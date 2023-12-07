@@ -2,5 +2,6 @@ package com.nosolorice.app;
 
 public class JinController {
 
-	// 꺼져
+	// 시이 바아아알
+	// 끄지라
 }
