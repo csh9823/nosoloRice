@@ -7,4 +7,6 @@ public class JinController {
 	// 끄지라
 	// 안녕
 	// 샹노무 시키야
+	// 뭐임마 빡치게 하지마
+
 }
