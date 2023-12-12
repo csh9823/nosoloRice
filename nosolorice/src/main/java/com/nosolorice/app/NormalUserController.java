@@ -24,6 +24,7 @@ public class NormalUserController {
 	
 	private NormalUserService normalUserService;
 	
+	
 	@Autowired
 	public void setMemberService(NormalUserService normalUserService) {
 		this.normalUserService = normalUserService;
