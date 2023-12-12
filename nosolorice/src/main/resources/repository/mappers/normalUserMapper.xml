@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nosolorice.mappers.normalUserMapper">
+	
+	<insert id="addNormalUser" parameterType="NormalUser">
+		INSERT INTO normalUser
+		VALUES(#{normalId}, #{pass}, #{name}, #{birth}, #{nickname}, #{mobile},
+				 #{profile}, #{postNum}, #{address1}, #{address2}, #{xpoint}, #{ypoint}, 
+				 #{gender},  #{email}, SYSDATE())
+	</insert>
+	
+	<select id="getNormalUser" resultType="NormalUser">
+		SELECT * FROM NormalUser WHERE normalId = #{normal_id}	
+	</select>
+	
+</mapper>
