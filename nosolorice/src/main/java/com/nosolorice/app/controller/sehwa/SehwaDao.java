@@ -6,4 +6,7 @@ public interface SehwaDao {
 
 	public BusinessUser getBusinessUserInfo(String id);
 	
+	public void businessUserInfoUpdate(String id, BusinessUser user);
+	
+	
 }

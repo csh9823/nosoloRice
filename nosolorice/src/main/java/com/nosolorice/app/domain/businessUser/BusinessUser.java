@@ -31,5 +31,200 @@ public class BusinessUser {
 	private Timestamp regDate;			// 가입일
 	private String storeOnoff;			// 영업시작/종료 상태
 	private String okNoOk;				// 가입승인여부
+	
+	public BusinessUser() {}
+	public BusinessUser(String businessId, String pass, String name, String phone, int businessNumber,
+			String businessName, String businessPicture, String email, String mobile, int postNum, String address1,
+			String address2, String xpoint, String ypoint, String businessProfile, String bankName, int bankNumber,
+			int deposit, String openTime, String closeTime, String breakTime, String dayOff, String introduction,
+			Timestamp regDate, String storeOnoff, String okNoOk) {
+		this.businessId = businessId;
+		this.pass = pass;
+		this.name = name;
+		this.phone = phone;
+		this.businessNumber = businessNumber;
+		this.businessName = businessName;
+		this.businessPicture = businessPicture;
+		this.email = email;
+		this.mobile = mobile;
+		this.postNum = postNum;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.xpoint = xpoint;
+		this.ypoint = ypoint;
+		this.businessProfile = businessProfile;
+		this.bankName = bankName;
+		this.bankNumber = bankNumber;
+		this.deposit = deposit;
+		this.openTime = openTime;
+		this.closeTime = closeTime;
+		this.breakTime = breakTime;
+		this.dayOff = dayOff;
+		this.introduction = introduction;
+		this.regDate = regDate;
+		this.storeOnoff = storeOnoff;
+		this.okNoOk = okNoOk;
+	}
+	
+	public String getBusinessId() {
+		return businessId;
+	}
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
+	}
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public int getBusinessNumber() {
+		return businessNumber;
+	}
+	public void setBusinessNumber(int businessNumber) {
+		this.businessNumber = businessNumber;
+	}
+	public String getBusinessName() {
+		return businessName;
+	}
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+	public String getBusinessPicture() {
+		return businessPicture;
+	}
+	public void setBusinessPicture(String businessPicture) {
+		this.businessPicture = businessPicture;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public int getPostNum() {
+		return postNum;
+	}
+	public void setPostNum(int postNum) {
+		this.postNum = postNum;
+	}
+	public String getAddress1() {
+		return address1;
+	}
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+	public String getAddress2() {
+		return address2;
+	}
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+	public String getXpoint() {
+		return xpoint;
+	}
+	public void setXpoint(String xpoint) {
+		this.xpoint = xpoint;
+	}
+	public String getYpoint() {
+		return ypoint;
+	}
+	public void setYpoint(String ypoint) {
+		this.ypoint = ypoint;
+	}
+	public String getBusinessProfile() {
+		return businessProfile;
+	}
+	public void setBusinessProfile(String businessProfile) {
+		this.businessProfile = businessProfile;
+	}
+	public String getBankName() {
+		return bankName;
+	}
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+	public int getBankNumber() {
+		return bankNumber;
+	}
+	public void setBankNumber(int bankNumber) {
+		this.bankNumber = bankNumber;
+	}
+	public int getDeposit() {
+		return deposit;
+	}
+	public void setDeposit(int deposit) {
+		this.deposit = deposit;
+	}
+	public String getOpenTime() {
+		return openTime;
+	}
+	public void setOpenTime(String openTime) {
+		this.openTime = openTime;
+	}
+	public String getCloseTime() {
+		return closeTime;
+	}
+	public void setCloseTime(String closeTime) {
+		this.closeTime = closeTime;
+	}
+	public String getBreakTime() {
+		return breakTime;
+	}
+	public void setBreakTime(String breakTime) {
+		this.breakTime = breakTime;
+	}
+	public String getDayOff() {
+		return dayOff;
+	}
+	public void setDayOff(String dayOff) {
+		this.dayOff = dayOff;
+	}
+	public String getIntroduction() {
+		return introduction;
+	}
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
+	}
+	public Timestamp getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Timestamp regDate) {
+		this.regDate = regDate;
+	}
+	public String getStoreOnoff() {
+		return storeOnoff;
+	}
+	public void setStoreOnoff(String storeOnoff) {
+		this.storeOnoff = storeOnoff;
+	}
+	public String getOkNoOk() {
+		return okNoOk;
+	}
+	public void setOkNoOk(String okNoOk) {
+		this.okNoOk = okNoOk;
+	}
 
+	
+	
+	
+	
 }

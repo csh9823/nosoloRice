@@ -6,4 +6,6 @@ public interface SehwaService {
 
 	public BusinessUser getBusinessUserInfo(String id);
 	
+	public void businessUserInfoUpdate(BusinessUser user);
+	
 }

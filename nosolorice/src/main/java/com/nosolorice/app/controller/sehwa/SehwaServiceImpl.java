@@ -15,6 +15,11 @@ public class SehwaServiceImpl implements SehwaService {
 	public BusinessUser getBusinessUserInfo(String id) {
 		return dao.getBusinessUserInfo(id);
 	}
+
+	@Override
+	public void businessUserInfoUpdate(BusinessUser user) {
+		dao.businessUserInfoUpdate(user.getBusinessId(), user);
+	}
 	
 	
 }

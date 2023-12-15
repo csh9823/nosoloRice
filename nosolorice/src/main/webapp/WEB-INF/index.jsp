@@ -11,18 +11,21 @@
 <link href="resources/bootstrap/bootstrap.min.css" rel="stylesheet" >
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <link href="resources/css/styles.css" type="text/css" rel="stylesheet">
+<link href="resources/css/sehwa/globalStyle.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <script src="resources/js/jquery-3.2.1.min.js"></script>
-<script src="resources/js/headerFunction.js"></script>
-<script src="resources/js/globalFunction.js"></script>
-<script src="resources/js/memberFunction.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="resources/js/sehwa/globalFunction.js"></script>
+<script src="resources/js/sehwa/validation.js"></script>
 </head>
 <body>
 <div class="container">
-
+	<%@ include file="./temple/header/header.jsp" %>
 	<jsp:include page="${param.body }" />
-
-	
+	<%@ include file="./temple/footer/footer.jsp" %>
 </div>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>
