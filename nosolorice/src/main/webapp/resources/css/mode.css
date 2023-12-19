@@ -1,0 +1,23 @@
+@charset "UTF-8";
+#memberjoin{
+    text-decoration: none;
+    color: black;
+}
+
+#loginsub:hover{
+    color: white;
+}
+
+#memberjoin:hover{
+    color: white;
+}
+
+#myfind{
+    text-decoration: none;
+    color: black;
+    font-size: 10px;
+}
+
+#myfind:hover{
+    color: darkred;
+}

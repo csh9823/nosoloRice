@@ -1,0 +1,9 @@
+@charset "UTF-8";
+        #joinmembership:hover{
+            color: white;
+        }
+
+        #joinmembership{
+            text-decoration: none;
+            color: black;  
+        }

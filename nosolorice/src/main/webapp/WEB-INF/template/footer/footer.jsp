@@ -1,30 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-
-<style>
-
-   p {
-   color: #979797;
-        font-family: 'SUITE-Regular';
-   }
-    
-    a {
-        color: #979797;
-        font-family: 'SUITE-Regular';
-    }
-    
-    ul {
-        padding-left: 0;
-        margin-top: 0;
-    }
-
-    li {
-        list-style: none;
-        margin-bottom: 20px;
-    }
-</style>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <footer class="py-5">
     <hr>
     <div class="container">
