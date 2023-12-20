@@ -45,4 +45,24 @@ public class JinFindDaoImpl implements JinFindInterfaceDao {
 		sqlSession.update(NAME_SPACE + ".newpassnormal", map);
 		
 	}
+	
+	// 사업자 아이디 이름으로 존재 확인
+	public String IdFindbusinessName (String name,String mobile) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("name", name);
+		map.put("mobile", mobile);
+		
+		return sqlSession.selectOne(NAME_SPACE + ".IdFindbusinessName",map);
+	}
+	
+	// 사용자 아이디 이름으로 존재 확인
+	public String IdFindnormalName (String name,String mobile) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("name", name);
+		map.put("mobile", mobile);
+		
+		return sqlSession.selectOne(NAME_SPACE + ".IdFindnormalName",map);
+	}
 }

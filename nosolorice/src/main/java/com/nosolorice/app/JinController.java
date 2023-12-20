@@ -24,7 +24,9 @@ public class JinController {
 	
 	// 아이디 찾기 알려주기 폼
 	@RequestMapping("FindidForm")
-	public String FindidForm() {
+	public String FindidForm(String Findid,Model model) {
+		
+		model.addAttribute("Findid", Findid);
 		
 		return "login/FindidForm";
 	}

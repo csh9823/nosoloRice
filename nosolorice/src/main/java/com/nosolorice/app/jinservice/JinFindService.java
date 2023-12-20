@@ -33,4 +33,14 @@ public class JinFindService implements JinFindInterface {
 		
 		jinFindDaoImpl.newpassnormal(id, pass);
 	}
+	
+	// 사업자 아이디 이름으로 존재 확인
+	public String IdFindbusinessName (String name,String mobile) {
+		return jinFindDaoImpl.IdFindbusinessName(name,mobile);
+	}
+	
+	// 사용자 아이디 이름으로 존재 확인
+	public String IdFindnormalName (String name,String mobile) {
+		return jinFindDaoImpl.IdFindnormalName(name,mobile);
+	}
 }

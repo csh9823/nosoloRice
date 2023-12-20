@@ -3,7 +3,7 @@
 
 <mapper namespace="com.nosolorice.app.mapper.FindMapper" >
 
-<!-- 사업자 아이디 있는지 없는지 확인  아이디를 Where로 받아서 -->
+<!-- 사업자 아이디 있는지 없는지 확인  -->
 <select id="IdFindbusiness" parameterType="String" resultType="String">
 select
 business_id
@@ -28,6 +28,23 @@ UPDATE business_user SET pass =#{pass} WHERE business_id = #{id}
 <update id="newpassnormal" parameterType="Map">
 UPDATE normal_user SET pass =#{pass} WHERE normal_id = #{id}
 </update>
+
+
+<!-- 이름과 핸드폰 번호로 사업자 아이디 있는지 없는지 확인  -->
+<select id="IdFindbusinessName" parameterType="Map" resultType="String">
+select
+business_id
+from  business_user
+where name = #{name} and mobile=#{mobile}
+</select>
+
+<!-- 이름과 핸드폰 번호로 일반 사용자 아이디 있는지 없는지 확인 -->
+<select id="IdFindnormalName" parameterType="Map" resultType="String">
+select 
+normal_id
+from normal_user
+where name = #{name} and mobile=#{mobile} 
+</select>
 
 </mapper>	
 
