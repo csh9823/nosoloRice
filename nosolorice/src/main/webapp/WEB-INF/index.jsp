@@ -13,15 +13,19 @@
 <link href="resources/css/styles.css" type="text/css" rel="stylesheet">
 <link href="resources/css/sehwa/globalStyle.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<link rel="stylesheet" href="resources/summernote/summernote-lite.css">
 <script src="resources/js/jquery-3.2.1.min.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="resources/js/sehwa/globalFunction.js"></script>
 <script src="resources/js/sehwa/validation.js"></script>
+<script src="resources/js/sehwa/ajax.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="resources/summernote/summernote-lite.js"></script>
+<script src="resources/summernote/lang/summernote-ko-KR.js"></script>
 </head>
 <body>
 <div class="container">
 	<%@ include file="./temple/header/header.jsp" %>
-	<jsp:include page="${param.body }" />
+	<jsp:include page="${param.body}" />
 	<%@ include file="./temple/footer/footer.jsp" %>
 </div>
 

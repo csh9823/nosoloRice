@@ -42,8 +42,7 @@ function sample6_execDaumPostcode() {
             document.getElementById("address2").focus();
         }
     }).open();
-}
-
+};
 
 
 
@@ -69,19 +68,21 @@ $(function() {
 	}
 
 
-
-
-  $('input.timepicker').timepicker({});
+  // $('input.timepicker').timepicker({});
   $('.timepicker').timepicker({
-    timeFormat: 'HH:mm',
-    interval: 30,
-    startTime: '00:00',
-    dynamic: false,
-    dropdown: true,
-    scrollbar: true
-});
+	    timeFormat: 'HH:mm',
+	    interval: 30,
+	    startTime: '00:00',
+	    dynamic: false,
+	    dropdown: true,
+	    scrollbar: true
+	});
 
-
+  /* 위즈윅 API summernote */
+  $('.summernote').summernote({
+    height: 300,
+    lang: "ko-KR"
+  });
 
 
 

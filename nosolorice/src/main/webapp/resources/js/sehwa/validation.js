@@ -119,6 +119,20 @@ $(function() {
 		}
 				
 	});
+	
+	// 리뷰모달 유효성검사
+	$("#reviewModalForm").on("submit", function() {
+		if($("#reviewContent").val().length <= 0) {
+			alert("리뷰내용을 작성해주세요.");
+			return false;
+		}
+		if($(".starPoint").val() == 0) {
+			alert("별점을 선택해주세요.");
+			return false;
+		}
+	});
+	
+
 
 
 

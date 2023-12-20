@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>사장님 정보수정</title>
 </head>
 <body>
   <div class="container">
@@ -59,7 +59,7 @@
             </select>
           </div>
           <div class="col">
-            <input type="text" name="mobile2" id="mobile2" class="form-control" value="${user.mobile.split('-')[1}">
+            <input type="text" name="mobile2" id="mobile2" class="form-control" value="${user.mobile.split('-')[1]}">
           </div>
           <div class="col">
             <input type="text" name="mobile3" id="mobile3" class="form-control" value="${user.mobile.split('-')[2]}">
