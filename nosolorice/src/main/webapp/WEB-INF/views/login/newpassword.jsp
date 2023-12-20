@@ -11,10 +11,12 @@
 
         <div class="row">
             <div class="col-6 text-center" style="float: none; margin: 0 auto; margin-top: 20px; min-width: 450px;" >
-	            <form action="" id="submitForm">
+	            <form action="Findpassword" id="submitForm" method="post">
 	                <input type="text" style="width: 458px; height: 45px; margin-top: 10px; margin-bottom: 10px;" placeholder="아이디를 입력해 주세요"  name="id" id="id"><br>
-	                <input type="text" style="width: 258px; height: 45px; margin-bottom: 10px; margin-right: 80px;" placeholder="휴대폰 번호를 입력해주세요" name="phone" id="phone"> <button id="CertificationNumber" style="border: solid 1px black;">인증번호받기</button><br>
+	                <input type="text" style="width: 258px; height: 45px; margin-bottom: 10px; margin-right: 80px;" placeholder="휴대폰 번호를 입력해주세요" name="mobile" id="phone"> <button id="CertificationNumber" style="border: solid 1px black;">인증번호받기</button><br>
 	                <input type="text" style="width: 458px; height: 45px; margin-bottom: 10px;" placeholder="인증번호를 입력해 주세요" name="phoneChk2" id="phoneChk2"><br>
+	                <input type="hidden" id="Yesnewpass" value="0">
+	                <input type="hidden" id="normalORbusiness" name="normalORbusiness">
 	                <button type="submit" style="background-color: rgb(255, 229, 202); border: solid 1px black; margin-top: 8px;" id="loginsub">인증하기</button>
 	             </form>
             </div>
@@ -22,6 +24,20 @@
     </div>
 </div>
 <script>
+
+$("#submitForm").on("submit", function () {
+	
+	let yesnewpass = $("#Yesnewpass").val();
+	
+	console.log(yesnewpass)
+	
+	if(yesnewpass == 0){
+		alert("인증이 완료되지 않았습니다.")
+    	return false;
+	}
+
+});
+
     $("#CertificationNumber").on("click",function(){
     	event.preventDefault();
     	
@@ -29,7 +45,7 @@
         let id = $("#id").val();
 
         if(id.length == 0){
-            alert("아을 입력해 주세요")
+            alert("아이디 입력해 주세요")
             return false;
         }
 
@@ -43,15 +59,33 @@
 	    }
         
         $.ajax({
-    		"url" : "testphone.ajax",
-    		"data" : "userPhoneNumber=" + phone,
+    		"url" : "newpassword.ajax",
+    		"data" : "userPhoneNumber=" + phone +"&id="+id ,
     		"type" : "POST" ,
     		"dataType" : "json",
     		// 성공하면 호출
     		"success" : function(resData){
     			
-    			console.log(resData.number);
-    			console.log(resData.isfalse);
+    			console.log(resData.number)
+    			
+    			console.log(resData.businessid)
+    			
+    			
+				if(resData.businessid == null && resData.normalid == null){
+					alert("존재하지 않는 아이디 입니다.")
+					return false;    					
+				}
+					
+    			if(resData.businessid != null){
+    				$("#normalORbusiness").val("0")
+    				$("#Yesnewpass").val("1")
+    			}
+    			
+    			if(resData.normalid != null){
+    				$("#normalORbusiness").val("1")
+    				$("#Yesnewpass").val("1")
+    			}
+    			
     			
     			$("#submitForm").on("submit", function () {
     				
@@ -68,5 +102,4 @@
     		}
     	});
     })
-    
 </script>

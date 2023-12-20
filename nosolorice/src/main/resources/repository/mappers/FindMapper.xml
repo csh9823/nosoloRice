@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nosolorice.app.mapper.FindMapper" >
+
+<!-- 사업자 아이디 있는지 없는지 확인  아이디를 Where로 받아서 -->
+<select id="IdFindbusiness" parameterType="String" resultType="String">
+select
+business_id
+from  business_user
+where business_id = #{id}
+</select>
+
+<!-- 일반 사용자 아이디 있는지 없는지 확인 -->
+<select id="IdFindnormal" parameterType="String" resultType="String">
+select
+normal_id
+from  normal_user
+where normal_id = #{id}
+</select>
+
+<!-- 사업자 비밀번호 변경 -->
+<update id="newpassbusiness" parameterType="Map">
+UPDATE business_user SET pass =#{pass} WHERE business_id = #{id}
+</update>
+
+<!-- 일반 사용자 비밀번호 변경 -->
+<update id="newpassnormal" parameterType="Map">
+UPDATE normal_user SET pass =#{pass} WHERE normal_id = #{id}
+</update>
+
+</mapper>	
+
+
+

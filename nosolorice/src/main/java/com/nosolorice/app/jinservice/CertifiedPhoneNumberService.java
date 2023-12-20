@@ -18,7 +18,7 @@ public void certifiedPhoneNumber(String userPhoneNumber, String randomNumber) {
 	Message message = new Message();
 	message.setFrom("01023269803");
 	message.setTo(userPhoneNumber);
-	message.setText("인증번호는"+randomNumber);
+	message.setText("인증번호는"+randomNumber+"입니다.");
 
 	try {
 	  messageService.send(message);
