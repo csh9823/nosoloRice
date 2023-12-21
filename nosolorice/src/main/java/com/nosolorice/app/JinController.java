@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.nosolorice.app.domain.businessUser.BusinessUser;
+import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.jinservice.JinFindService;
 import com.nosolorice.app.jinservice.JinloginService;
 
@@ -101,12 +103,22 @@ public class JinController {
 	}
 
 	@RequestMapping("loginservice")
-	public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,Model model,
+	public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,
 			HttpServletResponse response,HttpSession session) {
 		
+		BusinessUser buser = jinloginService.loginBusinessUser(id, pass);
 		
+		NormalUser nuser = jinloginService.loginNormalUser(id, pass);
 		
+
 		
+		if(buser.getBusinessId() != null) {
+			session.setAttribute("BusinessUser", buser);
+		}
+		
+		if(nuser.getNormalId() != null) {
+			session.setAttribute("NormalUser", nuser);
+		}
 		
 		// 쿠키에 값 저장하기
 		if(idsave != 0) {
