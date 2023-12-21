@@ -18,7 +18,9 @@
 </head>
 <body>
 <div class="container">
+<%@ include file="template/header/header.jsp" %>	
 <jsp:include page="${param.body}" />
+<%@ include file="template/footer/footer.jsp" %>	
 </div>
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 </head>
