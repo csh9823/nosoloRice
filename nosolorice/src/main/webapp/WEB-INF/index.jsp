@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="stylesheet" href="resources/css/mode.css">
 <link rel="stylesheet" href="resources/css/findForm.css">
 <link rel="stylesheet" href="resources/css/idFind.css">
@@ -20,5 +21,7 @@
 <jsp:include page="${param.body}" />
 </div>
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
+</head>
+<body>
 </body>
 </html>

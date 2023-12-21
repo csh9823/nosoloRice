@@ -9,5 +9,55 @@ public class PointHistory {
 	private String businessId;	// 포인트 사용매장 => 사장님 아이디로 하는건??
 	private String normalId;		// 유저아이디
 	
+	public PointHistory() {
+		
+	}
+
+	public int getPointHistoryNo() {
+		return pointHistoryNo;
+	}
+
+	public void setPointHistoryNo(int pointHistoryNo) {
+		this.pointHistoryNo = pointHistoryNo;
+	}
+
+	public Timestamp getHistoryDate() {
+		return historyDate;
+	}
+
+	public void setHistoryDate(Timestamp historyDate) {
+		this.historyDate = historyDate;
+	}
+
+	public int getHistoryPoint() {
+		return historyPoint;
+	}
+
+	public void setHistoryPoint(int historyPoint) {
+		this.historyPoint = historyPoint;
+	}
+
+	public String getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
+	}
+
+	public String getNormalId() {
+		return normalId;
+	}
+
+	public void setNormalId(String normalId) {
+		this.normalId = normalId;
+	}
+
+	@Override
+	public String toString() {
+		return "PointHistory [pointHistoryNo=" + pointHistoryNo + ", historyDate=" + historyDate + ", historyPoint="
+				+ historyPoint + ", businessId=" + businessId + ", normalId=" + normalId + "]";
+	}
+	
 	
 }
