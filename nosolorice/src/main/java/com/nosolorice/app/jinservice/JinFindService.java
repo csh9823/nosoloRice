@@ -12,14 +12,14 @@ public class JinFindService implements JinFindInterface {
 	private JinFindDaoImpl jinFindDaoImpl;
 	
 	@Override
-	public String IdFindbusiness(String id) {
+	public String IdFindbusiness(String id,String mobile) {
 
-		return jinFindDaoImpl.IdFindbusiness(id);
+		return jinFindDaoImpl.IdFindbusiness(id,mobile);
 	}
 	
-	public String IdFindnormal (String id) {
+	public String IdFindnormal (String id,String mobile) {
 		
-		return jinFindDaoImpl.IdFindnormal(id);
+		return jinFindDaoImpl.IdFindnormal(id,mobile);
 	}
 	
 	// 사업자 아이디 비밀번호 변경

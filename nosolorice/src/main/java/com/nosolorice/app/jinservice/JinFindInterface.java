@@ -3,10 +3,10 @@ package com.nosolorice.app.jinservice;
 public interface JinFindInterface {
 	
 	// 사업자 아이디 존재 확인
-	abstract public String IdFindbusiness (String id);
+	abstract public String IdFindbusiness (String id,String mobile);
 	
 	// 사용자 아이디 존재 확인
-	abstract public String IdFindnormal (String id);
+	abstract public String IdFindnormal (String id,String mobile);
 
 	// 사업자 아이디 이름으로 존재 확인
 	abstract public String IdFindbusinessName (String name,String mobile);

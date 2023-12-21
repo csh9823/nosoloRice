@@ -27,9 +27,9 @@ public class JinAjaxController {
 		// 휴대폰 문자보내기
 		int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
 				
-		String businessid = jinFindService.IdFindbusiness(id);
+		String businessid = jinFindService.IdFindbusiness(id,userPhoneNumber);
 		
-		String normalid = jinFindService.IdFindnormal(id);
+		String normalid = jinFindService.IdFindnormal(id,userPhoneNumber);
 		
 		String number = Integer.toString(randomNumber);
 		

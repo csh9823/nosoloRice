@@ -4,19 +4,19 @@
 <mapper namespace="com.nosolorice.app.mapper.FindMapper" >
 
 <!-- 사업자 아이디 있는지 없는지 확인  -->
-<select id="IdFindbusiness" parameterType="String" resultType="String">
+<select id="IdFindbusiness" parameterType="Map" resultType="String">
 select
 business_id
 from  business_user
-where business_id = #{id}
+where business_id = #{id} and mobile=#{mobile}
 </select>
 
 <!-- 일반 사용자 아이디 있는지 없는지 확인 -->
-<select id="IdFindnormal" parameterType="String" resultType="String">
+<select id="IdFindnormal" parameterType="Map" resultType="String">
 select
 normal_id
 from  normal_user
-where normal_id = #{id}
+where normal_id = #{id} and mobile=#{mobile}
 </select>
 
 <!-- 사업자 비밀번호 변경 -->

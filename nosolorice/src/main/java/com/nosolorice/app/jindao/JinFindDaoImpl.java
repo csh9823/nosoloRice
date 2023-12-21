@@ -16,15 +16,20 @@ public class JinFindDaoImpl implements JinFindInterfaceDao {
 	
 	// 사업자 아이디 존재 확인
 	@Override
-	public String IdFindbusiness(String id) {
+	public String IdFindbusiness(String id,String mobile) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("id", id);
+		map.put("mobile", mobile);
 		
-		return sqlSession.selectOne(NAME_SPACE + ".IdFindbusiness",id);
+		return sqlSession.selectOne(NAME_SPACE + ".IdFindbusiness",map);
 	}
 	
 	// 사용자 아이디 존재 확인
-	public String IdFindnormal (String id) {
-		
-		return sqlSession.selectOne(NAME_SPACE + ".IdFindnormal",id);
+	public String IdFindnormal (String id,String mobile) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("id", id);
+		map.put("mobile", mobile);
+		return sqlSession.selectOne(NAME_SPACE + ".IdFindnormal",map);
 	};
 	
 	// 사업자 아이디 비밀번호 변경
