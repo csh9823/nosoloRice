@@ -14,6 +14,82 @@ public class Booking {
 	private String businessId;			// 사장님 아이디
 	private String bookingChatName;	// 채팅방 이름
 	
+	public Booking() {
+		
+	}
+
+	public int getBookingNo() {
+		return bookingNo;
+	}
+
+	public void setBookingNo(int bookingNo) {
+		this.bookingNo = bookingNo;
+	}
+
+	public int getBookingCount() {
+		return bookingCount;
+	}
+
+	public void setBookingCount(int bookingCount) {
+		this.bookingCount = bookingCount;
+	}
+
+	public String getBookingRequest() {
+		return bookingRequest;
+	}
+
+	public void setBookingRequest(String bookingRequest) {
+		this.bookingRequest = bookingRequest;
+	}
+
+	public Timestamp getBookingTime() {
+		return bookingTime;
+	}
+
+	public void setBookingTime(Timestamp bookingTime) {
+		this.bookingTime = bookingTime;
+	}
+
+	public String getBookingState() {
+		return bookingState;
+	}
+
+	public void setBookingState(String bookingState) {
+		this.bookingState = bookingState;
+	}
+
+	public int getBookingBookNo() {
+		return bookingBookNo;
+	}
+
+	public void setBookingBookNo(int bookingBookNo) {
+		this.bookingBookNo = bookingBookNo;
+	}
+
+	public String getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
+	}
+
+	public String getBookingChatName() {
+		return bookingChatName;
+	}
+
+	public void setBookingChatName(String bookingChatName) {
+		this.bookingChatName = bookingChatName;
+	}
+
+	@Override
+	public String toString() {
+		return "Booking [bookingNo=" + bookingNo + ", bookingCount=" + bookingCount + ", bookingRequest="
+				+ bookingRequest + ", bookingTime=" + bookingTime + ", bookingState=" + bookingState
+				+ ", bookingBookNo=" + bookingBookNo + ", businessId=" + businessId + ", bookingChatName="
+				+ bookingChatName + "]";
+	}
+	
 	
 	
 }
