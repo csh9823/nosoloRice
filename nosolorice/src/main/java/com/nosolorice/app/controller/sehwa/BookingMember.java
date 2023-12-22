@@ -3,6 +3,7 @@ package com.nosolorice.app.controller.sehwa;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.nosolorice.app.domain.Review.Review;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
 
@@ -14,18 +15,21 @@ public class BookingMember {
 	private BusinessUser businessUser;		// 사업장정보
 	private Timestamp bookingTime;			// 방문시간
 	private Boolean reviewStatus;				// 리뷰등록여부
+	private Review review;
 	
 	
 	public BookingMember() {};
-	public BookingMember(int no, BusinessUser businessUser, List<String> members, List<NormalUser> normalUser,
-			Timestamp bookingTime, Boolean reviewStatus) {
+	public BookingMember(int no, List<String> members, List<NormalUser> normalUser, BusinessUser businessUser,
+			Timestamp bookingTime, Boolean reviewStatus, Review review) {
 		this.no = no;
-		this.businessUser = businessUser;
 		this.members = members;
 		this.normalUser = normalUser;
+		this.businessUser = businessUser;
 		this.bookingTime = bookingTime;
 		this.reviewStatus = reviewStatus;
+		this.review = review;
 	}
+
 
 
 
@@ -64,6 +68,12 @@ public class BookingMember {
 	}
 	public void setReviewStatus(Boolean reviewStatus) {
 		this.reviewStatus = reviewStatus;
+	}
+	public Review getReview() {
+		return review;
+	}
+	public void setReview(Review review) {
+		this.review = review;
 	}
 
 

@@ -107,7 +107,9 @@ public class SehwaServiceImpl implements SehwaService {
 				if(review == null) {
 					bMember.setReviewStatus(false);
 				} else {
+					// 리뷰가 있을 때
 					bMember.setReviewStatus(true);
+					bMember.setReview(review);
 				}
 			}
 			bookingList.add(bMember);
@@ -135,6 +137,16 @@ public class SehwaServiceImpl implements SehwaService {
 	@Override
 	public void insertBlock(String blocker, String attacker) {
 		dao.insertBlock(blocker, attacker);
+	}
+
+	@Override
+	public void visitantBlind(String id, int no) {
+		dao.visitantBlind(id, no);
+	}
+
+	@Override
+	public void deleteReview(int no) {
+		dao.deleteReview(no);
 	}
 	
 	

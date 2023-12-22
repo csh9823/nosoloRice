@@ -114,6 +114,7 @@
 		FROM visitant_userlist
 			WHERE 
 				normal_id = #{id}
+				AND visitant_blind IS NULL
 	</select>
 	
 	<select id="getVisitantUserListMember" parameterType="hashMap" resultType="string">
@@ -141,6 +142,16 @@
 				normal_id = #{normalId}
 				AND bookingok_no = #{bookingOkNo}
 	</select>
+	
+	<delete id="deleteReview">
+		DELETE FROM review
+			WHERE 
+				review_no = #{no}
+	</delete>
+	
+	
+	
+	
 
 	<insert id="insertReview" parameterType="Review">
 		INSERT INTO review(review_content, review_picture, review_score, regdate, normal_id, business_id, bookingok_no)
@@ -156,6 +167,27 @@
 		INSERT INTO block_history(blocker, block_attacker, block_date, block_state)
 			VALUES(#{blocker}, #{attacker}, SYSDATE(), '차단')
 	</insert>
+	
+	<update id="visitantBlind" parameterType="hashMap">
+		UPDATE visitant_userlist
+			SET
+				visitant_blind = 1
+			WHERE
+				normal_id = #{id}
+				AND bookingok_no = #{no}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	<resultMap type="BusinessUser" id="BusinessUserResultMap">
 		<id property="businessId" column="business_id"/>

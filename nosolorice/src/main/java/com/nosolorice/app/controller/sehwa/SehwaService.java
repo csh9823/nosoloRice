@@ -30,4 +30,9 @@ public interface SehwaService {
 	
 	public void insertBlock(String blocker, String attacker);
 	
+	public void visitantBlind(String id, int no);
+	
+	public void deleteReview(int no);
+	
+	
 }

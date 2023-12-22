@@ -158,6 +158,20 @@ public class SehwaDaoImpl implements SehwaDao {
 		
 		sqlSession.insert(NAME_SPACE + ".insertBlocker", params);
 	}
+
+	@Override
+	public void visitantBlind(String id, int no) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		params.put("no", no);
+		
+		sqlSession.update(NAME_SPACE + ".visitantBlind", params);
+	}
+
+	@Override
+	public void deleteReview(int no) {
+		sqlSession.delete(NAME_SPACE + ".deleteReview", no);
+	}
 	
 	
 	

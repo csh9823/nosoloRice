@@ -45,10 +45,9 @@ function sample6_execDaumPostcode() {
 };
 
 
-
 $(function() {
   /* 이미지 눌렀을 때 fileInput */
-  $("#clickImg").on("click", function() {
+  $(document).on("click", "#clickImg", function() {
     $("#fileInput").trigger("click");
     return false;
   });

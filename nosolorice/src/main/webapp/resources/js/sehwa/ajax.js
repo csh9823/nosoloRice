@@ -104,7 +104,7 @@ $(function() {
 		event.preventDefault();
 		
 		let reportContent = $("#reportContent").val().trim();
-		let fileInput = $("#fileInput")[0].files[0];
+		let fileInput = $(".fileInput")[0].files[0];
 		
 		if(reportContent.length <= 0) {
 			alert("신고내용을 작성해주세요.");
@@ -164,6 +164,8 @@ $(function() {
 	
 	});
 	
+    
+
 	
 	
 	

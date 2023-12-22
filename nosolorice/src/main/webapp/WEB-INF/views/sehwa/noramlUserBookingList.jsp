@@ -28,12 +28,15 @@
       margin-left: -10px;
       margin-top: -10px;
     }
-
+   .reviewCSS {
+      display: none;
+    }
   </style>
 
 </head>
 <body>
   <div class="container">
+  <input type="hidden" id="loginId" value="testNormalId">
     <div class="row">
       <div class="col">
         <div class="row mb-3">
@@ -53,18 +56,27 @@
                 </tr>
               </thead>
               <tbody> <!-- DB출력 -->
-                <tr>
-                  <td>${currentBookingNo}</td>
-                  <td>${storeInfo.businessName}</td>
-                  <td>
-                  	<c:forEach var="member" items="${memberInfo}" begin="0" end="${memberCount -1}">
-					    ${member.nickName}${not loop.last ? ", " : ""}
-					</c:forEach>
-                  </td>
-                  <td>
-                  	<fmt:formatDate value="${currentBookingDetail.bookingTime}" pattern="yyyy/MM/dd HH:mm" />
-                  </td>
-                </tr>
+              	<c:if test="${empty currentBookingNo}">
+              		<tr>
+              			<td colspan="4">
+              				현재 예약중인 내역이 없습니다.
+              			</td>
+              		</tr>
+              	</c:if>
+              	<c:if test="${not empty currentBookingNo}">
+	                <tr>
+	                  <td>${currentBookingNo}</td>
+	                  <td>${storeInfo.businessName}</td>
+	                  <td>
+	                  	<c:forEach var="member" items="${memberInfo}" begin="0" end="${memberCount -1}" varStatus="loop">
+						    ${member.nickName}${!loop.last ? ", " : ""}
+						</c:forEach>
+	                  </td>
+	                  <td>
+	                  	<fmt:formatDate value="${currentBookingDetail.bookingTime}" pattern="yyyy/MM/dd HH:mm" />
+	                  </td>
+	                </tr>
+                </c:if>
               </tbody>
             </table>
           </div>
@@ -88,50 +100,99 @@
                 </tr>
               </thead>
               <tbody>
+              	<c:if test="${empty bookingList}">
+              		<tr>
+						<td colspan="6">
+							방문하신 내역이 없습니다.
+						</td>              		
+              		</tr>
+              	</c:if>
                 <!-- DB 반복 출력 -->
-                <c:forEach var="bookingList" items="${bookingList}" begin="0" end="${size}">
-	                <tr class="border-bottom">
-	                  <td class="visitantBookingOkNo">${bookingList.no}</td>
-	                  <td class="visitantBusinessName">${bookingList.businessUser.businessName}</td>
-	                  <td>
-	                  	<input type="hidden" class="businessId" value="${bookingList.businessUser.businessId}">
-	                  	<input type="hidden" class="bookingNo" value="${bookingList.no}">
-	                  	<input type="hidden" class="visitantTime" value="${bookingList.bookingTime}">
-	                  	<input type="${bookingList.reviewStatus ? 'hidden' : 'button'}" value="리뷰쓰기"
-	                  			class="reviewModalBtn green btn btn-sm" data-bs-toggle="modal" data-bs-target="#reviewModal">
-	                  </td>
-	                  <td>
-	                    <!-- 참여자 반복출력 -->
-	                    <c:forEach var="member" items="${bookingList.normalUser}">
-		                    <div style="display: inline-block;" class="bookingMember" data-id="${member.normalId}">
-		                      <div style="position: relative;">
-		                        <span>${member.nickName}${not loop.last ? ", " : "" }</span>
+                <c:if test="${not empty bookingList}">
+	                <c:forEach var="bookingList" items="${bookingList}" begin="0" end="${size}">
+		                <tr class="border-bottom">
+		                  <td class="visitantBookingOkNo">${bookingList.no}</td>
+		                  <td class="visitantBusinessName">${bookingList.businessUser.businessName}</td>
+		                  <td>
+		                  	<input type="hidden" class="businessId" value="${bookingList.businessUser.businessId}">
+		                  	<input type="hidden" class="bookingNo" value="${bookingList.no}">
+		                  	<input type="hidden" class="visitantTime" value="${bookingList.bookingTime}">
+		                  	<input type="button" value="${bookingList.reviewStatus ? '리뷰보기' : '리뷰쓰기'}"
+		                  			class="${bookingList.reviewStatus ? 'reviewDropDownBtn' : 'reviewModalBtn'} green btn btn-sm" 
+		                  			${bookingList.reviewStatus ? '' : 'data-bs-toggle="modal" data-bs-target="#reviewModal"'} data-no="01">
+		                  </td>
+		                  <td>
+		                    <!-- 참여자 반복출력 -->
+		                    <c:forEach var="member" items="${bookingList.normalUser}"  varStatus="loop">
+			                    <div style="display: inline-block;" class="bookingMember" data-id="${member.normalId}">
+			                      <div style="position: relative;">
+			                        <span>${member.nickName}${!loop.last ? ", " : "" }</span>
+			                      </div>
+			                      <div class="hover mt-2" data-hover="${member.normalId}" style="display:none; position: absolute;">
+			                        <button style="text-decoration: none; font-size: 14px; color: black; border: none; background-color: #979797;"
+			                                data-bs-toggle="modal" data-bs-target="#reportModal" class="reportBtn" 
+			                                data-id="${member.normalId}" data-name="${member.nickName}">
+			                          	신고
+			                        </button><br>
+			                        <button style="text-decoration: none; font-size: 14px; border: none; background-color: #979797;" class="blockBtn text-red"
+			                                data-bs-toggle="modal" data-bs-target="#blockModal"
+			                                data-id="${member.normalId}" data-name="${member.nickName}">
+			                         	차단
+			                        </button>
+			                      </div>
+			                    </div>
+		                    </c:forEach>
+		                  </td>
+		                  <td>
+		                  	<fmt:formatDate value="${bookingList.bookingTime}" pattern="yyyy/MM/dd HH:mm" />
+		                  </td>
+		                  <td>
+		                    <button style="border: none; background-color: white;">
+		                      <span class="bookingBlindBtn" data-no="${bookingList.no}"><i class="bi bi-trash fs-5"></i></span>
+		                    </button>
+		                  </td>
+		                </tr>
+		                <tr class="reviewBox reviewCSS border-top border-bottom text-start" data-review="01">
+		                  <td colspan="6">
+		                    <div class="row mb-3">
+		                      <div class="col">
+		                        <div class="row">
+		                          <div class="col-auto">
+		                            <div class="profile-box-50">
+		                              <img src="https://via.placeholder.com/150" class="profile-img">
+		                            </div>
+		                          </div>
+		                          <div class="col-auto">
+		                           <span class="fw-bold">아이디</span><br>
+		                           <span class="text-gray">
+		                           	<fmt:formatDate value="${bookingList.review.regDate}" pattern="yyyy/MM/dd HH:mm:ss" />
+		                           </span>
+		                          </div>
+		                        </div>
 		                      </div>
-		                      <div class="hover mt-2" data-hover="${member.normalId}" style="display:none; position: absolute;">
-		                        <button style="text-decoration: none; font-size: 14px; color: black; border: none; background-color: #979797;"
-		                                data-bs-toggle="modal" data-bs-target="#reportModal" class="reportBtn" 
-		                                data-id="${member.normalId}" data-name="${member.nickName}">
-		                          	신고
-		                        </button><br>
-		                        <button style="text-decoration: none; font-size: 14px; border: none; background-color: #979797;" class="blockBtn text-red"
-		                                data-bs-toggle="modal" data-bs-target="#blockModal"
-		                                data-id="${member.normalId}" data-name="${member.nickName}">
-		                         	차단
-		                        </button>
+		                      <div class="col text-end text-red">
+		                        <i class="bi ${bookingList.review.reviewScore >=1 ? 'bi-star-fill' : 'bi-star'}"></i>
+		                        <i class="bi ${bookingList.review.reviewScore >=2 ? 'bi-star-fill' : 'bi-star'}"></i>
+		                        <i class="bi ${bookingList.review.reviewScore >=3 ? 'bi-star-fill' : 'bi-star'}"></i>
+		                        <i class="bi ${bookingList.review.reviewScore >=4 ? 'bi-star-fill' : 'bi-star'}"></i>
+		                        <i class="bi ${bookingList.review.reviewScore >=5 ? 'bi-star-fill' : 'bi-star'}"></i>
 		                      </div>
 		                    </div>
-	                    </c:forEach>
-	                  </td>
-	                  <td>
-	                  	<fmt:formatDate value="${bookingList.bookingTime}" pattern="yyyy/MM/dd HH:mm" />
-	                  </td>
-	                  <td>
-	                    <button style="border: none; background-color: white;">
-	                      <i class="bi bi-trash fs-5"></i>
-	                    </button>
-	                  </td>
-	                </tr>
-                </c:forEach>
+		                    <div class="row">
+		                      <div class="col-9">
+		                      	<pre>${bookingList.review.reviewContent}</pre>
+		                        <img src="resources/upload/${bookingList.review.reviewPicture}" alt="리뷰사진" class="w-100">
+		                      </div>
+		                        <div class="col-3" style="position: relative;">
+			                        <input type="button" value="리뷰삭제" class="reviewDeleteBtn green btn btn-sm" 
+			                        		style="position: absolute; right:0; bottom:0;"
+			                        		data-no="${bookingList.review.reviewNo}">
+		                        </div>
+		                    </div>
+		                  </td>
+		                </tr>
+	                </c:forEach>
+                </c:if>
               </tbody>
             </table>
           </div>
@@ -179,8 +240,8 @@
             </div>
             <div class="row mb-3">
 	            <div class="col text-start">
-	              <input type="file" name="reportFileInput" id="fileInput" style="display: none;">
-	              <span id="clickImg"><i class="bi bi-camera fs-4"></i> 사진 올리기</span>
+	              <input type="file" name="reportFileInput" class="fileInput" style="display: none;">
+	              <span class="clickImg"><i class="bi bi-camera fs-4"></i> 사진 올리기</span>
 	            </div>
             </div>
             <div class="row">
@@ -291,8 +352,8 @@
           </div>
           <div class="row mt-4">
             <div class="col text-start">
-              <input type="file" name="reviewFileInput" id="fileInput" style="display: none;">
-              <span id="clickImg"><i class="bi bi-camera fs-4"></i> 사진 올리기</span>
+              <input type="file" name="reviewFileInput" class="fileInput" style="display: none;">
+              <span class="clickImg"><i class="bi bi-camera fs-4"></i> 사진 올리기</span>
             </div>
             <div class="col text-end">
               <input type="submit" value="작성하기" style="border: none; background-color: white;">
@@ -304,6 +365,12 @@
   </div>
 
   <script>
+  	// 사진업로드창
+  	$(document).on("click", ".clickImg", function() {
+	    $(this).prev(".fileInput").trigger("click");
+	    return false;
+	 });
+  
   	// hover (신고/차단)
     $(document).on("mouseover", ".bookingMember", function() {
       let bookingMember = $(this).data('id');
@@ -325,7 +392,7 @@
     	let hour = date.getHours();
     	let minute = date.getMinutes();
     	let format = year + "/" + month + "/" + day + " " + hour + ":" + minute;
-    	$("#reviewModalVisitantDate").text(format);
+    	$(".reviewModalVisitantDate").text(format);
     	// 상호명 보이기
     	let businessName = $(".visitantBusinessName").text();
     	$(".reviewModalVisitantName").text(businessName);
@@ -334,9 +401,17 @@
     	$(".reviewBusinessUser").val(businessId);
     	// 방문관리번호 연결하기
     	let bookingOkNo = $(this).parents().find(".visitantBookingOkNo").text();
-    	console.log(bookingOkNo);
     	$(".reviewBookingNo").val(bookingOkNo);
-    	
+    });
+    
+    // 리뷰보기버튼 눌렀을 때
+    $(document).on("click", ".reviewDropDownBtn", function() {
+      let no = $(this).data('no');
+      if($(".reviewBox[data-review='" + no + "']").hasClass("reviewCSS") == true){
+        $(".reviewBox[data-review='" + no + "']").removeClass("reviewCSS");
+      } else {
+        $(".reviewBox[data-review='" + no + "']").addClass("reviewCSS");
+      }
     });
 
     // 신고버튼 눌렀을 때
@@ -358,7 +433,35 @@
 		let normalId = $(this).data("id");
 		$(".blockAttacker").val(normalId);
     });
+
+    // 목록삭제버튼 눌렀을때
+    $(document).on("click", ".bookingBlindBtn", function() {
+		let no = $(this).data("no");
+		let loginId = $("#loginId").val();
+		
+		$.ajax({
+			"url" : "visitantBlind.ajax",
+			"data" : {
+				id : loginId,
+				no : no
+			},
+			"type" : "post",
+			"dataType" : "text",
+			"success" : function(resData) {
+				console.log(resData);
+				location.href="noramlUserBookingList";
+			},
+			"error" : function(xhr, status, err) {
+				console.log("err : ", err);
+			}
+		});
+	});
     
+    // 리뷰 삭제버튼 눌렀을 때
+    $(document).on("click", ".reviewDeleteBtn", function() {
+    	let no = $(this).data("no");
+    	location.href="deleteReview?no=" + no;
+    });
     
     
     // 별점 hover 처리하기

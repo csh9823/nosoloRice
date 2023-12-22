@@ -168,9 +168,17 @@ public class SehwaController {
 		service.insertBlock(blocker, attacker);
 	}
 	
+	@RequestMapping(value="/visitantBlind.ajax", method=RequestMethod.POST)
+	@ResponseBody
+	public void visitantBlind(String id, int no) {
+		service.visitantBlind(id, no);
+	}
 	
-	
-	
+	@RequestMapping(value="/deleteReview")
+	public String deleteReview(int no) {
+		service.deleteReview(no);
+		return "redirect:/noramlUserBookingList";
+	}
 	
 	
 	
