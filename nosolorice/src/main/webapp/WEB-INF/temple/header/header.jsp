@@ -6,8 +6,7 @@
     <div class="container-fluid">
     
       <!-- nav_logo -->
-
-      <a class="logo" href="main.html"><img src="./logo/nosolorice_logo.png"></a>
+      <a class="logo" href="main.html"><img src="resources/img/logo/nosolorice_logo_s.png"></a>
     
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -123,14 +122,14 @@
     </c:if>
     
     <!-- normal_user -->
-    <c:if test="sessionScope.root eq '2'">
+    <c:if test="${sessionScope.root eq '2'}">
     	<nav class="navbar navbar-expand-lg">
 	
 		    <div class="container">
 		    
 		      <!-- nav_logo -->
 		
-		      <a class="logo" href="main.html"><img src="./logo/nosolorice_logo.png"></a>
+		      <a class="logo" href="main.html"><img src="resources/img/logo/nosolorice_logo_s.png"></a>
 		    
 		      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		        <span class="navbar-toggler-icon"></span>

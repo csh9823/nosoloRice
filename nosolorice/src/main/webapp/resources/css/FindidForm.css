@@ -1,0 +1,16 @@
+@charset "UTF-8";
+        #joinmembership:hover{
+            color: white;
+        }
+
+        #joinmembership{
+            text-decoration: none;
+            color: black;  
+        }
+        #loginpage{
+            text-decoration: none;
+            color: black;  
+        }
+        #loginpage:hover{
+            color: azure;
+        }
