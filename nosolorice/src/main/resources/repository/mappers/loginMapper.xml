@@ -3,6 +3,60 @@
 
 <mapper namespace="com.nosolorice.app.mapper.loginMapper" >
 
+<select id="loginBusinessUserv" parameterType="Map" resultType="BusinessUser">
+select
+business_id as businessId,
+name,
+phone,
+business_number as businessNumber,
+business_name as businessName,
+business_picture as businessPicture,
+email,
+mobile,
+postnum as postNum,
+address1,
+address2,
+xpoint,
+ypoint,
+business_profile as businessProfile,
+bank_name as bankName,
+bank_number as bankNumber,
+deposit,
+open_time as openTime,
+close_time as closeTime,
+break_time as breakTime,
+day_off as dayOff,
+introduction as introduction,
+regdate as regDate,
+store_onoff as storeOnoff,
+ok_nook as okNoOk,
+root
+from  business_user
+where business_id = #{id} and pass = #{pass}
+</select>
+
+<select id="loginNormalUser" parameterType="Map" resultType="NormalUser">
+select
+normal_id as normalId,
+name,
+birth,
+nickname as nickName,
+mobile,
+profile,
+postnum as postNum,
+address1,
+address2,
+xpoint,
+ypoint,
+gender,
+email,
+regdate as regDate,
+mypoint as myPoint,
+root 
+from  normal_user
+where normal_id = #{id} and pass = #{pass}
+</select>
+
 
 </mapper>	
 

@@ -110,13 +110,13 @@ public class JinController {
 		
 		NormalUser nuser = jinloginService.loginNormalUser(id, pass);
 		
-
-		
-		if(buser.getBusinessId() != null) {
+		if(buser != null) {
+			System.out.println(buser.getBusinessId());
 			session.setAttribute("BusinessUser", buser);
 		}
 		
-		if(nuser.getNormalId() != null) {
+		if(nuser != null) {
+			System.out.println(nuser.getNormalId());
 			session.setAttribute("NormalUser", nuser);
 		}
 		
@@ -131,6 +131,6 @@ public class JinController {
 			response.addCookie(cookie);
 		}
 		
-		return "redirect:login";
+		return "redirect:idFind";
 	}
 }

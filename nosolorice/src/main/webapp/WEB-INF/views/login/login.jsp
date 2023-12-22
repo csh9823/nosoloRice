@@ -8,9 +8,8 @@
         </div>
 
         <div class="row">
-        	<!-- ${sessionScope.member.emailGet ? "checked" : ""} -->
             <div class="col-6 text-center" style="float: none; margin: 0 auto; margin-top: 20px; min-width: 450px;" >
-            <form action="loginservice" method="get" id="loginsummit">
+            <form action="loginservice" method="post" id="loginsummit">
                 <input type="checkbox" value="1" name="idsave" id="idsave" ${id != null ? 'checked' : ''} > 아이디 저장하기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="autologin" name="autologin" id="autologin"> 자동 로그인<br>
                 <input type="text" style="width: 458px; height: 45px; margin-top: 10px; margin-bottom: 10px;" placeholder="아이디를 입력해 주세요"  name="id" id="id" value="${id != null ? id : ''}"><br>
                 <input type="text" style="width: 458px; height: 45px; margin-bottom: 10px;" placeholder="비밀번호를 입력해 주세요" name="pass" id="pass"><br>
