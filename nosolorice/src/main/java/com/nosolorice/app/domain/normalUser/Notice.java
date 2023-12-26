@@ -9,7 +9,7 @@ public class Notice {
 	private String noticeTitle;					// 공지사항 제목
 	private String noticeContent;			// 공지사항 내용
 	private Timestamp noticeRegDate;	// 공지사항 등록일
-	
+	private String noticeType;
 	public Notice() {
 		
 	}
@@ -41,9 +41,25 @@ public class Notice {
 	public Timestamp getNoticeRegDate() {
 		return noticeRegDate;
 	}
+	
+	
+	
+	public String getNoticeType() {
+		return noticeType;
+	}
+
+	public void setNoticeType(String noticeType) {
+		this.noticeType = noticeType;
+	}
 
 	public void setNoticeRegDate(Timestamp noticeRegDate) {
 		this.noticeRegDate = noticeRegDate;
+	}
+
+	@Override
+	public String toString() {
+		return "Notice [noticeNo=" + noticeNo + ", noticeTitle=" + noticeTitle + ", noticeContent=" + noticeContent
+				+ ", noticeRegDate=" + noticeRegDate + ", noticeType=" + noticeType + "]";
 	}
 	
 	

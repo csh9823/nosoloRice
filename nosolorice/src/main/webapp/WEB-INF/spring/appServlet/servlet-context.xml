@@ -38,13 +38,5 @@
 	<view-controller path="/normalJoinResult" view-name="member/normalJoinResult" />
 	
 	<view-controller path="/chatting" view-name="member/chatting" />	
-	
-	<!-- websocket -->
-	<websocket:handlers>
-		<websocket:mapping handler="chattingHandler" path="/chatting"/>
-		<websocket:sockjs></websocket:sockjs>
-	</websocket:handlers>
-	
-	<beans:bean id="chattingHandler" class="com.nosolorice.app.handler.ChattingHandler"/>	
-	
+		
 </beans:beans>
