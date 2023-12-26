@@ -9,7 +9,7 @@ public class BusinessNotice {
 	private String businessNoticeTitle;				// 공지사항 제목
 	private String businessNoticeContent;			// 공지사항 내용
 	private Timestamp businessNoticeRegDate;	// 공지사항 등록일
-	
+	private String businessNoticeType;
 	public BusinessNotice() {
 		
 	}
@@ -37,11 +37,21 @@ public class BusinessNotice {
 	public void setBusinessNoticeRegDate(Timestamp businessNoticeRegDate) {
 		this.businessNoticeRegDate = businessNoticeRegDate;
 	}
+	
+	
+	public String getBusinessNoticeType() {
+		return businessNoticeType;
+	}
+	public void setBusinessNoticeType(String businessNoticeType) {
+		this.businessNoticeType = businessNoticeType;
+	}
+	
 	@Override
 	public String toString() {
 		return "BusinessNotice [businessNoticeNo=" + businessNoticeNo + ", businessNoticeTitle=" + businessNoticeTitle
 				+ ", businessNoticeContent=" + businessNoticeContent + ", businessNoticeRegDate="
-				+ businessNoticeRegDate + "]";
+				+ businessNoticeRegDate + ", businessNoticeType=" + businessNoticeType + "]";
 	}
+
 
 }

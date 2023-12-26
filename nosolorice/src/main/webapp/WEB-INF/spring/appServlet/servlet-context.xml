@@ -36,18 +36,10 @@
 	<view-controller path="/normalJoin" view-name="member/normalJoinForm" />
 	
 	<view-controller path="/normalJoinResult" view-name="member/normalJoinResult" />
-	
+
 	<view-controller path="/chatting" view-name="member/chatting" />
 	
 	<!-- 자주 묻는 질문 페이지 -->
 	<view-controller path="/question" view-name="/question"/>	
-	
-	<!-- websocket -->
-	<websocket:handlers>
-		<websocket:mapping handler="chattingHandler" path="/chatting"/>
-		<websocket:sockjs></websocket:sockjs>
-	</websocket:handlers>
-	
-	<beans:bean id="chattingHandler" class="com.nosolorice.app.handler.ChattingHandler"/>	
 	
 </beans:beans>
