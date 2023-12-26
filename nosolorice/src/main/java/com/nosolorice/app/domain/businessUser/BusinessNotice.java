@@ -5,11 +5,14 @@ import java.sql.Timestamp;
 
 public class BusinessNotice {
 	//사장님 공지사항
-	
 	private int businessNoticeNo;						// No
 	private String businessNoticeTitle;				// 공지사항 제목
 	private String businessNoticeContent;			// 공지사항 내용
 	private Timestamp businessNoticeRegDate;	// 공지사항 등록일
+	
+	public BusinessNotice() {
+		
+	}
 	public int getBusinessNoticeNo() {
 		return businessNoticeNo;
 	}
@@ -34,7 +37,11 @@ public class BusinessNotice {
 	public void setBusinessNoticeRegDate(Timestamp businessNoticeRegDate) {
 		this.businessNoticeRegDate = businessNoticeRegDate;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "BusinessNotice [businessNoticeNo=" + businessNoticeNo + ", businessNoticeTitle=" + businessNoticeTitle
+				+ ", businessNoticeContent=" + businessNoticeContent + ", businessNoticeRegDate="
+				+ businessNoticeRegDate + "]";
+	}
 
 }

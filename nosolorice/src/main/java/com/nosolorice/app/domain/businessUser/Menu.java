@@ -10,6 +10,10 @@ public class Menu {
 	private String menuOrigin;		// 원산지
 	private String menuPicture;		// 메뉴사진 파일
 	private int menuCategoryNo;		// 카테고리 번호
+	
+	public Menu() {
+		
+	}
 	public int getMenuNo() {
 		return menuNo;
 	}
@@ -52,7 +56,12 @@ public class Menu {
 	public void setMenuCategoryNo(int menuCategoryNo) {
 		this.menuCategoryNo = menuCategoryNo;
 	}
-
+	@Override
+	public String toString() {
+		return "Menu [menuNo=" + menuNo + ", menuName=" + menuName + ", menuPrice=" + menuPrice + ", menuInfo="
+				+ menuInfo + ", menuOrigin=" + menuOrigin + ", menuPicture=" + menuPicture + ", menuCategoryNo="
+				+ menuCategoryNo + "]";
+	}
 	
 	
 }

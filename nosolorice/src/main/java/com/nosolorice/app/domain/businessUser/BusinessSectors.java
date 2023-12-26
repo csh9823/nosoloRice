@@ -7,6 +7,10 @@ public class BusinessSectors {
 	private int businessSectorsNo;	// 사업자업종번호
 	private int sectorsNo;				// 업종번호
 	private String businessId;		// 사업자 아이디
+	
+	public BusinessSectors() {
+		
+	}
 	public int getBusinessSectorsNo() {
 		return businessSectorsNo;
 	}
@@ -25,7 +29,10 @@ public class BusinessSectors {
 	public void setBusinessId(String businessId) {
 		this.businessId = businessId;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "BusinessSectors [businessSectorsNo=" + businessSectorsNo + ", sectorsNo=" + sectorsNo + ", businessId="
+				+ businessId + "]";
+	}
 
 }

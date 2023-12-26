@@ -9,6 +9,10 @@ public class PointRecharge {
 	private int chargeAmount;			// 충전금액
 	private int chargePoint;				// 충전포인트
 	private Timestamp chargeDate;				// 충전일
+
+	public PointRecharge() {
+		
+	}
 	public int getPointRechargeNo() {
 		return pointRechargeNo;
 	}
@@ -44,6 +48,13 @@ public class PointRecharge {
 	}
 	public void setChargeDate(Timestamp chargeDate) {
 		this.chargeDate = chargeDate;
+	}
+	
+	@Override
+	public String toString() {
+		return "PointRecharge [pointRechargeNo=" + pointRechargeNo + ", normalId=" + normalId + ", paymentMethod="
+				+ paymentMethod + ", chargeAmount=" + chargeAmount + ", chargePoint=" + chargePoint + ", chargeDate="
+				+ chargeDate + "]";
 	}
 	
 	

@@ -8,6 +8,9 @@ public class ChatHistory {
 	private String chatName;		// 채팅방 이름
 	private String chatMessage;		// 채팅내역
 	private Timestamp chatRegDate;	// 채팅날짜
+	public ChatHistory() {
+		
+	}
 	public int getChatNo() {
 		return chatNo;
 	}
@@ -38,7 +41,10 @@ public class ChatHistory {
 	public void setChatRegDate(Timestamp chatRegDate) {
 		this.chatRegDate = chatRegDate;
 	}
-
-	
+	@Override
+	public String toString() {
+		return "ChatHistory [chatNo=" + chatNo + ", normalId=" + normalId + ", chatName=" + chatName + ", chatMessage="
+				+ chatMessage + ", chatRegDate=" + chatRegDate + "]";
+	}
 	
 }

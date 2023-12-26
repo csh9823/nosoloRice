@@ -5,19 +5,34 @@ public class JoinApprove {
 	
 	private int joinApproveNo;	// No
 	private String businessId;	// 사업자 아이디
+	
+	public JoinApprove() {
+		
+	}
+
 	public int getJoinApproveNo() {
 		return joinApproveNo;
 	}
+
+
 	public void setJoinApproveNo(int joinApproveNo) {
 		this.joinApproveNo = joinApproveNo;
 	}
+
+
 	public String getBusinessId() {
 		return businessId;
 	}
+
+
 	public void setBusinessId(String businessId) {
 		this.businessId = businessId;
 	}
 
-	
+
+	@Override
+	public String toString() {
+		return "JoinApprove [joinApproveNo=" + joinApproveNo + ", businessId=" + businessId + "]";
+	}
 	
 }
