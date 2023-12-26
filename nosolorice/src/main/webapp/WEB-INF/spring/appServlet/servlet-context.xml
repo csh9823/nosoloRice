@@ -30,4 +30,5 @@
 	<view-controller path="/normalJoinResult" view-name="member/normalJoinResult" />
 	
 		
+		
 </beans:beans>
