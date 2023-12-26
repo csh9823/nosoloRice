@@ -15,7 +15,7 @@ public class Review {
 	private String normalId;				// 유저아이디 ==> 작성자 아이디 있는데???
 	private String businessId;				// 사업자아이디
 	private int BookingokNo; //
-	
+	private Timestamp ReviewRequestRegdate;
 	public Review() {
 	
 	}
@@ -108,13 +108,21 @@ public class Review {
 		BookingokNo = bookingokNo;
 	}
 
+		
+	public Timestamp getReviewRequestRegdate() {
+		return ReviewRequestRegdate;
+	}
+
+	public void setReviewRequestRegdate(Timestamp reviewRequestRegdate) {
+		ReviewRequestRegdate = reviewRequestRegdate;
+	}
+
 	@Override
 	public String toString() {
 		return "Review [reviewNo=" + reviewNo + ", reviewContent=" + reviewContent + ", reviewPicture=" + reviewPicture
 				+ ", reviewScore=" + reviewScore + ", reviewId=" + reviewId + ", regDate=" + regDate + ", reviewBlind="
 				+ reviewBlind + ", reviewDelete=" + reviewDelete + ", normalId=" + normalId + ", businessId="
-				+ businessId + ", BookingokNo=" + BookingokNo + "]";
+				+ businessId + ", BookingokNo=" + BookingokNo + ", ReviewRequestRegdate=" + ReviewRequestRegdate + "]";
 	}
-	
 	
 }

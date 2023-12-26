@@ -63,7 +63,7 @@ public class JinController {
 		
 		if(normalORbusiness == 0) {
 			jinFindService.newpassbusiness(id, pass);
-			return "redirect:login/login";
+			return "redirect:login";
 		}else {
 			jinFindService.newpassnormal(id, pass);
 			return "redirect:login";
