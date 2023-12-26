@@ -35,6 +35,8 @@
 	
 	<view-controller path="/normalJoin" view-name="member/normalJoinForm" />
 	
+	<view-controller path="/normalJoinResult" view-name="member/normalJoinResult" />
+	
 	<view-controller path="/chatting" view-name="member/chatting" />	
 	
 	<!-- websocket -->

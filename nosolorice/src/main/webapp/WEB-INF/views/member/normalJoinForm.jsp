@@ -16,7 +16,7 @@
 <div class="container justify-content-center">
 
 	
-	<form class="form form-center" id="normalJoinForm" action="/normal/joinResult" method="post" onsubmit="return submitCheck();" enctype="multipart/form-data">
+	<form class="form form-center" id="normalJoinForm" action="normalJoinResult" method="post" onsubmit="return submitCheck();" enctype="multipart/form-data">
 	
 	<input type="hidden" name="isIdCheck" id="isIdCheck" value="false" />
 	<input type="hidden" name="isNickCheck" id="isNickCheck" value="false" />
@@ -39,7 +39,7 @@
          <div class="col-md-4">
           <div class="col-sm-2">
             <img src="resources/image/profile_img.png" id="profilePreview" style="width: 348px; height: 400px;">
-            <input type="file" accept="image/*" onchange="previewProfileImage(this)">
+            <input type="file" accept="image/*" onchange="profileImage(this)" id="profileImage">
           </div> 
          </div> 
 

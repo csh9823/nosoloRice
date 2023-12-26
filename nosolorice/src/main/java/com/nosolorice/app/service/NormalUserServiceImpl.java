@@ -60,7 +60,9 @@ public class NormalUserServiceImpl implements NormalUserService {
 	    params.put("type", "sms"); 
 	    params.put("text", "혼밥싫어 인증번호는 [" + numStr + "] 입니다.");
 	    
-	    coolsms.send(params);
+	    
+	    System.out.println(params);
+	    // coolsms.send(params);
 	    
 	    return numStr;
 	}

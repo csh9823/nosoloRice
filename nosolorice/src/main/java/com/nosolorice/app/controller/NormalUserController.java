@@ -56,7 +56,7 @@ public class NormalUserController {
 	}
 	
 	// 회원가입 완료
-	@RequestMapping(value = "/normaloinResult", method = RequestMethod.POST)
+	@RequestMapping(value = "/normalJoinResult", method = RequestMethod.POST)
     public String normalJoinResult(
             Model model, NormalUser normalUser, String pass1,
             @RequestParam("profileImage") MultipartFile profileImage) {
@@ -71,7 +71,7 @@ public class NormalUserController {
 
         normalUserService.addNormalUser(normalUser);
 
-        return "redirect:loginForm";
+        return "redirect:login";
     }
 
     private String saveProfileImage(MultipartFile profileImage) {
