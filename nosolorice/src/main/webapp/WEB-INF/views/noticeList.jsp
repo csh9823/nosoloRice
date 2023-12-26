@@ -32,7 +32,7 @@
       <div class="col">
         <div class="row">
           <div class="col d-flex align-items-center">
-            <h2 class="fs-3 fw-bold my-5">공지관리</h2>
+            <h2 class="fs-3 fw-bold my-5">일반 공지관리</h2>
             <div class="col"></div> <!-- 공간 확보를 위한 비어있는 컬럼 -->
             <div class="col-auto">
               <input type="button" value="등록하기" class="btn" onclick="location.href='noticeWrite'">
@@ -40,8 +40,6 @@
           </div>
       </div>
     </div>
-
-
   </div>
 
     <div class="row text-center border-bottom border-top py-3">
@@ -77,7 +75,67 @@
     </div>
     </c:forEach>
   </c:if>
-</div>
+  
+  
+  <div class="row">
+      <div class="col">
+        <div class="row">
+          <div class="col d-flex align-items-center">
+            <h2 class="fs-3 fw-bold my-5">사업 공지관리</h2>
+            <div class="col"></div> <!-- 공간 확보를 위한 비어있는 컬럼 -->
+            <div class="col-auto">
+              
+            </div>
+          </div>
+      </div>
+    </div>
+    
+     <div class="row text-center border-bottom border-top py-3">
+      <div class="col-2">번호</div>
+      <div class="col-4">제목</div>
+      <div class="col-4">등록일</div>
+      <div class="col-2">삭제</div>
+    </div>
+
+  <c:if test="${empty nList}"> 
+	<div class="text-center">
+  		공지 작성이 없습니다.
+  </div>
+  </c:if>
+  
+  
+  
+  <c:if test="${not empty nList}">
+    <c:forEach var="n" items="${nList}">
+    	<div class="row text-center py-3 noticeRow" style="cursor:pointer;">
+      			<div class="col-2">${n.noticeNo}</div>
+      			<div class="col-4">${n.noticeTitle}</div>
+      			<div class="col-4"><fmt:formatDate value="${n.noticeRegDate}" pattern="yyyy-MM-dd" /></div>
+      			<div class="col-2">
+      		<input type="button" value="수정" class="btn mx-2" style="background-color:#FA9884;" onclick="location.href='noticeUpdate?noticeNo=${n.noticeNo}&pageNum=${currentPage}&noticeType=normal'">
+      		<input type="button" value="삭제" class="btn mx-2" style="background-color:#C93C3C ;" onclick="location.href='noticeDelete?noticeNo=${n.noticeNo}'">
+    		</div>
+    	</div>
+    <div class="row p-5 border-bottom d-none noticeContentRow">
+    	<div class="col">
+    		${n.noticeContent}
+    	</div>
+    </div>
+    </c:forEach>
+  </c:if>
+ </div>   
+</div>  <!-- container end -->
+
+
+    
+    
+    
+    
+
+   
+
+
+
 
 
   
