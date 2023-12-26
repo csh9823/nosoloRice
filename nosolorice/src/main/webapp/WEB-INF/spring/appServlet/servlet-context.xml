@@ -37,6 +37,5 @@
 	
 	<view-controller path="/normalJoinResult" view-name="member/normalJoinResult" />
 	
-	<view-controller path="/chatting" view-name="member/chatting" />	
 		
 </beans:beans>
