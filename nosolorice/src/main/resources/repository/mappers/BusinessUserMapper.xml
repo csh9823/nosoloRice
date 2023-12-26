@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nosolorice.mappers.BusinessUserMapper">
+	
+	<insert id="addNormalUser" parameterType="NormalUser">
+		INSERT INTO normalUser
+		VALUES(#{businessId}, #{pass}, #{name}, #{phone}, #{businessNumber}, #{businessName}, 
+				#{businessPicture}, #{email}, #{postNum}, #{address1}, #{address2}, #{xpoint}, 
+				#{ypoint}, #{bankName}, SYSDATE())
+	</insert>
+	
+	<select id="getBusinessId" resultType="BusinessUser">
+		SELECT * FROM business_user WHERE businessId = #{business_id}
+	</select>
+	
+</mapper>
