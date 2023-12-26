@@ -17,7 +17,7 @@
 
 	
 	<form class="form form-center" id="normalJoinForm" action="normalJoinResult" method="post" onsubmit="return submitCheck();" enctype="multipart/form-data">
-	
+	 
 	<input type="hidden" name="isIdCheck" id="isIdCheck" value="false" />
 	<input type="hidden" name="isNickCheck" id="isNickCheck" value="false" />
 	<input type="hidden" name="certCheck" id="certCheck" value="false" />
