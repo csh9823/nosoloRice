@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nosolorice.app.mapper.BusinessMapper" >
+
+	<insert id="writeBusinessInquiry" parameterType="BusinessInquiry">
+		insert into business_inquiry values(null, #{businessDivision}, #{businessTitle}, #{businessPicture}, now(), #{businessContent}, null, null, #{businessId})
+	</insert>
+	
+	<select id="getBusinessInquiry" parameterType="hashmap" resultMap="businessInquiryMap" resultType="BusinessInquiry">
+		select * from business_inquiry where business_id = #{businessId} order by business_inquiry_no desc LIMIT #{start}, #{pageSize};
+	</select>
+	<select id="getBusinessInquiryListCount" parameterType="hashmap" resultType="int">
+		select count(business_inquiry_no) from business_inquiry where business_id = #{businessId}
+	</select>
+	
+	
+	
+	<select id="getDailySalesList" resultType="BookingOk">
+		SELECT DATE(bo.bookingok_time) AS bookingOkTime, bo.booking_no AS bookingNo, (bo.deposit)*(bo.bookingok_count) AS deposit FROM bookingok bo JOIN business_user bu ON bo.business_id = bu.business_id where bo.business_id = #{businessId} ORDER BY bo.bookingok_time DESC LIMIT #{start}, #{pageSize}
+	</select>
+	
+	<select id="getMonthlySalesList" resultType="BookingOkMonth">
+		SELECT DATE_FORMAT(bookingok_time, '%Y년 %m월') AS month, COUNT(*) AS count, SUM(deposit * bookingok_count) AS deposit FROM bookingok where business_id = #{businessId} GROUP BY month ORDER BY month DESC LIMIT #{start}, #{pageSize}
+	</select>
+	
+	<select id="getDailySalesListCount" parameterType="hashmap" resultType="int">
+		select count(bookingok_no) from bookingok where business_id = #{businessId}
+	</select>
+	
+	<select id="getMonthlySalesListCount" parameterType="hashmap" resultType="int">
+		select count(*) from (SELECT DATE_FORMAT(bookingok_time, '%Y년 %m월') AS month, COUNT(*) AS count, SUM(deposit) AS deposit FROM bookingok where business_id = #{businessId} GROUP BY month) a;
+	</select>
+	
+	
+	
+	
+	<resultMap type="BusinessInquiry" id="businessInquiryMap">
+		<id property="businessInquiryNo" column="business_inquiry_no" />
+		<result property="businessDivision" column="business_division" />
+		<result property="businessTitle" column="business_title" />
+		<result property="businessPicture" column="business_picture" />
+		<result property="businessInquiryRegDate" column="business_inquiry_regdate" />
+		<result property="businessContent" column="business_content" />
+		<result property="businessComment" column="business_comment" />
+		<result property="businessCommentRegDate" column="business_comment_regdate" />
+		<result property="businessId" column="business_id" />
+	</resultMap>
+	
+</mapper>
