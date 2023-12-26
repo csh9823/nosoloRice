@@ -11,7 +11,9 @@ public class BookingOk {
 	private Timestamp bookingOkTime;	// 예약시간
 	private String bookingOkState;			// 방문여부
 	private int bookingNo;						// 관리번호 ==> NO랑 나눠놓은 이유 설명필요
+	private int deposit;
 	private String businessId;				// 사업자 아이디
+	private String businessName;
 	
 	public BookingOk() {
 	
@@ -72,13 +74,33 @@ public class BookingOk {
 	public void setBusinessId(String businessId) {
 		this.businessId = businessId;
 	}
+	
+
+	public int getDeposit() {
+		return deposit;
+	}
+
+	public void setDeposit(int deposit) {
+		this.deposit = deposit;
+	}
+
+	public String getBusinessName() {
+		return businessName;
+	}
+
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
 
 	@Override
 	public String toString() {
 		return "BookingOk [bookingOkNo=" + bookingOkNo + ", bookingOkCount=" + bookingOkCount + ", bookingOkRequest="
 				+ bookingOkRequest + ", bookingOkTime=" + bookingOkTime + ", bookingOkState=" + bookingOkState
-				+ ", bookingNo=" + bookingNo + ", businessId=" + businessId + "]";
+				+ ", bookingNo=" + bookingNo + ", deposit=" + deposit + ", businessId=" + businessId + ", businessName="
+				+ businessName + "]";
 	}
+
+
 	
 	
 	
