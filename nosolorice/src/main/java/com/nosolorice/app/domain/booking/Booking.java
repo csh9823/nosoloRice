@@ -11,9 +11,10 @@ public class Booking {
 	private Timestamp bookingTime;			// 예약시간
 	private String bookingState;			// 예약상태 (승인/거절)
 	private int bookingBookNo;				// 가게별 예약번호 ==> 변수명 동일
+	private int deposit;
 	private String businessId;			// 사장님 아이디
 	private String bookingChatName;	// 채팅방 이름
-
+	
 	public Booking() {
 		
 	}
@@ -78,6 +79,14 @@ public class Booking {
 		return bookingChatName;
 	}
 
+	public int getDeposit() {
+		return deposit;
+	}
+
+	public void setDeposit(int deposit) {
+		this.deposit = deposit;
+	}
+
 	public void setBookingChatName(String bookingChatName) {
 		this.bookingChatName = bookingChatName;
 	}
@@ -86,10 +95,11 @@ public class Booking {
 	public String toString() {
 		return "Booking [bookingNo=" + bookingNo + ", bookingCount=" + bookingCount + ", bookingRequest="
 				+ bookingRequest + ", bookingTime=" + bookingTime + ", bookingState=" + bookingState
-				+ ", bookingBookNo=" + bookingBookNo + ", businessId=" + businessId + ", bookingChatName="
-				+ bookingChatName + "]";
+				+ ", bookingBookNo=" + bookingBookNo + ", deposit=" + deposit + ", businessId=" + businessId
+				+ ", bookingChatName=" + bookingChatName + "]";
 	}
-	
+
+
 	
 	
 }

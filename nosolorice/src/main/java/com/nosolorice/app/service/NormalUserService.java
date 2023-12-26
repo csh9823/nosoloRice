@@ -1,4 +1,4 @@
-package com.nosolorice.app.eunservice;
+package com.nosolorice.app.service;
 
 import com.nosolorice.app.domain.normalUser.NormalUser;
 
@@ -8,7 +8,7 @@ public interface NormalUserService {
 	
 	public void addNormalUser(NormalUser normalUser);
 	
-	 public void normalPhoneCheck(String phone, String numStr);
+	public void normalPhoneCheck(String phone, String numStr);
 }
 
 
