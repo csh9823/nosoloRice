@@ -45,6 +45,6 @@
 		<websocket:sockjs></websocket:sockjs>
 	</websocket:handlers>
 	
-	<beans:bean id="chattingHandler" class="com.nosolorice.app.handler.ChattingHandler"/>	
+	<beans:bean id="chattingHandler" class="com.nosolorice.app.eunhandler.ChattingHandler"/>	
 	
 </beans:beans>

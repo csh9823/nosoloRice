@@ -1,4 +1,4 @@
-package com.nosolorice.app.dao;
+package com.nosolorice.app.eundao;
 
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 

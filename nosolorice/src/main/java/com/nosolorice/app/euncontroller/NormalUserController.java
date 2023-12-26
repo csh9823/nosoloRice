@@ -1,4 +1,4 @@
-package com.nosolorice.app.controller;
+package com.nosolorice.app.euncontroller;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.nosolorice.app.service.NormalUserService;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.eunservice.NormalUserService;
 
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import net.nurigo.sdk.NurigoApp;

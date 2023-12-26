@@ -1,11 +1,11 @@
-package com.nosolorice.app.service;
+package com.nosolorice.app.eunservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.nosolorice.app.dao.BusinessUserDao;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
+import com.nosolorice.app.eundao.BusinessUserDao;
 
 @Service("businessUserService")
 public class BusinessUserServiceImpl implements BusinessUserService {

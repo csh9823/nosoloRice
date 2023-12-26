@@ -1,4 +1,4 @@
-package com.nosolorice.app.dao;
+package com.nosolorice.app.eundao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

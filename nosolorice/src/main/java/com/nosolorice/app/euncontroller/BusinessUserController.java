@@ -1,4 +1,4 @@
-package com.nosolorice.app.controller;
+package com.nosolorice.app.euncontroller;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.nosolorice.app.service.BusinessUserService;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
+import com.nosolorice.app.eunservice.BusinessUserService;
 
 @Controller
 @SessionAttributes("businessUser")

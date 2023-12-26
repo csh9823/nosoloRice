@@ -1,4 +1,4 @@
-package com.nosolorice.app.service;
+package com.nosolorice.app.eunservice;
 
 import com.nosolorice.app.domain.normalUser.NormalUser;
 

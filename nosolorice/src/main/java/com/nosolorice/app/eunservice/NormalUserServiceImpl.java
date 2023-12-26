@@ -1,4 +1,4 @@
-package com.nosolorice.app.service;
+package com.nosolorice.app.eunservice;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.nosolorice.app.dao.normalUserDao;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.eundao.normalUserDao;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;

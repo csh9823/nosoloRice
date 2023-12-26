@@ -1,4 +1,4 @@
-package com.nosolorice.app.controller;
+package com.nosolorice.app.euncontroller;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
