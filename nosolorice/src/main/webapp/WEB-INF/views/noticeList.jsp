@@ -104,7 +104,7 @@
   </c:if>
   
   
-  
+ 
   <c:if test="${not empty nList}">
     <c:forEach var="n" items="${nList}">
     	<div class="row text-center py-3 noticeRow" style="cursor:pointer;">
