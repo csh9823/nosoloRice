@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,14 +19,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.service.NormalUserService;
-
-import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import com.nosolorice.app.service.NormalUserServiceImpl;
 
 @Controller
 @SessionAttributes("normalUser")
 public class NormalUserController {
 	
+	@Autowired
 	private NormalUserService normalUserService;
+	
+	@Autowired
+	private NormalUserServiceImpl normalUserServiceImpl;
 	
 	@Autowired
 	public void setMemberService(NormalUserService normalUserService) {
@@ -99,27 +102,28 @@ public class NormalUserController {
     }
 
 	// 문자인증번호 전송
-	@RequestMapping(value="/getNormalPhoneCheck", method=RequestMethod.POST)
+	@RequestMapping("getNormalPhoneCheck")
 	@ResponseBody
-	public Map<String, String> getNormalPhoneCheck(String phone) throws CoolsmsException {
+	public Map<String, String> getNormalPhoneCheck(String phone){
 		
-		String certNum =  normalUserService.normalPhoneCheck(phone);
 		
-		Map<String, String> result = new HashMap<>();
+		Random rnd = new Random();
+		String numStr = "";
 		
-		result.put("certNum", certNum);
+		for (int i = 0; i < 4; i++) {
+            String ran = Integer.toString(rnd.nextInt(10));
+            numStr += ran;
+		}
+		System.out.println(phone);
+		System.out.println(numStr);
 		
+		normalUserServiceImpl.normalPhoneCheck(phone,numStr);
 		
 		// 인증번호 저장
-		
+		Map<String, String> result = new HashMap<>();
+		result.put("certNum", numStr);
 		
 		return result;
 	}
-	
-	// 문자인증 번호 비교
-		@PostMapping("/normalPhoneCheck")
-		public @ResponseBody String normalPhoneCheck(@RequestParam(value="to") String to) throws CoolsmsException {			
-			return normalUserService.normalPhoneCheck(to);
-		}
     
 }

@@ -1,8 +1,5 @@
 package com.nosolorice.app.service;
 
-import java.util.HashMap;
-import java.util.Random;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,8 +7,12 @@ import org.springframework.stereotype.Service;
 import com.nosolorice.app.dao.normalUserDao;
 import com.nosolorice.app.domain.normalUser.NormalUser;
 
-import net.nurigo.java_sdk.api.Message;
-import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import net.nurigo.sdk.NurigoApp;
+import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
+import net.nurigo.sdk.message.model.Message;
+import net.nurigo.sdk.message.service.DefaultMessageService;
+
+
 
 @Service
 public class NormalUserServiceImpl implements NormalUserService {
@@ -42,28 +43,26 @@ public class NormalUserServiceImpl implements NormalUserService {
 	}
 	
 	@Override
-	public String normalPhoneCheck(String to) throws CoolsmsException {
-		String api_key = "NCS9KK7TUTOME4MO";
-		String api_secret = "PTWS3OHSRCMQFQRNYHJOHHJAQ6NSQCUM";
-		Message coolsms = new Message(api_key, api_secret);
+	public void normalPhoneCheck(String phone, String numStr) {
 		
-		Random rnd = new Random();
-		String numStr = "";
-		for (int i = 0; i < 4; i++) {
-            String ran = Integer.toString(rnd.nextInt(10));
-            numStr += ran;
+		System.out.println("certifiedPhoneNumber" + phone +"인증번호 : " + numStr);
+		
+		DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCS9KK7TUTOME4MO", "PTWS3OHSRCMQFQRNYHJOHHJAQ6NSQCUM", "https://api.coolsms.co.kr");
+		 
+		Message message = new Message();
+		message.setFrom("01040969353");
+		message.setTo(phone);
+		message.setText("인증번호는"+numStr+"입니다.");
+	    
+		try {
+			  messageService.send(message);
+			} catch (NurigoMessageNotReceivedException exception) {	
+			  // 발송에 실패한 메시지 목록을 확인할 수 있습니다!
+			  System.out.println(exception.getFailedMessageList());
+			  System.out.println(exception.getMessage());
+			} catch (Exception exception) {
+			  System.out.println(exception.getMessage());
+			}
+			   
 		}
-		
-		HashMap<String, String> params = new HashMap<String, String>();
-	    params.put("to", to);    // 수신전화번호 (ajax로 view 화면에서 받아온 값으로 넘김)
-	    params.put("from", "01040969353");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨_임시로 제거 넣엇어욘
-	    params.put("type", "sms"); 
-	    params.put("text", "혼밥싫어 인증번호는 [" + numStr + "] 입니다.");
-	    
-	    
-	    System.out.println(params);
-	    // coolsms.send(params);
-	    
-	    return numStr;
-	}
 }
