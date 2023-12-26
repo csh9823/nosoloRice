@@ -10,6 +10,7 @@ public class Menu {
 	private String menuOrigin;		// 원산지
 	private String menuPicture;		// 메뉴사진 파일
 	private int menuCategoryNo;		// 카테고리 번호
+	
 	public Menu() {
 		
 	}
@@ -61,7 +62,6 @@ public class Menu {
 				+ menuInfo + ", menuOrigin=" + menuOrigin + ", menuPicture=" + menuPicture + ", menuCategoryNo="
 				+ menuCategoryNo + "]";
 	}
-	
 	
 	
 }

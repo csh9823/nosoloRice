@@ -4,7 +4,7 @@
 <nav class="navbar navbar-expand-lg">
 
     <div class="container-fluid">
-    
+
       <!-- nav_logo -->
       <a class="logo" href="main.html"><img src="resources/img/logo/nosolorice_logo_s.png"></a>
     
@@ -12,64 +12,84 @@
         <span class="navbar-toggler-icon"></span>
       </button>
     
+    <!-- admin_header -->
     <c:if test="${sessionScope.root eq '0'}">
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 p-4">
-    
-          <!-- nav_content -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 문의 </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">일반회원 문의</a></li>
-              <li><a class="dropdown-item" href="#">사업자회원 문의</a></li>
-            </ul>
-          </li>
+		<!-- nav_logo -->
+		<a class="logo" href="main.jsp"><img src="./logo/nosolorice_logo_s.png"></a>
+      
 
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="#">신고내역</a>
-          </li>
-    
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="#">가입승인</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="#">리뷰삭제 요청</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="#">업체삭제</a>
-          </li>
-          
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="#">회원정지</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="#">매출현황</a>
-          </li>
-          
-          <li class="nav-item">
-            <a class="nav-link  " aria-current="page" href="#">공지관리</a>
-          </li>
-    
-        </ul>
-    
-        <!-- login -->
-        <div class="d-flex">
-        	<div>${sessionScope.rootName}</div>
-          <!-- who_login -->
-          <a class="nav-link" href="#">로그아웃</a>
-        </div>
-    
-      </div>
+	      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    
+	        <ul class="navbar-nav me-auto mb-2 mb-lg-0 p-4">
+	    
+	          <!-- nav_content -->
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 문의 </a>
+	            <ul class="dropdown-menu">
+	              <li><a class="dropdown-item" href="#">일반회원 문의</a></li>
+	              <li><a class="dropdown-item" href="#">사업자회원 문의</a></li>
+	            </ul>
+	          </li>
+	
+	          <li class="nav-item">
+	            <a class="nav-link " aria-current="page" href="#">신고내역</a>
+	          </li>
+	    
+	          <li class="nav-item">
+	            <a class="nav-link " aria-current="page" href="#">가입승인</a>
+	          </li>
+	
+	          <li class="nav-item">
+	            <a class="nav-link " aria-current="page" href="#">리뷰삭제 요청</a>
+	          </li>
+	
+	          <li class="nav-item">
+	            <a class="nav-link " aria-current="page" href="#">업체삭제</a>
+	          </li>
+	          
+	          <li class="nav-item">
+	            <a class="nav-link " aria-current="page" href="#">회원정지</a>
+	          </li>
+	
+	          <li class="nav-item">
+	            <a class="nav-link " aria-current="page" href="#">매출현황</a>
+	          </li>
+	          
+	          <li class="nav-item">
+	            <a class="nav-link  " aria-current="page" href="#">공지관리</a>
+	          </li>
+	    
+	        </ul>
+	    
+	        <!-- login -->
+	        <div class="d-flex">
+	        	<div>${sessionScope.rootName}</div>
+	          <!-- who_login -->
+	          <a class="nav-link" href="#">로그아웃</a>
+	        </div>
+	    
+	      </div>
     </c:if>
     
     <!-- normal_user -->
     <c:if test="${sessionScope.root eq '2'}">
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    
+
+    	<!-- nav_logo -->
+		<a class="logo" href="main.jsp"><img src="./logo/nosolorice_logo.png"></a>
+		
+	      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    
+	        <ul class="navbar-nav me-auto mb-2 mb-lg-0 p-4">
+	    
+	          <!-- nav_content -->
+	          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 문의 </a>
+	            <ul class="dropdown-menu">
+	              <li><a class="dropdown-item" href="#">일반회원 문의</a></li>
+	              <li><a class="dropdown-item" href="#">사업자회원 문의</a></li>
+	            </ul>
+	          </li>
+	          
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 p-4">
     
           <!-- nav_content -->
@@ -124,7 +144,48 @@
     <!-- normal_user -->
     <c:if test="${sessionScope.root eq '2'}">
     	<nav class="navbar navbar-expand-lg">
+>>>>>>> branch 'main' of https://github.com/csh9823/nosoloRice.git
 	
+<<<<<<< HEAD
+	          <li class="nav-item">
+	            <a class="nav-link " aria-current="page" href="#">신고내역</a>
+	          </li>
+	    
+	          <li class="nav-item">
+	            <a class="nav-link " aria-current="page" href="#">가입승인</a>
+	          </li>
+	
+	          <li class="nav-item">
+	            <a class="nav-link " aria-current="page" href="#">리뷰삭제 요청</a>
+	          </li>
+	
+	          <li class="nav-item">
+	            <a class="nav-link " aria-current="page" href="#">업체삭제</a>
+	          </li>
+	          
+	          <li class="nav-item">
+	            <a class="nav-link " aria-current="page" href="#">회원정지</a>
+	          </li>
+	
+	          <li class="nav-item">
+	            <a class="nav-link " aria-current="page" href="#">매출현황</a>
+	          </li>
+	          
+	          <li class="nav-item">
+	            <a class="nav-link  " aria-current="page" href="#">공지관리</a>
+	          </li>
+	    
+	        </ul>
+	    
+	        <!-- login -->
+	        <div class="d-flex">
+	        	<div>${sessionScope.rootName}</div>
+	          <!-- who_login -->
+	          <a class="nav-link" href="#">로그아웃</a>
+	        </div>
+	    
+	      </div>
+
 		    <div class="container">
 		    
 		      <!-- nav_logo -->
@@ -192,6 +253,7 @@
 		    </div>
 	  
 	  </nav>
+
     </c:if>
     
     </div>

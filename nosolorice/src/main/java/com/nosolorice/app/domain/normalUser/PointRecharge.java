@@ -9,6 +9,7 @@ public class PointRecharge {
 	private int chargeAmount;			// 충전금액
 	private int chargePoint;				// 충전포인트
 	private Timestamp chargeDate;				// 충전일
+
 	public PointRecharge() {
 		
 	}

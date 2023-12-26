@@ -14,7 +14,6 @@ public class UserInquiry {
 	private Timestamp inquiryCommentRegDate;	// 문의답글날짜
 	private String normalId;						// 유저아이디
 	
-	
 	public UserInquiry() {
 		
 	}
@@ -117,7 +116,6 @@ public class UserInquiry {
 				+ inquiryRegDate + ", inquiryContent=" + inquiryContent + ", inquiryComment=" + inquiryComment
 				+ ", inquiryCommentRegDate=" + inquiryCommentRegDate + ", normalId=" + normalId + "]";
 	}
-	
 	
 	
 }

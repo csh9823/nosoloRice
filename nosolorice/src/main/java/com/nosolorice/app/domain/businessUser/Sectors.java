@@ -5,6 +5,7 @@ public class Sectors {
 	
 	private int sectorsNo;			// No
 	private String sectorName;	// 업종명
+
 	public Sectors() {
 		
 	}
@@ -23,8 +24,6 @@ public class Sectors {
 	@Override
 	public String toString() {
 		return "Sectors [sectorsNo=" + sectorsNo + ", sectorName=" + sectorName + "]";
-	}
-	
-	
+	}	
 	
 }

@@ -79,8 +79,6 @@ public class ReportDetails {
 		return "ReportDetails [reportNo=" + reportNo + ", reportContent=" + reportContent + ", reportPicture="
 				+ reportPicture + ", reportReporter=" + reportReporter + ", reportAttacker=" + reportAttacker
 				+ ", ReportRegdate=" + ReportRegdate + "]";
-	}
-	
-	
+	}	
 	
 }

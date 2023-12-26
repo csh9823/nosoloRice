@@ -9,7 +9,6 @@ public class OwnerComment {
 	private int reviewNo;						// 리뷰 번호
 	private String normalId;					// 유저 아이디 ==> 리뷰번호가 있는데 사용이유??
 	private String businessId;				// 사업자 아이디
-	
 	public OwnerComment() {
 	
 	}

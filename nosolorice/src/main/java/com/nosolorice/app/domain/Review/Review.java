@@ -13,7 +13,7 @@ public class Review {
 	private String reviewBlind;			// 리뷰 블라인드 상태
 	private String reviewDelete;			// 리뷰 삭제요청 상태
 	private String normalId;				// 유저아이디 ==> 작성자 아이디 있는데???
-	private String businessId;				// 사업자아이디
+	private String businessId;				// 사업자아이디	
 	private int BookingokNo; //
 	private Timestamp ReviewRequestRegdate;
 	public Review() {

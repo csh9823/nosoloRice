@@ -8,7 +8,6 @@ public class BlockHistory {
 	private String blockState;
 	private String blocker;
 	private String blockAttacker;
-	
 	public BlockHistory() {
 	
 	}

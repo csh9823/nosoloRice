@@ -43,8 +43,5 @@ public class BusinessNotice {
 				+ ", businessNoticeContent=" + businessNoticeContent + ", businessNoticeRegDate="
 				+ businessNoticeRegDate + "]";
 	}
-	
-	
-	
 
 }

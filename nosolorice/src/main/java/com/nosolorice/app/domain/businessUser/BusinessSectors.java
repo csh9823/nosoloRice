@@ -7,6 +7,7 @@ public class BusinessSectors {
 	private int businessSectorsNo;	// 사업자업종번호
 	private int sectorsNo;				// 업종번호
 	private String businessId;		// 사업자 아이디
+	
 	public BusinessSectors() {
 		
 	}
@@ -33,5 +34,5 @@ public class BusinessSectors {
 		return "BusinessSectors [businessSectorsNo=" + businessSectorsNo + ", sectorsNo=" + sectorsNo + ", businessId="
 				+ businessId + "]";
 	}
-	
+
 }

@@ -47,6 +47,4 @@ public class ChatHistory {
 				+ chatMessage + ", chatRegDate=" + chatRegDate + "]";
 	}
 	
-	
-	
 }

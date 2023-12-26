@@ -12,7 +12,6 @@ public class MatchingOption {
 	private String matchingCateOption3;	// 카테고리 옵션3
 	private String matchingGender;			// 성별체크
 	private String matchingAge;				// 연령체크
-	
 	public MatchingOption() {
 		
 	}

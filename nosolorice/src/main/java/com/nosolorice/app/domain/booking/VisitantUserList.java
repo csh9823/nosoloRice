@@ -52,9 +52,5 @@ public class VisitantUserList {
 		return "VisitantUserList [normalId=" + normalId + ", businessId=" + businessId + ", bookingOkNo=" + bookingOkNo
 				+ ", BisitantBlind=" + BisitantBlind + "]";
 	}
-
-
-	
-	
 	
 }

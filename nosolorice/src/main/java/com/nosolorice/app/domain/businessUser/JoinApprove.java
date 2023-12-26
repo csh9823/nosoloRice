@@ -15,8 +15,11 @@ public class JoinApprove {
 	private String mobile;
 	private String phone;
 	private String email;
-	
-	
+
+	public JoinApprove() {
+		
+	}
+
 	public int getJoinApproveNo() {
 		return joinApproveNo;
 	}
@@ -84,4 +87,18 @@ public class JoinApprove {
 		this.businessPicture = businessPicture;
 	}
 
+<<<<<<< HEAD
+=======
+
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
+	}
+
+
+	@Override
+	public String toString() {
+		return "JoinApprove [joinApproveNo=" + joinApproveNo + ", businessId=" + businessId + "]";
+	}
+	
+>>>>>>> branch 'GoYeongEun' of https://github.com/csh9823/nosoloRice.git
 }

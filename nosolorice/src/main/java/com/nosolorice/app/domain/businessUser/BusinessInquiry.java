@@ -14,7 +14,7 @@ public class BusinessInquiry {
 	private Timestamp businessCommentRegDate;	// 문의답글날짜
 	private String businessComment;						// 문의답글
 	private String businessId;								// 사업자아이디
-	
+
 	public BusinessInquiry() {
 		
 	}

@@ -16,13 +16,12 @@
 <script src="resources/js/jquery-3.2.1.min.js"></script>
 </head>
 <body>
-<div class="container">
-<%@ include file="temple/header/header.jsp" %>	
-<jsp:include page="${param.body}" />
-<%@ include file="temple/footer/footer.jsp" %>	
-</div>
-<script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
-</head>
-<body>
+	<div class="container">
+		<%@ include file="temple/header/header.jsp" %>	
+		<jsp:include page="${param.body}" />
+		<%@ include file="temple/footer/footer.jsp" %>	
+	</div>	
+	<script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
