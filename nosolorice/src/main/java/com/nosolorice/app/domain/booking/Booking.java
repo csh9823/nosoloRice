@@ -14,7 +14,8 @@ public class Booking {
 	private int deposit;
 	private String businessId;			// 사장님 아이디
 	private String bookingChatName;	// 채팅방 이름
-
+	
+	
 	public Booking() {
 		
 	}
