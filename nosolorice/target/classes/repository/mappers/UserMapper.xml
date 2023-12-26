@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nosolorice.app.mapper.UserMapper" >
+
+	<insert id="writeUserInquiry" parameterType="UserInquiry">
+		insert into user_inquiry values(null, #{inquiryDivision}, #{inquiryTitle}, #{inquiryPicture}, now(), #{inquiryContent}, null, null, #{normalId})
+	</insert>
+	<select id="getUserInquiry" parameterType="hashmap" resultMap="userInquiryMap" resultType="UserInquiry">
+		select * from user_inquiry where normal_id = #{normalId} order by user_inquiry_no desc LIMIT #{start}, #{pageSize}
+	</select>
+	<select id="getUserInquiryListCount" parameterType="hashmap" resultType="int">
+		select count(user_inquiry_no) from user_inquiry where normal_id = #{normalId}
+	</select>
+	
+	
+	<resultMap type="UserInquiry" id="userInquiryMap">
+		<id property="userInquiryNo" column="user_inquiry_no" />
+		<result property="inquiryDivision" column="inquiry_division" />
+		<result property="inquiryTitle" column="inquiry_title" />
+		<result property="inquiryPicture" column="inquiry_picture" />
+		<result property="inquiryRegDate" column="inquiry_regdate" />
+		<result property="inquiryContent" column="inquiry_content" />
+		<result property="inquiryComment" column="inquiry_comment" />
+		<result property="inquiryCommentRegDate" column="inquiry_comment_regdate" />
+		<result property="normalId" column="normal_id" />
+	</resultMap>
+	
+</mapper>
