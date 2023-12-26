@@ -1,4 +1,4 @@
-package com.nosolorice.app;
+package com.nosolorice.app.controller;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
