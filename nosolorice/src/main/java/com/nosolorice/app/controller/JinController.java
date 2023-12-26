@@ -1,5 +1,7 @@
 package com.nosolorice.app.controller;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -104,8 +106,7 @@ public class JinController {
 
 	@RequestMapping("loginservice")
 	public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,
-			HttpServletResponse response,HttpSession session) {
-		
+			HttpServletResponse response,HttpSession session,PrintWriter out) {
 		BusinessUser buser = jinloginService.loginBusinessUser(id, pass);
 		
 		NormalUser nuser = jinloginService.loginNormalUser(id, pass);
@@ -120,6 +121,15 @@ public class JinController {
 			session.setAttribute("NormalUser", nuser);
 		}
 		
+		if(buser == null && nuser == null) {
+			response.setContentType("text/html; charset=utf-8");
+			out.println("<script>");
+			out.println("	alert('회원 아이디가 존재하지 않습니다.');");
+			out.println("	location.href='login'");
+			out.println("</script>");			
+			return null;
+		}
+		
 		// 쿠키에 값 저장하기
 		if(idsave != 0) {
 			Cookie cookie = new Cookie("saveId" ,id);
@@ -130,8 +140,9 @@ public class JinController {
 			cookie.setMaxAge(0);
 			response.addCookie(cookie);
 		}
+
+			return "redirect:idFind";
 		
-		return "redirect:idFind";
 	}
 
 }
