@@ -10,9 +10,6 @@ import org.springframework.stereotype.Service;
 import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.eundao.normalUserDao;
 
-import net.nurigo.java_sdk.api.Message;
-import net.nurigo.java_sdk.exceptions.CoolsmsException;
-
 @Service
 public class NormalUserServiceImpl implements NormalUserService {
 
@@ -42,7 +39,7 @@ public class NormalUserServiceImpl implements NormalUserService {
 	}
 	
 	@Override
-	public String normalPhoneCheck(String to) throws CoolsmsException {
+	public String normalPhoneCheck(String to)  {
 		String api_key = "NCS9KK7TUTOME4MO";
 		String api_secret = "PTWS3OHSRCMQFQRNYHJOHHJAQ6NSQCUM";
 		Message coolsms = new Message(api_key, api_secret);

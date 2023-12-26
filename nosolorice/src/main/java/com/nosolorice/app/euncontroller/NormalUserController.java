@@ -16,8 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.eunservice.NormalUserService;
 
-import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
 import net.nurigo.sdk.message.model.Balance;
@@ -139,7 +138,7 @@ public class NormalUserController {
 	}
 	
 	// 문자인증 번호 비교
-		@PostMapping("/normalPhoneCheck")
+		
 		public @ResponseBody String normalPhoneCheck(@RequestParam(value="to") String to) throws CoolsmsException {			
 			return normalUserService.normalPhoneCheck(to);
 		}
