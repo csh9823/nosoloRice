@@ -5,5 +5,19 @@ public class Sectors {
 	
 	private int sectorsNo;			// No
 	private String sectorName;	// 업종명
+	public int getSectorsNo() {
+		return sectorsNo;
+	}
+	public void setSectorsNo(int sectorsNo) {
+		this.sectorsNo = sectorsNo;
+	}
+	public String getSectorName() {
+		return sectorName;
+	}
+	public void setSectorName(String sectorName) {
+		this.sectorName = sectorName;
+	}
 
+	
+	
 }

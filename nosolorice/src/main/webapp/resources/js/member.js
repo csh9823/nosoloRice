@@ -1,3 +1,33 @@
+$(document).ready(function () {
+            
+            $('#profileImageInput').change(function () {
+                var fileName = $(this).val().split("\\").pop();
+                $('#profileImage').attr('src', '/normal_uploads/' + fileName);
+            });
+
+
+        });
+        
+function previewProfileImage(input) {
+    var preview = document.getElementById('profilePreview');
+    var file = input.files[0];
+
+    if (file) {
+      var reader = new FileReader();
+ 	
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.style.width = '348px';
+        preview.style.height = '400px';
+        
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+$("#btnZipcode").click(findZipcode);
+
 function findZipcode(){
  	 new daum.Postcode({
             oncomplete: function(data) {
@@ -51,7 +81,7 @@ function inputCharReplace(){
 		
 	//입력 값이 숫자 또는 영문자인지 판단 -- 정규 표현식
 	if(regExp.test($(this).val())){
-		alert("영문 대소문자와 숫자만 입력할 수 있음")
+		alert("영문 대소문자와 숫자만 입력 가능합니다. \n 다시 입력해 주세요.")
 		$(this).val($(this).val().replace(regExp,"")); //A Z 소문자 a z 0부터 9가 아니면 "" 문자를 지워라
 	}
 }
@@ -62,7 +92,7 @@ function inputEmailDomainReplace(){
 		
 	//입력 값이 숫자 또는 영문자인지 판단 -- 정규 표현식
 	if(regExp.test($(this).val())){
-		alert("이메일 도메인은 영문 대소문자와 숫자,(.)만 입력 할 수 있음")
+		alert("이메일 도메인은 영문 대소문자와 숫자,마침표만 입력 가능합니다.\n 다시 입력해 주세요.")
 		$(this).val($(this).val().replace(regExp,"")); //A Z 소문자 a z 0부터 9가 아니면 "" 문자를 지워라
 	}
 }
@@ -73,35 +103,35 @@ function joinFormCheck(elem){
 		alert("이름을 입력해주세요");
 	}
 
-		if($("#isIdCheck").val() == 'false' ){
+		if($("#overlapCheck").val() == 'false' ){
 			alert("아이디 중복을 체크해 주세요");
 		}
 	
-		if($("#pass1").val().length == 0 ){
+		if($("#pass").val().length == 0 ){
 			alert("비밀번호를 입력해 주세요");
 		}
 	
 	
-		if($("#pass2").val().length == 0 ){
+		if($("#checkPass").val().length == 0 ){
 			alert("비밀번호 확인을 입력해 주세요");
 		}
 		
-		if($("#pass1").val() != $("#pass2").val()){
+		if($("#pass").val() != $("#checkPass").val()){
 			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
 		}
 
-	if($("#userId2").val().length == 0){
+	if($("#normalId").val().length == 0){
 		alert("아이디를 입력해 주세요.");
 	}
 	
 
-	if($("#zipcode").val().length == 0){
-		alert("우편주소를 입력해주세여");
+	if($("#postNum").val().length == 0){
+		alert("우편주소를 입력해주세요.");
 	}
 	
 
 	if($("#address1").val().length == 0){
-		alert("주소를 입력해주세요");
+		alert("주소를 입력해주세요.");
 	}
 
 	if($("#emailId").val().length == 0){
@@ -113,27 +143,15 @@ function joinFormCheck(elem){
 	}
 	
 
-	if($("#mobile2").val().length == 0){
+	if($("#mobile").val().length == 0){
 		alert("핸드폰 번호를 입력해주세여");
 	}
 	
-	if($("#mobile3").val().length == 0){
-		alert("핸드폰 번호를 입력해주세여");
-	}
-	
-
-	if($("#phone2").val().length == 0){
-		alert("자택 번호를 입력해 주세요.");
-	}
-	
-	if($("#phone3").val().length == 0){
-		alert("자택 번호를를 입력해 주세요.");
-	}
 }
 
 $(function() {
 	
-	$("#joinUpdateForm").on("submit", function(){
+	$("#normalJoin").on("submit", function(){
 		let formck = $("#isPassCheck").val();
 		if(!formck){ // .prop("disabled") true인지 false인지 확인
 			alert("비밀번호 확인을 해주세요");
@@ -192,23 +210,14 @@ $(function() {
 	$("#selectDomain").on("change",function(){
 		let str = $(this).val();
 		
-		if(str == "직접입력") {
+		if(str == "@naver.com") {
 			$("#emailDomain").val("");
 			$("#emailDomain").prop("readonly", false);
-		} else if(str == "네이버"){
+		} else if(str == "@gmail.com"){
 			$("#emailDomain").val("naver.com");
 			$("#emailDomain").prop("readonly", true);
-		} else if(str == "다음") {
+		} else if(str == "@daum.net") {
 			$("#emailDomain").val("daum.net");
-			$("#emailDomain").prop("readonly", true);
-		} else if(str == "한메일"){
-			$("#emailDomain").val("hanmail.net");
-			$("#emailDomain").prop("readonly", true);
-		} else if(str == "구글") {
-			$("#emailDomain").val("gmail.com");
-			$("#emailDomain").prop("readonly", true);
-		}else if(str == "카카오") {
-			$("#emailDomain").val("kakao.com");
 			$("#emailDomain").prop("readonly", true);
 		}
 	});
@@ -216,41 +225,29 @@ $(function() {
 	$("#btnZipcode").on("click",findZipcode)
 	
 	//입력 값이 숫자 또는 영문자인지 판단
-	$("#pass1").on("keyup",inputCharReplace);
-	$("#pass2").on("keyup",inputCharReplace);
+	$("#pass").on("keyup",inputCharReplace);
+	$("#checkPass").on("keyup",inputCharReplace);
 	$("#emailId").on("keyup",inputEmailDomainReplace);
 	
 	//입력 값이 숫자 또는 영문자인지 판단
-	$("#userId2").on("keyup", function(){
+	$("#normalId").on("keyup", function(){
 		let id = $(this).val();
 		//대문자 A Z 소문자 a z 0부터 9까지 ^의 뜻 부정 아니면
 		let regExp = /[^A-Za-z0-9]/gi;
 		
 		//입력 값이 숫자 또는 영문자인지 판단 -- 정규 표현식
 		if(regExp.test(id)){
-			alert("영문 대소문자와 숫자만 입력할 수 있음")
+			alert("영문 대소문자와 숫자만 입력할 수 있습니다. \n 다시 입력해 주세요.")
 			$(this).val($(this).val().replace(regExp,"")); //A Z 소문자 a z 0부터 9가 아니면 "" 문자를 지워라
 		}
 	});
-	
-	
-	$("#btnIdCheckClose").on("click", function() {
-		
-		let id = $(this).attr("data-id-value");
-		
-		opener.document.joinForm.id.value = id ;
-		
-		opener.document.joinForm.isIdCheck.value = true ;
-		
-		window.close();
-	})
 	
 	$("#idCheckForm").submit(() => {
 	
 		let id = $("#checkId").val();
 		
 		if(id.length <= 0) {
-			alert("아이디가 입력되지 않음");
+			alert("아이디가 입력되지 않았습니다. \n 입력 후 다시 시도해 주세요.");
 			return false;	
 		}
 		
@@ -262,11 +259,11 @@ $(function() {
 	})
 
 	// 회원 아이디 중복 확인 버튼이 클릭되면
-	$("#btnOverlapId").on("click", () => {	
-		let id = $("#userId2").val();
-		url = "overlapIdCheck?id="+id;
+	$("#overlapCheck").on("click", function() {	
+		var id = $("#normalId").val();
+		url = "overlapIdCheck?normalId="+id;
 		if(id.length <= 0) {
-			alert("아이디가 입력되지 않음");
+			alert("아이디가 입력되지 않았습니다. \n 입력 후 다시 시도해 주세요.");
 			return false;	
 		}
 		if(id.length < 5) {
@@ -274,42 +271,79 @@ $(function() {
 			return false;
 		}
 	
-		window.open(url, "idCheck", "toolbar=no, location=no, " + "status=no, memubar=no, width=500, height=400");
+		window.open(url, "IdCheck", "toolbar=no, location=no, " + "status=no, memubar=no, width=500, height=400");
 	
 	});
 	
-	$("#loginForm").submit(() => {
-		var id = $("#userId").val();
-		var pass = $("#userPass").val();
-		
-		if(id.length <= 0) {
-			alert("아이디가 입력되지 않음");
-			$("#userId").focus();
-		
+	// 회원 닉네임 중복 확인 버튼이 클릭되면
+	$("#nickOverlapCheck").on("click", function() {	
+		var nickname = $("#nickname").val();
+		url = "nickOverlapCheck?nickname="+ nickname;
+		if(nickname.length <= 0) {
+			alert("닉네임이 입력되지 않았습니다. \n 입력 후 다시 시도해 주세요.");
 			return false;	
 		}
-		
-		if(pass.length <= 0) {
-			alert("비밀번호가 입력되지 않음");
-			$("#userPass").focus();
-			
+		if(nickname.length < 5) {
+			alert("닉네임은 5자 이상 입력해주세요.");
 			return false;
 		}
+	
+		window.open(url, "nickCheck", "toolbar=no, location=no, " + "status=no, memubar=no, width=500, height=400");
+	
 	});
 	
-	$("#loginFormModal").submit(() => {
+	$("#btnIdCheckClose").on("click", function() {
+	    var id = $(this).attr("data-id-value");
+	
+	    // Check if normalJoinForm exists
+	    if (opener.document.normalJoinForm) {
+	        // Check if normalId exists
+	        if (opener.document.normalJoinForm.normalId) {
+	            opener.document.normalJoinForm.normalId.value = id;
+	            opener.document.normalJoinForm.isIdCheck.value = true;
+	        } else {
+	            console.error("에러가 발생하였습니다.");
+	        }
+	    } else {
+	        console.error("에러가 발생하였습니다.");
+	    }
+	
+	    window.close();
+	});
+	
+	$("#btnNickCheckClose").on("click", function() {
+	    var nickName = $(this).attr("data-nickname-value");
+	
+	    
+	    if (opener.document.normalJoinForm) {
+	    
+	        if (opener.document.normalJoinForm.normalId) {
+	            opener.document.normalJoinForm.nickname.value = nickName;
+	            opener.document.normalJoinForm.isNickCheck.value = true;
+	        } else {
+	            console.error("에러가 발생하였습니다.");
+	        }
+	    } else {
+	        console.error("에러가 발생하였습니다.");
+	    }
+	
+	    window.close();
+	});
+
+	
+	$("#bir").submit(() => {
 		var id = $("#userId").val();
 		var pass = $("#userPass").val();
 		
 		if(id.length <= 0) {
-			alert("아이디가 입력되지 않음");
+			alert("아이디가 입력되지 않았습니다.\n 입력 후 다시 시도해 주세요.");
 			$("#userId").focus();
 		
 			return false;	
 		}
 		
 		if(pass.length <= 0) {
-			alert("비밀번호가 입력되지 않음");
+			alert("비밀번호가 입력되지 않았습니다. \n 입력 후 다시 시도해 주세요.");
 			$("#userPass").focus();
 			
 			return false;

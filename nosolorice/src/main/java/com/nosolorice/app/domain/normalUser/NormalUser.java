@@ -21,5 +21,102 @@ public class NormalUser {
 	private String email;					// 이메일
 	private Timestamp regDate;			// 가입일
 	private int myPoint;				// 내 포인트 잔여액
+	public String getNormalId() {
+		return normalId;
+	}
+	public void setNormalId(String normalId) {
+		this.normalId = normalId;
+	}
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getBirth() {
+		return birth;
+	}
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+	public int getPostNum() {
+		return postNum;
+	}
+	public void setPostNum(int postNum) {
+		this.postNum = postNum;
+	}
+	public String getAddress1() {
+		return address1;
+	}
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+	public String getAddress2() {
+		return address2;
+	}
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+	public String getXpoint() {
+		return xpoint;
+	}
+	public void setXpoint(String xpoint) {
+		this.xpoint = xpoint;
+	}
+	public String getYpoint() {
+		return ypoint;
+	}
+	public void setYpoint(String ypoint) {
+		this.ypoint = ypoint;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public Timestamp getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Timestamp regDate) {
+		this.regDate = regDate;
+	}
+	public int getMyPoint() {
+		return myPoint;
+	}
+	public void setMyPoint(int myPoint) {
+		this.myPoint = myPoint;
+	}
 
+	
 }

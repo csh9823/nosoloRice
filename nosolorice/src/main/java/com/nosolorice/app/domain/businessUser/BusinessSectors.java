@@ -7,5 +7,25 @@ public class BusinessSectors {
 	private int businessSectorsNo;	// 사업자업종번호
 	private int sectorsNo;				// 업종번호
 	private String businessId;		// 사업자 아이디
+	public int getBusinessSectorsNo() {
+		return businessSectorsNo;
+	}
+	public void setBusinessSectorsNo(int businessSectorsNo) {
+		this.businessSectorsNo = businessSectorsNo;
+	}
+	public int getSectorsNo() {
+		return sectorsNo;
+	}
+	public void setSectorsNo(int sectorsNo) {
+		this.sectorsNo = sectorsNo;
+	}
+	public String getBusinessId() {
+		return businessId;
+	}
+	public void setBusinessId(String businessId) {
+		this.businessId = businessId;
+	}
+	
+	
 
 }

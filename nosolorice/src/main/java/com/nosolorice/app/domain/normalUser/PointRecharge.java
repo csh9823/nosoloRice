@@ -9,6 +9,42 @@ public class PointRecharge {
 	private int chargeAmount;			// 충전금액
 	private int chargePoint;				// 충전포인트
 	private Timestamp chargeDate;				// 충전일
+	public int getPointRechargeNo() {
+		return pointRechargeNo;
+	}
+	public void setPointRechargeNo(int pointRechargeNo) {
+		this.pointRechargeNo = pointRechargeNo;
+	}
+	public String getNormalId() {
+		return normalId;
+	}
+	public void setNormalId(String normalId) {
+		this.normalId = normalId;
+	}
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+	public int getChargeAmount() {
+		return chargeAmount;
+	}
+	public void setChargeAmount(int chargeAmount) {
+		this.chargeAmount = chargeAmount;
+	}
+	public int getChargePoint() {
+		return chargePoint;
+	}
+	public void setChargePoint(int chargePoint) {
+		this.chargePoint = chargePoint;
+	}
+	public Timestamp getChargeDate() {
+		return chargeDate;
+	}
+	public void setChargeDate(Timestamp chargeDate) {
+		this.chargeDate = chargeDate;
+	}
 	
 	
 	
