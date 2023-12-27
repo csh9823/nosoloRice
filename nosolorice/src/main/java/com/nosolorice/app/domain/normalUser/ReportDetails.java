@@ -8,77 +8,74 @@ public class ReportDetails {
 	private String reportAttacker;	// 신고당한사람
 	private String ReportRegdate; // 신고일
 	
-	
 	public ReportDetails() {
 		
 	}
 
+	public ReportDetails(int reportNo, String reportContent, String reportPicture, String reportReporter,String reportAttacker, String reportRegdate) {
+		this.reportNo = reportNo;
+		this.reportContent = reportContent;
+		this.reportPicture = reportPicture;
+		this.reportReporter = reportReporter;
+		this.reportAttacker = reportAttacker;
+		ReportRegdate = reportRegdate;
+	}
 
 	public int getReportNo() {
 		return reportNo;
 	}
 
-
 	public void setReportNo(int reportNo) {
 		this.reportNo = reportNo;
 	}
-
 
 	public String getReportContent() {
 		return reportContent;
 	}
 
-
 	public void setReportContent(String reportContent) {
 		this.reportContent = reportContent;
 	}
-
 
 	public String getReportPicture() {
 		return reportPicture;
 	}
 
-
 	public void setReportPicture(String reportPicture) {
 		this.reportPicture = reportPicture;
 	}
-
 
 	public String getReportReporter() {
 		return reportReporter;
 	}
 
-
 	public void setReportReporter(String reportReporter) {
 		this.reportReporter = reportReporter;
 	}
-
 
 	public String getReportAttacker() {
 		return reportAttacker;
 	}
 
-
 	public void setReportAttacker(String reportAttacker) {
 		this.reportAttacker = reportAttacker;
 	}
-
 
 	public String getReportRegdate() {
 		return ReportRegdate;
 	}
 
-
 	public void setReportRegdate(String reportRegdate) {
 		ReportRegdate = reportRegdate;
 	}
-
 
 	@Override
 	public String toString() {
 		return "ReportDetails [reportNo=" + reportNo + ", reportContent=" + reportContent + ", reportPicture="
 				+ reportPicture + ", reportReporter=" + reportReporter + ", reportAttacker=" + reportAttacker
 				+ ", ReportRegdate=" + ReportRegdate + "]";
-	}	
+	}
+	
+	
 	
 }

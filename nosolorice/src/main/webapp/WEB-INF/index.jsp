@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
 <!DOCTYPE html>
 <html>
@@ -28,6 +27,9 @@
 		<jsp:include page="${param.body}" />
 		<%@ include file="temple/footer/footer.jsp" %>	
 	</div>	
-	<script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
+	
+	<script src="resources/bootstrap/bootstrap.bundle.min.js">
+	</script>
+	
 </body>
 </html>
