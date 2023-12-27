@@ -24,6 +24,7 @@
 <script src="resources/summernote/lang/summernote-ko-KR.js"></script>
 </head>
 <body>
+
 	<div class="container">
 		<%@ include file="temple/header/header.jsp" %>
 		<jsp:include page="${param.body}" />

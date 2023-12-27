@@ -1,25 +1,32 @@
 package com.nosolorice.app.domain.normalUser;
 
+import java.sql.Timestamp;
+
 public class ReportDetails {
 	private int reportNo;				// No
 	private String reportContent;	// 신고내용
 	private String reportPicture;		// 증거사진 파일
 	private String reportReporter;	// 신고자
 	private String reportAttacker;	// 신고당한사람
-	private String ReportRegdate; // 신고일
+	private Timestamp  reportRegdate; // 신고일
 	
 	public ReportDetails() {
 		
 	}
 
-	public ReportDetails(int reportNo, String reportContent, String reportPicture, String reportReporter,String reportAttacker, String reportRegdate) {
+
+
+	public ReportDetails(int reportNo, String reportContent, String reportPicture, String reportReporter,
+			String reportAttacker, Timestamp reportRegdate) {
 		this.reportNo = reportNo;
 		this.reportContent = reportContent;
 		this.reportPicture = reportPicture;
 		this.reportReporter = reportReporter;
 		this.reportAttacker = reportAttacker;
-		ReportRegdate = reportRegdate;
+		this.reportRegdate = reportRegdate;
 	}
+
+
 
 	public int getReportNo() {
 		return reportNo;
@@ -61,19 +68,25 @@ public class ReportDetails {
 		this.reportAttacker = reportAttacker;
 	}
 
-	public String getReportRegdate() {
-		return ReportRegdate;
+
+
+	public Timestamp getReportRegdate() {
+		return reportRegdate;
 	}
 
-	public void setReportRegdate(String reportRegdate) {
-		ReportRegdate = reportRegdate;
+
+
+	public void setReportRegdate(Timestamp reportRegdate) {
+		this.reportRegdate = reportRegdate;
 	}
+
+
 
 	@Override
 	public String toString() {
 		return "ReportDetails [reportNo=" + reportNo + ", reportContent=" + reportContent + ", reportPicture="
 				+ reportPicture + ", reportReporter=" + reportReporter + ", reportAttacker=" + reportAttacker
-				+ ", ReportRegdate=" + ReportRegdate + "]";
+				+ ", ReportRegdate=" + reportRegdate + "]";
 	}
 	
 	
