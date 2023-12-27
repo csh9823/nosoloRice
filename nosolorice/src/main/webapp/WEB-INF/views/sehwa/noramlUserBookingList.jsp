@@ -56,14 +56,14 @@
                 </tr>
               </thead>
               <tbody> <!-- DB출력 -->
-              	<c:if test="${empty currentBookingNo}">
+              	<c:if test="${currentBookingNo eq 0}">
               		<tr>
               			<td colspan="4">
               				현재 예약중인 내역이 없습니다.
               			</td>
               		</tr>
               	</c:if>
-              	<c:if test="${not empty currentBookingNo}">
+              	<c:if test="${currentBookingNo ne 0}">
 	                <tr>
 	                  <td>${currentBookingNo}</td>
 	                  <td>${storeInfo.businessName}</td>

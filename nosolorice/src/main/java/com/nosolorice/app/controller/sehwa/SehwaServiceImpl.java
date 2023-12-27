@@ -50,29 +50,34 @@ public class SehwaServiceImpl implements SehwaService {
 	@Override
 	public Map<String, Object> getCurrentBooking(String id) {
 		// 예약관리번호 가져오기(booking_userlist)
-		int no = dao.getCurrentBooking(id);
-		// 예약멤버 가져오기
-		List<String> members = dao.getCurrentBookingMember(no, id);
-		List<NormalUser> memberInfo = new ArrayList<>();
-		int memberCount = 0;
-		for(int i=0; i<members.size(); i++) {
-			NormalUser member = dao.getNormalUserInfo(members.get(i));
-			memberInfo.add(i, member);
-			memberCount ++;
-		}
-		// 예약 상세내역 가져오기
-		Booking bookingDetail = dao.getBookingDetail(no);
-		// 사장님 아이디로 가게정보 가져오기
-		String businessId = bookingDetail.getBusinessId();
-		BusinessUser storeInfo = dao.getBusinessUserInfo(businessId);
-		
+		Integer no = dao.getCurrentBooking(id);
 		Map<String, Object> result = new HashMap<>();
 		result.put("currentBookingNo", no);
-		result.put("currentBookingMembers", members);
-		result.put("currentBookingDetail", bookingDetail);
-		result.put("storeInfo", storeInfo);
-		result.put("memberInfo", memberInfo);
-		result.put("memberCount", memberCount);
+		
+		  if (no != null && no != 0) { 
+			  // 예약멤버 가져오기 
+			  List<String> members = dao.getCurrentBookingMember(no, id); 
+			  List<NormalUser> memberInfo = new ArrayList<>();
+			  int memberCount = 0; 
+			  for(int i=0; i<members.size(); i++) {
+				  NormalUser member = dao.getNormalUserInfo(members.get(i)); 
+				  memberInfo.add(i, member); 
+				  memberCount ++;
+			  } 
+			  // 예약 상세내역 가져오기 
+			  Booking bookingDetail = dao.getBookingDetail(no); 
+			  // 사장님 아이디로 가게정보 가져오기 
+			  String businessId = bookingDetail.getBusinessId(); 
+			  BusinessUser storeInfo = dao.getBusinessUserInfo(businessId);
+			  
+			  result.put("currentBookingMembers", members);
+			  result.put("currentBookingDetail", bookingDetail); 
+			  result.put("storeInfo",storeInfo); 
+			  result.put("memberInfo", memberInfo); 
+			  result.put("memberCount",memberCount);
+			  
+		  }
+		 
 		
 		return result;
 	}

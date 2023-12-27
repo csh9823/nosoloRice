@@ -90,7 +90,12 @@ public class SehwaDaoImpl implements SehwaDao {
 
 	@Override
 	public int getCurrentBooking(String id) {
-		return sqlSession.selectOne(NAME_SPACE + ".getCurrentBooking", id);
+		int no = 0;
+		Integer temp = sqlSession.selectOne(NAME_SPACE + ".getCurrentBooking", id);
+		if(temp != null) {
+			no = temp;
+		}
+		return no;
 	}
 
 	@Override
