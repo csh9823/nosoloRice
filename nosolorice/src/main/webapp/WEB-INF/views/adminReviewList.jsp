@@ -45,7 +45,7 @@
             <li class="my-5"><a href="adminReportList" class="textColor">신고내역</a></li>
             <li class="my-5"><a href="#" class="textColor">가입승인</a></li>
             <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제 요청</a></li>
-            <li class="my-5"><a href="businessList" class="textColor">업체삭제</a></li>
+            <li class="my-5"><a href="businessDeleteList" class="textColor">업체삭제</a></li>
             <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
             <li class="my-5"><a href="#" class="textColor">매출현황</a></li>
             <li class="my-5"><a href="noticeWrite" class="textColor">공지작성</a></li>

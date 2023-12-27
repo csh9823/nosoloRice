@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nosolorice.app.handao.NoticeDao;
+import com.nosolorice.app.domain.businessUser.BusinessNotice;
 import com.nosolorice.app.domain.normalUser.Notice;
 
 @Service
@@ -50,6 +51,12 @@ public class NoticeServiceImpl implements NoticeService {
 	public void deleteNotice(int noticeNo) {
 		
 		noticeDao.deleteNotice(noticeNo);
+		
+	}
+
+	@Override
+	public List<BusinessNotice> BusinessNoticeList() {
+		return noticeDao.BusinessNoticeList();
 		
 	}
 

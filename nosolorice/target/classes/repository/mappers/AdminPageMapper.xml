@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
+		<!-- 한선  -->
 
 <mapper namespace="com.nosolorice.app.mapper.AdminPageMapper">
 
@@ -11,6 +11,12 @@
 	
 	SELECT * FROM report_details ORDER BY report_no
 	
+	</select>
+	
+	<select id="getReportCount" resultType="int" parameterType="ReportDetails">
+	
+		SELECT COUNT(report_no) FROM report_details
+		
 	</select>
 	
 
@@ -45,6 +51,15 @@
     VALUES (null, #{id}, #{reason}, NOW(), DATE_ADD(NOW(), INTERVAL #{day} DAY))
     ]]>
 </insert>
+
+
+
+<delete id="businessDelete" parameterType="int">
+
+
+	DELETE FROM business_user WHERE business_number = #{businessNumber}
+
+</delete>
 
 
 

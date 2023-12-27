@@ -50,6 +50,7 @@ public class AdminPageController {
 	@RequestMapping("/deniedList")
 	public String userBlockList(Model model,@RequestParam(value="pageNum",required=false, defaultValue="1")int pageNum) {
 		
+		System.out.println("ㅇㅇㅇ");
 		Map<String,Object> modelMap = adminPageService.deniedList(pageNum);
 		
 		model.addAllAttributes(modelMap);

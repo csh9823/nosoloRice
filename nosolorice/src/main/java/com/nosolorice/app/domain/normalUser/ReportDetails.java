@@ -1,12 +1,14 @@
 package com.nosolorice.app.domain.normalUser;
 
+import java.sql.Timestamp;
+
 public class ReportDetails {
 	private int reportNo;				// No
 	private String reportContent;	// 신고내용
 	private String reportPicture;		// 증거사진 파일
 	private String reportReporter;	// 신고자
 	private String reportAttacker;	// 신고당한사람
-	private String ReportRegdate; // 신고일
+	private Timestamp reportRegDate; // 신고일
 	
 	
 	public ReportDetails() {
@@ -62,15 +64,14 @@ public class ReportDetails {
 	public void setReportAttacker(String reportAttacker) {
 		this.reportAttacker = reportAttacker;
 	}
-
-
-	public String getReportRegdate() {
-		return ReportRegdate;
+	
+	public Timestamp getReportRegDate() {
+		return reportRegDate;
 	}
 
 
-	public void setReportRegdate(String reportRegdate) {
-		ReportRegdate = reportRegdate;
+	public void setReportRegDate(Timestamp reportRegDate) {
+		this.reportRegDate = reportRegDate;
 	}
 
 
@@ -78,7 +79,7 @@ public class ReportDetails {
 	public String toString() {
 		return "ReportDetails [reportNo=" + reportNo + ", reportContent=" + reportContent + ", reportPicture="
 				+ reportPicture + ", reportReporter=" + reportReporter + ", reportAttacker=" + reportAttacker
-				+ ", ReportRegdate=" + ReportRegdate + "]";
+				+ ", ReportRegdate=" + reportRegDate + "]";
 	}	
 	
 }

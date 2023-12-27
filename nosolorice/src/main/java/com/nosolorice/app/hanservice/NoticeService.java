@@ -2,7 +2,7 @@ package com.nosolorice.app.hanservice;
 
 import java.util.List;
 
-
+import com.nosolorice.app.domain.businessUser.BusinessNotice;
 import com.nosolorice.app.domain.normalUser.Notice;
 
 public interface NoticeService {
@@ -16,5 +16,7 @@ public interface NoticeService {
 	public abstract void updateNotice(Notice notice);
 	//삭제
 	public abstract void deleteNotice(int noticeNo);
+	
+	public abstract List<BusinessNotice> BusinessNoticeList();
 
 }

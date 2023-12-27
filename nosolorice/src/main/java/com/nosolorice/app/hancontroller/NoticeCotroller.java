@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.nosolorice.app.domain.businessUser.BusinessNotice;
 import com.nosolorice.app.domain.normalUser.Notice;
 import com.nosolorice.app.hanservice.NoticeService;
 
@@ -21,16 +22,27 @@ public class NoticeCotroller {
 		this.noticeService = noticeService;
 	}
 
-	@RequestMapping({"/","/noticeList"})
+	@RequestMapping("/noticeList")
 	public String noticeList(Model model) {
 		
 		List<Notice> nList = noticeService.NoticeList();
 		
 		model.addAttribute("nList",nList);
-		
+				
 		return "/noticeList";
 		
 	}
+	
+	@RequestMapping("/noticeBusiness")
+	public String noticeBusiness(Model model) {
+		
+		List<BusinessNotice> bList = noticeService.BusinessNoticeList();
+
+		model.addAttribute("bList",bList);
+		
+		return "/noticeBusiness";
+	}
+	
 	
 	@RequestMapping("/noticeDetail")
 	public String noticeDetail(Model model,int noticeNo) {
@@ -61,7 +73,7 @@ public class NoticeCotroller {
 		notice.setNoticeTitle(noticeTitle);
 		notice.setNoticeContent(noticeContent);
 		
-		System.out.println(notice.getNoticeContent());
+		//System.out.println(notice.getNoticeContent());
 		
 		noticeService.insertNotice(notice);
 		
@@ -106,8 +118,10 @@ public class NoticeCotroller {
 		return"redirect:noticeList";
 	}
 	
-	
-	
+	/*
+	 * @ReqeustMapping("/businessDeleteList") public STring bsuinessDelete(int )
+	 * 
+	 */
 	
 	
 

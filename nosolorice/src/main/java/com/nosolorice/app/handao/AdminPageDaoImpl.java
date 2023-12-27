@@ -70,10 +70,22 @@ public class AdminPageDaoImpl implements AdminPageDao {
 		map.put("reason", reason);
 		map.put("day", day);
 		
-		System.out.println(reason +"리즌");
 
 		sqlSession.insert(Mapper + ".addDenied",map);
 		
+	}
+
+	@Override
+	public void businessDelete(int businessNumber) {
+		
+		sqlSession.delete(Mapper + ".businessDelete",businessNumber);
+		
+	}
+
+	@Override
+	public int getReportCount() {
+		
+		return sqlSession.selectOne(Mapper + ".getReportCount");
 	}
 	
 	

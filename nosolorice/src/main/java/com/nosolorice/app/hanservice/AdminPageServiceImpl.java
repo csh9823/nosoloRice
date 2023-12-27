@@ -16,9 +16,9 @@ public class AdminPageServiceImpl implements AdminPageService {
 	
 	private AdminPageDao adminPageDao;
 	
-	private static final int PS = 10;
+	private static final int PS = 3;
 	
-	private static final int PG = 10;
+	private static final int PG = 3;
 	
 	
 	@Autowired
@@ -37,6 +37,9 @@ public class AdminPageServiceImpl implements AdminPageService {
 		
 		int listCount = 0;
 		
+		listCount = adminPageDao.getReportCount();
+		
+		if(listCount > 0) {
 		
 		List<ReportDetails> adminReportList = adminPageDao.reportList(start, PS);
 		
@@ -61,8 +64,11 @@ public class AdminPageServiceImpl implements AdminPageService {
 		reportMap.put("listCount", listCount);
 		reportMap.put("PG", PG);
 		
-
+		
 		return reportMap;
+		} else {
+		return null;
+		}
 	}
 
 	@Override
@@ -169,6 +175,13 @@ public class AdminPageServiceImpl implements AdminPageService {
 	public void addDenied(String id, String reason, int day) {
 		
 		adminPageDao.addDenied(id,reason,day);
+	}
+
+	@Override
+	public void businessDelete(int businessNumber) {
+		
+		adminPageDao.businessDelete(businessNumber);
+		
 	}
 	
 	

@@ -3,6 +3,7 @@ package com.nosolorice.app.handao;
 
 import java.util.List;
 
+import com.nosolorice.app.domain.businessUser.BusinessNotice;
 import com.nosolorice.app.domain.normalUser.Notice;
 
 public interface NoticeDao {
@@ -16,5 +17,7 @@ public interface NoticeDao {
 	public abstract void updateNotice(Notice notice);
 	//삭제
 	public abstract void deleteNotice(int noticeNo);
+	
+	public abstract List<BusinessNotice> BusinessNoticeList();
 	
 }

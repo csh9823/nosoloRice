@@ -54,7 +54,7 @@
         </div>     
           
         <div class="col mt-5">
-            <div class="mt-3 fs-2 fw-bold" style="color:#C93C3C">회원정지</div>
+            <div class="mt-3 fs-2 fw-bold" style="color:#C93C3C">업체삭제</div>
               <br>
               
               <div class="row py-3">
@@ -156,9 +156,12 @@
 		 		$(".resultRow").each(function(i,v){
 		 			$(v).removeClass("d-none");
 		 		})
-		 			 		
+		 		
+		 		
 		 	} else{
-		 			 		
+		 		
+		 		
+		 		
 		 		alert("이미 정지된 회원이거나 없는 아이디입니다.");
 		 		$("#resultId").text("");
 		 		
@@ -183,8 +186,6 @@
 	 	
 	 const day = $(this).attr("data-day");
 	 
-	 console.log(day);
-	 
 	
 	 
 	 const id = $("#resultId").text();
@@ -193,7 +194,6 @@
 	 
 	 if(confirm("정지하시겠습니까?")){
 		 
-		 let regDate = new Date(v.deniedRegDate);
 		 
 		 $.ajax({
 			 
@@ -210,9 +210,7 @@
 				 
 				 $(resData.deniedList.deniedList).each(function(i,v){
 					 console.log(v);
-
-					 
-					 
+					 var regDate = new Date(v.deniedRegDate);
 					 $("#dListCol").append(`<div class="row align-items-center text-center py-3">
 					        <div class="col-1">` + v.deniedUserNo + `</div>
 					        <div class="col-2">` + v.normalId + `</div>

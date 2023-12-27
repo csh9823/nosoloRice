@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-	
+		<!-- 한선 -->
 	
 <mapper namespace="com.nosolorice.app.mapper.NoticeMapper">
 	
@@ -44,6 +44,13 @@
 		
 	</delete>
 	
+	<select id="noticeBusiness" resultType="BusinessNotice" resultMap="BusinessResultMap">
+	
+		SELECT * FROM BusinessNotice ORDER BY business_notice_no DESC
+	
+	
+	</select>
+	
 	
 	
 	
@@ -59,7 +66,6 @@
 	</resultMap>
 	
 	<resultMap id="BusinessResultMap" type="BusinessNotice">
-	
 		<id property="businessNoticeNo" column="business_notice_no"/>
 		<result property="businessNoticeTitle" column="business_notice_title"/>
 		<result property="businessNoticeContent" column="business_notice_content"/>

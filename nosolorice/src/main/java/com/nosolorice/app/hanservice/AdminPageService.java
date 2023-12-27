@@ -26,5 +26,7 @@ public interface AdminPageService {
 	public abstract boolean searchId(String id); 
 	
 	public abstract void addDenied(String id,String reason,int day);
+	
+	public abstract void businessDelete(int businessNumber);
 
 }

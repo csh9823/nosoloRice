@@ -47,11 +47,11 @@
           <ul class="my-3 fs-5">
                 <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
             <li class="my-5"><a href="userInquiryList" class="textColor">일반회원 문의</a></li>
-            <li class="my-5"><a href="#" class="textColor">사업자회원 문의</a></li>
+            <li class="my-5"><a href="noticeBusiness" class="textColor">사업자회원 문의</a></li>
             <li class="my-5"><a href="adminReportList" class="textColor">신고내역</a></li>
             <li class="my-5"><a href="#" class="textColor">가입승인</a></li>
             <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제 요청</a></li>
-            <li class="my-5"><a href="businessList" class="textColor">업체삭제</a></li>
+            <li class="my-5"><a href="businessDeleteList" class="textColor">업체삭제</a></li>
             <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
             <li class="my-5"><a href="#" class="textColor">매출현황</a></li>
             <li class="my-5"><a href="noticeList" class="textColor">공지관리</a></li>
@@ -71,6 +71,13 @@
                 <div class="col-1">사진</div>
             </div>
             
+            <c:if test="${empty adminReportList }">
+            
+            <span class="d-flex justify-content-center align-items-center" style="height: 10vh;">요청 글이 없습니다.</span>
+            
+            </c:if>            
+            
+            <c:if test="${not empty adminReportList}">
             
 				 <c:forEach var="r" items="${adminReportList}">
 				    <div class="row align-items-center text-center py-3 reportRow" style="cursor:pointer;">
@@ -111,10 +118,35 @@
 				    </div>
 				    </div>
 				</c:forEach>
+			</c:if>	
          </div>     
        </div>
 	</div>
 </div>
+
+	<c:if test="${startPage > PG }">
+		<li class="page-item">
+			<a class="page-link" href="adminReportList?pageNum=${startPage - PG}">Pre</a>
+		</li>
+		</c:if>
+		
+		<c:forEach var="r" begin="${startPage}" end="${endPage}">
+			<c:if test="${r == currentPage }">
+			<li class="page-item active" aria-current="page">
+				<span class="page-link">${r}</span>
+			</li>
+			</c:if>
+			<c:if test="${r != currentPage}">
+				<li class="page-item">
+					<a class="page-link" href="adminReportList?pageNum=${r}">${r}</a>
+				</li>
+			</c:if>
+					
+		</c:forEach>	<c:if test="${endPage < pageCount }">
+			<li class="page-item">
+				<a class="page-link" href="adminReportList?pageNum=${ startPage + PG }">Next</a>
+			</li>	
+		</c:if>
 
     <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

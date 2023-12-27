@@ -6,6 +6,8 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.nosolorice.app.domain.businessUser.BusinessNotice;
 import com.nosolorice.app.domain.normalUser.Notice;
 
 @Repository
@@ -56,5 +58,13 @@ public class NoticeDaoImpl implements NoticeDao {
 		
 		
 	}
+
+	@Override
+	public List<BusinessNotice> BusinessNoticeList() {
+		
+		return  sqlSession.selectList(Mapper + ".noticeBusiness");
+	}
+
+
 
 }
