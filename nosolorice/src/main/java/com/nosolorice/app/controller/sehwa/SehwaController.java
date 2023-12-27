@@ -27,8 +27,9 @@ public class SehwaController {
 	
 	private static final String DEFAULT_PATH = "/resources/upload/";
 	
-	@RequestMapping(value={"/", "/businessUserInfoUpdate"}, method=RequestMethod.GET)
+	@RequestMapping(value={"/businessUserInfoUpdate"}, method=RequestMethod.GET)
 	public String businessUserInfoUpdate(Model model, String id) {
+		id= "testBusinessId";
 		model.addAttribute("user", service.getBusinessUserInfo(id));
 		
 		return "sehwa/businessUserInfoUpdate";

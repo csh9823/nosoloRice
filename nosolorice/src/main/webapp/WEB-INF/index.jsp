@@ -13,23 +13,25 @@
 <link href="resources/bootstrap/bootstrap.min.css" rel="stylesheet" >
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <script src="resources/js/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<link href="resources/css/sehwa/globalStyle.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="resources/summernote/summernote-lite.css">
+<script src="resources/js/sehwa/globalFunction.js"></script>
+<script src="resources/js/sehwa/validation.js"></script>
+<script src="resources/js/sehwa/ajax.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="resources/summernote/summernote-lite.js"></script>
+<script src="resources/summernote/lang/summernote-ko-KR.js"></script>
 </head>
 <body>
 	<div class="container">
-	<c:if test="${sessionScope.BusinessUser.root == 1}">
-			<%@ include file="temple/header/businessMenubar.jsp" %>
-	</c:if>
-	
-	<c:if test="${sessionScope.NormalUser.root == 2}">
 		<%@ include file="temple/header/header.jsp" %>
-	</c:if>
-	
 		<jsp:include page="${param.body}" />
-		<%@ include file="temple/footer/footer.jsp" %>	
+		<%@ include file="temple/footer/footer.jsp" %>
 	</div>	
 	
 	<script src="resources/bootstrap/bootstrap.bundle.min.js">
 	</script>
-	
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>	
 </body>
 </html>
