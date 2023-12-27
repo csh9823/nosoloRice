@@ -8,7 +8,7 @@ public class DeniedUser {
 	private String normalId;			// 유저 아이디
 	private String deniedReason;	// 정지사유
 	private Timestamp deniedUnlock;		// 정지해제일
-	private Timestamp DeniedRegdate;
+	private Timestamp deniedRegdate;
 	public DeniedUser() {
 	
 	}
@@ -43,6 +43,17 @@ public class DeniedUser {
 
 	public void setDeniedUnlock(Timestamp deniedUnlock) {
 		this.deniedUnlock = deniedUnlock;
+	}
+	
+	
+
+
+	public Timestamp getDeniedRegdate() {
+		return deniedRegdate;
+	}
+
+	public void setDeniedRegdate(Timestamp deniedRegdate) {
+		this.deniedRegdate = deniedRegdate;
 	}
 
 	@Override

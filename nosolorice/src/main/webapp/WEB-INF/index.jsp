@@ -22,6 +22,5 @@
 		<%@ include file="temple/footer/footer.jsp" %>	
 	</div>	
 	<script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
