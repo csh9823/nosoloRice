@@ -67,7 +67,7 @@ public class BusinessController {
 		
 		model.addAllAttributes(businessService.getBusinessInquiryList(pageNum, businessId));
 		
-		return "businessInquiryList";
+		return "forward:/WEB-INF/views/businessInquiryList.jsp";
 	}
 	
 	@RequestMapping("businessSales")

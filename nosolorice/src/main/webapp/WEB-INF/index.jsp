@@ -20,7 +20,7 @@
 		<%@ include file="temple/header/header.jsp" %>	
 		<jsp:include page="${param.body}" />
 		<%@ include file="temple/footer/footer.jsp" %>	
-	</div>	
+	</div>
 	<script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>
