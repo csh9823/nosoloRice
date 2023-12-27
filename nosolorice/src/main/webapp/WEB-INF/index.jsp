@@ -17,7 +17,14 @@
 </head>
 <body>
 	<div class="container">
-		<%@ include file="temple/header/header.jsp" %>	
+	<c:if test="${sessionScope.BusinessUser.root == 1}">
+			<%@ include file="temple/header/businessMenubar.jsp" %>
+	</c:if>
+	
+	<c:if test="${sessionScope.NormalUser.root == 2}">
+		<%@ include file="temple/header/header.jsp" %>
+	</c:if>
+	
 		<jsp:include page="${param.body}" />
 		<%@ include file="temple/footer/footer.jsp" %>	
 	</div>	
