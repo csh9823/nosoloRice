@@ -29,7 +29,7 @@ public class BusinessController {
 
 	@RequestMapping("businessInquiry")
 	public String businessInquiry(Model model) {
-		return "businessInquiry";
+		return "forward:/WEB-INF/views/businessInquiry.jsp";
 	}
 	
 	@RequestMapping("writeBusinessInquiry")
