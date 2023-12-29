@@ -40,15 +40,15 @@
       <div class="row">
         <div class="col-md-3">
           <ul class="my-3 fs-5">
-            <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
+             <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
             <li class="my-5"><a href="userInquiryList" class="textColor">일반회원 문의</a></li>
             <li class="my-5"><a href="#" class="textColor">사업자회원 문의</a></li>
             <li class="my-5"><a href="adminReportList" class="textColor">신고내역</a></li>
-            <li class="my-5"><a href="#" class="textColor">가입승인</a></li>
+            <li class="my-5"><a href="joinApprove" class="textColor">가입승인</a></li>
             <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제 요청</a></li>
             <li class="my-5"><a href="businessDeleteList" class="textColor">업체삭제</a></li>
             <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
-            <li class="my-5"><a href="#" class="textColor">매출현황</a></li>
+            <li class="my-5"><a href="businessSales" class="textColor">매출현황</a></li>
             <li class="my-5"><a href="noticeList" class="textColor">공지관리</a></li>
           </ul>
         </div>     
@@ -62,7 +62,7 @@
 			  		<form action="#" id="idSearchForm" name="idSearchForm" method="post">
 				    <div class="col-5 d-flex align-items-center">
 				        <input type="text" id="searchId" name="searchId" placeholder="아이디를 입력해주세요" class="form-control">
-				        <button type="submit" class="btn col-2 mx-3">검색</button>
+				        <button type="submit" class="btn col-2 mx-3 searchBtn">검색</button>
 				    </div>
 					</form>
 		  	</div>
@@ -118,7 +118,10 @@
 				        <div class="col-3"><fmt:formatDate value="${d.deniedRegDate}" pattern="yyyy-MM-dd" /></div>
 				        <div class="col-2">${d.resultDate()}</div>
 				        <div class="col-2">
-				        	<input type="button" value="해제하기" class="btn">
+				        <form action="deleteDeniedUser" method="post" >
+				        	<input type="hidden" name="deniedUserNo" value="${d.deniedUserNo}">
+				        	<input type="submit" value="해제하기" class="btn unlockUser">
+				  		</form>
 				        </div>
 				        </div>
 			</c:forEach>            		
@@ -174,7 +177,19 @@
 		 
 	 });
 	 
+ });
+ 
+ 
+ $(document).on("click", ".unlockUser",function(){
 	 
+	if(confirm("정지를 해제하시겠습니까?")){
+		
+		return true;
+		
+	} else {
+		
+		return false;
+	}
 	 
  });
  
@@ -193,7 +208,7 @@
 	 
 	 if(confirm("정지하시겠습니까?")){
 		 
-		 let regDate = new Date(v.deniedRegDate);
+		
 		 
 		 $.ajax({
 			 
@@ -211,18 +226,28 @@
 				 $(resData.deniedList.deniedList).each(function(i,v){
 					 console.log(v);
 
+					 let regDate = new Date(v.deniedRegDate);
+					 
+					 let formatDate = regDate.getFullYear() + '-' + String(regDate.getMonth() + 1).padStart(2,'0') + '-' + String(regDate.getDate()).padStart(2,'0');
+					 
+					 let mill = v.deniedUnlock / (24 * 60 * 60 * 1000);
+					 const now = regDate.getTime() / (24 * 60 * 60 * 1000);
+					 const result = Math.round(mill - now);
 					 
 					 
 					 $("#dListCol").append(`<div class="row align-items-center text-center py-3">
-					        <div class="col-1">` + v.deniedUserNo + `</div>
-					        <div class="col-2">` + v.normalId + `</div>
-					        <div class="col-2">` + v.deniedReason + ` </div>
-					        <div class="col-3">` + regDate + `</div>
-					        <div class="col-2">` + v.deniedUnlock + `</div>
-					        <div class="col-2">
-					        	<input type="button" value="해제하기" class="btn">
-					        </div>
-					        </div>`);
+						        <div class="col-1">` + v.deniedUserNo + `</div>
+						        <div class="col-2">` + v.normalId + `</div>
+						        <div class="col-2">` + v.deniedReason + ` </div>
+						        <div class="col-3">` + formatDate + `</div>
+						        <div class="col-2">` + result + `일 정지</div>
+						        <div class="col-2">
+						        <form action="deleteDeniedUser" method="post" >
+					        	<input type="hidden" name="deniedUserNo" value=` + parseInt(v.deniedUserNo) + `>
+					        	<input type="submit" value="해제하기" class="btn unlockUser">
+					  			</form>
+						        </div>
+						    </div>`);
 					 
 				 });
 				 
@@ -245,6 +270,8 @@
 	
 	 
  });
+ 
+
  
 
  

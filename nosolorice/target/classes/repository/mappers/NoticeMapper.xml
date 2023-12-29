@@ -40,29 +40,38 @@
 	
 	<delete id="noticeDelete">
 	
-		DELETE FROM notice WHERE notice_no = #{noticeNo}
+		DELETE FROM notice WHERE notice_no = #{noticeNo}	
 		
 	</delete>
 	
-	<select id="noticeBusiness" resultType="BusinessNotice" resultMap="BusinessResultMap">
+	<select id="BusinessNotice" resultType="BusinessNotice" resultMap="BusinessResultMap">
+		
+		 SELECT * FROM business_notice ORDER BY business_notice_no DESC
+		 
+	</select>
 	
-		SELECT * FROM BusinessNotice ORDER BY business_notice_no DESC
-	
+	<select id="BusinessNoticeDetail" resultType="BusinessNotice" resultMap="BusinessResultMap">
+		
+		SELECT * FROM business_notice WHERE business_notice_no = #{businessNoticeNo}
 	
 	</select>
 	
+	<update id="updateNoticeBusiness" parameterType="BusinessNotice">
+	    UPDATE business_notice SET business_notice_title = #{businessNoticeTitle}, business_notice_content = #{businessNoticeContent}, business_notice_regdate = SYSDATE()
+	    WHERE business_notice_no = #{businessNoticeNo}
+	</update>
 	
+	<delete id="deleteBusinessNotice">
+		DELETE FROM business_notice WHERE business_notice_no = #{businessNoticeNo}
+	</delete>
 	
-	
-	
-	
+
 	
 	<resultMap id="noticeResultMap" type="Notice">
 		<id property="noticeNo" column="notice_no"/>
 		<result property="noticeTitle" column="notice_title"/>
 		<result property="noticeContent" column="notice_content"/>
 		<result property="noticeRegDate" column="notice_regdate"/>
-		
 	</resultMap>
 	
 	<resultMap id="BusinessResultMap" type="BusinessNotice">
@@ -70,7 +79,6 @@
 		<result property="businessNoticeTitle" column="business_notice_title"/>
 		<result property="businessNoticeContent" column="business_notice_content"/>
 		<result property="businessNoticeRegDate" column="business_notice_regdate"/>
-	
 	</resultMap>
 	
 

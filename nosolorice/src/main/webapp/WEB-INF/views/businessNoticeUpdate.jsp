@@ -69,26 +69,26 @@
        </div>
   <div class="row align-items-center">
     <div class="col text-end">
-      <form action="noticeUpdateProcess" id="noticeUpdate" name="noticeUpdate" method="post" enctype="multipart/form-data">
-      		<input type="hidden" name="noticeNo" value="${notice.noticeNo}">
-			<input type="hidden" name="pageNum" value="${pageNum}" />
+      <form action="businessNoticeUpdateProcess" id="businessNoticeUpdate" name="businessNoticeUpdate" method="post" enctype="multipart/form-data">
+      		<input type="hidden" name="businessNoticeNo" value="${businessNotice.businessNoticeNo}">
+			<%-- <input type="hidden" name="pageNum" value="${pageNum}" /> --%>
         <div class="row my-5">
           <div class="col-md-12">
             <input type="radio" name="noticeType" id="normal" class="radio" value="normal" ${notice.noticeType == 'normal' ? 'checked' : ''}>
             <label for="normal">일반 공지사항</label> &nbsp; &nbsp;
-            <input type="radio" name="noticeType" id="business" class="radio" value="business" ${businessNotice.businessNoticeType == 'business' ? 'checked' : ''}>
+            <input type="radio" name="noticeType" id="business" class="radio" value="business" ${notice.noticeType == 'normal' ? '' : 'checked'}>
             <label for="business">업체 공지사항</label>
           </div>
         </div>
         <div class="row my-3">
           <div class="col-md-12">
-            <input type="text" class="form-control" id="noticeTitle" name="noticeTitle" placeholder="제목을 입력해 주세요" value="${notice.noticeTitle}"/>
+            <input type="text" class="form-control" id="businessNoticeTitle" name="businessNoticeTitle" placeholder="제목을 입력해 주세요" value="${businessNotice.businessNoticeTitle}"/>
           </div>
         </div>
         <div class="row my-5">
           <div class="col">
-          	<input type="hidden" name="noticeContent" id="noticeContent">
-            <textarea id="summernote" name="editordata">${notice.noticeContent}</textarea>
+          	<input type="hidden" name="businessNoticeContent" id="noticeContent">
+            <textarea id="summernote" name="editordata">${businessNotice.businessNoticeContent}</textarea>
           </div>  
         </div>
         <div class="row">
@@ -109,7 +109,7 @@
     <script>
    
     	
-    $("#noticeUpdate").on("submit",function(e){
+    $("#businessNoticeUpdate").on("submit",function(e){
     	
         let content = $(".note-editable").html();
         

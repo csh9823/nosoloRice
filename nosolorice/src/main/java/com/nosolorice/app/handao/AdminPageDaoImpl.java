@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.nosolorice.app.domain.Review.Review;
+import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
 @Repository
@@ -75,17 +76,24 @@ public class AdminPageDaoImpl implements AdminPageDao {
 		
 	}
 
-	@Override
-	public void businessDelete(int businessNumber) {
-		
-		sqlSession.delete(Mapper + ".businessDelete",businessNumber);
-		
-	}
 
 	@Override
 	public int getReportCount() {
 		
 		return sqlSession.selectOne(Mapper + ".getReportCount");
+	}
+
+	@Override
+	public void unlockUser(int deniedUserNo) {
+	
+		sqlSession.delete(Mapper + ".unlockUser",deniedUserNo);
+		
+	}
+
+	@Override
+	public List<BusinessUser> businessDeleteList() {
+		
+		return sqlSession.selectList(Mapper + ".businessDelete");
 	}
 	
 	

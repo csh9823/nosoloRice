@@ -56,15 +56,33 @@ public class NoticeDaoImpl implements NoticeDao {
 		sqlSession.delete(Mapper + ".noticeDelete",noticeNo);
 	
 		
-		
 	}
 
 	@Override
 	public List<BusinessNotice> BusinessNoticeList() {
 		
-		return  sqlSession.selectList(Mapper + ".noticeBusiness");
+		return  sqlSession.selectList(Mapper + ".BusinessNotice");
 	}
 
+	@Override
+	public BusinessNotice getBusinessnotice(int businessNoticeNo) {
+		
+		return sqlSession.selectOne(Mapper +".BusinessNoticeDetail",businessNoticeNo);
+	}
+
+	@Override
+	public void updateBusinessNotice(BusinessNotice businessNotice) {
+		
+		sqlSession.update(Mapper + ".updateNoticeBusiness",businessNotice);
+		
+	}
+
+	@Override
+	public void deleteBusinessNotice(int businessNoticeNo) {
+
+		sqlSession.delete(Mapper + ".deleteBusinessNotice",businessNoticeNo);
+		
+	}
 
 
 }

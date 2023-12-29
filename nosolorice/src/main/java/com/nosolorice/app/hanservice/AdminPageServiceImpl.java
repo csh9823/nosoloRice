@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.nosolorice.app.handao.AdminPageDao;
 import com.nosolorice.app.domain.Review.Review;
+import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
 @Service
@@ -176,13 +177,20 @@ public class AdminPageServiceImpl implements AdminPageService {
 		
 		adminPageDao.addDenied(id,reason,day);
 	}
+	
+	@Override
+	public List<BusinessUser> businessDeleteList() {
+		
+		return adminPageDao.businessDeleteList();
+	}
 
 	@Override
-	public void businessDelete(int businessNumber) {
+	public void unlockUser(int deniedUserNo) {
 		
-		adminPageDao.businessDelete(businessNumber);
+		adminPageDao.unlockUser(deniedUserNo);
 		
 	}
+
 	
 	
 

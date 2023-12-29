@@ -3,6 +3,7 @@ package com.nosolorice.app.handao;
 import java.util.List;
 
 import com.nosolorice.app.domain.Review.Review;
+import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
 
@@ -24,8 +25,12 @@ public interface AdminPageDao {
 	public abstract String searchId(String id);
 	//정지 추가
 	public abstract void addDenied(String id,String reason,int day);
-	//업체 삭제
-	public abstract void businessDelete(int businessNumber);
+	//업체 삭제 리스트
+	public abstract List<BusinessUser> businessDeleteList();
+	//정지 해제
+	public abstract void unlockUser(int deniedUserNo);
+	
+	
 	
 	
 	

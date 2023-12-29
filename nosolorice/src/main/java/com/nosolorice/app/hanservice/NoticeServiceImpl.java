@@ -60,4 +60,24 @@ public class NoticeServiceImpl implements NoticeService {
 		
 	}
 
+	@Override
+	public BusinessNotice getBusinessnotice(int businessNoticeNo) {
+		
+		return noticeDao.getBusinessnotice(businessNoticeNo);
+	}
+
+	@Override
+	public void updateBusinessNotice(BusinessNotice businessNotice) {
+		
+		noticeDao.updateBusinessNotice(businessNotice);
+		
+	}
+
+	@Override
+	public void deleteBusinessNotice(int businessNoticeNo) {
+
+		noticeDao.deleteBusinessNotice(businessNoticeNo);
+		
+	}
+
 }

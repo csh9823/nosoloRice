@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosolorice.app.domain.Review.Review;
+import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
 
@@ -27,6 +28,9 @@ public interface AdminPageService {
 	
 	public abstract void addDenied(String id,String reason,int day);
 	
-	public abstract void businessDelete(int businessNumber);
+	public abstract List<BusinessUser> businessDeleteList();
+
+	public abstract void unlockUser(int deniedUserNo);
+	
 
 }

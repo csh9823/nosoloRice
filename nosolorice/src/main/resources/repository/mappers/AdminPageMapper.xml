@@ -54,10 +54,16 @@
 
 
 
-<delete id="businessDelete" parameterType="int">
+<select id="businessDelete" resultType="BusinessUser">
+
+	SELECT name, phone, business_name as businessName, business_profile as businessProfile, address1, address2  FROM  business_user
+	
+</select>
 
 
-	DELETE FROM business_user WHERE business_number = #{businessNumber}
+<delete id="unlockUser" parameterType="int">
+
+	DELETE FROM denied_user WHERE denied_user_no = #{deniedUserNo}
 
 </delete>
 
@@ -95,10 +101,8 @@
 			<result property="deniedReason" column="denied_reason"/>
 			<result property="deniedRegDate" column="denied_regdate"/>
 			<result property="deniedUnlock" column="denied_unlock"/>
-			
 		</resultMap>
-
-
+		
 
 </mapper>
 

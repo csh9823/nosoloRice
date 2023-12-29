@@ -28,7 +28,11 @@ public class NoticeCotroller {
 		List<Notice> nList = noticeService.NoticeList();
 		
 		model.addAttribute("nList",nList);
-				
+		
+		List<BusinessNotice> bList = noticeService.BusinessNoticeList();
+
+		model.addAttribute("bList",bList);
+		
 		return "/noticeList";
 		
 	}
@@ -85,9 +89,7 @@ public class NoticeCotroller {
 	
 	@RequestMapping("/noticeUpdate")
 	public String noticeUpdate (Model model,int noticeNo,String noticeType) {
-		
-
-			//System.out.println(noticeNo  + noticeType);
+			
 		Notice notice = noticeService.getNotice(noticeNo);
 		
 		notice.setNoticeType(noticeType);
@@ -105,9 +107,31 @@ public class NoticeCotroller {
 		  	
 		  return "redirect:/noticeList";
 	  }
-	 
-	
-	
+	  
+	  
+	  @RequestMapping("/businessNoticeUpdate")
+	  public String BusinessUpdate(Model model, int businessNoticeNo,String businessNoticeType) {
+		  
+		  
+		  
+		  BusinessNotice businessNotice = noticeService.getBusinessnotice(businessNoticeNo);
+		  
+		  businessNotice.setBusinessNoticeType(businessNoticeType);
+		  	  
+		  model.addAttribute("businessNotice",businessNotice);	
+		  
+		  return "/businessNoticeUpdate";
+		  
+	  }
+	  
+	  @RequestMapping("/businessNoticeUpdateProcess") 
+	  public String businessNoticeUpdateProcess(Model model,BusinessNotice businessNotice) {
+		    
+		  	noticeService.updateBusinessNotice(businessNotice);
+		  	
+		  return "redirect:/noticeList";
+	  }
+
 	
 	@RequestMapping("/noticeDelete")
 	public String noticeDelete(int noticeNo) {
@@ -117,6 +141,17 @@ public class NoticeCotroller {
 		
 		return"redirect:noticeList";
 	}
+	
+	@RequestMapping("/businessNoticeDelete")
+	public String businessNoticeDelete(int businessNoticeNo) {
+		
+		noticeService.deleteBusinessNotice(businessNoticeNo);
+		
+		return"redirect:noticeList";
+	}
+	
+	
+	
 	
 	/*
 	 * @ReqeustMapping("/businessDeleteList") public STring bsuinessDelete(int )

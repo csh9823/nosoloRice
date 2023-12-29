@@ -68,7 +68,7 @@
                 <div class="col-2">신고대상</div>
                 <div class="col-3">신고내용</div>
                 <div class="col-3">신고일</div>
-                <div class="col-1">사진</div>
+                <div class="col-1">첨부사진</div>
             </div>
             
             <c:if test="${empty adminReportList }">
@@ -103,7 +103,7 @@
 				                    </div>
 				                    <!-- 모달 바디 - 이미지 표시 -->
 				                    <div class="modal-body">
-				                        <img src="resources/upload/${r.reportPicture}" class="img-fluid" id="modalImage_${r.reportNo}" alt="증거 사진"/>
+				                        <img src="resources/upload/${r.reportPicture}" class="img-fluid" id="modalImage_${r.reportNo}" alt="첨부 사진"/>
 				                        <!-- 이미지가 없을 경우 대체 내용 -->
 				                        <p class="noImageText" style="display: none;">이미지가 없습니다.</p>
 				                    </div>

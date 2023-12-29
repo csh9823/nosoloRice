@@ -44,11 +44,11 @@
             <li class="my-5"><a href="userInquiryList" class="textColor">일반회원 문의</a></li>
             <li class="my-5"><a href="#" class="textColor">사업자회원 문의</a></li>
             <li class="my-5"><a href="adminReportList" class="textColor">신고내역</a></li>
-            <li class="my-5"><a href="#" class="textColor">가입승인</a></li>
+            <li class="my-5"><a href="joinApprove" class="textColor">가입승인</a></li>
             <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제 요청</a></li>
             <li class="my-5"><a href="businessDeleteList" class="textColor">업체삭제</a></li>
             <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
-            <li class="my-5"><a href="#" class="textColor">매출현황</a></li>
+            <li class="my-5"><a href="businessSales" class="textColor">매출현황</a></li>
             <li class="my-5"><a href="noticeList" class="textColor">공지관리</a></li>
           </ul>
         </div>     
@@ -59,86 +59,58 @@
               
               <div class="row py-3">
   					<div class="col">
-			  		<form action="#" id="idSearchForm" name="idSearchForm" method="post">
+			  		<form action="#" id="businessIdSearchForm" name="businessIdSearchForm" method="post">
 				    <div class="col-5 d-flex align-items-center">
-				        <input type="text" id="searchId" name="searchId" placeholder="아이디를 입력해주세요" class="form-control">
+				        <input type="text" id="businessSearchId" name="searchId" placeholder="업체명/사업자 아이디" class="form-control">
 				        <button type="submit" class="btn col-2 mx-3">검색</button>
 				    </div>
 					</form>
 		  	</div>
 		  </div>
-		  
 		  	
 		  	<div class="row py-3 resultRow d-none">
 				<div class="col mx-2 fs-5">
-						아이디 검색결과
+					업체 검색 결과가 출력 될 곳	
 				</div>
 			</div>
+			
 				<div class="row align-items-center justify-content-end text-end py-3 mx-2 resultRow d-none">
-				  	<div class="col text-start">
-				  <span id="resultId"></span>
+				  	<div class="col text-start">	  		
 				  </div>
-				  <div class="col-auto">
-				  		<select class="form-select" id="deniedReason">
-				  			<option value="언어폭력">언어폭력</option>
-				  			<option value="계정도용">계정도용</option>
-				  			<option value="불건전행위">불건전행위</option>
-				  		</select>
+				  <div class="col-auto">	
 				  </div>
-					    <div class="col-auto">
-				        <button type="button" class="btn me-2 deniedBtn" data-day="10" style="background-color:#FFE5CA;">10일 정지</button>
-				        <button type="button" class="btn mx-2 deniedBtn" data-day="30" style="background-color:#FA9884;">30일 정지</button>
-				        <button type="button" class="btn mx-2 deniedBtn" data-day="36500" style="background-color:#C93C3C;">영구 정지</button>
+				</div>		
+					<c:if test="${not empty bList}">
+					<c:forEach var="b" items="${bList}">
+				<div class="row py-5">
+				    <div class="col-md-3">
+				        <img src="resources/upload/${b.businessProfile}" style="max-width: 100%; height: auto;">
 				    </div>
-				</div>
-			
-			
-			<div class="row py-3 fs-5">
-				<div class="col">
-					정지 사용자 리스트
-				</div>
-			</div>
+						    <div class="col-md-3 py-4">
+						        <div class="fs-2">${b.businessName}</div>
+						        <div class="fs-4">${b.name}</div>
+						        <div class="fs-4">${b.phone}</div>
+						        <div class="fs-4">${b.address1} ${b.address2}</div>
+						    </div>
+						    <div class="col-md-6 text-md-end align-self-center">
+						        <input type="button" value="삭제" class="btn btn-lg deleteBtn" style="background-color:#C93C3C; color:white;">
+						    </div>
+						</div>
+				</c:forEach>
+						</c:if>
+    
 
-              <div class="row text-center align-items-center border-top border-bottom py-3">
-                <div class="col-1">번호</div>
-               	<div class="col-2">아이디</div>
-                <div class="col-2">제재 사유</div>
-                <div class="col-3">제재 일시</div>
-                <div class="col-2">제재 결과</div>
-                <div class="col-2">해제하기</div>
-            </div>
-            
-            <div class="row">
-            	<div class="col" id="dListCol">
-            <c:forEach var="d" items="${deniedList}">
-				    <div class="row align-items-center text-center py-3">
-				        <div class="col-1">${d.deniedUserNo}</div>
-				        <div class="col-2">${d.normalId}</div>
-				        <div class="col-2">${d.deniedReason}</div>
-				        <div class="col-3"><fmt:formatDate value="${d.deniedRegDate}" pattern="yyyy-MM-dd" /></div>
-				        <div class="col-2">${d.resultDate()}</div>
-				        <div class="col-2">
-				        	<input type="button" value="해제하기" class="btn">
-				        </div>
-				        </div>
-			</c:forEach>            		
-            	</div>
-            </div>
-
-			
-			
-			
-			</div>
-              </div>     
+			 </div>
+          </div>     
        </div>
-	</div>
+	</div> <!-- container end  -->
 
             
             
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 <script>
  
- $("#idSearchForm").on('submit',function(e){
+/*  $("#idSearchForm").on('submit',function(e){
 	 
 	 e.preventDefault();
 	 
@@ -177,72 +149,21 @@
 		 
 	 });
 	 
-	 
-	 
  });
- 
- 
- $(".deniedBtn").on("click",function(){
-	 	
-	 const day = $(this).attr("data-day");
-	 
-	
-	 
-	 const id = $("#resultId").text();
-	 
-	 const reason = $("#deniedReason").val();
-	 
-	 if(confirm("정지하시겠습니까?")){
-		 
-		 
-		 $.ajax({
-			 
-			 
-			 url : "/app/addDenied",
-			 data : "id=" + id + "&reason=" + reason + "&day=" + day ,
-			 type : "post",
-			 dataType : "json",
-			 success : function(resData){
-				 
-				 $("#dListCol").empty();
-				 
-				 console.log(resData);
-				 
-				 $(resData.deniedList.deniedList).each(function(i,v){
-					 console.log(v);
-					 var regDate = new Date(v.deniedRegDate);
-					 $("#dListCol").append(`<div class="row align-items-center text-center py-3">
-					        <div class="col-1">` + v.deniedUserNo + `</div>
-					        <div class="col-2">` + v.normalId + `</div>
-					        <div class="col-2">` + v.deniedReason + ` </div>
-					        <div class="col-3">` + regDate + `</div>
-					        <div class="col-2">` + v.deniedUnlock + `</div>
-					        <div class="col-2">
-					        	<input type="button" value="해제하기" class="btn">
-					        </div>
-					        </div>`);
-					 
-				 });
-				 
-			 		$("#resultId").text("");
-			 		
-			 		$(".resultRow").each(function(i,v){
-			 			$(v).addClass("d-none");
-			 		});
-				 
-				 
-			 }, error : function(){
-				 console.log("통신에러");
-			 }
-			 
-			 
-		 });
-
-		 
-	 }
-	
-	 
- });
+  */
+  
+  $(".deleteBtn").on('click',function(){
+	  
+	  if(confirm("업체를 삭제하시겠습니까?")){
+			
+			return true;
+			
+		} else {
+			
+			return false;
+		}
+	  
+  });
  
 
  

@@ -18,5 +18,11 @@ public interface NoticeService {
 	public abstract void deleteNotice(int noticeNo);
 	
 	public abstract List<BusinessNotice> BusinessNoticeList();
+	
+	public abstract BusinessNotice getBusinessnotice(int businessNoticeNo);
+	
+	public abstract void updateBusinessNotice(BusinessNotice businessNotice);
+	
+	public abstract void deleteBusinessNotice(int businessNoticeNo);
 
 }
