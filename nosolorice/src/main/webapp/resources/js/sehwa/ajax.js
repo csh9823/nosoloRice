@@ -76,25 +76,28 @@ $(function() {
 
 	$(document).on("click", "#storeSectorUpdateBtn", function() {
 		let id = $("#businessId").val();
-		let sectors = []; 
-		
-		$("input[type='checkbox']:checked").each(function() {
-			sectors.push($(this).val());
+		let sectors = "";
+		let count = 0;
+		$(".selector:checked").each(function() {
+			sectors += $(this).val() + ", ";
+			count ++;
 		}); 
+		console.log(sectors);
 		
 		$.ajax({
 			"url" : "storeSectorUpdateBtn.ajax",
 			"data" : {
 				id : id,
+				count : count,
 				sectors : sectors
 			},
 			"type" : "post", 
-			"dataType" : "json",
+			"dataType" : "text",
 			"success" : function(resData) {
 				console.log(resData);
 			},
 			"error" : function(xhr, status, err) {
-				console.log("err : ", err);
+				console.log("err : ",xhr, "-", err);
 			}
 		});
 	});
@@ -161,9 +164,26 @@ $(function() {
 				console.log("err : ", err);
 			}
 		});
-	
 	});
 	
+	// 기본이미지로 변경하기
+	$(document).on("click", "#changeDefaultImg", function() {
+		let id = $("#businessId").val();
+		$.ajax({
+			"url" : "changeDefaultImg.ajax",
+			"data" : {
+						id : id
+			},
+			"type" : "post",
+			"dataType" : "text",
+			"success" : function(resData) {
+				console.log(resData);
+			},
+			"error" : function(xhr, status, err) {
+				console.log(xhr, "-", err);			
+			}
+		});
+	});
     
 
 	

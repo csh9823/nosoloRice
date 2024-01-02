@@ -26,6 +26,14 @@
 			WHERE 
 				business_id = #{id}
 	</update>
+	
+	<update id="changeDefaultImg">
+		UPDATE business_user
+			SET 
+				business_picture = "defaultImg"
+			WHERE 
+				business_id = #{id}
+	</update>
 
 	<update id="storeDepositUpdate" parameterType="hashMap">
 		UPDATE business_user
@@ -54,9 +62,9 @@
 				business_id = #{id}
 	</update>
 	
-	<select id="getBusinessSectors">
+	<select id="getBusinessSectors" resultType="BusinessSectors">
 		SELECT
-			*
+			sector_no AS sectorsNo
 		FROM business_sector
 			WHERE
 				business_id = #{id}
@@ -68,7 +76,7 @@
 	</insert>
 	
 	<delete id="deleteBusinessSectors">
-		DELETE business_sector
+		DELETE FROM business_sector
 			WHERE
 				business_id = #{id}
 	</delete>
@@ -149,6 +157,30 @@
 				review_no = #{no}
 	</delete>
 	
+	<select id="getNormalUserPass" resultType="string">
+		SELECT 
+			pass 
+		FROM normal_user 
+			WHERE normal_id = #{id}
+	</select>
+	
+	<update id="updateNormalUserInfo" parameterType="NormalUser">
+		UPDATE normal_user
+			SET
+				name = #{name}
+				nickname = #{nickName}
+				pass = #{pass}
+				birth = #{birth}
+				gender = #{gender}
+				mobile = #{mobile}
+				email = #{email}
+				postnum = #{postNum}
+				address1 = #{address1}
+				address2 = #{address2}
+				profile = #{profile}
+			WHERE	
+				normal_id = #{normalId}
+	</update>
 	
 	
 	
@@ -177,9 +209,46 @@
 				AND bookingok_no = #{no}
 	</update>
 	
+	<insert id="rechargePoint" parameterType="hashMap">
+		INSERT INTO point_recharge (normal_id, payment_method, charge_amount, charge_point, charge_date)
+			VALUES(#{id}, #{payment}, #{amount}, #{point}, SYSDATE())
+	</insert>
 	
+	<update id="updateMyPoint">
+		UPDATE normal_user
+			SET
+				mypoint = mypoint  + #{point}
+			WHERE
+				normal_id = #{id}
+	</update>
 	
+	<select id="chargePointList" resultType="PointRecharge">
+		SELECT 
+			point_recharge_no AS pointRechargeNo,
+			normal_id AS normalId,
+			payment_method AS paymentMethod,
+			charge_amount AS chargeAmount,
+			charge_point AS chargePoint,
+			charge_date AS chargeDate
+		FROM point_recharge
+			WHERE 
+				normal_id = #{id}
+			ORDER BY
+				point_recharge_no DESC
+	</select>
 	
+	<select id="usePointList" resultType="PointHistory">
+		SELECT 
+			p.history_date AS historyDate, 
+			p.history_point AS historyPoint,
+			bu.business_name AS businessId, 
+			p.normal_id AS normalId
+		FROM point_history p, business_user bu
+			WHERE 
+				p.business_id = bu.business_id
+    			AND p.normal_id = #{id}
+	</select>
+
 	
 	
 	
@@ -271,5 +340,6 @@
 		<result property="bookingOkNo" column="bookingok_no"/>
 	</resultMap>
 	
+
 	
 </mapper>

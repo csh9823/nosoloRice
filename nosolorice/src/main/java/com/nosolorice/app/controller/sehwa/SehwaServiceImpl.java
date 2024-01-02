@@ -12,8 +12,11 @@ import org.springframework.stereotype.Service;
 import com.nosolorice.app.domain.Review.Review;
 import com.nosolorice.app.domain.booking.Booking;
 import com.nosolorice.app.domain.booking.BookingOk;
+import com.nosolorice.app.domain.businessUser.BusinessSectors;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.domain.normalUser.PointHistory;
+import com.nosolorice.app.domain.normalUser.PointRecharge;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
 
 @Service
@@ -28,15 +31,44 @@ public class SehwaServiceImpl implements SehwaService {
 	}
 
 	@Override
+	public List<BusinessSectors> getBusinessSectors(String id) {
+		return dao.getBusinessSectors(id);
+	};
+	
+	@Override
 	public void businessUserInfoUpdate(BusinessUser user) {
 		dao.businessUserInfoUpdate(user.getBusinessId(), user);
 	}
 
 	@Override
+	public String getNormalUserPass(String id) {
+		return dao.getNormalUserPass(id);
+	};
+	
+	@Override
+	public void normalUserInfoUpdate(NormalUser user) {
+		dao.normalUserInfoUpdate(user);
+	};
+	
+	@Override
+	public void changeDefaultImg(String id) {
+		dao.changeDefaultImg(id);
+	};
+	
+	@Override
 	public void storeDepositUpdate(String id, int deposit) {
 		dao.storeDepositUpdate(id, deposit);
 	}
 
+	@Override
+	public void storeSectorUpdate(String id, int count, int[] sector) {
+		dao.deleteBusinessSectors(id);
+		for(int i=0; i <= count -1 ; i++) {
+			dao.insertBusinessSectors(id, sector[i]);
+			System.out.println("sector[i] : " + sector[i]);
+		}
+	};
+	
 	@Override
 	public void storeTimeUpdate(String id, String openTime, String closeTime, String dayOff, String breakTime) {
 		dao.storeTimeUpdate(id, openTime, closeTime, dayOff, breakTime);
@@ -152,6 +184,24 @@ public class SehwaServiceImpl implements SehwaService {
 	@Override
 	public void deleteReview(int no) {
 		dao.deleteReview(no);
+	}
+
+	@Override
+	public void rechargePoint(String id, String payment, int amount, int point) {
+		// 포인트 충전내역 테이블에 추가
+		dao.rechargePoint(id, payment, amount, point);
+		// 내 포인트금액 추가
+		dao.updateMyPoint(id, point);
+	}
+
+	@Override
+	public List<PointRecharge> chargePointList(String id) {
+		return dao.chargePointList(id);
+	}
+
+	@Override
+	public List<PointHistory> usePointList(String id) {
+		return dao.usePointList(id);
 	}
 	
 	

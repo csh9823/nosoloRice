@@ -295,7 +295,7 @@
               <button type="button" class="gray btn w-100" data-bs-dismiss="modal" style="font-size: 20px;">취소하기</button>
             </div>
             <div class="col text-end">
-              <button type="button" class="blockSubmit red btn w-100" style="font-size: 20px;">신고하기</button>
+              <button type="button" class="blockSubmit red btn w-100" style="font-size: 20px;">차단하기</button>
             </div>
           </div>
         </form>

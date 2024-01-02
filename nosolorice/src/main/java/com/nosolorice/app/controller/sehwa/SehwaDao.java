@@ -9,6 +9,8 @@ import com.nosolorice.app.domain.booking.BookingOk;
 import com.nosolorice.app.domain.businessUser.BusinessSectors;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.domain.normalUser.PointHistory;
+import com.nosolorice.app.domain.normalUser.PointRecharge;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
 
 public interface SehwaDao {
@@ -16,6 +18,12 @@ public interface SehwaDao {
 	public BusinessUser getBusinessUserInfo(String id);
 
 	public void businessUserInfoUpdate(String id, BusinessUser user);
+	
+	public String getNormalUserPass(String id);
+	
+	public void normalUserInfoUpdate(NormalUser user);
+	
+	public void changeDefaultImg(String id);
 	
 	public void storeDepositUpdate(String id, int deposit);
 	
@@ -25,7 +33,7 @@ public interface SehwaDao {
 	
 	public List<BusinessSectors> getBusinessSectors(String id);
 	
-	public void insertBusinessSectors(String id, String sectorsNo);
+	public void insertBusinessSectors(String id, int sectorsNo);
 	
 	public void deleteBusinessSectors(String id);
 	
@@ -54,6 +62,16 @@ public interface SehwaDao {
 	public void visitantBlind(String id, int no);
 	
 	public void deleteReview(int no);
+	
+	public void rechargePoint(String id, String payment, int amount, int point);
+	
+	public void updateMyPoint(String id, int point);
+	
+	public List<PointRecharge> chargePointList(String id);
+	
+	public List<PointHistory> usePointList(String id);
+	
+	
 	
 	
 }

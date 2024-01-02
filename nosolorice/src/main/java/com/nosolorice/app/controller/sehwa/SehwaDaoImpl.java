@@ -15,6 +15,8 @@ import com.nosolorice.app.domain.booking.BookingOk;
 import com.nosolorice.app.domain.businessUser.BusinessSectors;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.domain.normalUser.PointHistory;
+import com.nosolorice.app.domain.normalUser.PointRecharge;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
 
 @Repository
@@ -38,6 +40,23 @@ public class SehwaDaoImpl implements SehwaDao {
 		
 		sqlSession.update(NAME_SPACE + ".businessUserInfoUpdate", params);
 	}
+	
+	@Override
+	public String getNormalUserPass(String id) {
+		String pass = sqlSession.selectOne(NAME_SPACE + ".getNormalUserPass", id);
+		System.out.println("DAO Pass : " + pass);
+		return pass;
+	};
+	
+	@Override
+	public void normalUserInfoUpdate(NormalUser user) {
+		sqlSession.update(NAME_SPACE + ".updateNormalUserInfo", user);
+	};
+	
+	@Override
+	public void changeDefaultImg(String id) {
+		sqlSession.update(NAME_SPACE + ".changeDefaultImg", id);
+	};
 
 	@Override
 	public void storeDepositUpdate(String id, int deposit) {
@@ -75,10 +94,11 @@ public class SehwaDaoImpl implements SehwaDao {
 	}
 
 	@Override
-	public void insertBusinessSectors(String id, String sectorsNo) {
+	public void insertBusinessSectors(String id, int sectorsNo) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", id);
 		params.put("sectorsNo", sectorsNo);
+		System.out.println(sectorsNo);
 		
 		sqlSession.insert(NAME_SPACE + ".insertBusinessSectors", params);
 	}
@@ -176,6 +196,36 @@ public class SehwaDaoImpl implements SehwaDao {
 	@Override
 	public void deleteReview(int no) {
 		sqlSession.delete(NAME_SPACE + ".deleteReview", no);
+	}
+
+	@Override
+	public void rechargePoint(String id, String payment, int amount, int point) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		params.put("payment", payment);
+		params.put("amount", amount);
+		params.put("point", point);
+		
+		sqlSession.insert(NAME_SPACE + ".rechargePoint", params);
+	}
+
+	@Override
+	public void updateMyPoint(String id, int point) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		params.put("point", point);
+		
+		sqlSession.update(NAME_SPACE + ".updateMyPoint", params);
+	}
+
+	@Override
+	public List<PointRecharge> chargePointList(String id) {
+		return sqlSession.selectList(NAME_SPACE + ".chargePointList", id);
+	}
+
+	@Override
+	public List<PointHistory> usePointList(String id) {
+		return sqlSession.selectList(NAME_SPACE + ".usePointList", id);
 	}
 	
 	
