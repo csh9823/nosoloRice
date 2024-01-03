@@ -39,5 +39,15 @@ public class UserDaoImpl implements UserDao {
 		params.put("normalId", normalId);
 		return sqlSession.selectOne(NAME_SPACE + ".getUserInquiryListCount", params);
 	}
+
+	@Override
+	public void addChatRoom(Map<String, Object> map) {
+		sqlSession.insert(NAME_SPACE + ".addChatRoom", map);
+	}
+
+	@Override
+	public void addChatMember(Map<String, Object> map) {
+		sqlSession.insert(NAME_SPACE + ".addChatMember", map);
+	}
 	
 }

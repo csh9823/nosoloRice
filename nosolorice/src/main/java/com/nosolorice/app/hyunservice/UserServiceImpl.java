@@ -54,5 +54,16 @@ public class UserServiceImpl implements UserService {
 			return modelMap;			
 		} else return null;
 	}
+
+	@Override
+	public void addChatRoom(Map<String, Object> map) {
+		userDao.addChatRoom(map);
+	}
+
+	@Override
+	public void addChatMember(Map<String, Object> map) {
+		userDao.addChatMember(map);
+		
+	}
 	
 }
