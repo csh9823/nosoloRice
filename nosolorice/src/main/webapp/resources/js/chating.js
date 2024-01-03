@@ -1,5 +1,7 @@
 $(function(){
 
+	//커밋테스트
+
 	//채팅방 진입시 db의 chat_member테이블에서 로그인한 ID가 있는지 확인.
 	//있으면 room_id의 값을 가져온다.
 	//가져온 room_id를 이용해 chat_room 테이블에서 채팅방의 정보를 가져온다.
