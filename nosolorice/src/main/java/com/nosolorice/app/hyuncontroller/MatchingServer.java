@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -171,12 +173,18 @@ public class MatchingServer {
             data.put("memberCount", memberCount);
             data.put("roomId", roomId);
             data.put("locationMethod", dataMap.get("locationMethod").toString());
-            if(dataMap.get("locationMethod").toString().equals("map")) data.put("centerPoint", centerPoint);
-            else data.put("address", address);
+            if(dataMap.get("locationMethod").toString().equals("map")) data.put("locationInfo", centerPoint);
+            else data.put("locationInfo", address);
+            
+            //Map을 json문자열로 변환
             String jsonData = om.writeValueAsString(data);
+            //변환한 json문자열을 클라이언트에 반환
             for(Session m : matchingMember) {
             	m.getBasicRemote().sendText(jsonData);            	
             }
+            
+
+            
     	}    
     }
     

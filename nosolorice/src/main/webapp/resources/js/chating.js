@@ -1,5 +1,17 @@
 $(function(){
 
+	//채팅방 진입시 db의 chat_member테이블에서 로그인한 ID가 있는지 확인.
+	//있으면 room_id의 값을 가져온다.
+	//가져온 room_id를 이용해 chat_room 테이블에서 채팅방의 정보를 가져온다.
+	//roomId를 이용해 chat_history테이블에서 기존 채팅메시지들을 가져온다
+	//가져온 채팅방정보에서 centerPoint 혹은 address를 이용해 ajax로 가게리스트를 가져온다
+	//가져온 room_id를 이용해 웹소켓채팅서버를 연다 ex)192.168.0.1:8081/app/chat/${roomId}
+	//채팅이 입력되면 db의 chat_history에 저장한다.이때 클라이언트에서 서버로 보내는 메시지객체에 들어갈 타입은(msg, img, info, book) 4가지로 나뉜다.(더 늘어날수도 있음)
+	//예약이 완료되면 book테이블에 정보를 저장하고 예약시간을 기준으로 채팅방 소멸시간을 설정한 후 chat_room테이블에 입력한다.
+	//예약완료여부를 체크하여 완료시 오른쪽에 예약안내 모달을 띄운다. 이 모달을 닫을 수 없다.(아직 고려중...)
+	 
+	
+	
     //... 텍스트 애니메이션
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     const textAnimation1 = async () => {

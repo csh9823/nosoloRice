@@ -397,7 +397,34 @@ $(function(){
 	    
 	    //matching 웹소켓 서버에서 메시지가 왔을 때 이벤트    						
 		socket.addEventListener('message', function(event){
+		    
 		    console.log('서버로부터 메시지 수신:', event.data); // 문자열로 출력
+		    
+		    const messageObj = JSON.parse(event.data);
+		    console.log(messageObj);
+		    
+		    //ajax통신으로 messageObj객체를 서버에 보내 DB작업을 해야함
+		    //1. chat_room테이블에 정보저장
+		    //2. chat_member테이블에 정보저장(이 과정에서 현재 로그인한 유저의 id가 필요함)
+		    $.ajax({
+		    
+		    	url : "/app/matchingComplete",
+		    	contentType: "application/json; charset=utf-8",
+		    	data : event.data,
+		    	type : "post",
+		    	dataType: "json",
+		    	success : function(resData){
+		    		console.log(resData);
+		    	}, error : function(){
+		    		console.log("통신에러");
+		    	}
+		    
+		    });
+		    
+		    //db작업이 끝나면 채팅창으로 이동
+		    //채팅창에서 db를 검색해 자동으로 roomId가 엔드포인트인 웹소켓 서버로 연결 시켜줄거임
+		    location.href="/app/chating"
+		    
 		});
 		
 		//matching 웹소켓 서버에 연결이 끊겼을때 이벤트
@@ -409,9 +436,6 @@ $(function(){
 		$(socket).on('error', function(event) {
 		    console.error('WebSocket 오류:', event);
 		});
-	    
-	    //matching 웹소켓 서버에 메시지를 보내는 메서드
-	    //socket.send("메시지내용");
 	}
 	
 	//Matching 웹소켓 버서 연결해제

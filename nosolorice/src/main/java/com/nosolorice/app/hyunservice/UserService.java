@@ -8,4 +8,7 @@ public interface UserService {
 	
 	public abstract void writeUserInquiry(UserInquiry userInquiry);
 	public abstract Map<String, Object> getUserInquiryList(int pageNum, String normalId);
+	
+	public abstract void addChatRoom(Map<String, Object> map);
+	public abstract void addChatMember(Map<String, Object> map);
 }

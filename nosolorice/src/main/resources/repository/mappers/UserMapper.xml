@@ -14,6 +14,13 @@
 		select count(user_inquiry_no) from user_inquiry where normal_id = #{normalId}
 	</select>
 	
+	<insert id="addChatRoom" parameterType="hashmap">
+		insert into chat_room values(#{roomId}, #{memberCount}, #{locationMethod}, #{locationInfo}, null)	
+	</insert>
+	<insert id="addChatMember" parameterType="hashmap">
+		insert into chat_member values(#{userInfo.id}, #{roomId})
+	</insert>
+	
 	
 	<resultMap type="UserInquiry" id="userInquiryMap">
 		<id property="userInquiryNo" column="user_inquiry_no" />

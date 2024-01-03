@@ -26,33 +26,26 @@ public class BusinessController {
 		this.businessService = businessService;
 	}
 	
+	private final static String DEFAULT_PATH = "/resources/upload/";
 
 	@RequestMapping("businessInquiry")
 	public String businessInquiry(Model model) {
-		return "forward:/WEB-INF/views/businessInquiry.jsp";
+		return "businessInquiry";
 	}
 	
 	@RequestMapping("writeBusinessInquiry")
 	public String writeBusinessInquiry(Model model, BusinessInquiry businessInquiry, 
 			@RequestParam(value="file1", required=false)MultipartFile multipartFile, HttpServletRequest request) throws IllegalStateException, IOException {
-		String defaultPath = "/resources/upload/";	
-		
 		if(!multipartFile.isEmpty()) {
-			String filePath = 
-					request.getServletContext().getRealPath(defaultPath);
-
+			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
 			UUID uid = UUID.randomUUID();
-			String saveName = 
-					uid.toString() + "_" + multipartFile.getOriginalFilename();
-			
+			String saveName = uid.toString() + "_" + multipartFile.getOriginalFilename();
 			File file = new File(filePath, saveName);		
-
 			multipartFile.transferTo(file);
-
 			businessInquiry.setBusinessPicture(saveName);
-		}
+		}		
 		businessService.writeBusinessInquiry(businessInquiry);
-		return "redirect:/WEB-INF/views/businessInquiryList.jsp";
+		return "redirect:/businessInquiryList";
 	}
 	
 	@RequestMapping("businessInquiryList")
@@ -67,7 +60,7 @@ public class BusinessController {
 		
 		model.addAllAttributes(businessService.getBusinessInquiryList(pageNum, businessId));
 		
-		return "forward:/WEB-INF/views/businessInquiryList.jsp";
+		return "businessInquiryList";
 	}
 	
 	@RequestMapping("businessSales")
@@ -80,7 +73,7 @@ public class BusinessController {
 		String businessId = "testBusinessId";
 		
 		model.addAllAttributes(businessService.getDailySalesList(pageNum, businessId));
-		return "forward:/WEB-INF/views/businessSales.jsp";
+		return "businessSales";
 	}
 	
 	@RequestMapping("businessSalesMonth")
@@ -93,7 +86,7 @@ public class BusinessController {
 		String businessId = "testBusinessId";
 		
 		model.addAllAttributes(businessService.getMonthlySalesList(pageNum, businessId));
-		return "forward:/WEB-INF/views/businessSalesMonth.jsp";
+		return "businessSalesMonth";
 	}
 	
 }
