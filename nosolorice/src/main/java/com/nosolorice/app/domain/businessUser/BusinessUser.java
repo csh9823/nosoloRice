@@ -33,8 +33,42 @@ public class BusinessUser {
 	private String okNoOk;				// 가입승인여부
 	private int root; // 권한
 	
-	public BusinessUser() {
+
 	
+	
+	public BusinessUser() {}
+	
+	public BusinessUser(String businessId, String pass, String name, String phone, int businessNumber,
+			String businessName, String businessPicture, String email, String mobile, int postNum, String address1,
+			String address2, String xpoint, String ypoint, String businessProfile, String bankName, int bankNumber,
+			int deposit, String openTime, String closeTime, String breakTime, String dayOff, String introduction,
+			Timestamp regDate, String storeOnoff, String okNoOk) {
+		this.businessId = businessId;
+		this.pass = pass;
+		this.name = name;
+		this.phone = phone;
+		this.businessNumber = businessNumber;
+		this.businessName = businessName;
+		this.businessPicture = businessPicture;
+		this.email = email;
+		this.mobile = mobile;
+		this.postNum = postNum;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.xpoint = xpoint;
+		this.ypoint = ypoint;
+		this.businessProfile = businessProfile;
+		this.bankName = bankName;
+		this.bankNumber = bankNumber;
+		this.deposit = deposit;
+		this.openTime = openTime;
+		this.closeTime = closeTime;
+		this.breakTime = breakTime;
+		this.dayOff = dayOff;
+		this.introduction = introduction;
+		this.regDate = regDate;
+		this.storeOnoff = storeOnoff;
+		this.okNoOk = okNoOk;
 	}
 
 	public String getBusinessId() {
@@ -264,6 +298,7 @@ public class BusinessUser {
 				+ breakTime + ", dayOff=" + dayOff + ", introduction=" + introduction + ", regDate=" + regDate
 				+ ", storeOnoff=" + storeOnoff + ", okNoOk=" + okNoOk + ", root=" + root + "]";
 	}
+
 	
 	
 	

@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 
 public class BookingOk {
 	// 방문/미방문 눌렀을때 insert
-	
 	private int bookingOkNo;					// No
 	private int bookingOkCount;				// 예약인원
 	private String bookingOkRequest;		// 요청사항
@@ -99,9 +98,5 @@ public class BookingOk {
 				+ ", bookingNo=" + bookingNo + ", deposit=" + deposit + ", businessId=" + businessId + ", businessName="
 				+ businessName + "]";
 	}
-
-
-	
-	
 	
 }

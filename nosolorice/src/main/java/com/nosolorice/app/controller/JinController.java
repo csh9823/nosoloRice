@@ -104,6 +104,8 @@ public class JinController {
 		return "login/login";
 	}
 
+	
+	//로그인 하기
 	@RequestMapping("loginservice")
 	public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,
 			HttpServletResponse response,HttpSession session,PrintWriter out) {
@@ -141,8 +143,7 @@ public class JinController {
 			response.addCookie(cookie);
 		}
 
-			return "redirect:idFind";
-		
+			return "redirect:idFind";	
 	}
 
 }

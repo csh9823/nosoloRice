@@ -1,4 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
   <style>
     .darkgray {
       background-color : #2E2E2E !important;
@@ -12,8 +18,11 @@
       color : #C93C3C !important;
     }
   </style>
+</head>
 <body>
-      <div class="col-md-3 darkgray" style="height:100vh;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 darkgray">
         <div class="row">
           <div class="col">
             <div class="row red p-4" onclick="location.href=''">
@@ -46,7 +55,9 @@
           </div>
         </div>
       </div> 
-</body>
+    </div>
+  </div>
+
 
   <script>
     $(document).on("mouseover", ".menu", function() {
@@ -57,3 +68,5 @@
     });
 
   </script>
+</body>
+</html>
