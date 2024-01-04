@@ -119,7 +119,40 @@
 <body>
 <div class="container">
 <div class="row">
-<%@ include file="../../temple/header/businessMenubar.jsp" %>
+        <div class="col-md-3 darkgray" style="height: 100hv;">
+            <div class="row">
+                <div class="col">
+                    <div class="row red p-4" onclick="location.href=''">
+                        <span class="menu fs-4 fw-bold">영업시작</span>
+                    </div>
+                    <div class="menu row p-4" onclick="location.href=''">
+                        <span class="fs-4 fw-bold">업체정보</span>
+                    </div>
+                    <div class="menu row p-4" onclick="location.href=''">
+                        <span class="fs-4 fw-bold">예약관리</span>
+                    </div>
+                    <div class="menu row p-4" onclick="location.href=''">
+                        <span class="fs-4 fw-bold">예약이력</span>
+                    </div>
+                    <div class="menu row p-4" onclick="location.href=''">
+                        <span class="fs-4 fw-bold">리뷰관리</span>
+                    </div>
+                    <div class="menu row p-4" onclick="location.href=''">
+                        <span class="fs-4 fw-bold">메뉴관리</span>
+                    </div>
+                    <div class="menu row p-4" onclick="location.href=''">
+                        <span class="fs-4 fw-bold">탈퇴</span>
+                    </div>
+                    <div class="row p-4 gy-2">
+                        <span onclick="location.href=''">공지사항</span><br>
+                        <span onclick="location.href=''">1:1문의</span><br>
+                        <span onclick="location.href=''">내 정보 수정</span><br>
+                        <span onclick="location.href=''" class="text-red">로그아웃</span><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="col-2" style="border: 1px solid black;">
             <div class="row" style="margin-top: 100px; font-size: 30px; margin-left: 10px; margin-bottom: 40px;">
                 <div class="col" id="menumanagement">메뉴관리</div>
@@ -331,7 +364,7 @@
 
                 <div class="row" style="margin-top: 10px;">
                     <div class="col-4"><strong>가격</strong></div>
-                    <div class="col-8"><input name="menuPrice" id="menuPrice" type="text" style="width: 100%; height: 100%; font-size: 12px;"></div>
+                    <div class="col-8"><input name="menuPrice" id="menuPrice" type="text"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="width: 100%; height: 100%; font-size: 12px;"></div>
                 </div>
 
                 <div class="row" style="margin-top: 10px;">

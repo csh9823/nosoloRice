@@ -232,12 +232,15 @@ public class JinController {
 		return "redirect:BusinessMenu?businessId="+buser.getBusinessId()+"&"+"menuCategoryNo="+menu.getMenuCategoryNo();
 	}
 	
+	
 	// 파일이 없을때 메뉴 등록하기
 	@RequestMapping("Nofilemenuadd")
 	public String Nofilemenuadd(Menu menu,HttpServletRequest request) {
+		
 		// 세견 값 가져오기
 		BusinessUser buser = (BusinessUser) request.getSession().getAttribute("BusinessUser");
 		jinMenuService.Nofilemenuadd(menu);
+		
 		return "redirect:BusinessMenu?businessId="+buser.getBusinessId()+"&"+"menuCategoryNo="+menu.getMenuCategoryNo();
 	}
 }
