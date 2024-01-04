@@ -166,24 +166,6 @@ $(function() {
 		});
 	});
 	
-	// 기본이미지로 변경하기
-	$(document).on("click", "#changeDefaultImg", function() {
-		let id = $("#businessId").val();
-		$.ajax({
-			"url" : "changeDefaultImg.ajax",
-			"data" : {
-						id : id
-			},
-			"type" : "post",
-			"dataType" : "text",
-			"success" : function(resData) {
-				console.log(resData);
-			},
-			"error" : function(xhr, status, err) {
-				console.log(xhr, "-", err);			
-			}
-		});
-	});
     
 
 	

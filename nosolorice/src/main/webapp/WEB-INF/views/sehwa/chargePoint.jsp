@@ -60,30 +60,30 @@
   <div class="container">
   	<input type="hidden" id="id" value="${sessionScope.NormalUser.normalId}">
     <div class="row">
-      <div class="col">
-        <div class="row mb-5">
+      <div class="col-10 offset-1">
+        <div class="row mb-3">
           <div class="col">
-            <h3 class="text-red">충전하기</h3>
+            <h1 class="text-red fw-bold">충전하기</h1>
           </div>
         </div>
         <div class="row">
-        	<div class="col-10 offset-1">
+        	<div class="col">
 		        <div class="row mb-5 payment-radio-btn text-center">
 		        	<div class="col-4">
 		        		<input type="radio" id="신용카드" name="payment" value="danal_tpay.9810030929">
-		        		<label for="card">
+		        		<label for="신용카드">
 		        			<img src="resources/img/payment/cheque-guarantee-card-2103506_1280.jpg" class="w-100">
 		        		</label>
 		        	</div>
 		        	<div class="col-4">
 		        		<input type="radio" id="카카오페이" name="payment" value="kakaopay.TCSUBSCRIP">
-		        		<label for="kakao">
+		        		<label for="카카오페이">
 		        			<img src="resources/img/payment/kakaopay_og_20201217.jpg" class="w-100">
 		        		</label>
 		        	</div>
 		        	<div class="col-4">
 		        		<input type="radio" id="페이코" name="payment" value="payco.AUTOPAY">
-		        		<label for="payco">
+		        		<label for="페이코">
 		        			<img src="resources/img/payment/payco_com.jpg" class="w-100">
 		        		</label>
 		        	</div>

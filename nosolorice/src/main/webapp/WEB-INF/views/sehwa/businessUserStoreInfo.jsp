@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +27,12 @@
 			<input type="hidden" id="businessId" value="${BusinessUser.businessId}">
 		   <div class="row">
 		     <div class="col-4">
-		         <img src="https://via.placeholder.com/150" class="w-100">
+		       <c:if test="${empty BusinessUser.businessProfile}">
+		          <img src="resources/img/profile_img.png" class="preview w-100">      
+	          </c:if>
+	          <c:if test="${not empty BusinessUser.businessProfile}">
+		          <img src="resources/upload/${BusinessUser.businessProfile}" class="preview w-100">
+	          </c:if>
 		     </div>
 		     <div class="col-8">
 		       <div class="row">

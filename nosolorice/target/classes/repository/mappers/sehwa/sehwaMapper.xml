@@ -22,17 +22,26 @@
 				phone = #{user.phone},
 				postNum = #{user.postNum},
 				address1 = #{user.address1},
-				address2 = #{user.address2}
+				address2 = #{user.address2},
+				business_profile = #{user.businessProfile}
 			WHERE 
 				business_id = #{id}
 	</update>
 	
-	<update id="changeDefaultImg">
+	<update id="changeBuserDefaultImg">
 		UPDATE business_user
 			SET 
-				business_picture = "defaultImg"
+				business_profile = NULL
 			WHERE 
 				business_id = #{id}
+	</update>
+
+	<update id="changeNuserDefaultImg">
+		UPDATE normal_user
+			SET 
+				profile = "defaultImg"
+			WHERE 
+				normal_id = #{id}
 	</update>
 
 	<update id="storeDepositUpdate" parameterType="hashMap">
@@ -84,11 +93,14 @@
 	
 	
 	<select id="getCurrentBooking" resultType="int">
-	 	SELECT
-	 		booking_no AS bookingNo
-	 	FROM booking_userlist
-	 		WHERE
-	 			normal_id = #{id}
+		SELECT 
+			bu.booking_no AS bookingNo
+	 	FROM 
+	 		booking_userlist bu, booking b
+	 	WHERE
+			bu.booking_no = b.booking_no
+               AND bu.normal_id = #{id}
+ 			AND booking_state = '대기'
 	</select>
 	
 	<select id="getCurrentBookingMember" parameterType="hashMap" resultType="String">
@@ -119,10 +131,27 @@
 	<select id="getVisitantUserListNo" resultType="int">
 		SELECT
 			bookingok_no
-		FROM visitant_userlist
-			WHERE 
-				normal_id = #{id}
-				AND visitant_blind IS NULL
+		FROM 
+			visitant_userlist
+		WHERE 
+			normal_id = #{id}
+			AND visitant_blind IS NULL
+		ORDER BY
+			bookingok_no DESC
+	</select>
+
+	<select id="getVisitantUserList" resultType="int">
+		SELECT
+			bookingok_no
+		FROM 
+			visitant_userlist
+		WHERE 
+			normal_id = #{id}
+			AND visitant_blind IS NULL
+		ORDER BY
+			bookingok_no DESC
+		LIMIT
+			#{start}, #{PAGE_SIZE}
 	</select>
 	
 	<select id="getVisitantUserListMember" parameterType="hashMap" resultType="string">
@@ -167,16 +196,16 @@
 	<update id="updateNormalUserInfo" parameterType="NormalUser">
 		UPDATE normal_user
 			SET
-				name = #{name}
-				nickname = #{nickName}
-				pass = #{pass}
-				birth = #{birth}
-				gender = #{gender}
-				mobile = #{mobile}
-				email = #{email}
-				postnum = #{postNum}
-				address1 = #{address1}
-				address2 = #{address2}
+				name = #{name},
+				nickname = #{nickName},
+				pass = #{pass},
+				birth = #{birth},
+				gender = #{gender},
+				mobile = #{mobile},
+				email = #{email},
+				postnum = #{postNum},
+				address1 = #{address1},
+				address2 = #{address2},
 				profile = #{profile}
 			WHERE	
 				normal_id = #{normalId}
@@ -237,6 +266,23 @@
 				point_recharge_no DESC
 	</select>
 	
+	<select id="chargePointListPage" parameterType="hashMap" resultType="PointRecharge">
+		SELECT 
+			point_recharge_no AS pointRechargeNo,
+			normal_id AS normalId,
+			payment_method AS paymentMethod,
+			charge_amount AS chargeAmount,
+			charge_point AS chargePoint,
+			charge_date AS chargeDate
+		FROM point_recharge
+			WHERE 
+				normal_id = #{id}
+			ORDER BY
+				point_recharge_no DESC
+			LIMIT
+				#{start}, #{PAGE_SIZE}
+	</select>
+	
 	<select id="usePointList" resultType="PointHistory">
 		SELECT 
 			p.history_date AS historyDate, 
@@ -247,6 +293,20 @@
 			WHERE 
 				p.business_id = bu.business_id
     			AND p.normal_id = #{id}
+	</select>
+	
+	<select id="usePointListPage" parameterType="hashMap" resultType="PointHistory">
+		SELECT 
+			p.history_date AS historyDate, 
+			p.history_point AS historyPoint,
+			bu.business_name AS businessId, 
+			p.normal_id AS normalId
+		FROM point_history p, business_user bu
+			WHERE 
+				p.business_id = bu.business_id
+    			AND p.normal_id = #{id}
+    		LIMIT
+				#{start}, #{PAGE_SIZE}
 	</select>
 
 	

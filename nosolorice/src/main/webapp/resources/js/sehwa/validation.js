@@ -1,8 +1,3 @@
-// 핸드폰인증 API 구현하기
-function verify() {
-	$("#verifyResult").val("true");
-}
-
 // 프로필 이미지 미리보기
  function readImage(input) {
     if(input.files && input.files[0]) {
@@ -16,6 +11,49 @@ function verify() {
 }
 
 $(function() {
+	// 인증 번호를 저장할 변수
+	let verifyNum = "";
+	
+	// 핸드폰 인증
+	$("#verifyBtn").on("click", function() {	
+	 	let mobile1 = $("#mobile1 option:selected").val();
+	 	let mobile2 = $("#mobile2").val();
+	 	let mobile3 = $("#mobile3").val();
+	 	let mobile = mobile1 + mobile2 + mobile3;
+		console.log(mobile);	 
+	 
+	 	$.ajax({
+	 		url : "verifyNumSMS.ajax", 
+	 		data : {
+	 			mobile : "01081313703"
+	 		},
+	 		type : "post",
+	 		"dataType" : "json",
+	 		success : function(resData) {
+	 			console.log(resData.response);
+	 			console.log(resData.num);
+	 			
+	 			verifyNum = resData.num;
+	 		},
+	 		error : function(xhr, status, err) {
+	 			console.log("err : ", xhr, "-", err)
+	 		}
+	 	});
+	 	
+	 	$("#blockVerify").css("display", "block");
+	});
+	$("#inputVerify").on("keyup", function() {
+		if($("#inputVerify").val() == verifyNum) {
+			$("#verifyResult").val("true");
+		}
+		if($("#inputVerify").val() != verifyNum) {
+			$("#verifyResult").val("false");
+		}
+	});
+	
+	
+
+
 	// 비밀번호일치확인(새로운비밀번호)
 	$("#passCheck").on("keyup", function() {
 		if($("#passCheck").val() == $("#pass").val() && $("#passCheck").val().length != 0) {
@@ -25,40 +63,6 @@ $(function() {
 			$("#passCheckResult").css("display", "none");
 		}
 	});
-	
-	// 핸드폰번호 변경 시
-	$("#mobile1, #mobile2, #mobile3").on("change", function() {
-		let id = $("#businessId").val();
-		let mobile1 = $("#mobile1").val();
-		let mobile2 = $("#mobile2").val();
-		let mobile3 = $("#mobile3").val();
-		let inputMobile = mobile1 + "-" + mobile2 + "-" + mobile3;	
-	
-		$.ajax({
-			"url" : "checkBusinessMobile.ajax",
-			"data" : {
-				"id" : id,
-				"inputMobile" : inputMobile
-			},
-			"type" : "post",
-			"dataType" : "text",
-			"success" : function(resData) {
-				console.log(resData);
-				if(resData == 'true') {
-					$("#verifyResult").val(true);
-				} else {
-					$("#verifyResult").val(false);
-				}
-			},
-			"error" : function(xhr, status, err) {
-				console.log("err : ", xhr, err);
-			}
-		});	
-	
-	
-		// $("#verifyResult").val(false);
-	});
-
 
 
 	// 사장님 개인정보 수정
@@ -168,19 +172,14 @@ $(function() {
 			$("#mail").focus();
 			return false;
 		}
-		if($("#postNum").val().length <= 0) {
+		if($("#sample6_postcode").val().length <= 0) {
 			alert("우편번호를 입력해주세요.");
-			$("#postNum").focus();
+			$("#sample6_postcode").focus();
 			return false;
 		}
-		if($("#address1").val().length <= 0) {
-			alert("가게 주소를 입력해주세요.");
-			$("#address1").focus();
-			return false;
-		}
-		if($("#oldPass").val() != $("#rPass").val()) {
-			alert("비밀번호가 일치하지 않습니다.");
-			$("#oldPass").focus();
+		if($("#sample6_address").val().length <= 0) {
+			alert("주소를 입력해주세요.");
+			$("#sample6_address").focus();
 			return false;
 		}
 		if($("#passCheck").val() != $("#pass").val()) {
@@ -188,7 +187,7 @@ $(function() {
 			$("#passCheck").focus();
 			return false;
 		}
-		if($("#verifyResult").val() == "false"){
+		if($("#verifyResult").val() != "true"){
 			alert("핸드폰 인증을 진행해주세요.");
 			return false;
 		}

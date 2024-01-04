@@ -24,6 +24,10 @@ import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
 
+import net.nurigo.sdk.message.model.Message;
+import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+
 @Controller
 public class SehwaController {
 	
@@ -35,9 +39,15 @@ public class SehwaController {
 	
 	@RequestMapping(value="/checkBusinessPass.ajax", method=RequestMethod.POST)
 	@ResponseBody
-	public boolean checkPass(String id, String inputPass) {
+	public boolean checkPass(String id, String inputPass, String type) {
 		boolean isPass = false;
-		String pass = service.getBusinessUserInfo(id).getPass();
+		String pass = "";
+		if(type.equals("business")) {
+			pass = service.getBusinessUserInfo(id).getPass();
+		} else if(type.equals("normal")) {
+			pass = service.getNormalUserInfo(id).getPass();
+		}
+		
 		if (pass.equals(inputPass)) isPass = true;
 		
 		return isPass;
@@ -45,9 +55,15 @@ public class SehwaController {
 	
 	@RequestMapping(value="/checkBusinessMobile.ajax", method=RequestMethod.POST)
 	@ResponseBody
-	public boolean checkMobile(String id, String inputMobile) {
+	public boolean checkMobile(String id, String inputMobile, String type) {
 		boolean isMobile = false;
-		String mobile = service.getBusinessUserInfo(id).getMobile();
+		String mobile = "";
+		if(type.equals("business")) {
+			mobile = service.getBusinessUserInfo(id).getMobile();
+		} else if(type.equals("normal")) {
+			mobile = service.getNormalUserInfo(id).getMobile();
+		}
+		
 		if(mobile.equals(inputMobile)) isMobile = true;
 		
 		return isMobile;
@@ -67,7 +83,8 @@ public class SehwaController {
 					String mobile1, String mobile2, String mobile3, String mail, String domain, 
 					String name, String businessName, String bankName, int bankNumber,
 					String phone1, String phone2, String phone3, int postNum, String address1, 
-					@RequestParam(required = false, defaultValue = "") String address2) {
+					@RequestParam(required = false, defaultValue = "") String address2,
+					HttpServletRequest request) throws IOException {
 		
 		String nPass = oldPass;
 		if(pass != null && !pass.isEmpty()) nPass = pass;
@@ -88,34 +105,44 @@ public class SehwaController {
 		user.setPostNum(postNum);
 		user.setAddress1(address1);
 		user.setAddress2(address2);
+		if(multi != null && !multi.isEmpty()) {
+			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
+			UUID uid = UUID.randomUUID();
+			String saveName = uid.toString() + "_" + multi.getOriginalFilename();
+			File file = new File(filePath, saveName);
+			multi.transferTo(file);
+			user.setBusinessProfile(saveName);
+		}
 		
 		service.businessUserInfoUpdate(user);
 		
-		return "forward:/WEB-INF/views/sehwa/businessUserStoreInfo.jsp";
+		return "redirect:/businessUserStoreInfo?id=testBusinessId";
 	}	
 
 	@RequestMapping(value="/normalUserInfoUpdate", method = RequestMethod.GET)
 	public String normalUserInfoUpdate(Model model, String id) {
-		id = "noraml01";
-		model.addAttribute("rPass", service.getNormalUserPass(id));
+		model.addAttribute("NormalUser", service.getNormalUserInfo(id));
 		
 		return "sehwa/normalUserInfoUpdate";
 	}
 	
 	@RequestMapping(value="/normalUserInfoUpdate", method = RequestMethod.POST)
-	public String normalUserInfoUpdate(String id, String name, String nickName, String oldPass, @RequestParam(required = false) String pass,
+	public String normalUserInfoUpdate(String normalId, String name, String nickName, 
+							String oldPass, @RequestParam(required = false) String pass,
 							int birth1, int birth2, int birth3, String gender,
-							int mobile1, int mobile2, int mobile3, String mail, String domain,
+							String mobile1, String mobile2, String mobile3, String mail, String domain,
 							int postNum, String address1, @RequestParam(required = false) String address2, 
-							@RequestParam("profile") MultipartFile multi) {
+							@RequestParam(value="fileInput", required=false, defaultValue = "defaultImg") MultipartFile multi,
+							HttpServletRequest request) throws IOException {
 
 		String nPass = oldPass;
-		if(pass != null) nPass = pass;
+		if(pass != null && !pass.isEmpty()) nPass = pass;
 		String birth = birth1 + "-" + birth2 + "-" + birth3;
 		String mobile = mobile1 + "-" + mobile2 + "-" + mobile3;
 		String email = mail + domain;
 		
 		NormalUser user = new NormalUser();
+		user.setNormalId(normalId);
 		user.setName(name);
 		user.setNickName(nickName);
 		user.setPass(nPass);
@@ -126,24 +153,24 @@ public class SehwaController {
 		user.setPostNum(postNum);
 		user.setAddress1(address1);
 		user.setAddress2(address2);
-		
-		if(multi != null) {
-			String fileName = "";
-			user.setProfile(fileName);
-		} else {
-			user.setProfile("defaultImg");
+		if(!multi.getOriginalFilename().equals("defaultImg")) {
+			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
+			UUID uid = UUID.randomUUID();
+			String saveName = uid.toString() + "_" + multi.getOriginalFilename();
+			File file = new File(filePath, saveName);
+			multi.transferTo(file);
+			user.setProfile(saveName);
 		}
 		
 		service.normalUserInfoUpdate(user);
 		
-		return "sehwa/normalUserInfoUpdate";
+		return "redirect:/normalUserInfoUpdate?id=" + normalId;
 	}
-	
 	
 	@RequestMapping(value="/changeDefaultImg.ajax", method=RequestMethod.POST)
 	@ResponseBody
-	public void changeDefaultImg(String id) {
-		service.changeDefaultImg(id);
+	public void changeDefaultImg(String id, String type) {
+		service.changeDefaultImg(id, type);
 	}
 	
 	@RequestMapping(value={"/businessUserStoreInfo"}, method=RequestMethod.GET)
@@ -194,12 +221,12 @@ public class SehwaController {
 	}
 	
 	@RequestMapping(value= {"/noramlUserBookingList"}, method=RequestMethod.GET)
-	public String noramlUserBookingList(Model model) {
-		String id = "testNormalId";
+	public String noramlUserBookingList(Model model, String id,
+			@RequestParam(value="pageNum", required = false, defaultValue = "1") int pageNum) {
 		// 현재 예약내역
 		model.addAllAttributes(service.getCurrentBooking(id));
 		// 지난 예약내역
-		model.addAllAttributes(service.getPastBooking(id));
+		model.addAllAttributes(service.getPastBooking(id, pageNum));
 		return "sehwa/noramlUserBookingList";
 	}
 	
@@ -216,7 +243,7 @@ public class SehwaController {
 		review.setReviewScore(starPoint);
 		review.setReviewContent(reviewContent);
 
-		if(multi != null) {
+		if(multi != null && !multi.isEmpty()) {
 			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
 			UUID uid = UUID.randomUUID();
 			String saveName = uid.toString() + "_" + multi.getOriginalFilename();
@@ -227,7 +254,7 @@ public class SehwaController {
 
 		service.insertReview(review);
 		
-		return "redirect:/noramlUserBookingList";
+		return "redirect:/noramlUserBookingList?id=" + reviewNormalUser;
 	}
 	
 	@RequestMapping(value= {"/insertReport.ajax"}, method=RequestMethod.POST)
@@ -263,9 +290,9 @@ public class SehwaController {
 	}
 	
 	@RequestMapping(value="/deleteReview")
-	public String deleteReview(int no) {
+	public String deleteReview(int no, String id) {
 		service.deleteReview(no);
-		return "redirect:/noramlUserBookingList";
+		return "redirect:/noramlUserBookingList?id=" + id;
 	}
 
 	@RequestMapping(value="/chargePoint")
@@ -280,15 +307,15 @@ public class SehwaController {
 	}
 	
 	@RequestMapping("/pointList")
-	public String pointList(Model model, String id) {
-		id = "noraml01";
+	public String pointList(Model model, String id,
+			@RequestParam(value="chargePageNum", required = false, defaultValue = "1") int chargePageNum,
+			@RequestParam(value="usePageNum", required = false, defaultValue = "1") int usePageNum) {
 		// 충전내역 가져오기
-		model.addAttribute("chargePointList", service.chargePointList(id));
+		model.addAllAttributes(service.chargePointList(id, chargePageNum));
 		// 사용내역 가져오기
-		model.addAttribute("usePointList", service.usePointList(id));
+		model.addAllAttributes(service.usePointList(id, usePageNum));
 		return "sehwa/noramlUserPointList";
 	}
-	
-	
+
 	
 }

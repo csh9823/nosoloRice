@@ -22,15 +22,14 @@
   	<div class="col-md-9">
 	    <form class="row" name ="businessUserInfoUpdate" id="businessUserInfoUpdate" 
 	    		action="businessUserInfoUpdate" method="post" enctype="multipart/form-data">
-		  <!-- <input type="hidden" name="rPass" id="rPass" value="${rPass}">  -->
 	      <div class="col-3">
 	        <input type="file" name="fileInput" id="fileInput"  onchange="readImage(this)"  style="display:none;" accept="image/*">
 	        <button style="border : none; background-color: white;" class="w-100" id="clickImg">
-	          <c:if test="${BusinessUser.businessPicture eq 'defaultImg'}">
+	          <c:if test="${empty BusinessUser.businessProfile}">
 		          <img src="resources/img/profile_img.png" class="preview w-100">      
 	          </c:if>
-	          <c:if test="${BusinessUser.businessPicture ne 'defaultImg'}">
-		          <img class="preview w-100">      
+	          <c:if test="${not empty BusinessUser.businessProfile}">
+		          <img src="resources/upload/${BusinessUser.businessProfile}" class="preview w-100">
 	          </c:if>
 	        </button>
 	        <span id="changeDefaultImg" class="text-gray" style="text-decoration: none;">기본이미지로 변경</span>
@@ -60,8 +59,8 @@
 	        </div>
 	        <div class="row mb-3">
 	          <div class="col">
-	            <select class="form-select" name="mobile1">
-	              <option ${BusinessUser.mobile.split('-')[0] == '010' ? 'selected' : ''}>010</option>
+	            <select class="form-select" name="mobile1" id="mobile1">
+	              <option ${BusinessUser.mobile.split('-')[0] == '010' ? 'selected' : ''} selected>010</option>
 	              <option ${BusinessUser.mobile.split('-')[0] == '011' ? 'selected' : ''}>011</option>
 	              <option ${BusinessUser.mobile.split('-')[0] == '016' ? 'selected' : ''}>016</option>
 	              <option ${BusinessUser.mobile.split('-')[0] == '017' ? 'selected' : ''}>017</option>
@@ -78,10 +77,16 @@
 	            			value="${BusinessUser.mobile.split('-')[2]}">
 	          </div>
 	          <div class="col">
-	            <input type="button" id="verifyBtn" class="green btn w-100" value="인증하기" onclick="verify();">
+	            <input type="button" id="verifyBtn" class="green btn w-100" value="인증하기" disabled>
 	            <input type="hidden" id="verifyResult" value="true">
 	          </div>
 	        </div>
+	        <div class="row mb-3" id="blockVerify" style="display: none;">
+	        	<div class="col">
+	        		<input type="text" id="inputVerify" class="form-control">
+	        	</div>
+	        </div>
+	        
 	        <div class="row mb-3">
 	          <div class="col-8">
 	            <input type="text" name="mail" id="mail" class="form-control w-100" value="${BusinessUser.email.split('@')[0]}">
@@ -228,7 +233,8 @@
 			"url" : "checkBusinessPass.ajax",
 			"data" : {
 				"id" : id,
-				"inputPass" : inputPass 
+				"inputPass" : inputPass,
+				"type" : "business"
 			},
 			"type" : "post", 
 			"dataType" : "text",
@@ -246,6 +252,60 @@
 			}
 		});
 	});
+	
+	// 핸드폰번호 변경 시
+	$("#mobile1, #mobile2, #mobile3").on("change", function() {
+		let id = $("#businessId").val();
+		let mobile1 = $("#mobile1").val();
+		let mobile2 = $("#mobile2").val();
+		let mobile3 = $("#mobile3").val();
+		let inputMobile = mobile1 + "-" + mobile2 + "-" + mobile3;	
+	
+		$.ajax({
+			"url" : "checkBusinessMobile.ajax",
+			"data" : {
+				"id" : id,
+				"inputMobile" : inputMobile,
+				"type" : "business"
+			},
+			"type" : "post",
+			"dataType" : "text",
+			"success" : function(resData) {
+				console.log(resData);
+				if(resData == 'true') {
+					$("#verifyResult").val(true);
+				} else {
+					$("#verifyResult").val(false);
+				}
+			},
+			"error" : function(xhr, status, err) {
+				console.log("err : ", xhr, err);
+			}
+		});	
+	});
+	
+	
+	// 기본이미지로 변경하기
+	$(document).on("click", "#changeDefaultImg", function() {
+		let id = $("#businessId").val();
+		$.ajax({
+			"url" : "changeDefaultImg.ajax",
+			"data" : {
+						id : id,
+						type : "businessUser"
+			},
+			"type" : "post",
+			"dataType" : "text",
+			"success" : function(resData) {
+				console.log(resData);
+				$(".preview").attr("src", "resources/img/profile_img.png");
+			},
+			"error" : function(xhr, status, err) {
+				console.log(xhr, "-", err);			
+			}
+		});
+	});
+	
   </script>
   
 </body>

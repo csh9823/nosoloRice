@@ -19,11 +19,9 @@ public interface SehwaDao {
 
 	public void businessUserInfoUpdate(String id, BusinessUser user);
 	
-	public String getNormalUserPass(String id);
-	
 	public void normalUserInfoUpdate(NormalUser user);
 	
-	public void changeDefaultImg(String id);
+	public void changeDefaultImg(String id, String type);
 	
 	public void storeDepositUpdate(String id, int deposit);
 	
@@ -46,6 +44,8 @@ public interface SehwaDao {
 	public NormalUser getNormalUserInfo(String id);
 	
 	public List<Integer> getVisitantUserListNo(String id);
+
+	public List<Integer> getVisitantUserListNo(String id, int start, int PAGE_SIZE);
 	
 	public List<String> getVisitantUserListMember(int no, String id);
 	
@@ -68,9 +68,12 @@ public interface SehwaDao {
 	public void updateMyPoint(String id, int point);
 	
 	public List<PointRecharge> chargePointList(String id);
+
+	public List<PointRecharge> chargePointList(String id, int start, int PAGE_SIZE);
 	
 	public List<PointHistory> usePointList(String id);
 	
+	public List<PointHistory> usePointList(String id, int start, int PAGE_SIZE);
 	
 	
 	

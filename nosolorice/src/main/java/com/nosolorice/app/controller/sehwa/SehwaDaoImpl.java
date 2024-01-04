@@ -42,20 +42,17 @@ public class SehwaDaoImpl implements SehwaDao {
 	}
 	
 	@Override
-	public String getNormalUserPass(String id) {
-		String pass = sqlSession.selectOne(NAME_SPACE + ".getNormalUserPass", id);
-		System.out.println("DAO Pass : " + pass);
-		return pass;
-	};
-	
-	@Override
 	public void normalUserInfoUpdate(NormalUser user) {
 		sqlSession.update(NAME_SPACE + ".updateNormalUserInfo", user);
 	};
 	
 	@Override
-	public void changeDefaultImg(String id) {
-		sqlSession.update(NAME_SPACE + ".changeDefaultImg", id);
+	public void changeDefaultImg(String id, String type) {
+		if(type.equals("normalUser")) {
+			sqlSession.update(NAME_SPACE + ".changeNuserDefaultImg", id);
+		} else if(type.equals("businessUser")) {
+			sqlSession.update(NAME_SPACE + ".changeBuserDefaultImg", id);
+		}
 	};
 
 	@Override
@@ -143,6 +140,16 @@ public class SehwaDaoImpl implements SehwaDao {
 	}
 
 	@Override
+	public List<Integer> getVisitantUserListNo(String id, int start, int PAGE_SIZE) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		params.put("start", start);
+		params.put("PAGE_SIZE", PAGE_SIZE);
+		
+		return sqlSession.selectList(NAME_SPACE + ".getVisitantUserList", params);
+	};
+	
+	@Override
 	public List<String> getVisitantUserListMember(int no, String id) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("no", no);
@@ -222,12 +229,31 @@ public class SehwaDaoImpl implements SehwaDao {
 	public List<PointRecharge> chargePointList(String id) {
 		return sqlSession.selectList(NAME_SPACE + ".chargePointList", id);
 	}
+	
+	@Override
+	public List<PointRecharge> chargePointList(String id, int start, int PAGE_SIZE) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		params.put("start", start);
+		params.put("PAGE_SIZE", PAGE_SIZE);
+		
+		return sqlSession.selectList(NAME_SPACE + ".chargePointListPage", params);
+	}
 
 	@Override
 	public List<PointHistory> usePointList(String id) {
 		return sqlSession.selectList(NAME_SPACE + ".usePointList", id);
 	}
 	
+	@Override
+	public List<PointHistory> usePointList(String id, int start, int PAGE_SIZE) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		params.put("start", start);
+		params.put("PAGE_SIZE", PAGE_SIZE);
+		
+		return sqlSession.selectList(NAME_SPACE + ".usePointListPage", params);
+	}
 	
 	
 	

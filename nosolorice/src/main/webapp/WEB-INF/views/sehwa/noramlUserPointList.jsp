@@ -7,6 +7,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+  .pagination .page-item.active .page-link {
+    background-color: #FA9884;
+    border-color: #FA9884;
+    color: #fff; 
+   }
+
+   .pagination .page-link {
+    color: #C93C3C;
+   }
+
+   .pagination .page-link:hover {
+    color: #fff; 
+    background-color: #C93C3C;
+    border-color: #C93C3C;
+   }
+
+</style>
 </head>
 <body>
   <div class="container">
@@ -65,19 +83,31 @@
           <div class="col">
             <nav aria-label="Page navigation example">
               <ul class="pagination justify-content-center">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
+                <c:if test="${chargeStartPage > chargePAGE_GROUP}">
+			    	<li class="page-item">
+			    		<a class="page-link" 
+			    			href="pointList?id=${sessionScope.NormalUser.normalId}&chargePageNum=${chargeStartPage - chargePAGE_GROUP}&usePageNum=${usePageNum}">Pre</a>
+			    	</li>
+			    </c:if>
+                <c:forEach var="i" begin="${chargeStartPage}" end="${chargeEndPage}">
+			    	<c:if test="${ i == chargePageNum}">
+					    <li class="page-item active" aria-current="page">
+					    	<span class="page-link">${i}</span>
+					    </li>
+				    </c:if>
+				    <c:if test="${ i != chargePageNum}">
+					    <li class="page-item">
+					    	<a class="page-link" 
+					    		href="pointList?id=${sessionScope.NormalUser.normalId}&chargePageNum=${i}&usePageNum=${usePageNum}">${i}</a>
+					    </li>
+				    </c:if>
+			    </c:forEach>
+                <c:if test="${chargeEndPage < chargePageCount}">
+			    	<li class="page-item">
+			    		<a class="page-link" 
+			    			href="pointList?id=${sessionScope.NormalUser.normalId}&chargePageNum=${chargeEndPage + 1}&usePageNum=${usePageNum}">Next</a>
+			    	</li>
+			    </c:if>
               </ul>
             </nav>
           </div>
@@ -130,19 +160,31 @@
           <div class="col">
             <nav aria-label="Page navigation example">
               <ul class="pagination justify-content-center">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
+                <c:if test="${chargeStartPage > chargePAGE_GROUP}">
+			    	<li class="page-item">
+			    		<a class="page-link" 
+			    			href="pointList?id=${sessionScope.NormalUser.normalId}&chargePageNum=${chargePageNum}&usePageNum=${useStartPage - usePAGE_GROUP}">Pre</a>
+			    	</li>
+			    </c:if>
+                <c:forEach var="i" begin="${chargeStartPage}" end="${chargeEndPage}">
+			    	<c:if test="${ i == chargePageNum}">
+					    <li class="page-item active" aria-current="page">
+					    	<span class="page-link">${i}</span>
+					    </li>
+				    </c:if>
+				    <c:if test="${ i != chargePageNum}">
+					    <li class="page-item">
+					    	<a class="page-link" 
+					    		href="pointList?id=${sessionScope.NormalUser.normalId}&chargePageNum=${chargePageNum}&usePageNum=${i}">${i}</a>
+					    </li>
+				    </c:if>
+			    </c:forEach>
+                <c:if test="${chargeEndPage < chargePageCount}">
+			    	<li class="page-item">
+			    		<a class="page-link" 
+			    			href="pointList?id=${sessionScope.NormalUser.normalId}&chargePageNum=${chargePageNum}&usePageNum=${useEndPage + 1}">Next</a>
+			    	</li>
+			    </c:if>
               </ul>
             </nav>
           </div>
