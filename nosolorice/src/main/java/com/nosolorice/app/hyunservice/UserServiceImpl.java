@@ -70,8 +70,6 @@ public class UserServiceImpl implements UserService {
 		userDao.addChatMember(map);
 		
 	}
-<<<<<<< HEAD
-=======
 
 	@Override
 	public Map<String, Object> chatMemberCheck(String id) {
@@ -124,6 +122,5 @@ public class UserServiceImpl implements UserService {
 	public List<Menu> getMenuList(String businessId) {
 		return userDao.getMenuList(businessId);
 	}
->>>>>>> branch 'KimDaehyun' of https://github.com/csh9823/nosoloRice.git
 	
 }

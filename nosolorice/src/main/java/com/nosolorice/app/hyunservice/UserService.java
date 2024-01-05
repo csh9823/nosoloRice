@@ -17,9 +17,7 @@ public interface UserService {
 	
 	public abstract void addChatRoom(Map<String, Object> map);
 	public abstract void addChatMember(Map<String, Object> map);
-<<<<<<< HEAD
-=======
-	
+
 	public abstract Map<String, Object> chatMemberCheck(String id);
 	public abstract void addChatMessage(ChatHistory chatHistory);
 	
@@ -30,5 +28,5 @@ public interface UserService {
 	
 	public abstract List<Review> getReviewList(String businessId);
 	public abstract List<Menu> getMenuList(String businessId);
->>>>>>> branch 'KimDaehyun' of https://github.com/csh9823/nosoloRice.git
+
 }

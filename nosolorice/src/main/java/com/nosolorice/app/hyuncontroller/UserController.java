@@ -3,10 +3,7 @@ package com.nosolorice.app.hyuncontroller;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-<<<<<<< HEAD
-=======
 import java.util.List;
->>>>>>> branch 'KimDaehyun' of https://github.com/csh9823/nosoloRice.git
 import java.util.Map;
 import java.util.UUID;
 
@@ -22,13 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-<<<<<<< HEAD
-=======
 import com.nosolorice.app.domain.Review.Review;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.businessUser.Menu;
 import com.nosolorice.app.domain.normalUser.ChatHistory;
->>>>>>> branch 'KimDaehyun' of https://github.com/csh9823/nosoloRice.git
 import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.domain.normalUser.UserInquiry;
 import com.nosolorice.app.hyunservice.UserService;
@@ -175,6 +169,4 @@ public class UserController {
 		System.out.println("컨트롤러에서 businessId : " + businessId);
 		return userService.getMenuList(businessId);
 	}
-	
->>>>>>> branch 'KimDaehyun' of https://github.com/csh9823/nosoloRice.git
 }

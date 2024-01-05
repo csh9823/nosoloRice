@@ -227,9 +227,7 @@ SELECT
 	   <result property="businessId" column="business_id"/>
 	   <result property="bookingOkNo" column="bookingok_no"/>
 	   <result property="reviewRequestRegDate" column="review_request_regdate"/>
-	</resultMap>
->>>>>>> branch 'KimDaehyun' of https://github.com/csh9823/nosoloRice.git
-	
+	</resultMap>	
 	
 	<resultMap type="UserInquiry" id="userInquiryMap">
 		<id property="userInquiryNo" column="user_inquiry_no" />
