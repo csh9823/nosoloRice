@@ -152,7 +152,7 @@
 	        		
             <c:if test="${empty deniedList }">
             
-            <span class="d-flex justify-content-center align-items-center" style="height: 10vh;">정지된 아이디가 없습니다.</span>
+            <span class="d-flex justify-content-center align-items-center resultRow" style="height: 10vh;">정지된 아이디가 없습니다.</span>
             
             </c:if>    
 
