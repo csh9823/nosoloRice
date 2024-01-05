@@ -15,23 +15,7 @@
 				<!-- 여기서부터 작업 시작 -->
 				
 				<div class="row">
-					<div class="col-3 bg-dark d-flex flex-column justify-content-center align-items-center" style="min-height:100vh;">
-						<ul class="text-white ls-none fs-3" style="list-style: none">
-							<li>영업시작</li>
-							<li>업체정보</li>
-							<li>예약관리</li>
-							<li>예약이력</li>
-							<li>리뷰관리</li>
-							<li>메뉴관리</li>
-							<li>탈퇴</li>
-						</ul>
-						<ul class="text-white fs-5" style="list-style: none">
-							<li>공지사항</li>
-							<li>1:1문의</li>
-							<li>내 정보수정</li>
-							<li>로그아웃</li>
-						</ul>
-					</div>
+					<%@ include file="../temple/header/businessMenubar.jsp" %>
 					<div class="col bg-white">
 					
 						<div class="row mx-2 mt-5">

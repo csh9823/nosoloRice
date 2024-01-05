@@ -1,0 +1,139 @@
+.receiveChat, .receiveChat2 {
+    position:relative;
+    width:auto;
+    height:auto;
+    background:#d4fff3;
+    border-radius: 10px;
+}
+.receiveChat:after {
+    content:"";
+    border-top: 16px solid #d4fff3;
+    border-left: 25px solid transparent;
+    border-right: 0px solid transparent;
+    border-bottom: 0px solid transparent;
+    position: absolute;
+    top: 15px;
+    left: -18px;
+}
+
+.sendChat, .sendChat2 {
+    position:relative;
+    background:#ffd4d4;
+    border-radius: 10px;
+}
+.sendChat:after {
+    content:"";
+    border-top: 16px solid #ffd4d4;
+    border-left: 0px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 0px solid transparent;
+    position: absolute;
+    top: 15px;
+    right: -18px;
+}
+#chatStoreSearchInput::placeholder {
+    text-align: center;
+    color: #aaa;
+}
+#chatStoreSearchInput:focus::placeholder, #chatStoreSearchInput:hover::placeholder{
+    color:black;
+}
+#chatStoreSortSelect{
+    color: #aaa;
+}
+#chatStoreSortSelect:focus, #chatStoreSortSelect:hover{
+    color: black;
+    border: 1px solid black !important;
+}
+#chatStoreSearchBtn{
+    font-size: 2em;
+    color: #aaa;
+}
+#chatStoreSearchBtn:hover{
+    color: black;
+}
+#chatStoreSearchDiv {
+    border-bottom: 1px solid #aaa;
+}
+.tooltip-inner {
+    /* 툴팁 박스 색깔 */
+    /* background-color: #3DB78B; */
+    color: #fff;
+}
+#chatContainer {
+    box-shadow: 0 0 40px 0px rgb(214, 214, 214);
+    z-index: 1;
+}
+#storeDetailModal {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0%;
+    left: 0%;
+    background-color: white;
+    z-index: 2;
+    box-shadow: 0 0 40px 0px rgb(214, 214, 214);
+}
+#storeDetailModalCloseBtn {
+    position: absolute;
+    top: 8px;;
+    right: 8px;
+    cursor: pointer;
+}
+.storeDetailModalBtn {
+    cursor: pointer;
+    color: white;
+    font-size: 1.2em;
+    font-weight: 600;
+    opacity: 0.7;
+    transition: opacity 0.5s ease-in-out;
+}
+.storeDetailModalBtn:hover {
+    opacity: 1;
+}
+#storeDetailModalHomeBtn {
+    background-color: rgb(255, 150, 0);
+}
+#storeDetailModalMenuBtn {
+    background-color: rgb(255, 100, 0);
+}
+#storeDetailModalReviewBtn {
+    background-color: rgb(255, 50, 0);
+}
+#storeDetailModalBookBtn {
+    background-color: rgb(255, 0, 0);
+}
+.storeDetailMenuCategoryRow {
+    cursor: pointer;
+}
+.storeDetailMenuCategoryRow:hover {
+    background-color: #efefef;
+}
+#userConfigBox {
+    position: absolute;
+}
+#reportModal {
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    top : 0;
+    left : 0;
+    box-shadow: 0 0 40px 0px rgb(214, 214, 214);
+}
+#blockModal, #reportCompleteModal, #blockCompleteModal, #chatRoomQuitModal, #bookModal {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 40px 0px rgb(214, 214, 214);
+}
+#reportCompleteModal, #blockCompleteModal {
+    z-index: 4;
+}
+#bookModal {
+    z-index: 2;
+}

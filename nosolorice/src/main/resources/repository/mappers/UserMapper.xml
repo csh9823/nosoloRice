@@ -15,11 +15,220 @@
 	</select>
 	
 	<insert id="addChatRoom" parameterType="hashmap">
-		insert into chat_room values(#{roomId}, #{memberCount}, #{locationMethod}, #{locationInfo}, null)	
+		insert into chat_room values(#{roomId}, #{memberCount}, #{locationMethod}, #{locationInfo}, null) ON DUPLICATE KEY UPDATE room_id = room_id
 	</insert>
 	<insert id="addChatMember" parameterType="hashmap">
-		insert into chat_member values(#{userInfo.id}, #{roomId})
+		insert into chat_member values(#{id}, #{roomId})
 	</insert>
+	
+	<select id="chatMemberCheck" resultType="int">
+		select count(normal_id) from normal_user where normal_id = #{id} 
+	</select>
+	
+	<select id="getRoomId" resultType="String">
+		select room_id as roomId from chat_member where normal_id = #{id}
+	</select>
+	
+	<select id="getChatHistory" resultType="ChatHistory">
+		select 
+		chat_history.chat_no as chatNo, 
+		chat_history.normal_id as normalId, 
+		normal_user.nickname as nickName, 
+		chat_history.chat_name as chatName, 
+		chat_history.chat_type as chatType, 
+		chat_history.chat_message as chatMessage, 
+		chat_history.chat_regdate as chatRegDate 
+		from chat_history  
+		JOIN 
+    	normal_user ON chat_history.normal_id = normal_user.normal_id 
+		where chat_name = #{roomId}
+	</select>
+	
+	<select id="getChatRoomInfo" resultType="java.util.Map">
+		select 
+		room_id as roomId,
+		member_count as memberCount,
+		location_method as locationMethod,
+		location_info as locationInfo,
+		expiry_time as expiryTime
+		from chat_room where room_id = #{roomId}
+	</select>
+	
+	<insert id="addChatMessage" parameterType="ChatHistory">
+		insert into chat_history values(null, #{normalId}, #{chatName}, #{chatType}, #{chatMessage}, now())
+	</insert>
+	
+	<select id="isMatchingCheck" resultType="int">
+		select count(normal_id) as count from chat_member where normal_id = #{id}
+	</select>
+	
+	<select id="getStoreListByMap" resultType="BusinessUser">
+SELECT
+	b.business_id as businessId, 
+	b.name, 
+	b.phone, 
+	b.business_number as businessNumber, 
+	b.business_name as businessName, 
+	b.business_picture as businessPicture, 
+	b.email, 
+	b.mobile, 
+	b.postnum as postNum, 
+	b.address1, 
+	b.address2, 
+	b.xpoint, 
+	b.ypoint, 
+	b.business_profile as businessProfile, 
+	b.bank_name as bankName, 
+	b.bank_number as bankNumber, 
+	b.deposit, 
+	b.open_time as openTime, 
+	b.close_time as closeTime, 
+	b.break_time as breakTime, 
+	b.day_off as dayOff, 
+	b.introduction as introduction, 
+	b.regdate as regDate, 
+	b.store_onoff as storeOnoff, 
+	b.ok_nook as okNoOk, 
+	b.root,
+	6371 * 2 * ASIN(SQRT(
+        POWER(SIN((RADIANS(xpoint) - RADIANS(#{lat})) / 2), 2) +
+        COS(RADIANS(#{lat})) * COS(RADIANS(xpoint)) *
+        POWER(SIN((RADIANS(ypoint) - RADIANS(#{lng})) / 2), 2)
+    )) AS distance, 
+	AVG(r.review_score) AS totalScore, 
+    COUNT(r.business_id) AS totalReviewCount 
+	FROM business_user b 
+	LEFT JOIN
+    review r ON b.business_id = r.business_id 
+	GROUP BY
+    b.business_id,
+    b.name,
+    b.phone,
+    b.business_number,
+    b.business_name,
+    b.business_picture,
+    b.email,
+    b.mobile,
+    b.postnum,
+    b.address1,
+    b.address2,
+    b.xpoint,
+    b.ypoint,
+    b.business_profile,
+    b.bank_name,
+    b.bank_number,
+    b.deposit,
+    b.open_time,
+    b.close_time,
+    b.break_time,
+    b.day_off,
+    b.introduction,
+    b.regdate,
+    b.store_onoff,
+    b.ok_nook,
+    b.root
+	ORDER BY distance
+	</select>
+	
+
+	
+	<select id="getStoreListByAddress" resultType="BusinessUser">
+	SELECT
+	b.business_id as businessId, 
+	b.name, 
+	b.phone, 
+	b.business_number as businessNumber, 
+	b.business_name as businessName, 
+	b.business_picture as businessPicture, 
+	b.email, 
+	b.mobile, 
+	b.postnum as postNum, 
+	b.address1, 
+	b.address2, 
+	b.xpoint, 
+	b.ypoint, 
+	b.business_profile as businessProfile, 
+	b.bank_name as bankName, 
+	b.bank_number as bankNumber, 
+	b.deposit, 
+	b.open_time as openTime, 
+	b.close_time as closeTime, 
+	b.break_time as breakTime, 
+	b.day_off as dayOff, 
+	b.introduction as introduction, 
+	b.regdate as regDate, 
+	b.store_onoff as storeOnoff, 
+	b.ok_nook as okNoOk, 
+	b.root,
+	AVG(r.review_score) AS totalScore, 
+    COUNT(r.business_id) AS totalReviewCount 
+	FROM business_user b 
+	LEFT JOIN
+    review r ON b.business_id = r.business_id 
+    WHERE 
+    b.address1 = #{address} 
+	GROUP BY
+    b.business_id,
+    b.name,
+    b.phone,
+    b.business_number,
+    b.business_name,
+    b.business_picture,
+    b.email,
+    b.mobile,
+    b.postnum,
+    b.address1,
+    b.address2,
+    b.xpoint,
+    b.ypoint,
+    b.business_profile,
+    b.bank_name,
+    b.bank_number,
+    b.deposit,
+    b.open_time,
+    b.close_time,
+    b.break_time,
+    b.day_off,
+    b.introduction,
+    b.regdate,
+    b.store_onoff,
+    b.ok_nook,
+    b.root
+	ORDER BY regdate
+	</select>
+	
+	<select id="getReviewList" resultMap="reviewResultMap">
+		select * from review where business_id = #{businessId}
+	</select>
+	
+	<select id="getMenuList" resultType="Menu">
+		SELECT 
+		menu.menu_no as menuNo, 
+		menu.menu_name as menuName, 
+		menu.menu_price as menuPrice, 
+		menu.menu_info as menuInfo, 
+		menu.menu_origin as menuOrigin, 
+		menu.menu_picture as menuPicture, 
+		menu_category.menu_category_name as menuCategoryName 
+		FROM menu
+		JOIN menu_category ON menu.menu_category_no = menu_category.menu_category_no
+		WHERE menu_category.business_id = #{businessId}; 
+	</select>
+
+	<resultMap id="reviewResultMap" type="Review">
+	   <id property="reviewNo" column="review_no"/>
+	   <result property="reviewContent" column="review_content"/>
+	   <result property="reviewPicture" column="review_picture"/>
+	   <result property="reviewScore" column="review_score"/>
+	   <result property="regDate" column="regdate"/>
+	   <result property="reviewBlind" column="review_blind"/>
+	   <result property="reviewDelete" column="review_delete"/>
+	   <result property="normalId" column="normal_id"/>
+	   <result property="businessId" column="business_id"/>
+	   <result property="bookingOkNo" column="bookingok_no"/>
+	   <result property="reviewRequestRegDate" column="review_request_regdate"/>
+	</resultMap>
+>>>>>>> branch 'KimDaehyun' of https://github.com/csh9823/nosoloRice.git
 	
 	
 	<resultMap type="UserInquiry" id="userInquiryMap">

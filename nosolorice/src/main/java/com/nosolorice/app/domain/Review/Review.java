@@ -8,16 +8,29 @@ public class Review {
 	private String reviewContent;		// 리뷰내용
 	private String reviewPicture;			// 리뷰사진파일
 	private int reviewScore;				// 별점
-	private String reviewId;				// 작성자 아이디
+	private String reviewId;				// 작성자 아이디 (사용x)
 	private Timestamp regDate;					// 리뷰 등록일
 	private String reviewBlind;			// 리뷰 블라인드 상태
 	private String reviewDelete;			// 리뷰 삭제요청 상태
 	private String normalId;				// 유저아이디 ==> 작성자 아이디 있는데???
-	private String businessId;				// 사업자아이디	
-	private int BookingokNo; //
-	private Timestamp ReviewRequestRegdate;
-	public Review() {
+	private int bookingOkNo;
+	private String businessId;
 	
+	
+	public Review() {
+		
+	}
+
+	public Review(int reviewNo, String reviewContent, String reviewPicture, int reviewScore, String reviewId, Timestamp regDate, String reviewBlind, String reviewDelete, String normalId) {
+		this.reviewNo = reviewNo;
+		this.reviewContent = reviewContent;
+		this.reviewPicture = reviewPicture;
+		this.reviewScore = reviewScore;
+		this.reviewId = reviewId;
+		this.regDate = regDate;
+		this.reviewBlind = reviewBlind;
+		this.reviewDelete = reviewDelete;
+		this.normalId = normalId;
 	}
 
 	public int getReviewNo() {
@@ -91,6 +104,15 @@ public class Review {
 	public void setNormalId(String normalId) {
 		this.normalId = normalId;
 	}
+	
+	
+	public int getBookingOkNo() {
+		return bookingOkNo;
+	}
+
+	public void setBookingOkNo(int bookingOkNo) {
+		this.bookingOkNo = bookingOkNo;
+	}
 
 	public String getBusinessId() {
 		return businessId;
@@ -100,29 +122,13 @@ public class Review {
 		this.businessId = businessId;
 	}
 
-	public int getBookingokNo() {
-		return BookingokNo;
-	}
-
-	public void setBookingokNo(int bookingokNo) {
-		BookingokNo = bookingokNo;
-	}
-
-		
-	public Timestamp getReviewRequestRegdate() {
-		return ReviewRequestRegdate;
-	}
-
-	public void setReviewRequestRegdate(Timestamp reviewRequestRegdate) {
-		ReviewRequestRegdate = reviewRequestRegdate;
-	}
-
 	@Override
 	public String toString() {
 		return "Review [reviewNo=" + reviewNo + ", reviewContent=" + reviewContent + ", reviewPicture=" + reviewPicture
 				+ ", reviewScore=" + reviewScore + ", reviewId=" + reviewId + ", regDate=" + regDate + ", reviewBlind="
-				+ reviewBlind + ", reviewDelete=" + reviewDelete + ", normalId=" + normalId + ", businessId="
-				+ businessId + ", BookingokNo=" + BookingokNo + ", ReviewRequestRegdate=" + ReviewRequestRegdate + "]";
+				+ reviewBlind + ", reviewDelete=" + reviewDelete + ", normalId=" + normalId + "]";
 	}
+
+	
 	
 }

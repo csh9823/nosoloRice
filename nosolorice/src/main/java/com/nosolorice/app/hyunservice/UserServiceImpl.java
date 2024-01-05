@@ -7,6 +7,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nosolorice.app.domain.Review.Review;
+import com.nosolorice.app.domain.businessUser.BusinessUser;
+import com.nosolorice.app.domain.businessUser.Menu;
+import com.nosolorice.app.domain.normalUser.ChatHistory;
+import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.domain.normalUser.UserInquiry;
 import com.nosolorice.app.hyundao.UserDao;
 
@@ -65,5 +70,60 @@ public class UserServiceImpl implements UserService {
 		userDao.addChatMember(map);
 		
 	}
+<<<<<<< HEAD
+=======
+
+	@Override
+	public Map<String, Object> chatMemberCheck(String id) {
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		boolean isChatMember = userDao.chatMemberCheck(id);
+		String roomId = userDao.getRoomId(id);
+		if(roomId != null) {
+			List<ChatHistory> chatHistory = userDao.getChatHistory(roomId);
+			Map<String, Object> chatRoomInfo = userDao.getChatRoomInfo(roomId);
+			map.put("chatHistory", chatHistory);
+			map.put("chatRoomInfo", chatRoomInfo);
+		}
+		
+		map.put("isChatMember", isChatMember);
+		map.put("roomId", roomId);
+		
+		return map;
+	}
+
+	@Override
+	public void addChatMessage(ChatHistory chatHistory) {
+		userDao.addChatMessage(chatHistory);
+	}
+
+	@Override
+	public boolean isMatchingCheck(String id) {
+		System.out.println("서비스에서 id : " + id);
+		System.out.println("서비스에서 result : " + userDao.isMatchingCheck(id));
+		return userDao.isMatchingCheck(id);
+	}
+
+	@Override
+	public List<BusinessUser> getStoreListByMap(double lat, double lng) {
+		return userDao.getStoreListByMap(lat, lng);
+	}
+
+	@Override
+	public List<BusinessUser> getStoreListByAddress(String address) {
+		return userDao.getStoreListByAddress(address);
+	}
+
+	@Override
+	public List<Review> getReviewList(String businessId) {
+		return userDao.getReviewList(businessId);
+	}
+
+	@Override
+	public List<Menu> getMenuList(String businessId) {
+		return userDao.getMenuList(businessId);
+	}
+>>>>>>> branch 'KimDaehyun' of https://github.com/csh9823/nosoloRice.git
 	
 }
