@@ -17,6 +17,7 @@ public class Menu {
 	public Menu() {
 		
 	}
+	
 	public int getMenuNo() {
 		return menuNo;
 	}
