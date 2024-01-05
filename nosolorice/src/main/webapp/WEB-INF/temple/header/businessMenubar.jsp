@@ -13,7 +13,7 @@
     }
   </style>
 <body>
-      <div class="col-md-3 darkgray" style="height: 100hv;">
+      <div class="col-md-3 darkgray" style="height:100vh;">
         <div class="row">
           <div class="col">
             <div class="row red p-4" onclick="location.href=''">
@@ -46,7 +46,8 @@
           </div>
         </div>
       </div> 
-</body>      
+</body>
+
   <script>
     $(document).on("mouseover", ".menu", function() {
       $(this).css("opacity", "30%");
