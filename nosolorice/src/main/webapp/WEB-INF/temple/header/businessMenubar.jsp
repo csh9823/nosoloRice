@@ -19,7 +19,7 @@
             <div class="row red p-4" onclick="location.href=''">
               <span class="menu fs-4 fw-bold">영업시작</span>
             </div>
-            <div class="menu row p-4" onclick="location.href=''">
+            <div class="menu row p-4" onclick="location.href='businessUserStoreInfo?id=${sessionScope.BusinessUser.businessId}'">
               <span class="fs-4 fw-bold">업체정보</span>
             </div>
             <div class="menu row p-4" onclick="location.href=''">
@@ -40,7 +40,7 @@
             <div class="row p-4 gy-2">
               <span onclick="location.href=''">공지사항</span><br>
               <span onclick="location.href=''">1:1문의</span><br>
-              <span onclick="location.href=''">내 정보 수정</span><br>
+              <span onclick="location.href='businessUserInfoUpdate?id=${sessionScope.BusinessUser.businessId}'">내 정보 수정</span><br>
               <span onclick="location.href=''" class="text-red">로그아웃</span><br>
             </div>
           </div>

@@ -13,6 +13,7 @@
       background: #979797;
       border-radius: .4em;
       padding: 5px;
+      z-index: 10;
     }
 
     .hover:after {
@@ -27,16 +28,33 @@
       border-top: 0;
       margin-left: -10px;
       margin-top: -10px;
+      z-index: 10;
     }
    .reviewCSS {
       display: none;
     }
+   .pagination .page-item.active .page-link {
+    background-color: #FA9884;
+    border-color: #FA9884;
+    color: #fff; 
+   }
+
+   .pagination .page-link {
+    color: #C93C3C;
+   }
+
+   .pagination .page-link:hover {
+    color: #fff; 
+    background-color: #C93C3C;
+    border-color: #C93C3C;
+   }
+    
   </style>
 
 </head>
 <body>
   <div class="container">
-  <input type="hidden" id="loginId" value="testNormalId">
+  <input type="hidden" id="loginId" value="${sessionScope.NormalUser.normalId}">
     <div class="row">
       <div class="col">
         <div class="row mb-3">
@@ -118,17 +136,17 @@
 		                  	<input type="hidden" class="bookingNo" value="${bookingList.no}">
 		                  	<input type="hidden" class="visitantTime" value="${bookingList.bookingTime}">
 		                  	<input type="button" value="${bookingList.reviewStatus ? '리뷰보기' : '리뷰쓰기'}"
-		                  			class="${bookingList.reviewStatus ? 'reviewDropDownBtn' : 'reviewModalBtn'} green btn btn-sm" 
-		                  			${bookingList.reviewStatus ? '' : 'data-bs-toggle="modal" data-bs-target="#reviewModal"'} data-no="01">
+		                  			class="${bookingList.reviewStatus ? 'reviewDropDownBtn salmon' : 'reviewModalBtn green'}  btn btn-sm" 
+		                  			${bookingList.reviewStatus ? '' : 'data-bs-toggle="modal" data-bs-target="#reviewModal"'} data-no="${bookingList.no}">
 		                  </td>
 		                  <td>
 		                    <!-- 참여자 반복출력 -->
 		                    <c:forEach var="member" items="${bookingList.normalUser}"  varStatus="loop">
-			                    <div style="display: inline-block;" class="bookingMember" data-id="${member.normalId}">
+			                    <div style="display: inline-block;" class="bookingMember" data-id="${member.normalId}" data-b="${bookingList.no}">
 			                      <div style="position: relative;">
 			                        <span>${member.nickName}${!loop.last ? ", " : "" }</span>
 			                      </div>
-			                      <div class="hover mt-2" data-hover="${member.normalId}" style="display:none; position: absolute;">
+			                      <div class="hover mt-2" data-hover="${member.normalId}${bookingList.no}" style="display:none; position: absolute;">
 			                        <button style="text-decoration: none; font-size: 14px; color: black; border: none; background-color: #979797;"
 			                                data-bs-toggle="modal" data-bs-target="#reportModal" class="reportBtn" 
 			                                data-id="${member.normalId}" data-name="${member.nickName}">
@@ -152,14 +170,19 @@
 		                    </button>
 		                  </td>
 		                </tr>
-		                <tr class="reviewBox reviewCSS border-top border-bottom text-start" data-review="01">
+		                <tr class="reviewBox reviewCSS border-top border-bottom text-start" data-review="${bookingList.no}">
 		                  <td colspan="6">
 		                    <div class="row mb-3">
 		                      <div class="col">
 		                        <div class="row">
 		                          <div class="col-auto">
 		                            <div class="profile-box-50">
-		                              <img src="https://via.placeholder.com/150" class="profile-img">
+		                              <c:if test="${sessionScope.NormalUser.profile eq 'defaultImg'}">
+								          <img src="" class="profile-img">      
+							          </c:if>
+							          <c:if test="${sessionScope.NormalUser.profile ne 'defaultImg'}">
+								          <img src="resources/upload/${sessionScope.NormalUser.profile}" class="profile-img">
+							          </c:if>    
 		                            </div>
 		                          </div>
 		                          <div class="col-auto">
@@ -181,7 +204,9 @@
 		                    <div class="row">
 		                      <div class="col-9">
 		                      	<pre>${bookingList.review.reviewContent}</pre>
-		                        <img src="resources/upload/${bookingList.review.reviewPicture}" alt="리뷰사진" class="w-100">
+		                      	<c:if test="${not empty bookingList.review.reviewPicture}">
+			                        <img src="resources/upload/${bookingList.review.reviewPicture}" alt="리뷰사진" class="w-100">
+		                      	</c:if>
 		                      </div>
 		                        <div class="col-3" style="position: relative;">
 			                        <input type="button" value="리뷰삭제" class="reviewDeleteBtn green btn btn-sm" 
@@ -202,23 +227,36 @@
           <div class="col">
             <nav aria-label="Page navigation example">
               <ul class="pagination justify-content-center">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
+			  	<c:if test="${startPage > pageGroup}">
+			    	<li class="page-item">
+			    		<a class="page-link" 
+			    			href="noramlUserBookingList?id=${sessionScope.NormalUser.normalId}&pageNum=${startPage - pageGroup}">Pre</a>
+			    	</li>
+			    </c:if>
+                <c:forEach var="i" begin="${startPage}" end="${endPage}">
+			    	<c:if test="${ i == pageNum}">
+					    <li class="page-item active" aria-current="page">
+					    	<span class="page-link">${i}</span>
+					    </li>
+				    </c:if>
+				    <c:if test="${ i != pageNum}">
+					    <li class="page-item">
+					    	<a class="page-link" 
+					    		href="noramlUserBookingList?id=${sessionScope.NormalUser.normalId}&pageNum=${i}">${i}</a>
+					    </li>
+				    </c:if>
+			    </c:forEach>
+                <c:if test="${endPage < pageCount}">
+			    	<li class="page-item">
+			    		<a class="page-link" 
+			    			href="noramlUserBookingList?id=${sessionScope.NormalUser.normalId}&pageNum=${endPage + 1}">Next</a>
+			    	</li>
+			    </c:if>
               </ul>
             </nav>
           </div>
         </div>
+        
       </div>
     </div>
   </div>
@@ -233,7 +271,7 @@
         </div>
         <div class="modal-body">
           <form name="reportModalForm" id="reportModalForm" enctype="multipart/form-data">
-          	<input type="hidden" name="reporter" id="reporter" value="testNormalId">
+          	<input type="hidden" name="reporter" id="reporter" value="${sessionScope.NormalUser.normalId}">
           	<input type="hidden" name="attacker" id="attacker" class="attacker">
             <div style="border: 1px solid black; border-radius: 5%; padding: 20px; margin-bottom: 10px;">
               <textarea name="reportContent" id="reportContent" rows="10" cols="50" style="border: none;"></textarea><br>
@@ -285,7 +323,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form id="blockForm" class="modal-body text-center">
-        	<input type="hidden" name="blocker" id="blocker" value="testNormalId">
+        	<input type="hidden" name="blocker" id="blocker" value="${sessionScope.NormalUser.normalId}">
           	<input type="hidden" name="blockAttacker" id="blockAttacker" class="blockAttacker">
           <span class="blockAttackerId fs-3 fw-bold">아이디</span>
           <spans>님을<br>정말 차단하시겠습니까?</span><br>
@@ -295,7 +333,7 @@
               <button type="button" class="gray btn w-100" data-bs-dismiss="modal" style="font-size: 20px;">취소하기</button>
             </div>
             <div class="col text-end">
-              <button type="button" class="blockSubmit red btn w-100" style="font-size: 20px;">신고하기</button>
+              <button type="button" class="blockSubmit red btn w-100" style="font-size: 20px;">차단하기</button>
             </div>
           </div>
         </form>
@@ -324,7 +362,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <form name="reviewModalForm" id="reviewModalForm" class="modal-content"
       			action="insertReview" method="post" enctype="multipart/form-data">
-      	<input type="hidden" name="reviewNormalUser" id="reviewNormalUser" class="reviewNormalUser" value="testNormalId">
+      	<input type="hidden" name="reviewNormalUser" id="reviewNormalUser" class="reviewNormalUser" value="${sessionScope.NormalUser.normalId}">
         <input type="hidden" name="reviewBusinessUser" id="reviewBusinessUser" class="reviewBusinessUser">
         <input type="hidden" name="reviewBookingNo" id="reviewBookingNo" class="reviewBookingNo">
         <input  type="hidden" name="starPoint" class="starPoint">
@@ -374,11 +412,17 @@
   	// hover (신고/차단)
     $(document).on("mouseover", ".bookingMember", function() {
       let bookingMember = $(this).data('id');
-      $(".hover[data-hover='" + bookingMember + "']").css("display","block");
+      let bNo = $(this).data('b');
+      let data = bookingMember + bNo;
+      
+      $(".hover[data-hover='" +data + "']").css("display","block");
     });
     $(document).on("mouseleave", ".bookingMember", function() {
       let bookingMember = $(this).data('id');
-      $(".hover[data-hover='" + bookingMember + "']").css("display","none");
+      let bNo = $(this).data('b');
+      let data = bookingMember + bNo;
+      
+      $(".hover[data-hover='" + data + "']").css("display","none");
     });
     
     // 리뷰쓰기 버튼 눌렀을때
@@ -394,13 +438,14 @@
     	let format = year + "/" + month + "/" + day + " " + hour + ":" + minute;
     	$(".reviewModalVisitantDate").text(format);
     	// 상호명 보이기
-    	let businessName = $(".visitantBusinessName").text();
+    	let businessName = $(this).closest('tr').find('.visitantBusinessName').text();
+    	// let businessName = $(".visitantBusinessName").text();
     	$(".reviewModalVisitantName").text(businessName);
     	// 사업자 아이디 연결하기
     	let businessId = $(this).parents().find(".businessId").val();
     	$(".reviewBusinessUser").val(businessId);
     	// 방문관리번호 연결하기
-    	let bookingOkNo = $(this).parents().find(".visitantBookingOkNo").text();
+    	let bookingOkNo = $(this).closest('tr').find(".visitantBookingOkNo").text();
     	$(".reviewBookingNo").val(bookingOkNo);
     });
     
@@ -460,7 +505,8 @@
     // 리뷰 삭제버튼 눌렀을 때
     $(document).on("click", ".reviewDeleteBtn", function() {
     	let no = $(this).data("no");
-    	location.href="deleteReview?no=" + no;
+    	let id = $("#loginId").val();
+    	location.href="deleteReview?no=" + no + "&id=" + id;
     });
     
     
