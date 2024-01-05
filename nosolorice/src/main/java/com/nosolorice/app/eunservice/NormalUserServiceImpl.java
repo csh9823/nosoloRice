@@ -1,4 +1,4 @@
-package com.nosolorice.app.eunservice;
+package com.nosolorice.app.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +11,8 @@ import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.service.DefaultMessageService;
+
+
 
 @Service
 public class NormalUserServiceImpl implements NormalUserService {
@@ -39,27 +41,28 @@ public class NormalUserServiceImpl implements NormalUserService {
 
 		normalUserDao.addNormalUser(normalUser);
 	}
-	   @Override
-	   public void normalPhoneCheck(String phone, String numStr) {
-	      
-	      System.out.println("certifiedPhoneNumber" + phone +"인증번호 : " + numStr);
-	      
-	      DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCS9KK7TUTOME4MO", "PTWS3OHSRCMQFQRNYHJOHHJAQ6NSQCUM", "https://api.coolsms.co.kr");
-	       
-	      Message message = new Message();
-	      message.setFrom("01040969353");
-	      message.setTo(phone);
-	      message.setText("인증번호는"+numStr+"입니다.");
-	       
-	      try {
-	           messageService.send(message);
-	         } catch (NurigoMessageNotReceivedException exception) {   
-	           // 발송에 실패한 메시지 목록을 확인할 수 있습니다!
-	           System.out.println(exception.getFailedMessageList());
-	           System.out.println(exception.getMessage());
-	         } catch (Exception exception) {
-	           System.out.println(exception.getMessage());
-	         }
-	            
-	      }
+	
+	@Override
+	public void normalPhoneCheck(String phone, String numStr) {
+		
+		System.out.println("certifiedPhoneNumber" + phone +"인증번호 : " + numStr);
+		
+		DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCS9KK7TUTOME4MO", "PTWS3OHSRCMQFQRNYHJOHHJAQ6NSQCUM", "https://api.coolsms.co.kr");
+		 
+		Message message = new Message();
+		message.setFrom("01040969353");
+		message.setTo(phone);
+		message.setText("인증번호는"+numStr+"입니다.");
+	    
+		try {
+			  messageService.send(message);
+			} catch (NurigoMessageNotReceivedException exception) {	
+			  // 발송에 실패한 메시지 목록을 확인할 수 있습니다!
+			  System.out.println(exception.getFailedMessageList());
+			  System.out.println(exception.getMessage());
+			} catch (Exception exception) {
+			  System.out.println(exception.getMessage());
+			}
+			   
+		}
 }
