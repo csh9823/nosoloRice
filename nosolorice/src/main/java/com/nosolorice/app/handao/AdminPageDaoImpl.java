@@ -140,6 +140,7 @@ Map<String, Object> map = new HashMap<String, Object>();
 	@Override
 	public int getDeniedUserCount() {
 		
+		
 		return sqlSession.selectOne(Mapper + ".getDeniedUserCount");
 	}
 
