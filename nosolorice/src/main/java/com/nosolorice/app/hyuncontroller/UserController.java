@@ -33,7 +33,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("userInquiryList")
-	public String businessInquiryList(Model model, @RequestParam(required=false, defaultValue="1") int pageNum, HttpSession session) {
+	public String userInquiryList(Model model, @RequestParam(required=false, defaultValue="1") int pageNum, HttpSession session) {
 		
 		/*
 		 * BusinessUser bUser = (BusinessUser)session.getAttribute("businessUser");

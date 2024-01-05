@@ -26,6 +26,7 @@ public class BusinessController {
 		this.businessService = businessService;
 	}
 	
+	private final static String DEFAULT_PATH = "/resources/upload/";
 
 	@RequestMapping("businessInquiry")
 	public String businessInquiry(Model model) {
@@ -35,22 +36,14 @@ public class BusinessController {
 	@RequestMapping("writeBusinessInquiry")
 	public String writeBusinessInquiry(Model model, BusinessInquiry businessInquiry, 
 			@RequestParam(value="file1", required=false)MultipartFile multipartFile, HttpServletRequest request) throws IllegalStateException, IOException {
-		String defaultPath = "/resources/upload/";	
-		
 		if(!multipartFile.isEmpty()) {
-			String filePath = 
-					request.getServletContext().getRealPath(defaultPath);
-
+			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
 			UUID uid = UUID.randomUUID();
-			String saveName = 
-					uid.toString() + "_" + multipartFile.getOriginalFilename();
-			
+			String saveName = uid.toString() + "_" + multipartFile.getOriginalFilename();
 			File file = new File(filePath, saveName);		
-
 			multipartFile.transferTo(file);
-
 			businessInquiry.setBusinessPicture(saveName);
-		}
+		}		
 		businessService.writeBusinessInquiry(businessInquiry);
 		return "redirect:/businessInquiryList";
 	}
