@@ -150,6 +150,7 @@ public class JinController {
 			return "redirect:BusinessMenu?businessId="+buser.getBusinessId();
 		}
 		
+		
 		if(nuser != null) {
 			System.out.println(nuser.getNormalId());
 			session.setAttribute("NormalUser", nuser);
