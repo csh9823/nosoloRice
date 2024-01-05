@@ -17,7 +17,7 @@ public interface UserDao {
 	
 	public abstract void addChatRoom(Map<String, Object> map);
 	public abstract void addChatMember(Map<String, Object> map);
-	
+
 	public abstract boolean chatMemberCheck(String id);
 	
 	public abstract String getRoomId(String id);

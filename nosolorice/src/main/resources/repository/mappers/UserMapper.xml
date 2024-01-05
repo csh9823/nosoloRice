@@ -227,8 +227,7 @@ SELECT
 	   <result property="businessId" column="business_id"/>
 	   <result property="bookingOkNo" column="bookingok_no"/>
 	   <result property="reviewRequestRegDate" column="review_request_regdate"/>
-	</resultMap>
-	
+	</resultMap>	
 	
 	<resultMap type="UserInquiry" id="userInquiryMap">
 		<id property="userInquiryNo" column="user_inquiry_no" />

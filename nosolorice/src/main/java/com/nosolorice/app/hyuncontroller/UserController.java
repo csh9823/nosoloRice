@@ -93,7 +93,6 @@ public class UserController {
 	@RequestMapping("matchingComplete")
 	@ResponseBody
 	public Map<String, Boolean> matchingComplete(@RequestBody Map<String, Object> requestMap, HttpSession session){
-		
 		NormalUser userInfo = (NormalUser)session.getAttribute("NormalUser");		
 		requestMap.put("id", userInfo.getNormalId());
 		userService.addChatRoom(requestMap);
@@ -170,5 +169,4 @@ public class UserController {
 		System.out.println("컨트롤러에서 businessId : " + businessId);
 		return userService.getMenuList(businessId);
 	}
-	
 }
