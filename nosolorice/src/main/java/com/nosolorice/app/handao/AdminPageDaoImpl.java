@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.nosolorice.app.domain.Review.Review;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
+import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
 @Repository
 public class AdminPageDaoImpl implements AdminPageDao {
@@ -29,7 +30,12 @@ public class AdminPageDaoImpl implements AdminPageDao {
 	@Override
 	public List<ReportDetails> reportList(int start,int num) {
 		
-		return sqlSession.selectList(Mapper +".reportList");
+Map<String, Object> map = new HashMap<String, Object>();
+		
+			map.put("start", start);
+			map.put("num", num);
+		
+		return sqlSession.selectList(Mapper +".reportList",map);
 	}
 
 	@Override
@@ -40,8 +46,13 @@ public class AdminPageDaoImpl implements AdminPageDao {
 
 	@Override
 	public List<Review> reviewList(int start,int num) {
+		
+Map<String, Object> map = new HashMap<String, Object>();
+		
+			map.put("start", start);
+			map.put("num", num);
 	
-		return sqlSession.selectList(Mapper +".reviewList");
+		return sqlSession.selectList(Mapper +".reviewList",map);
 	}
 
 	@Override
@@ -53,13 +64,30 @@ public class AdminPageDaoImpl implements AdminPageDao {
 	@Override
 	public List<DeniedUser> deniedList(int start, int num) {
 		
-		return sqlSession.selectList(Mapper + ".deniedList");
+Map<String, Object> map = new HashMap<String, Object>();
+		
+			map.put("start", start);
+			map.put("num", num);
+		
+		return sqlSession.selectList(Mapper + ".deniedList",map);
 	}
 
 	@Override
-	public String searchId(String id) {
+	public NormalUser searchId(String id) {
 		
-		return sqlSession.selectOne(Mapper + ".searchId",id);
+		Map<String,Object> map = new HashMap<>();
+		
+		
+		map.put("id",id);
+		
+		return sqlSession.selectOne(Mapper + ".searchId",map);
+	}
+	
+	@Override
+	public BusinessUser searchBusinessId(String id){
+
+		return sqlSession.selectOne(Mapper + ".searchBusinessId",id);
+		
 	}
 
 	@Override
@@ -70,6 +98,7 @@ public class AdminPageDaoImpl implements AdminPageDao {
 		map.put("id", id);
 		map.put("reason", reason);
 		map.put("day", day);
+		System.out.println("denied : " + id);
 		
 
 		sqlSession.insert(Mapper + ".addDenied",map);
@@ -91,10 +120,55 @@ public class AdminPageDaoImpl implements AdminPageDao {
 	}
 
 	@Override
-	public List<BusinessUser> businessDeleteList() {
+	public List<BusinessUser> businessDeleteList(int start,int num) {
 		
-		return sqlSession.selectList(Mapper + ".businessDelete");
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("start", start);
+		map.put("num", num);
+		List<BusinessUser> list = sqlSession.selectList(Mapper + ".businessDeleteList",map);
+	
+			return list;
 	}
+
+	@Override
+	public int getReviewCount() {
+		
+		return sqlSession.selectOne(Mapper + ".getReviewCount");
+	}
+
+	@Override
+	public int getDeniedUserCount() {
+		
+		return sqlSession.selectOne(Mapper + ".getDeniedUserCount");
+	}
+
+	@Override
+	public int getBusinessDeleteCount() {
+		
+		return sqlSession.selectOne(Mapper + ".getBusinessDeleteCount");
+	}
+
+	@Override
+	public NormalUser normalUser(String id) {
+	
+		return sqlSession.selectOne(Mapper + ".getNormalUser",id);
+	}
+
+	@Override
+	public void reviewDelete(int reviewNo) {
+			
+		sqlSession.delete(Mapper+".reviewDelete",reviewNo);
+	
+	}
+
+	@Override
+	public void businessDelete(String id) {
+
+		sqlSession.delete(Mapper + ".businessDelete",id);
+		
+	}
+
 	
 	
 

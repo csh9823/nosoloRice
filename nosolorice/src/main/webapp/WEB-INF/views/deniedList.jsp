@@ -30,6 +30,21 @@
     * {
       font-family: 'SUITE Variable', sans-serif;
     }
+     .pagination .page-item.active .page-link {
+    background-color: #FA9884;
+    border-color: #FA9884;
+    color: #fff; 
+	}
+
+	.pagination .page-link {
+    color: #C93C3C;
+	}
+
+	.pagination .page-link:hover {
+    color: #fff; 
+    background-color: #C93C3C;
+    border-color: #C93C3C;
+	}
   
 </style>
 </head>
@@ -76,7 +91,11 @@
 			</div>
 				<div class="row align-items-center justify-content-end text-end py-3 mx-2 resultRow d-none">
 				  	<div class="col text-start">
-				  <span id="resultId"></span>
+				  <img style="width:50px; height:50px; border-radius: 50%;" id="searchProfileImg">
+				  <span id="resultNickName" class="fs-5"></span>
+				  <span class="fs-5">(</span>
+				  <span id="resultId" class="fs-5"></span> 
+				  <span class="fs-5">)</span>
 				  </div>
 				  <div class="col-auto">
 				  		<select class="form-select" id="deniedReason">
@@ -108,8 +127,10 @@
                 <div class="col-2">해제하기</div>
             </div>
             
+           
             <div class="row">
             	<div class="col" id="dListCol">
+            	<c:if test="${not empty deniedList}">		
             <c:forEach var="d" items="${deniedList}">
 				    <div class="row align-items-center text-center py-3">
 				        <div class="col-1">${d.deniedUserNo}</div>
@@ -124,17 +145,59 @@
 				  		</form>
 				        </div>
 				        </div>
-			</c:forEach>            		
+				</c:forEach>
+				</c:if>
             	</div>
-            </div>
+            </div>			
+	        		
+            <c:if test="${empty deniedList }">
+            
+            <span class="d-flex justify-content-center align-items-center" style="height: 10vh;">정지된 아이디가 없습니다.</span>
+            
+            </c:if>    
 
-			
-			
-			
+            		<c:if test="${not empty deniedList}">
+            		 <div class="row my-5">
+				<div class="col">
+					<nav aria-label="Page navigation">
+					  <ul class="pagination justify-content-center">
+					
+					  	<c:if test="${ startPage > PG }">
+						    <li class="page-item">
+						      <a class="page-link" href="deniedList?pageNum=${ startPage - PG }">Pre</a>
+						    </li>
+					    </c:if>
+
+					    <c:forEach var="i" begin="${startPage}" end="${endPage}">
+			   			 
+					    	<c:if test="${i == currentPage }">
+					    	<li class="page-item active" aria-current="page">
+					    		<span class="page-link">${i}</span>
+					    	</li>
+					    	</c:if>
+					    	<c:if test="${i != currentPage }">
+						    	<li class="page-item">
+						    		<a class="page-link" href="deniedList?pageNum=${i}">${i}</a>
+						    	</li>
+						    </c:if>					    
+					    </c:forEach>
+					    
+				
+						<c:if test="${ endPage < pageCount }">
+						    <li class="page-item">
+						      <a class="page-link" href="deniedList?pageNum=${ startPage + PG }">Next</a>
+						    </li>
+					  	</c:if>
+					  </ul>
+					</nav>
+				</div>
 			</div>
-              </div>     
-       </div>
-	</div>
+  		</c:if>
+      </div>
+  </div>
+</div>
+</div>     
+
 
             
             
@@ -150,11 +213,23 @@
 	 $.ajax({
 		 
 		 url : "/app/searchId",
-		 data : "id=" + id,
+		 data :  "id=" + id,
+		 type : "post",
 		 dataType : "json",
 		 success : function(resData){
 		 	if(resData.result){
+		 		
+		 		console.log(resData);
+		 		
+		 		let nickName = resData.searchUserInfo.nickName;
+		 		
+		 		let profile = resData.searchUserInfo.profile;
+		 			
+		 		$("#resultNickName").text(nickName);
+		 		
 		 		$("#resultId").text(id);
+		 		
+		 		$("#searchProfileImg").attr("src", "resources/upload/"+profile);
 		 		
 		 		$(".resultRow").each(function(i,v){
 		 			$(v).removeClass("d-none");
@@ -163,6 +238,7 @@
 		 	} else{
 		 			 		
 		 		alert("이미 정지된 회원이거나 없는 아이디입니다.");
+		 		
 		 		$("#resultId").text("");
 		 		
 		 		$(".resultRow").each(function(i,v){
@@ -228,7 +304,9 @@
 
 					 let regDate = new Date(v.deniedRegDate);
 					 
-					 let formatDate = regDate.getFullYear() + '-' + String(regDate.getMonth() + 1).padStart(2,'0') + '-' + String(regDate.getDate()).padStart(2,'0');
+					 let formatDate = regDate.getFullYear() + '-' + String(regDate.getMonth() + 1).padStart(2,'0') + '-' 
+					 
+					 + String(regDate.getDate()).padStart(2,'0');
 					 
 					 let mill = v.deniedUnlock / (24 * 60 * 60 * 1000);
 					 const now = regDate.getTime() / (24 * 60 * 60 * 1000);
@@ -240,7 +318,7 @@
 						        <div class="col-2">` + v.normalId + `</div>
 						        <div class="col-2">` + v.deniedReason + ` </div>
 						        <div class="col-3">` + formatDate + `</div>
-						        <div class="col-2">` + result + `일 정지</div>
+						        <div class="col-2">` + (parseInt(result) > 100 ? "영구정지" : result+"일 정지") + `</div>
 						        <div class="col-2">
 						        <form action="deleteDeniedUser" method="post" >
 					        	<input type="hidden" name="deniedUserNo" value=` + parseInt(v.deniedUserNo) + `>

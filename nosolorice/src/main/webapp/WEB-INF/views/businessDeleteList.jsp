@@ -14,6 +14,7 @@
   <script src="resources/js/summernote-ko-KR.js"></script>
   <script src="resources//js/summerNote.js"></script>
   <link rel="stylesheet" href="resources/js/summernote-lite.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- Axios CDN -->
   <style>
     .btn {
       background-color: #3DB78B;
@@ -30,6 +31,21 @@
     * {
       font-family: 'SUITE Variable', sans-serif;
     }
+     .pagination .page-item.active .page-link {
+    background-color: #FA9884;
+    border-color: #FA9884;
+    color: #fff; 
+	}
+
+	.pagination .page-link {
+    color: #C93C3C;
+	}
+
+	.pagination .page-link:hover {
+    color: #fff; 
+    background-color: #C93C3C;
+    border-color: #C93C3C;
+	}
   
 </style>
 </head>
@@ -60,48 +76,108 @@
               <div class="row py-3">
   					<div class="col">
 			  		<form action="#" id="businessIdSearchForm" name="businessIdSearchForm" method="post">
-				    <div class="col-5 d-flex align-items-center">
+				    <div class="col-5 py-5 d-flex align-items-center">
 				        <input type="text" id="businessSearchId" name="searchId" placeholder="업체명/사업자 아이디" class="form-control">
 				        <button type="submit" class="btn col-2 mx-3">검색</button>
 				    </div>
 					</form>
 		  	</div>
 		  </div>
-		  	
-		  	<div class="row py-3 resultRow d-none">
-				<div class="col mx-2 fs-5">
-					업체 검색 결과가 출력 될 곳	
-				</div>
+		  		
+		  <div class="row resultDiv d-none">
+		  		
+		  	<div class="col">
+		  		<div class="row">
+		  			<div class="col fs-3">
+		  				검색 결과
+		  			</div>
+		  			<div class="col text-end">
+		  				<input type="button" value="목록보기" id="businessListBtn" class="btn">
+		  			</div>
+		  		</div>
+		  		<div class="row border-bottom resultRow">
+		  			 <div class="col-md-3">
+				        <img  id="businessImg" style="max-width: 100%; height: auto;">
+				    </div>
+				    <div class="col-md-3 py-4">
+				        <div class="fs-2"><span id="businessName"></span></div>
+				        <div class="fs-4"><span id="bname"></span></div>
+				        <div class="fs-4"><span id="bphone"></span></div>
+				        <div class="fs-4"><span id="baddress"></span></div>
+				    </div>
+				    <div class="col-md-6 text-md-end align-self-center">
+				        <input type="button" value="삭제" class="btn btn-lg deleteBtn" style="background-color:#C93C3C; color:white;">
+				    </div>
+		  					
+		  					
+		  		</div>
+		  			</div>
 			</div>
-			
-				<div class="row align-items-center justify-content-end text-end py-3 mx-2 resultRow d-none">
-				  	<div class="col text-start">	  		
-				  </div>
-				  <div class="col-auto">	
-				  </div>
-				</div>		
+					<div class="row"id="forBlist">
+				<div class="col" >
 					<c:if test="${not empty bList}">
 					<c:forEach var="b" items="${bList}">
-				<div class="row py-5">
+				<div class="row" data-id="${b.businessId}">
 				    <div class="col-md-3">
 				        <img src="resources/upload/${b.businessProfile}" style="max-width: 100%; height: auto;">
 				    </div>
-						    <div class="col-md-3 py-4">
-						        <div class="fs-2">${b.businessName}</div>
-						        <div class="fs-4">${b.name}</div>
-						        <div class="fs-4">${b.phone}</div>
-						        <div class="fs-4">${b.address1} ${b.address2}</div>
-						    </div>
-						    <div class="col-md-6 text-md-end align-self-center">
-						        <input type="button" value="삭제" class="btn btn-lg deleteBtn" style="background-color:#C93C3C; color:white;">
-						    </div>
+				    <div class="col-md-3 py-4">
+				        <div class="fs-2">${b.businessName}</div>
+				        <div class="fs-4">${b.name}</div>
+				        <div class="fs-4">${b.phone}</div>
+				        <div class="fs-4">${b.address1} ${b.address2}</div>
+				    </div>
+				    <div class="col-md-6 text-md-end align-self-center">
+				        <input type="button" value="삭제" class="btn btn-lg deleteBtn" style="background-color:#C93C3C; color:white;">
+				    </div>
 						</div>
 				</c:forEach>
-						</c:if>
-    
-
-			 </div>
-          </div>     
+						</c:if>	
+					</div>
+				</div>			
+						
+				<c:if test="${not empty bList}">		
+						
+			<div class="row my-5">
+				<div class="col">
+					<nav aria-label="Page navigation">
+					  <ul class="pagination justify-content-center">
+					
+					  	<c:if test="${ startPage > PG }">
+						    <li class="page-item">
+						      <a class="page-link" href="businessDeleteList?pageNum=${ startPage - PG }">Pre</a>
+						    </li>
+					    </c:if>
+				
+							
+							
+					    <c:forEach var="i" begin="${startPage}" end="${endPage}">
+			   			 
+					    	<c:if test="${i == currentPage }">
+					    	<li class="page-item active" aria-current="page">
+					    		<span class="page-link">${i}</span>
+					    	</li>
+					    	</c:if>
+					    	<c:if test="${i != currentPage }">
+						    	<li class="page-item">
+						    		<a class="page-link" href="businessDeleteList?pageNum=${i}">${i}</a>
+						    	</li>
+						    </c:if>					    
+					    </c:forEach>
+					    
+				
+						<c:if test="${ endPage < pageCount }">
+						    <li class="page-item">
+						      <a class="page-link" href="businessDeleteList?pageNum=${ startPage + PG }">Next</a>
+						    </li>
+					  	</c:if>
+					  </ul>
+					</nav>
+				</div>
+			</div>
+	</c:if>		
+	      </div>
+	 	 </div>
        </div>
 	</div> <!-- container end  -->
 
@@ -110,58 +186,94 @@
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 <script>
  
-/*  $("#idSearchForm").on('submit',function(e){
+ 
+ $("#businessIdSearchForm").on('submit', async function(e){
 	 
 	 e.preventDefault();
 	 
-	 let id = $("#searchId").val();
+	 let id = $("#businessSearchId").val();
 	 
-	 $.ajax({
+	 console.log(id);
+	 
+	 const resData = await axios.post("/app/searchBusinessId", { id : `%{id}%` });
+	 
+	 console.log(resData.data);
+	 
+	 console.log(typeof resData.data);
+	 
+	 if(resData.data.result){
 		 
-		 url : "/app/searchId",
-		 data : "id=" + id,
-		 dataType : "json",
-		 success : function(resData){
-		 	if(resData.result){
-		 		$("#resultId").text(id);
-		 		
-		 		$(".resultRow").each(function(i,v){
-		 			$(v).removeClass("d-none");
-		 		})
-		 		
-		 		
-		 	} else{
-		 		
-		 		
-		 		
-		 		alert("이미 정지된 회원이거나 없는 아이디입니다.");
-		 		$("#resultId").text("");
-		 		
-		 		$(".resultRow").each(function(i,v){
-		 			$(v).addClass("d-none");
-		 		});
-		 		
-		 	}
-		 	
-		 }, error : function(){
-			 console.log("통신에러");
-		 }
+		 $("#businessName").text(resData.data.searchUserInfo.businessName);
+		 $("#bname").text(resData.data.searchUserInfo.name);
+		 $("#bphone").text(resData.data.searchUserInfo.phone);
+		 $("#baddress").text(resData.data.searchUserInfo.address1 + "  " +resData.data.searchUserInfo.address2 );
 		 
-	 });
+		 $("#businessImg").attr("src","resources/upload/"+ resData.data.searchUserInfo.businessProfile);
+		 $(".resultRow").attr("data-id",resData.data.searchUserInfo.businessId);
+		 $(".resultDiv").removeClass("d-none");
+		 
+		 $("#forBlist").addClass("d-none");
+		 
+		 
+		 
+
+	 } else {
+		 
+		 alert("존재하지 않는 업체/아이디 입니다.");
+	 }
+
 	 
  });
-  */
+ 	
+		 $("#businessListBtn").on('click',function(){
+			 
+		 $(".resultDiv").addClass("d-none");
+			 
+		 $("#forBlist").removeClass("d-none");
+			 
+		 });
   
-  $(".deleteBtn").on('click',function(){
+  $(document).on('click', ".deleteBtn", function(){
+	  
+	  
+	  let businessId = $(this).parent().parent().attr("data-id");
+	  let row = $(this).parent().parent();
+	  
+	  console.log(businessId);
 	  
 	  if(confirm("업체를 삭제하시겠습니까?")){
+		  
+		  
+		  
+		  $.ajax({
+			  
+			  url:"/app/businessDelete",
+			  data : "businessId=" + businessId,
+			  type : "post",
+			  dataType : "json",
+			  success : function(resData){
+				  
+				  if(resData.id){
+					 
+				row.remove();
+				
+				location.href='businessDeleteList?pageNum=' +pageNum
+					  
+				  }
+				  
+				  console.log(resData);
+				  
+			  },error : function(err){
+				  
+				  console.log(err);
+			  }
+  
+			  
+		  });
+
 			
-			return true;
 			
-		} else {
-			
-			return false;
-		}
+		} 
 	  
   });
  

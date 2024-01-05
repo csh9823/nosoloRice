@@ -1,11 +1,15 @@
 package com.nosolorice.app.hancontroller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nosolorice.app.domain.businessUser.BusinessNotice;
 import com.nosolorice.app.domain.normalUser.Notice;
@@ -23,50 +27,26 @@ public class NoticeCotroller {
 	}
 
 	@RequestMapping("/noticeList")
-	public String noticeList(Model model) {
+	public String noticeList(Model model,@RequestParam(value="pageNum", defaultValue="1")int pageNum) {
 		
-		List<Notice> nList = noticeService.NoticeList();
+		Map<String,Object> nList = noticeService.NoticeList(pageNum);
 		
-		model.addAttribute("nList",nList);
+		model.addAllAttributes(nList);
 		
-		List<BusinessNotice> bList = noticeService.BusinessNoticeList();
+		Map<String,Object> bList = noticeService.BusinessNoticeList(pageNum);
 
-		model.addAttribute("bList",bList);
+		model.addAllAttributes(bList);
 		
 		return "/noticeList";
 		
 	}
-	
-	@RequestMapping("/noticeBusiness")
-	public String noticeBusiness(Model model) {
-		
-		List<BusinessNotice> bList = noticeService.BusinessNoticeList();
-
-		model.addAttribute("bList",bList);
-		
-		return "/noticeBusiness";
-	}
-	
-	
-	@RequestMapping("/noticeDetail")
-	public String noticeDetail(Model model,int noticeNo) {
-		
-		Notice notice = noticeService.getNotice(noticeNo);
-		
-		model.addAttribute("notice",notice);
-		
-		return "/noticeDetail";
-	}
-	
 	
 	@RequestMapping("/noticeWrite")
 	public String noticeWrite() {
 		
 		return"/noticeWrite";
 	}
-	
-	
-	
+
 	
 	@RequestMapping("/noticeWriteProcess")
 	public String noticeWriteProcess(Model model,String noticeType,String noticeTitle, String noticeContent) {
@@ -134,21 +114,33 @@ public class NoticeCotroller {
 
 	
 	@RequestMapping("/noticeDelete")
-	public String noticeDelete(int noticeNo) {
+	@ResponseBody
+	public Map<String,Boolean> noticeDelete(int noticeNo) {
 		
+		 Map<String,Boolean> map = new HashMap<>(); 
 		
 		noticeService.deleteNotice(noticeNo);
 		
-		return"redirect:noticeList";
+		map.put("result",true);
+		
+		return map;
+		
 	}
 	
 	@RequestMapping("/businessNoticeDelete")
-	public String businessNoticeDelete(int businessNoticeNo) {
+	@ResponseBody
+	public Map<String,Boolean> businessNoticeDelete(int businessNoticeNo) {
+		
+		 Map<String,Boolean> map = new HashMap<>(); 
 		
 		noticeService.deleteBusinessNotice(businessNoticeNo);
 		
-		return"redirect:noticeList";
+		map.put("result",true);
+		
+		return map;
+		
 	}
+	
 	
 	
 	

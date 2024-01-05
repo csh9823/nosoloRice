@@ -59,7 +59,7 @@ public class DeniedUser {
 				+ ", deniedUnlock=" + deniedUnlock + "]";
 	}
 	
-public String resultDate() {
+	public String resultDate() {
 		
 		long millisecondsDiff = this.deniedUnlock.getTime() - this.deniedRegDate.getTime();
 		
@@ -68,11 +68,8 @@ public String resultDate() {
 		if(daysDiff > 100) {
 			
 			return "영구 정지";
-			
 		} 
-		
 		return daysDiff + "일 정지" ;
-		
 	}
 	
 }

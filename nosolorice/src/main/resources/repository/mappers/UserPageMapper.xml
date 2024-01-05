@@ -5,9 +5,15 @@
 	<mapper namespace="com.solorice.app.mapper.UserPageMapper">
 	 	<!-- 한선  -->
 	 	<!-- 신고 내역 리스트 -->
-		<select id="reportList" resultType="ReportDetails" resultMap="reportResultMap">
+		<select id="userReportList" resultType="ReportDetails" resultMap="reportResultMap">
 		
 		SELECT * FROM report_details ORDER BY report_no
+		
+		</select>
+		
+		<select id="getReportCount" resultType="int" resultMap="reportResultMap">
+	
+		SELECT COUNT(report_no) FROM report_details WHERE report_reporter = #{reportReporter}
 		
 		</select>
 		
@@ -15,6 +21,12 @@
 		<select id="blockList" resultType="BlockHistory" resultMap="blockResultMap">
 			
 		SELECT * FROM block_history ORDER BY block_history_no
+		
+		</select>
+		
+		<select id="getBlockCount" resultType="int" resultMap="blockResultMap">
+	
+		SELECT COUNT(block_history_no) FROM block_history WHERE blocker = #{blocker}
 		
 		</select>
 		
@@ -33,7 +45,6 @@
 	
 		<!-- 차단 내역 -->
 		<resultMap id="blockResultMap" type="BlockHistory">
-			
 			<id property="blockHistoryNo" column="block_history_no"/>
 			<result property="blockDate" column="block_date"/>
 			<result property="blockState" column="block_state"/>

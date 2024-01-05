@@ -1,6 +1,8 @@
 package com.nosolorice.app.handao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +25,40 @@ private static final String Mapper = "com.solorice.app.mapper.UserPageMapper";
 	}
 
 	@Override
-	public List<ReportDetails>reportList() {
+	public List<ReportDetails>userReportList(int start,int num) {
 		
-		return sqlSession.selectList(Mapper + ".reportList");
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("start", start);
+		map.put("num", num);
+	
+		
+		return sqlSession.selectList(Mapper + ".userReportList");
 	}
 
 	@Override
-	public List<BlockHistory>blockList() {
+	public List<BlockHistory>blockList(int start,int num) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("start", start);
+		map.put("num", num);
+	
 		
 		return sqlSession.selectList(Mapper+".blockList");
 	}
+
+	@Override
+	public int getUserReportCount() {
+		
+		return sqlSession.selectOne(Mapper + ".getUserReportCount");
+	}
+
+	@Override
+	public int getBlockCount() {
+		
+		return sqlSession.selectOne(Mapper + ".getBlockCount");
+	}
+	
 
 }

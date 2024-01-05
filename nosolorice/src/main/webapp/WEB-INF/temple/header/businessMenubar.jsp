@@ -1,10 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
   <style>
     .darkgray {
       background-color : #2E2E2E !important;
@@ -18,11 +12,8 @@
       color : #C93C3C !important;
     }
   </style>
-</head>
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3 darkgray">
+      <div class="col-md-3 darkgray" style="height: 100vh">
         <div class="row">
           <div class="col">
             <div class="row red p-4" onclick="location.href=''">
@@ -55,10 +46,7 @@
           </div>
         </div>
       </div> 
-    </div>
-  </div>
-
-
+</body>      
   <script>
     $(document).on("mouseover", ".menu", function() {
       $(this).css("opacity", "30%");
@@ -68,5 +56,3 @@
     });
 
   </script>
-</body>
-</html>

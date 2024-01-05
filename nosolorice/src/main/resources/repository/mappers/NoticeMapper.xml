@@ -6,11 +6,18 @@
 	
 <mapper namespace="com.nosolorice.app.mapper.NoticeMapper">
 	
-	<select id="noticeList" resultType="Notice" resultMap="noticeResultMap">
+	<select id="noticeList" resultType="Notice" parameterType="hashmap" resultMap="noticeResultMap">
 	
-		SELECT * FROM notice ORDER BY notice_no DESC
+		SELECT * FROM notice ORDER BY notice_no DESC LIMIT #{start}, #{num}
 	
 	</select>
+	
+	<select id="getNoticeCount" resultType="int">
+	
+		SELECT COUNT(notice_no) FROM notice
+		
+	</select>	
+	
 	
 	<select id="noticeDetail" resultType="Notice" resultMap="noticeResultMap">
 	
@@ -44,11 +51,17 @@
 		
 	</delete>
 	
-	<select id="BusinessNotice" resultType="BusinessNotice" resultMap="BusinessResultMap">
+	<select id="BusinessNotice" resultType="BusinessNotice"  parameterType="hashmap"   resultMap="BusinessResultMap">
 		
-		 SELECT * FROM business_notice ORDER BY business_notice_no DESC
+		 SELECT * FROM business_notice ORDER BY business_notice_no DESC LIMIT #{start}, #{num}
 		 
 	</select>
+	
+	<select id="getBusinessNoticeCount" resultType="int">
+	
+		SELECT COUNT(business_notice_no) FROM business_notice
+		
+	</select>	
 	
 	<select id="BusinessNoticeDetail" resultType="BusinessNotice" resultMap="BusinessResultMap">
 		

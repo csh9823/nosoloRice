@@ -1,13 +1,14 @@
 package com.nosolorice.app.hanservice;
 
 import java.util.List;
+import java.util.Map;
 
 import com.nosolorice.app.domain.businessUser.BusinessNotice;
 import com.nosolorice.app.domain.normalUser.Notice;
 
 public interface NoticeService {
 	//공지사항 리스트
-	public abstract List<Notice> NoticeList();
+	public abstract Map<String,Object> NoticeList(int pageNum);
 	//디테일
 	public abstract Notice getNotice(int noticeNo);
 	//추가
@@ -17,7 +18,7 @@ public interface NoticeService {
 	//삭제
 	public abstract void deleteNotice(int noticeNo);
 	
-	public abstract List<BusinessNotice> BusinessNoticeList();
+	public abstract Map<String,Object> BusinessNoticeList(int pageNum);
 	
 	public abstract BusinessNotice getBusinessnotice(int businessNoticeNo);
 	

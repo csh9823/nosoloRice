@@ -8,7 +8,9 @@ import com.nosolorice.app.domain.normalUser.Notice;
 
 public interface NoticeDao {
 	//공지사항
-	public abstract List <Notice> NoticeList();
+	public abstract List <Notice> NoticeList(int start, int num);
+	
+	public abstract int getNoticeCount();
 	//디테일
 	public abstract Notice getNotice(int noticeNo);
 	//추가
@@ -18,7 +20,9 @@ public interface NoticeDao {
 	//삭제
 	public abstract void deleteNotice(int noticeNo);
 	
-	public abstract List<BusinessNotice> BusinessNoticeList();
+	public abstract List<BusinessNotice> BusinessNoticeList(int start,int num);
+	
+	public abstract int getBusinessNoticeCount();
 	
 	public abstract BusinessNotice getBusinessnotice(int businessNoticeNo);
 	

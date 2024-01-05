@@ -1,11 +1,13 @@
 package com.nosolorice.app.hancontroller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nosolorice.app.domain.normalUser.BlockHistory;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
@@ -25,21 +27,22 @@ public class UserPageController {
 	
 	//신고 목록 리스트
 	@RequestMapping("/userReportList")
-	public String deniedList(Model model) {
+	public String userReportList(Model model,@RequestParam(value="pageNum",required=false, defaultValue="1")int pageNum) {
 		
-		List<ReportDetails> userReportList = userPageService.reportList();
+		Map<String, Object> userReportList = userPageService.userReportList(pageNum);
 		
-		model.addAttribute("userReportList",userReportList);
+		model.addAllAttributes(userReportList);
 		
 		return "userReportList";
 	}
 	//차단 목록 리스트
 	@RequestMapping("/blockList")
-	public String blockList(Model model) {
+	public String blockList(Model model,@RequestParam(value="pageNum",required=false, defaultValue="1")int pageNum) {
 		
-		List<BlockHistory> blockList = userPageService.blockList();
 		
-		model.addAttribute("blockList",blockList);
+		Map<String, Object> blockList = userPageService.blockList(pageNum);
+		
+		model.addAllAttributes(blockList);
 		
 		return "blockList";
 	}

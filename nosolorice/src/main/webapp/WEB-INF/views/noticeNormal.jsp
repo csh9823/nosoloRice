@@ -34,7 +34,7 @@
             <h2 class="fs-3 fw-bold my-5">일반 공지관리</h2>
             <div class="col"></div> <!-- 공간 확보를 위한 비어있는 컬럼 -->
             <div class="col-auto">
-              <input type="button" value="등록하기" class="btn" onclick="location.href='noticeWrite'">
+            
             </div>
           </div>
       </div>

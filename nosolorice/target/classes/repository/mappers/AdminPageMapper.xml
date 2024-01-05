@@ -7,36 +7,48 @@
 <mapper namespace="com.nosolorice.app.mapper.AdminPageMapper">
 
 	
-	<select id="reportList" resultType="ReportDetails" resultMap="reportResultMap">
+	<select id="reportList" resultType="ReportDetails" parameterType="hashmap" resultMap="reportResultMap">
 	
-	SELECT * FROM report_details ORDER BY report_no
+	SELECT * FROM report_details ORDER BY report_no LIMIT #{start}, #{num}
 	
 	</select>
 	
-	<select id="getReportCount" resultType="int" parameterType="ReportDetails">
+	<select id="getReportCount" resultType="int">
 	
 		SELECT COUNT(report_no) FROM report_details
 		
 	</select>
 	
 
-	<select id="reviewList" resultType="Review" resultMap="reviewResultMap">
+	<select id="reviewList" resultType="Review" parameterType="hashmap" resultMap="reviewResultMap">
 	
-	SELECT * FROM review ORDER BY review_no
-	
-	</select>
-
-	
-	<select id="deniedList" resultType="DeniedUser" resultMap="deniedResultMap">
-	
-	SELECT * FROM denied_user ORDER BY denied_user_no DESC
+	select a.*,b.business_name as businessName from review a join business_user b on a.business_id = b.business_id ORDER BY review_no DESC LIMIT #{start}, #{num}
 	
 	</select>
 	
-	<select id="searchId" resultType="String">
+	<select id="getReviewCount" resultType="int">
+	
+		SELECT COUNT(review_no) FROM review
+		
+	</select>
+	
+	
+	<select id="deniedList" resultType="DeniedUser" parameterType="hashmap" resultMap="deniedResultMap">
+	
+	SELECT * FROM denied_user ORDER BY denied_user_no DESC LIMIT #{start}, #{num}
+	
+	</select>
+	
+	<select id="getDeniedUserCount" resultType="int">
+	
+		SELECT COUNT(denied_user_no) FROM denied_user
+		
+	</select>
+	
+	<select id="searchId" resultType="NormalUser">
     
     <![CDATA[
-    SELECT normal_id
+    SELECT profile, normal_id as normalId, nickname as nickName
     FROM normal_user
     WHERE normal_id = #{id} AND NOT EXISTS (
         SELECT 1 FROM denied_user WHERE normal_id = #{id}
@@ -54,22 +66,97 @@
 
 
 
-<select id="businessDelete" resultType="BusinessUser">
-
-	SELECT name, phone, business_name as businessName, business_profile as businessProfile, address1, address2  FROM  business_user
+	<select id="businessDeleteList" resultType="BusinessUser" parameterType="hashmap">
 	
-</select>
-
-
-<delete id="unlockUser" parameterType="int">
-
-	DELETE FROM denied_user WHERE denied_user_no = #{deniedUserNo}
-
-</delete>
-
-
-
+		SELECT business_id businessId, name, phone, business_name as businessName, business_profile as businessProfile, address1, address2,regdate as regDate  FROM  business_user ORDER BY regDate DESC LIMIT #{start}, #{num}
+		
+	</select>
 	
+	<delete id="businessDelete">
+	
+		DELETE FROM business_user WHERE business_id = #{businessId}
+	
+	</delete>
+	
+	<select id="getBusinessDeleteCount" resultType="int">
+		
+			SELECT COUNT(business_id) FROM business_user
+			
+		</select>
+	
+	
+	<delete id="unlockUser" parameterType="int">
+	
+		DELETE FROM denied_user WHERE denied_user_no = #{deniedUserNo}
+	
+	</delete>
+	
+	
+	<select id="getNormalUser" resultType="NormalUser">
+	
+		SELECT 
+		normal_id as normalId,
+		name,
+		birth,
+		nickname as nickName,
+		mobile,
+		profile,
+		postnum as postNum,
+		address1,
+		address2,
+		xpoint,
+		ypoint,
+		gender,
+		email,
+		regdate as regDate,
+		mypoint as myPoint,
+		root 
+		FROM  normal_user
+		WHERE normal_id = #{id}
+	
+	</select>
+	
+	<select id="searchBusinessId" resultType="BusinessUser">
+			select
+		business_id as businessId,
+		name,
+		phone,
+		business_number as businessNumber,
+		business_name as businessName,
+		business_picture as businessPicture,
+		email,
+		mobile,
+		postnum as postNum,
+		address1,
+		address2,
+		xpoint,
+		ypoint,
+		business_profile as businessProfile,
+		bank_name as bankName,
+		bank_number as bankNumber,
+		deposit,
+		open_time as openTime,
+		close_time as closeTime,
+		break_time as breakTime,
+		day_off as dayOff,
+		introduction as introduction,
+		regdate as regDate,
+		store_onoff as storeOnoff,
+		ok_nook as okNoOk,
+		root
+		from  business_user
+		where business_id = #{id} || business_name = #{id}
+
+	</select>
+
+
+	<delete id="reviewDelete">
+	
+		DELETE FROM review WHERE review_no = #{reviewNo}
+	
+	</delete>
+
+
 		<!-- 신고 리스트 -->
 	<resultMap id="reportResultMap" type="ReportDetails">
 		<id property="reportNo" column="report_no"/>
@@ -91,7 +178,8 @@
 		<result property="reviewDelete" column="review_delete"/>
 		<result property="normalId" column="normal_id"/>
 		<result property="businessId" column="business_id"/>
-		<result property="bookingOkNo" column="bookingok_no"/>	
+		<result property="bookingOkNo" column="bookingok_no"/>
+		<result property="reviewRequestRegDate" column="review_request_regdate"/>
 	</resultMap>
 	
 		<!--  정지 리스트 -->

@@ -64,7 +64,7 @@
       		<h2 class="fs-3 fw-bold my-5">공지수정</h2>
      	</div>
      	<div class="col-auto d-flex align-items-center">
-     	 <input type="button" value="목록보기" class="btn" onclick="location.href='noticeList'">
+     	 <input type="button" value="목록보기" class="btn" onclick="location.href='noticeList?pageNum=${pageNum}'">
      	</div>
        </div>
   <div class="row align-items-center">

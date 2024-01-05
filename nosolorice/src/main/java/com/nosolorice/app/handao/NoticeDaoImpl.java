@@ -1,7 +1,8 @@
 package com.nosolorice.app.handao;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,15 @@ public class NoticeDaoImpl implements NoticeDao {
 	}
 
 	@Override
-	public List<Notice> NoticeList() {
+	public List<Notice> NoticeList(int start, int num) {
 		
-		return  sqlSession.selectList(Mapper + ".noticeList");
+		Map<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("start", start);
+		params.put("num", num);
+		
+		
+		return  sqlSession.selectList(Mapper + ".noticeList",params);
 	}
 
 	@Override
@@ -59,9 +66,14 @@ public class NoticeDaoImpl implements NoticeDao {
 	}
 
 	@Override
-	public List<BusinessNotice> BusinessNoticeList() {
+	public List<BusinessNotice> BusinessNoticeList(int start,int num) {
 		
-		return  sqlSession.selectList(Mapper + ".BusinessNotice");
+Map<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("start", start);
+		params.put("num", num);
+		
+		return  sqlSession.selectList(Mapper + ".BusinessNotice",params);
 	}
 
 	@Override
@@ -81,6 +93,20 @@ public class NoticeDaoImpl implements NoticeDao {
 	public void deleteBusinessNotice(int businessNoticeNo) {
 
 		sqlSession.delete(Mapper + ".deleteBusinessNotice",businessNoticeNo);
+		
+	}
+
+	@Override
+	public int getNoticeCount() {
+		return sqlSession.selectOne(Mapper + ".getNoticeCount");
+		
+	}
+
+	@Override
+	public int getBusinessNoticeCount() {
+		
+		return sqlSession.selectOne(Mapper + ".getBusinessNoticeCount");
+		
 		
 	}
 

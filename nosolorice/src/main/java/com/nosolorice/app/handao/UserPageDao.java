@@ -9,10 +9,14 @@ import com.nosolorice.app.domain.normalUser.ReportDetails;
 public interface UserPageDao {
 		
 		//신고 목록
-		public abstract List<ReportDetails>reportList();
+		public abstract List<ReportDetails>userReportList(int start,int num);
+		
+		public abstract int getUserReportCount();
 		
 		//차단 목록
-		public abstract List<BlockHistory> blockList();
+		public abstract List<BlockHistory> blockList(int start,int num);
+		
+		public abstract int getBlockCount();
 		
 		
 		

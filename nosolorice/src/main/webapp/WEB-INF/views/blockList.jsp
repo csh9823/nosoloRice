@@ -31,6 +31,21 @@
     background-color: #3DB78B;
     color : white;
   }
+    .pagination .page-item.active .page-link {
+    background-color: #FA9884;
+    border-color: #FA9884;
+    color: #fff; 
+	}
+
+	.pagination .page-link {
+    color: #C93C3C;
+	}
+
+	.pagination .page-link:hover {
+    color: #fff; 
+    background-color: #C93C3C;
+    border-color: #C93C3C;
+	}
 
 </style>
 </head>
@@ -64,22 +79,62 @@
                 <div class="col-3">차단일</div>
                 <div class="col-3">차단해제</div>
             </div>
+           <c:if test="${not empty blockList}"> 
           <c:forEach var="b" items="${blockList}">
             <div class="row align-items-center text-center">
                 <div class="col-3">${b.blockHistoryNo}</div>
                 <div class="col-3">${b.blockAttacker}</div>
                 <div class="col-3">${b.blockDate}</div>
                 <div class="col-3 py-3">
-                  <input type="button" value="해제하기" style="color:#C93C3C">
+                  <input type="button" value="해제하기" style="color:#C93C3C" id="blockUnlockBtn">
                 </div>    
             </div>
             </c:forEach>
+           </c:if>
        </div>
+
+	
+	<div class="row my-5">
+				<div class="col">
+					<nav aria-label="Page navigation">
+					  <ul class="pagination justify-content-center">
+					
+					  	<c:if test="${ startPage > PG }">
+						    <li class="page-item">
+						      <a class="page-link" href="blockList?pageNum=${ startPage - PG }">Pre</a>
+						    </li>
+					    </c:if>
+				
+							
+							
+					    <c:forEach var="i" begin="${startPage}" end="${endPage}">
+			   			 
+					    	<c:if test="${i == currentPage }">
+					    	<li class="page-item active" aria-current="page">
+					    		<span class="page-link">${i}</span>
+					    	</li>
+					    	</c:if>
+					    	<c:if test="${i != currentPage }">
+						    	<li class="page-item">
+						    		<a class="page-link" href="blockList?pageNum=${i}">${i}</a>
+						    	</li>
+						    </c:if>					    
+					    </c:forEach>
+					    
+				
+						<c:if test="${ endPage < pageCount }">
+						    <li class="page-item">
+						      <a class="page-link" href="blockListt?pageNum=${ startPage + PG }">Next</a>
+						    </li>
+					  	</c:if>
+					  </ul>
+					</nav>
+				</div>
+			</div>
+  
   </div>
 </div>
-       <div class="text-center">
-        페이지네이션 부분
-       </div>
+       
  
 
 
