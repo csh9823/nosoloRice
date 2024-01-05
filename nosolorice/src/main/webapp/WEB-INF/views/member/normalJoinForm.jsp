@@ -4,23 +4,29 @@
 
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="resources/js/jquery-3.2.1.min.js"></script>
-<link href="resources/bootstrap/main.css" rel="stylesheet">
+<!-- <link href="resources/bootstrap/main.css" rel="stylesheet"> -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
 <!-- favicon 404 에러 방지용(파비폰은 resources/image 안에 있습니다.) -->
 <link rel="icon" href="data:,">
 
-
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  
+<!-- 다음우편번호찾기 -->
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<!-- 다음좌표 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=685bdba705a3c08af0c489199df63809&libraries=services"></script>
 
 <div class="container justify-content-center">
-
 	
-	<form class="form form-center" id="normalJoinForm" action="normalJoinResult" method="post" onsubmit="return submitCheck();" enctype="multipart/form-data">
+	<form class="form form-center" id="normalJoinForm" action="normalJoinResult" method="post" enctype="multipart/form-data">
 	 
 	<input type="hidden" name="isIdCheck" id="isIdCheck" value="false" />
 	<input type="hidden" name="isNickCheck" id="isNickCheck" value="false" />
 	<input type="hidden" name="certCheck" id="certCheck" value="false" />
+	<input type="hidden" name="xpoint" id="xpoint" />
+	<input type="hidden" name="ypoint" id="ypoint" />
+	<input type="hidden" name="emailDomain" id="emailDomain" />
+	<input type="hidden" name="mypoint" id="mypoint" value=0 />
+	<input type="hidden" name="root" id="root" value=2 />
 	
         <div class="row-12 p-5">
           <div class="d-flex justify-content-center">
@@ -36,10 +42,10 @@
         <div class="row-12 d-flex p-3 justify-content-center">
           
           <!-- profile_img -->
-         <div class="col-md-4">
+         <div class="col-lg-4">
           <div class="col-sm-2">
             <img src="resources/image/profile_img.png" id="profilePreview" style="width: 348px; height: 400px;">
-            <input type="file" accept="image/*" onchange="profileImage(this)" id="profileImage">
+            <input type="file" accept="image/*" onchange="profileImage(this)" id="profileImageInput" name="profileImageInput">
           </div> 
          </div> 
 
@@ -71,7 +77,7 @@
 
               <div class="col-7 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="nickname" id="nickname" placeholder="닉네임" >
+                  <input type="text" class="form-control" name="nickName" id="nickName" placeholder="닉네임" >
                 </div>
               </div>
 
@@ -100,7 +106,7 @@
               
               <div class="col-8 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="phone" id="phone" placeholder="01012345678" >
+                  <input type="text" class="form-control" name="mobile" id="mobile" placeholder="01012345678" >
                 </div>
               </div>
 
@@ -134,19 +140,19 @@
 
               <div class="col-4 text-start p-2">
                 <div class="form-group">
-                  <input type="number" class="form-control" name="year" id="year" placeholder="년" >
+                  <input type="number" class="form-control" name="year" id="year" maxlength=4 placeholder="년" >
                 </div>
               </div>
 
               <div class="col-3 text-center p-2">
                 <div class="form-group">
-                  <input type="number" class="form-control" name="month" id="month" placeholder="월" >
+                  <input type="number" class="form-control" name="month" id="month" maxlength=2 placeholder="월" >
                 </div>
               </div>
 
               <div class="col-3 text-end p-2">
                 <div class="form-group">
-                  <input type="number" class="form-control" name="day" id="day" placeholder="일" >
+                  <input type="number" class="form-control" name="day" id="day" maxlength=2 placeholder="일" >
                 </div>
               </div>
 
@@ -156,20 +162,16 @@
               </div>
 
               <div class="col-4 p-2">
-                <p>성별을 선택해 주세요</p>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="man" id="man">
-                  <label class="form-check-label" for="man">
-                    남성
-                  </label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="woman" id="woman" checked>
-                  <label class="form-check-label" for="woman">
-                    여성
-                  </label>
-                </div>
-              </div>
+				  <p>성별을 선택해 주세요</p>
+				  <div class="form-check form-check-inline" name="gender">
+				    <input class="form-check-input" type="radio" name="gender" id="man" value="남성">
+				    <label class="form-check-label" for="man">남성</label>
+				  </div>
+				  <div class="form-check form-check-inline">
+				    <input class="form-check-input" type="radio" name="gender" id="woman" value="여성">
+				    <label class="form-check-label" for="woman">여성</label>
+				  </div>
+			  </div>
 
               <div class="col-12">
                 <div class="form-group">
@@ -184,10 +186,11 @@
               
               <!-- option으로 수정 -->
               <div class="col-4 p-2">
-                <select class="form-select" id="emailDomain">
-                  <option value="@naver.com">@naver.com</option>
-                  <option value="@gmail.com">@gmail.com</option>
-                  <option value="@daum.net">@daum.net</option>
+                <select class="form-select" id="selectDomain" name="selectDomain">
+                  <option selected>--- 선택해 주세요 ---</option>
+                  <option value="naver.com">@naver.com</option>
+                  <option value="gmail.com">@gmail.com</option>
+                  <option value="daum.net">@daum.net</option>
                 </select>
               </div>
 
@@ -280,9 +283,11 @@
               
 				</div>
             </div>
+            
         </div>
+         </form> 
       </div>
-  </form>  
+  
 
 <script src="resources/js/normalUserPhoneCheck.js"></script>
 <script src="resources/js/member.js"></script>

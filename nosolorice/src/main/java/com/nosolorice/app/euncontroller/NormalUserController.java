@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,112 +16,115 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.eunservice.NormalUserService;
+import com.nosolorice.app.eunservice.NormalUserServiceImpl;
 
 @Controller
 @SessionAttributes("normalUser")
 public class NormalUserController {
 	
+	@Autowired
 	private NormalUserService normalUserService;
+	
+	@Autowired
+	private NormalUserServiceImpl normalUserServiceImpl;
+	
+	private static final String DEFAULT_PATH = "/resources/upload/normal_upload";
 	
 	@Autowired
 	public void setMemberService(NormalUserService normalUserService) {
 		this.normalUserService = normalUserService;
 	}
-	
-	// �쉶�썝媛��엯 �셿猷�
-	@RequestMapping(value = "/normalJoinResult", method = RequestMethod.POST)
+
+    
+    // 회원가입 완료
+    @RequestMapping("/normalJoinResult")
     public String normalJoinResult(
-            Model model, NormalUser normalUser, String pass1,
-            @RequestParam("profileImage") MultipartFile profileImage) {
+            Model model, HttpServletRequest req, NormalUser normalUser, String pass, String mobile, String gender,
+            @RequestPart("profileImageInput") MultipartFile profileImage,
+            @RequestParam("year") String year, @RequestParam("month") String month, @RequestParam("day")String day,
+            @RequestParam("zipcode") int postNum, String address1, String address2, String xpoint, String ypoint, int mypoint, String email, String emailDomain) throws IOException {
 
-        normalUser.setPass(pass1);
+    	System.out.println(profileImage);
+    	System.out.println(mypoint);
+    	System.out.println(postNum);
+    	System.out.println("이메일 :" + emailDomain);
+    	
+        normalUser.setPass(pass);
+        
+        normalUser.setEmail(email + "@" +emailDomain);
+        
+        System.out.println(email);
+        
+        String birth = year + "-" + month + "-" + day;
+        normalUser.setBirth(birth);
 
-        if (!profileImage.isEmpty()) {
-
-            String profileImagePath = saveProfileImage(profileImage);
-            normalUser.setProfile(profileImagePath);
+        normalUser.setGender(gender);
+        System.out.println(gender);
+        
+        if(!profileImage.isEmpty()) {
+        	String filePath = req.getServletContext().getRealPath(DEFAULT_PATH);
+        	
+        	UUID uid = UUID.randomUUID();
+        	
+        	String newName = uid.toString() + "_" + profileImage.getOriginalFilename();
+        	
+        	File file = new File(filePath, newName);
+        	
+        	profileImage.transferTo(file);
+        	
+        	normalUser.setProfile(newName);
         }
 
         normalUserService.addNormalUser(normalUser);
 
-        return "redirect:login";
-    }
-
-    private String saveProfileImage(MultipartFile profileImage) {
-        try {
-        	
-            String uploadDir = "normal_upload";  // �엫�쓽寃쎈줈(normal_upload)�뤃�뜑 �깮�꽦 �썑 嫄곌린�뿉 ���옣
-            String absolutePath = new File("").getAbsolutePath();
-            String filePath = absolutePath + File.separator + uploadDir + File.separator;
-
-            File directory = new File(filePath);
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-
-            String fileName = profileImage.getOriginalFilename();
-            String fileFullPath = filePath + fileName;
-            FileCopyUtils.copy(profileImage.getBytes(), new File(fileFullPath));
-
-            return fileFullPath;
-        } catch (IOException e) {
-
-            e.printStackTrace();
-            return null;
-        }
+        return "login/login"; // 경로 수정
     }
 
     @RequestMapping("/overlapIdCheck")
-    public String overlapNormalIdCheck(Model model, String normalId){
-    	boolean overlap = normalUserService.overlapNormalIdCheck(normalId);
+    public String overlapIdCheck(Model model, String normalId) {
+        boolean overlap = normalUserService.overlapIdCheck(normalId);
 
         model.addAttribute("normalId", normalId);
         model.addAttribute("overlap", overlap);
-        
-        return "forward:WEB-INF/views/member/overlapIdCheck.jsp";
-    }
-    
-    // �땳�꽕�엫 以묐났
-    @RequestMapping("/nickOverlapCheck")
-    public String nickOverlapCheck(Model model, String nickName){
-    	System.out.println("�땳�꽕�엫: " + nickName);
-    	boolean overlap = normalUserService.overlapNormalIdCheck(nickName);
 
-        model.addAttribute("nickName", nickName);
+        return "member/overlapIdCheck";
+    }
+
+    // 닉네임 중복
+    @RequestMapping(value = "/nickOverlapCheck", method = {RequestMethod.POST, RequestMethod.GET})
+    public String nickOverlapCheck(Model model, String nickName) {
+        boolean overlap = normalUserService.overlapNickCheck(nickName);
+        
+        System.out.println("overlap " + overlap + ", nickName " + nickName);
+        
         model.addAttribute("overlap", overlap);
-        
-        return "forward:WEB-INF/views/member/nickOverlapCheck.jsp";
+        model.addAttribute("nickName", nickName);
+        return "member/nickOverlapCheck";
     }
 
-    // 문자인증번호 전송
-    @RequestMapping("getNormalPhoneCheck")
-    @ResponseBody
-    public Map<String, String> getNormalPhoneCheck(String phone){
-       
-       
-       Random rnd = new Random();
-       String numStr = "";
-       
-       for (int i = 0; i < 4; i++) {
-             String ran = Integer.toString(rnd.nextInt(10));
-             numStr += ran;
-       }
-       System.out.println(phone);
-       System.out.println(numStr);
-       
-       // normalUserServiceImpl.normalPhoneCheck(phone,numStr);
-       
-       // 인증번호 저장
-       Map<String, String> result = new HashMap<>();
-       result.put("certNum", numStr);
-       
-       return result;
-    }
+
+	// 문자인증번호 전송
+	@RequestMapping("getNormalPhoneCheck")
+	@ResponseBody
+	public Map<String, String> getNormalPhoneCheck(String mobile){
+		String numStr = normalUserService.certNum();
+		
+		System.out.println("컨트롤러 : " + numStr);
+		
+		// normalUserServiceImpl.normalPhoneCheck(phone,numStr);
+		
+		// 인증번호 저장
+		Map<String, String> result = new HashMap<>();
+		result.put("certNum", numStr);
+		
+		return result;
+	}
     
 }

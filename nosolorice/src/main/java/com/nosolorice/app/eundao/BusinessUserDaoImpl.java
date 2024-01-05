@@ -1,5 +1,7 @@
 package com.nosolorice.app.eundao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,7 +13,7 @@ public class BusinessUserDaoImpl implements BusinessUserDao {
 
 	private SqlSessionTemplate sqlSession;
 	
-	private final String NAME_SPACE = "com.nosolorice.mapper.businessUserMapper";
+	private final String NAME_SPACE = "com.nosolorice.mappers.BusinessUserMapper";
 	
 	@Autowired
 	public void setSqlSession(SqlSessionTemplate sqlSession) {
@@ -26,12 +28,20 @@ public class BusinessUserDaoImpl implements BusinessUserDao {
 
 
 	@Override
-	public boolean overlapBusinessIdCheck(String businessId) {
-	    // db에서 사용자 조회
-	    BusinessUser existingUser = sqlSession.selectOne(NAME_SPACE + ".getBusinessId", businessId);
+	public List<String> getBusinessUser(String businessId) {
+		return sqlSession.selectList(NAME_SPACE + ".getBusinessUser", businessId);
+	}
+	
+	@Override
+	public int overlapBusinessNumberCheck(Integer businessNumber) {
+	    Integer count = sqlSession.selectOne(NAME_SPACE + ".getBusinessNumber", businessNumber);
 
-	    // 있으면 true
-	    return existingUser != null;
+	    return count != null && count > 0 ? 1 : 0;
+	}
+	
+	@Override
+	public BusinessUser getBusinessId(String businessId) {
+		return sqlSession.selectOne(NAME_SPACE + ".getBusinessId", businessId);
 	}
 
 }

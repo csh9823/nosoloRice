@@ -1,7 +1,7 @@
 let code = "";
 
-$('#getNormalPhoneCheck').click(function() {
-	const mobile = $('#mobile').val();
+$('#getBPhoneCheck').click(function() {
+	const mobile = $('#bPhone').val();
 	
 	console.log(mobile)
 	
@@ -13,8 +13,8 @@ $('#getNormalPhoneCheck').click(function() {
 	
 	$.ajax({
 	
-		"url" : "getNormalPhoneCheck",
-		"data" : "mobile=" + mobile ,
+		"url" : "getBusinessPhoneCheck",
+		"data" : "mobile=" + bPhone ,
     	"type" : "POST" ,
     	"dataType" : "json",
 		
@@ -31,13 +31,13 @@ $('#getNormalPhoneCheck').click(function() {
 });
 
 
-$("#normalPhoneCheck").click(function() {
-    if($("#chkNum").val() == code) {
+$("#businessPhoneCheck").click(function() {
+    if($("#checkNum").val() == code) {
     	alert("인증이 완료되었습니다.");
-        $("#certCheck").val(true); 
+        $("#bPhoneCheck").val(true); 
     } else {
     	alert("인증번호가 맞지 않습니다. \n다시 시도해 주세요.");
-		$("#certCheck").val(false); 
+		$("#bPhoneCheck").val(false); 
     };
 
     

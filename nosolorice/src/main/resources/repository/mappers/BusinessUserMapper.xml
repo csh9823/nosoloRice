@@ -4,15 +4,21 @@
 
 <mapper namespace="com.nosolorice.mappers.BusinessUserMapper">
 	
-	<insert id="addNormalUser" parameterType="NormalUser">
-		INSERT INTO normalUser
-		VALUES(#{businessId}, #{pass}, #{name}, #{phone}, #{businessNumber}, #{businessName}, 
-				#{businessPicture}, #{email}, #{postNum}, #{address1}, #{address2}, #{xpoint}, 
-				#{ypoint}, #{bankName}, SYSDATE())
+	<insert id="addBusinessUser" parameterType="BusinessUser">
+		INSERT INTO business_user (business_id, pass, name, phone, business_number, business_name, business_picture, email, mobile, postnum, address1, address2, xpoint, ypoint, business_profile, bank_name, bank_number, deposit, open_time, close_time, break_time, day_off, introduction, regdate, store_onoff, ok_nook, root)
+    	VALUES (#{businessId}, #{bPass}, #{businessUserName}, #{callPhone}, #{businessReg}, #{bName}, #{businessProfileImage}, #{email}, #{bPhone}, #{postNum}, #{address1}, #{address2}, #{xpoint}, #{ypoint}, null, #{bankcode}, #{accountNumber}, 0, 0, 0, 0, 0, 0, SYSDATE(), 0, 0, 1)
 	</insert>
 	
-	<select id="getBusinessId" resultType="BusinessUser">
-		SELECT * FROM business_user WHERE businessId = #{business_id}
+	<select id="getBusinessUser" resultType="String">
+		select business_id from business_user WHERE business_id = #{businessId} or business_name = #{businessId}
+			union
+		select normal_id from normal_user WHERE normal_id = #{businessId} or  nickname= #{businessId}
+					union
+		select root_id from root_user WHERE root_id = #{businessId}
+	</select>
+	
+	<select id="getBusinessNumber" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM business_user WHERE business_number = #{businessReg}
 	</select>
 	
 </mapper>

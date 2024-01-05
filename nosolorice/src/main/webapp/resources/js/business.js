@@ -1,6 +1,6 @@
 // 입력한 이미지를 미리보기
-    function profileImage(input) {
-	    var preview = document.getElementById('profilePreview');
+    function previewProfileImage(input) {
+	    var preview = document.getElementById('profileImageInput');
 	    var file = input.files[0];
 
 	
@@ -26,9 +26,10 @@ $(document).ready(function () {
 
 });
 
-$("#btnZipcode").click(normalFindZipcode);
+// 주소입력_좌표값구하기
+$("#businessSearchZipcode").click(findZipcode);
 
-function normalFindZipcode(){
+function findZipcode(){
  	 new daum.Postcode({
 	        oncomplete: function(data) {
 	            // 주소 - 좌표 변환
@@ -92,8 +93,8 @@ function normalFindZipcode(){
 			            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 			
 			            // hidden 폼에 좌표값 설정
-			            $("#xpoint").val(coords.getLat());
-			            $("#ypoint").val(coords.getLng());
+			            $("#xpoint1").val(coords.getLat());
+			            $("#ypoint1").val(coords.getLng());
 			
 			            // 콘솔에 좌표값 출력
 			            console.log('x :', coords.getLat());
@@ -105,9 +106,6 @@ function normalFindZipcode(){
             }
         }).open();
 }
-
-
-
 
 function inputCharReplace(){
 	//대문자 A Z 소문자 a z 0부터 9까지 ^의 뜻 부정 아니면
@@ -141,7 +139,7 @@ function joinFormCheck(elem){
 			alert("아이디 중복을 체크해 주세요");
 		}
 	
-		if($("#pass").val().length == 0 ){
+		if($("#bPass").val().length == 0 ){
 			alert("비밀번호를 입력해 주세요");
 		}
 	
@@ -154,7 +152,7 @@ function joinFormCheck(elem){
 			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
 		}
 
-	if($("#normalId").val().length == 0){
+	if($("#businessId").val().length == 0){
 		alert("아이디를 입력해 주세요.");
 	}
 	
@@ -177,7 +175,7 @@ function joinFormCheck(elem){
 	}
 	
 
-	if($("#mobile").val().length == 0){
+	if($("#bPhone").val().length == 0){
 		alert("핸드폰 번호를 입력해주세요.");
 	}
 	
@@ -185,7 +183,7 @@ function joinFormCheck(elem){
 
 $(function() {
 	
-	$("#normalJoin").on("submit", function(){
+	$("#businessJoin").on("submit", function(){
 		let formck = $("#isPassCheck").val();
 		if(!formck){ // .prop("disabled") true인지 false인지 확인
 			alert("비밀번호 확인을 해주세요");
@@ -240,6 +238,7 @@ $(function() {
 		return joinFormCheck();
 	});
 	
+	
 	$(document).ready(function () {
 		$("#selectDomain").on("change", function() {
 			var str = $(this).val();
@@ -254,14 +253,13 @@ $(function() {
 		});
 	});
 	
-	
 	//입력 값이 숫자 또는 영문자인지 판단
 	$("#pass").on("keyup",inputCharReplace);
 	$("#checkPass").on("keyup",inputCharReplace);
 	$("#emailId").on("keyup",inputEmailDomainReplace);
 	
 	//입력 값이 숫자 또는 영문자인지 판단
-	$("#normalId").on("keyup", function(){
+	$("#businessId").on("keyup", function(){
 		let id = $(this).val();
 		//대문자 A Z 소문자 a z 0부터 9까지 ^의 뜻 부정 아니면
 		let regExp = /[^A-Za-z0-9]/gi;
@@ -287,88 +285,126 @@ $(function() {
 			return false;
 		}
 		
-
-		
 	})
-	// 회원 아이디 중복 확인 버튼이 클릭되면
-	$("#overlapCheck").on("click", function() {	
-		var id = $("#normalId").val();
-		url = "overlapIdCheck?normalId="+id;
-		if(id.length <= 0) {
+
+	// 사업자 아이디 중복 확인 버튼이 클릭되면
+	$("#businessOverlapCheck").on("click", function() {	
+		var businessId = $("#businessId").val();
+		url = "overlapIdCheck?normalId="+businessId;
+		if(businessId.length <= 0) {
 			alert("아이디가 입력되지 않았습니다. \n 입력 후 다시 시도해 주세요.");
 			return false;	
 		}
-		if(id.length < 5) {
+		if(businessId.length < 5) {
 			alert("아이디는 5자 이상 입력해주세요.");
 			return false;
 		}
 	
-		window.open(url, "IdCheck", "toolbar=no, location=no, " + "status=no, memubar=no, width=500, height=400");
+		window.open(url, "businessId", "toolbar=no, location=no, " + "status=no, memubar=no, width=500, height=400");
 	
 	});
-
-	// 닉네임 중복 확인 버튼이 클릭되면
-	$("#nickOverlapCheck").on("click", function() {
-	    var nickName = $("#nickName").val();
-	    var url = "nickOverlapCheck?nickName=" + nickName;
 	
-	    if (nickName.length <= 0) {
-	        alert("닉네임이 입력되지 않았습니다. \n 입력 후 다시 시도해 주세요.");
-	        return false;
-	    }
-	
-	    if (nickName.length < 3) {
-	        alert("닉네임은 3자 이상 입력해주세요.");
-	        return false;
-	    }
-	
-	    window.open(url, "NickCheck", "toolbar=no, location=no, " + "status=no, memubar=no, width=500, height=400");
-	});
-	
-	$("#btnIdCheckClose").on("click", function () {
-	    var id = $(this).attr("data-id-value");
-	    var normalIdElement = $(window.opener.document).find("#normalId");
-	    var idCheck = $(window.opener.document).find("#isIdCheck").val(true);
-	    let bIdCheck = $(window.opener.document).find("#isBusinessIdCheck").val(true);
+	// 사업자 아이디 중복페이지에서 닫으면
+	$("#btnBusinessIdCheckClose").on("click", function () {
+	    var id = $(this).attr("data-bid-value");
+	    var bIdElement = $(window.opener.document).find("#businessId");
+	    var bidCheck = $(window.opener.document).find("#isBusinessIdCheck").val(true);
 	    
-		normalIdElement.val(id);
+		BusinessIdElement.val(id);
 
 	    window.close();
 	});
-
-	$("#btnNickCheckClose").on("click", function() {
-	    var nickName = $(this).attr("data-nickname-value");
-		var normalNickElement = $(window.opener.document).find("#nickName");
-		var isNickCheck = $(window.opener.document).find("#isNickCheck").val(true);
-
-	    normalNickElement.val(nickName);
-	    
-	    window.close();
-	});
-
 	
+	// 사업자번호 중복 확인 버튼이 클릭되면
+	$("#checkBusinessReg").on("click", function() {
+	    let businessNumber = $("#businessNumber").val();
+	    let numCheck = $("#bNoCheck").val();
+	
+	    if (businessNumber.length <= 0) {
+	        alert("사업자번호가 입력되지 않았습니다. \n 입력 후 다시 시도해 주세요.");
+	        return false;
+	    }
+	
+	    if (businessNumber.length < 10) {
+	        alert("사업자번호를 정확히 입력해 주세요");
+	        return false;
+	    }
+	    
+	    async function checkBusiness() {
+	        let data = { "b_no": ["" + businessNumber + ""] }; 
+
+	        try {
+	            let result = await $.ajax({
+	                "url": "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=GwlTEq9WhhOCWK9%2FYjxr5GKfNdCEWXYeHl82B1AY%2BT%2BOuOy45hl8Itbg0tkAt3y0KQff3Kke%2FNF%2FGSDNKPmEjA%3D%3D",
+	                "type": "POST",
+	                "data": JSON.stringify(data),
+	                "dataType": "JSON",
+	                "contentType": "application/json",
+	                "accept": "application/json",
+	                "success" : function(result) {
+	                	
+	                	b_stt_ce = result.data[0].status_code;
+	                	b_no = result.data[0].b_no;
+	                	console.log(b_stt_ce, b_no);
+	                },
+	                "fail" : function(result) {
+	                	fail(error);
+	                }
+	                	
+	            });
+	
+	            return result.data[0];
+	        } catch (error) {
+	            throw error;
+	        }
+	    }
+		    	
+	    checkBusiness().then((check) => {
+	        $.ajax({
+	            "url": "businessNumberOverlapCheck",
+	            "type": "POST",
+	            "data": JSON.stringify({ "b_no": businessNumber }), 
+	            "dataType": "JSON", 
+	            "contentType": "application/json", 
+	            "success": function(result) {
+	                if (result > 0) {
+	                    alert("이미 가입한 사업자번호입니다. \n 다시 시도해 주세요");
+	                } else {
+	                    if (b_stt_ce == "01") {
+	                        alert("정상적으로 인증되었습니다.");
+	                        return $("#bNoCheck").val(true);
+	                    } else if (b_stt_ce == "02" || b_stt_ce == "03") {
+	                        alert("휴/폐업된 사업자번호입니다. \n 다시 시도해 주세요.");
+	                        return $("#bNoCheck").val(false);
+	                    } else {
+	                        alert("등록되지 않은 사업자번호입니다. \n 다시 시도해 주세요.");
+	                        return $("#bNoCheck").val(false);
+	                    }
+	                }
+	            },
+	            "error": function(error) { // 수정
+	                console.error(error); // 수정
+	            }
+	        });
+	    });
+	});
 	$("#bir").submit(() => {
-		var id = $("#userId").val();
-		var pass = $("#userPass").val();
+		var id = $("#businessId").val();
+		var pass = $("#bPass").val();
 		
 		if(id.length <= 0) {
 			alert("아이디가 입력되지 않았습니다.\n 입력 후 다시 시도해 주세요.");
-			$("#userId").focus();
+			$("#businessId").focus();
 		
 			return false;	
 		}
 		
 		if(pass.length <= 0) {
 			alert("비밀번호가 입력되지 않았습니다. \n 입력 후 다시 시도해 주세요.");
-			$("#userPass").focus();
+			$("#bPass").focus();
 			
 			return false;
 		}
 	});
 	
-	// 회원가입 버튼을 누르면
-	$("#normalJoin").click(function() {
-        $("#normalJoinForm").submit();
-    });
-    	
 });
