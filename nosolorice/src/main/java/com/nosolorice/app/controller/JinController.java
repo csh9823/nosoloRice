@@ -1,15 +1,11 @@
 package com.nosolorice.app.controller;
 
-<<<<<<< HEAD
-import java.io.PrintWriter;
-=======
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
->>>>>>> branch 'jin' of https://github.com/csh9823/nosoloRice.git
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
