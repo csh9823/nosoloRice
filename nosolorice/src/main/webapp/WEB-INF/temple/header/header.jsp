@@ -64,7 +64,7 @@
     </c:if>
         
     <!-- 일반유저_헤더 -->
-    <c:if test="${sessionScope.root eq '2'}">
+    <c:if test="${sessionScope.root eq '1'}">
     	
 		      <!-- nav_logo -->
 		
