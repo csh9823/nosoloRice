@@ -4,14 +4,6 @@
 <nav class="navbar navbar-expand-lg">
 
     <div class="container-fluid">
-
-      <!-- nav_logo -->
-      <a class="logo" href="main.html"><img src="resources/img/logo/nosolorice_logo_s.png"></a>
-    
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-     
     <!-- 관리자_헤더 -->
     <c:if test="${sessionScope.root eq '0'}">
 		<!-- nav_logo -->
@@ -130,7 +122,10 @@
 		
 		          <!-- 버튼들 -->
 		          <button type="button" class="btn btn-danger me-2">충전</button>
-		          <button type="button" class="btn btn-light me-2">로그아웃</button>
+		          <a class="nav-link" class="btn btn-primary" href='${ sessionScope.isLogin ? "logout" : "loginForm" }'>
+						${ sessionScope.isLogin ? "로그아웃" : "로그인" }
+				  </a>
+
 		
 		        </div>  
 		    
