@@ -130,11 +130,35 @@ public class JinController {
 	//로그인 하기
 	@RequestMapping("loginservice")
 	public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,
-			HttpServletResponse response,HttpSession session,PrintWriter out) {
-
+			HttpServletResponse response,HttpSession session) {
+		
+		// 쿠키에 값 저장하기
+		if(idsave != 0) {
+			Cookie cookie = new Cookie("saveId" ,id);
+			cookie.setMaxAge(60*60*24*30);
+			response.addCookie(cookie);
+		}else {
+			Cookie cookie = new Cookie("saveId" ,id);
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
+		}
+		
+		BusinessUser buser = jinloginService.loginBusinessUser(id, pass);
+		
+		NormalUser nuser = jinloginService.loginNormalUser(id, pass);
+		
+		if(buser != null) {
+			System.out.println(buser.getBusinessId());
+			session.setAttribute("BusinessUser", buser);
+			return "redirect:BusinessMenu?businessId="+buser.getBusinessId();
+		}
+		
+		if(nuser != null) {
+			System.out.println(nuser.getNormalId());
+			session.setAttribute("NormalUser", nuser);
+		}
 		
 		return "redirect:idFind";
-
 	}
 	
 	@RequestMapping("BusinessMenu")
