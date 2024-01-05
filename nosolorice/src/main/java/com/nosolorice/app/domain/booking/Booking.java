@@ -16,7 +16,19 @@ public class Booking {
 	private String bookingChatName;	// 채팅방 이름
 	
 	public Booking() {
-		
+	
+	}
+
+	public Booking(int bookingNo, int bookingCount, String bookingRequest, Timestamp bookingTime, String bookingState, int bookingBookNo, int deposit, String businessId, String bookingChatName) {
+		this.bookingNo = bookingNo;
+		this.bookingCount = bookingCount;
+		this.bookingRequest = bookingRequest;
+		this.bookingTime = bookingTime;
+		this.bookingState = bookingState;
+		this.bookingBookNo = bookingBookNo;
+		this.deposit = deposit;
+		this.businessId = businessId;
+		this.bookingChatName = bookingChatName;
 	}
 
 	public int getBookingNo() {
@@ -67,6 +79,14 @@ public class Booking {
 		this.bookingBookNo = bookingBookNo;
 	}
 
+	public int getDeposit() {
+		return deposit;
+	}
+
+	public void setDeposit(int deposit) {
+		this.deposit = deposit;
+	}
+
 	public String getBusinessId() {
 		return businessId;
 	}
@@ -77,14 +97,6 @@ public class Booking {
 
 	public String getBookingChatName() {
 		return bookingChatName;
-	}
-
-	public int getDeposit() {
-		return deposit;
-	}
-
-	public void setDeposit(int deposit) {
-		this.deposit = deposit;
 	}
 
 	public void setBookingChatName(String bookingChatName) {
@@ -99,7 +111,5 @@ public class Booking {
 				+ ", bookingChatName=" + bookingChatName + "]";
 	}
 
-
-	
 	
 }

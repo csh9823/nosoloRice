@@ -32,7 +32,7 @@ function normalFindZipcode(){
  	 new daum.Postcode({
 	        oncomplete: function(data) {
 	            // 주소 - 좌표 변환
-	            var geocoder = new daum.maps.services.Geocoder(); // Geocoder 객체 생성
+	            var geocoder = new daum.maps.services.Geocoder();
 	
 	            var callback = function(result, status) {
 				    if (status === kakao.maps.services.Status.OK) {

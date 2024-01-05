@@ -1,0 +1,240 @@
+body {
+  overflow: hidden;
+}
+
+/* 지도api css 시작 */
+.map_wrap {position:relative;width: 100%;height: 100%;}
+#mapAddressSearchModal {
+  display: none;
+  opacity: 0;
+  position: absolute;
+  top: 25px;
+  left: 130px;
+  z-index: 1; 
+  width: 300px;
+  height: 400px;
+  transition: opacity 0.25s ease-in;
+}
+.radius_border{border:1px solid #919191;border-radius:5px;}     
+.custom_zoomin {
+  position:absolute;
+  top:25px;
+  right:60px;
+  width:36px;
+  height:36px;
+  z-index:1;
+  background-color:#3DB78B;
+  font-size:2em;
+  cursor:pointer;
+  color:white;
+}
+.custom_zoomout {
+  position:absolute;
+  top:25px;
+  right:20px;
+  width:36px;
+  height:36px;
+  z-index:1;
+  background-color:#3DB78B;
+  font-size:2em;
+  cursor:pointer;
+  color:white;
+}
+.custom_search {
+  position:absolute;
+  top:25px;
+  left:22px;
+  width:100px;
+  height:50px;
+  z-index:1;
+  background-color:#3DB78B;
+  font-size:1em;
+  cursor:pointer;
+  color:white;
+}
+.custom_home {
+  position:absolute;
+  top:80px;
+  left:22px;
+  width:100px;
+  height:50px;
+  z-index:1;
+  background-color:#3DB78B;
+  font-size:1em;
+  cursor:pointer;
+  color:white;
+}
+/* 지도api css 끝 */
+.stepDiv{
+	transition: opacity 0.25s ease-in-out;
+	}
+#matchingConfigModal {
+	display: none;
+  opacity: 0;
+	position: absolute;
+	left: auto;
+	top: auto;
+	width: 30vw;
+	height: auto;
+  background-color: #ffe6e6;
+  box-shadow: 0 0 40px 0px rgb(75, 75, 75);
+  transition: opacity 0.25s ease-in-out;
+}
+#matchingConfigModalTitle {
+    position: relative;
+    background-color: #eaeaea;
+}
+.matchingConfigModalRow{
+    background-color: rgba(255, 255, 255, 1);
+}
+.matchingConfigModalRow:hover{
+    background: linear-gradient(to right, #f0f0f0, #f0f0f0, #fff);
+    transition: 0.25s;
+}
+#matchingConfigModalCloseDiv {
+    position: absolute;
+    top: 0;
+    right: 20px;
+}
+#matchingConfigModalCloseBtn {
+    color: gray;
+}
+#matchingConfigModalCloseBtn:hover {
+    color: black;
+}
+.matchingConfigLabel:hover {
+    font-weight: bolder;
+    cursor: pointer;
+}
+@keyframes bounce {
+    0%{
+      transform: translateY(0);
+    }
+    25% {
+      transform: translateY(-10px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    50% {
+    transform: translateY(0);
+    }
+  }
+
+  .matchingTextAnimation span {
+    display: inline-block;
+    animation: bounce 2s infinite ease-in-out;
+    letter-spacing: -0.4em; /* span 간 간격을 조절합니다 */
+  }
+
+  .matchingTextAnimation span:nth-child(1),
+  .matchingTextAnimation span:nth-child(5) {
+    animation-delay: 0.2s;
+  }
+
+  .matchingTextAnimation span:nth-child(2) {
+    animation-delay: 0.4s;
+  }
+
+  .matchingTextAnimation span:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+
+  .matchingTextAnimation span:nth-child(4) {
+    animation-delay: 0.8s;
+  }
+  .stepCol{
+    border: 5px #3DB78B solid;
+    border-radius: 20px;
+    width : 45vw !important;
+    height: 40vh;
+  }
+  #carouselExampleDark {
+    border: 5px #3DB78B solid;
+    border-radius: 20px;
+    width : 45vw !important;
+    height: 40vh;
+  }
+  #matchingConfigModalMatchingBtn{
+    background-color: #3DB78B;
+  }
+  #matchingConfigModalMatchingBtn:hover{
+    background-color: #3DB78B;
+    background-color: #069d66;
+    transition: 0.25s ease-in-out;
+  }
+
+  #matchingAgeSelect {
+    border : 3px solid #dddddd;
+    width: 300px !important;
+  }
+  .stepIntro, #matchingStartMention {
+    font-size: 30px;
+    font-weight: bolder;
+  }
+  .matchingNextBtn {
+    background-color: #3DB78B;
+    border: 5px solid #3DB78B;
+    color: white !important;
+    cursor: pointer;
+    height: 100px;
+  }
+  .matchingNextBtn:hover {
+    background-color: #069d66;
+    border: 5px solid #069d66;
+    transition: 0.25s ease-in-out;
+  }
+  .matchingPrevBtn {
+    background-color: #C93C3C;
+    border: 1px solid #C93C3C;
+    color: white !important;
+    cursor: pointer;
+    height: 100px;
+  }
+  .matchingPrevBtn:hover {
+    background-color: #af2121 !important;
+    transition: 0.25s ease-in-out;
+  }
+  #matchingStartBtn {
+    border-radius: 15px;
+    height : 100%;
+  }
+  input[type=checkbox], input[type=radio], select {
+    cursor: pointer;
+  }
+  #step4BtnDiv {
+    width: 45vw !important;
+    margin: auto;
+  }
+  #addressDiv{
+    position: relative;
+    height: 64vh;
+  }
+  #matchingAddress {
+    position: absolute;
+    top: 30vh;
+    left: 5vw;
+    width: 35vw;
+    height: auto;
+    font-weight: bold;
+    z-index: -1;
+  }
+  #matchingModalBg {
+    display: none;
+    opacity: 0;
+    background-color:rgba(0, 0, 0, 0.5);
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    transition: 0.25s ease-in-out;
+  }
+  #searchAddressBtn {
+    display: none;
+    background-color: #3DB78B;
+    border: 5px solid #3DB78B;
+    cursor: pointer;
+    color : white;
+  }

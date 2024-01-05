@@ -27,6 +27,28 @@ public class NormalUser {
 		
 	}
 
+	public NormalUser(String normalId, String pass, String name, String birth, String nickName, String mobile,
+			String profile, int postNum, String address1, String address2, String xpoint, String ypoint, String gender,
+			String email, Timestamp regDate, int myPoint, int root) {
+		this.normalId = normalId;
+		this.pass = pass;
+		this.name = name;
+		this.birth = birth;
+		this.nickName = nickName;
+		this.mobile = mobile;
+		this.profile = profile;
+		this.postNum = postNum;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.xpoint = xpoint;
+		this.ypoint = ypoint;
+		this.gender = gender;
+		this.email = email;
+		this.regDate = regDate;
+		this.myPoint = myPoint;
+		this.root = root;
+	}
+
 	public String getNormalId() {
 		return normalId;
 	}

@@ -19,16 +19,14 @@
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-	    <beans:property name="prefix" value="/WEB-INF/views/" />
+	    <beans:property name="prefix" value="/WEB-INF/index.jsp?body=views/" />
 	    <beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	
 	<context:component-scan base-package="com.nosolorice.app" />
 	
-	<view-controller path="/normaljoin" view-name="member/normalJoinForm" />
-	<view-controller path="/normaljoinresult" view-name="member/normalJoinResult" />
-	
-	<view-controller path="/businessjoin" view-name="member/businessJoinForm" />
-	<view-controller path="/businessjoinresult" view-name="member/businessJoinResult" />	
+	<view-controller path="/normalJoin" view-name="member/normalJoinForm" />
+	<view-controller path="/normaljoinresult" view-name="member/normalJoinResult" />	
 	
 </beans:beans>

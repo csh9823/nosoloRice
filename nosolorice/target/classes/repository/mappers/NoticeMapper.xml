@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+		<!-- 한선 -->
+	
+<mapper namespace="com.nosolorice.app.mapper.NoticeMapper">
+	
+	<select id="noticeList" resultType="Notice" parameterType="hashmap" resultMap="noticeResultMap">
+	
+		SELECT * FROM notice ORDER BY notice_no DESC LIMIT #{start}, #{num}
+	
+	</select>
+	
+	<select id="getNoticeCount" resultType="int">
+	
+		SELECT COUNT(notice_no) FROM notice
+		
+	</select>	
+	
+	
+	<select id="noticeDetail" resultType="Notice" resultMap="noticeResultMap">
+	
+		SELECT * FROM notice WHERE notice_no = #{noticeNo}
+		
+	</select>
+	
+	<insert id="noticeWrite" parameterType="Notice">
+    <choose>
+        <when test="noticeType == 'normal'">
+            INSERT INTO notice VALUES(null,#{noticeTitle},#{noticeContent},SYSDATE())
+        </when>
+        <when test="noticeType == 'business'">
+            INSERT INTO business_notice VALUES(null,#{noticeTitle}, #{noticeContent},SYSDATE())
+        </when>
+    </choose>
+</insert>
+	
+	
+	<update id="noticeUpdate" parameterType="Notice">
+	
+    UPDATE notice SET notice_title = #{noticeTitle}, notice_content = #{noticeContent}, notice_regdate = SYSDATE()
+    WHERE notice_no = #{noticeNo}
+
+	</update>
+	
+	
+	<delete id="noticeDelete">
+	
+		DELETE FROM notice WHERE notice_no = #{noticeNo}	
+		
+	</delete>
+	
+	<select id="BusinessNotice" resultType="BusinessNotice"  parameterType="hashmap"   resultMap="BusinessResultMap">
+		
+		 SELECT * FROM business_notice ORDER BY business_notice_no DESC LIMIT #{start}, #{num}
+		 
+	</select>
+	
+	<select id="getBusinessNoticeCount" resultType="int">
+	
+		SELECT COUNT(business_notice_no) FROM business_notice
+		
+	</select>	
+	
+	<select id="BusinessNoticeDetail" resultType="BusinessNotice" resultMap="BusinessResultMap">
+		
+		SELECT * FROM business_notice WHERE business_notice_no = #{businessNoticeNo}
+	
+	</select>
+	
+	<update id="updateNoticeBusiness" parameterType="BusinessNotice">
+	    UPDATE business_notice SET business_notice_title = #{businessNoticeTitle}, business_notice_content = #{businessNoticeContent}, business_notice_regdate = SYSDATE()
+	    WHERE business_notice_no = #{businessNoticeNo}
+	</update>
+	
+	<delete id="deleteBusinessNotice">
+		DELETE FROM business_notice WHERE business_notice_no = #{businessNoticeNo}
+	</delete>
+	
+
+	
+	<resultMap id="noticeResultMap" type="Notice">
+		<id property="noticeNo" column="notice_no"/>
+		<result property="noticeTitle" column="notice_title"/>
+		<result property="noticeContent" column="notice_content"/>
+		<result property="noticeRegDate" column="notice_regdate"/>
+	</resultMap>
+	
+	<resultMap id="BusinessResultMap" type="BusinessNotice">
+		<id property="businessNoticeNo" column="business_notice_no"/>
+		<result property="businessNoticeTitle" column="business_notice_title"/>
+		<result property="businessNoticeContent" column="business_notice_content"/>
+		<result property="businessNoticeRegDate" column="business_notice_regdate"/>
+	</resultMap>
+	
+
+</mapper>
