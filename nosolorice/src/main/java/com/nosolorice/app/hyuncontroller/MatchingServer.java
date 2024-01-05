@@ -2,6 +2,7 @@ package com.nosolorice.app.hyuncontroller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -173,7 +174,7 @@ public class MatchingServer {
             data.put("memberCount", memberCount);
             data.put("roomId", roomId);
             data.put("locationMethod", dataMap.get("locationMethod").toString());
-            if(dataMap.get("locationMethod").toString().equals("map")) data.put("locationInfo", centerPoint);
+            if(dataMap.get("locationMethod").toString().equals("map")) data.put("locationInfo", Arrays.toString(centerPoint));
             else data.put("locationInfo", address);
             
             //Map을 json문자열로 변환
@@ -183,7 +184,7 @@ public class MatchingServer {
             	m.getBasicRemote().sendText(jsonData);            	
             }
             
-
+            
             
     	}    
     }

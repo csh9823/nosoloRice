@@ -1,5 +1,22 @@
 $(function(){
 
+	let loginId = $("#loginId").val();
+	console.log(loginId);
+	$.ajax({
+		url: "isMatchingCheck",
+		data : "id=" + loginId,
+		type : "post",
+		dataType : "json",
+		success : function(resData){
+			console.log("resData : ", resData);
+			if(resData.result){
+				location.href="/app/chating"
+			}
+		}, error : function(err) {
+			console.log("통신에러",err);
+		}
+	});
+
     //Matching 웹소켓 변수
     let socket;
 
@@ -385,7 +402,13 @@ $(function(){
         
     //matching 웹소켓 서버 연결
     const matchingServerConnect = (matchingData) => {
-	    let url = "ws://192.168.35.92:8081/app/matching";
+    
+    	//학원꺼
+	    let url = "ws://192.168.0.16:8081/app/matching";
+	    
+	    //집꺼
+	    //let url = "ws://192.168.35.92:8081/app/matching";
+	    
 	    socket = new WebSocket(url);
 	    
 	    //matching 웹소켓 서버에 연결 됬을 때 이벤트
@@ -415,16 +438,16 @@ $(function(){
 		    	dataType: "json",
 		    	success : function(resData){
 		    		console.log(resData);
+		    		if(resData.success){
+			    		//db작업이 끝나면 채팅창으로 이동
+					    //채팅창에서 db를 검색해 자동으로 roomId가 엔드포인트인 웹소켓 서버로 연결 시켜줄거임
+					    location.href="/app/chating";
+		    		}
 		    	}, error : function(){
 		    		console.log("통신에러");
 		    	}
 		    
 		    });
-		    
-		    //db작업이 끝나면 채팅창으로 이동
-		    //채팅창에서 db를 검색해 자동으로 roomId가 엔드포인트인 웹소켓 서버로 연결 시켜줄거임
-		    location.href="/app/chating"
-		    
 		});
 		
 		//matching 웹소켓 서버에 연결이 끊겼을때 이벤트

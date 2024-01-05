@@ -14,10 +14,14 @@
 
 </head>
 <body>
+
+	<input type="hidden" id="loginId" value="${sessionScope.NormalUser.normalId}">
+		
 	<div id="matchingModalBg"></div>
 	<div class="container">
 	  <div class="row" style="height: 100vh;">
 		<div class="col d-flex justify-content-center align-items-center">
+		
 
 				<div id="step1" class="stepDiv">
 					<div class="row">

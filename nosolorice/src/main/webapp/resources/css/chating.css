@@ -18,8 +18,6 @@
 
 .sendChat, .sendChat2 {
     position:relative;
-    width:auto;
-    height:auto;
     background:#ffd4d4;
     border-radius: 10px;
 }

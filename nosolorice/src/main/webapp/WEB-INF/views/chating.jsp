@@ -16,6 +16,11 @@
     <div class="container" style="min-height: 100vh;">
         <div class="row">
             <div class="col">
+            	
+            	<input type="hidden" id="loginId" value="${sessionScope.NormalUser.normalId}">
+            	<input type="hidden" id="loginNickName" value="${sessionScope.NormalUser.nickName}">
+            	<input type="hidden" id="loginProfileImg" value="${sessionScope.NormalUser.profile}">
+            
                 <div class="row p-5">
 
                     <!-- 채팅 시작 -->
@@ -26,11 +31,11 @@
                                 <i class="bi bi-chat-right-dots" style="font-size: 3em; color:#555;"></i>
                             </div>
                             <div class="col d-flex justify-content-center align-items-start flex-column">
-                                <span class="text-secondary">
-                                    현재 4명 채팅중
+                                <div class="text-secondary">
+                                    현재 <span class="currentMemberCount"></span>명 채팅중(<span class="currentMemberCount"></span>/<span class="memberCount"></span>)
                                     <span class="chatTextAnimation1" style="letter-spacing: 5px;"></span>
-                                </span>
-                                <span class="fw-bold fs-5">홍길동, 이순신, 강감찬, 임꺽정</span>
+                                </div>
+                                <span class="fw-bold fs-5" id="memberList"></span>
                             </div>
                             <div class="col-auto d-flex justify-content-center align-items-center">
                                 <input type="button" class="btn btn-danger" value="나가기" id="chatQuitBtn">
@@ -42,7 +47,7 @@
                         </div>
                         <!-- 채팅본문 -->
                         <div class="row p-3" id="chatContent" style="height:500px; overflow-x: hidden; overflow-y: auto;">
-                            <div class="col p-3" style="position: relative;">
+                            <div class="col p-3" id="chatDiv" style="position: relative;">
                                 
                                 <!-- 신고,차단버튼 -->
                                 <div id="userConfigBox" class="my-2 d-none" style="width: 70px;">
@@ -56,168 +61,15 @@
                                     </ul>
                                 </div>
 
-                                <!-- 상대방 채팅 -->
-                                <div class="row">
-                                    <div class="col-auto p-0">
-                                        <img src="https://via.placeholder.com/70" class="rounded-circle chatProfileImg" style="cursor: pointer;">                                        
-                                    </div>
-                                    <div class="col-5">
-                                        <div class="row">
-                                            <div class="col fs-5 fw-bold p-0 ms-4">
-                                                김효정
-                                            </div>
-                                        </div>
-                                        <div class="row my-1">
-                                            <div class="col-auto p-0 ms-4">
-                                                <div class="receiveChat text-center px-3 py-2">
-                                                    안녕하세요
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-auto p-0 ms-4">
-                                                <div class="receiveChat2 text-center px-3 py-2">
-                                                    저는 김효정이에요
-                                                </div>
-                                                <div class="text-end">
-                                                    <span style="font-size: 12px;">
-                                                        오후 10:01
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 
-                                <!-- 내 채팅 -->
-                                <div class="row my-2">
-                                    <div class="col"></div>
-                                    <div class="col-5">
-                                        <div class="row justify-content-end">
-                                            <div class="col-auto fs-5 fw-bold p-0 me-4">
-                                                김대현
-                                            </div>
-                                        </div>
-                                        <div class="row my-1 justify-content-end">
-                                            <div class="col-auto p-0 me-4">
-                                                <div class="sendChat text-center px-3 py-2">
-                                                    안녕 효정아~
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row justify-content-end">
-                                            <div class="col-auto p-0 me-4">
-                                                <div class="sendChat2 text-center px-3 py-2">
-                                                    난 김대현이라고 해!
-                                                </div>
-                                                <span style="font-size: 12px;">
-                                                    오후 10:01
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto p-0">
-                                        <img src="https://via.placeholder.com/70" class="rounded-circle chatProfileImg" style="cursor: pointer;">
-                                    </div>
-                                </div>
+                                
+                                
 
-                                <!-- 이미지 업로드 수신 채팅 -->
-                                <div class="row my-2">
-                                    <div class="col-auto p-0">
-                                        <img src="https://via.placeholder.com/70" class="rounded-circle chatProfileImg" style="cursor: pointer;">
-                                    </div>
-                                    <div class="col-5">
-                                        <div class="row">
-                                            <div class="col fs-5 fw-bold p-0 ms-4">
-                                                김효정
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-auto p-0 ms-4">
-                                                <div class="receiveImgChat py-2">
-                                                    <img src="https://via.placeholder.com/200x250" class="rounded">
-                                                </div>
-                                                <div class="text-end">
-                                                    <span style="font-size: 12px;">
-                                                        오후 10:01
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
 
-                                <!-- 이미지 업로드 발신 채팅 -->
-                                <div class="row my-2">
-                                    <div class="col"></div>
-                                    <div class="col-5">
-                                        <div class="row justify-content-end">
-                                            <div class="col-auto fs-5 fw-bold p-0 me-4">
-                                                김대현
-                                            </div>
-                                        </div>
-                                        <div class="row justify-content-end">
-                                            <div class="col-auto p-0 me-4">
-                                                <div class="sendImgChat py-2">
-                                                    <img src="https://via.placeholder.com/200x250" class="rounded">
-                                                </div>
-                                                <span style="font-size: 12px;">
-                                                    오후 10:01
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto p-0">
-                                        <img src="https://via.placeholder.com/70" class="rounded-circle chatProfileImg" style="cursor: pointer;">
-                                    </div>
-                                </div>
+                                
 
-                                <!-- 가게 드래그 출력 시작 -->
-                                <div class="row my-4">
-                                    <div class="col-auto">
-                                        <div class="row justify-content-center">
-                                            <div class="col p-0 col-9 text-center text-secondary storeChatDiv" style="font-size: 14px;cursor: pointer;">
-                                                <span class="text-dark fs-5"><b>홍길동</b>님이 소개하셨어요!</span>
-                                            </div>
-                                        </div>
-                                        <div class="dragStore row justify-content-center">
-                                            <div class="col bg-danger rounded col-9 storeChatDiv" style="height: 125px; overflow: hidden; cursor: pointer;">
-                                                <div class="row">
-                                                    <div class="col-auto p-2">
-                                                        <img src="https://via.placeholder.com/200" style="max-width: 100%; max-height: 110px;" class="rounded">
-                                                    </div>
-                                                    <div class="col-8 text-white p-2">
-                                                        <p class="m-0 p-0 fs-4 fw-bold">BBQ 봉천점</p>
-                                                        <p class="m-0 p-0" style="font-size: 14px;">리뷰 5 별점 5</p>
-                                                        <p class="m-0 p-0" style="font-size: 14px;">인당예약금 : 2,000원</p>
-                                                        <p class="m-0 p-0" style="font-size: 14px; height: 24px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">주소 : 서울시 관악구 봉천동 872-65 서울시 관악구 봉천동 872-65 서울시 관악구 봉천동 872-65 </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- 가게 드래그 출력 끝 -->
 
-                                <!-- 예약 제안 채팅 -->
-                                <div class="row my-4">
-                                    <div class="col">
-                                        <div class="dragStore row justify-content-center">
-                                            <div class="col-9 bg-primary py-2 rounded">
-                                                <div class="row">
-                                                    <div class="col text-white p-2 text-center">
-                                                        <p class="m-0 p-0 fs-5">
-                                                            <b>홍길동</b>님이 예약을 제안했어요!
-                                                        </p>
-                                                        <p class="m-0 p-0">
-                                                            오른쪽 예약창을 확인해주세요
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
 
                             </div>
@@ -250,7 +102,6 @@
                     <div class="col-6 bg-white ps-4">
                         <div class="row">
                             <div class="col" style="position: relative;" id="storeContainer">
-                                
 
                                 <!-- 예약 모달 시작 -->
                                 <div id="bookModal" class="rounded border px-4 py-2 d-none">
@@ -424,61 +275,76 @@
 
                                 <!-- 가게 상세보기 모달 시작 -->
                                 <div id="storeDetailModal" class="rounded border p-4 d-none">
+                                	
+                                	<input type="hidden" id="storeDetailModalBusinessId">
+                                
                                     <i class="bi bi-x-lg fs-3" id="storeDetailModalCloseBtn"></i>
 
                                     <div class="row">
-                                        <div class="col-auto p-0">
-                                            <img src="https://via.placeholder.com/130" class="rounded">
+                                        <div class="col-auto p-0" id="storeBusinessProfile">
+                                            
                                         </div>
                                         <div class="col me-4">
 
                                             <div class="row mt-3">
                                                 <div class="col">
-                                                    <span class="fs-3 fw-bold">BBQ 봉천점</span>
+                                                    <span class="fs-3 fw-bold storeBusinessNameDiv"></span>
                                                 </div>
                                             </div>
 
                                             <div class="row">
                                                 <div class="col">
-                                                    <span>별점 5  리뷰수 5</span>
+                                                    별점 <span id="storeTotalScore"></span>  리뷰수 <span id="storeTotalReviewCount"></span>
                                                 </div>
                                             </div>
 
                                             <div class="row mt-2">
                                                 <div class="col">
-                                                    <span class="fw-bold fs-5" id="storeDetailModalInfoBtn">
+                                                    <div class="fw-bold fs-5" id="storeDetailModalInfoBtn">
                                                         가게정보 보기
                                                         <div class="row px-2">
-                                                            <div class="rounded bg-success d-none" id="storeDetailModalInfoDiv"
+                                                            <div class="rounded d-none" id="storeDetailModalInfoDiv"
                                                             style="position: absolute; width: 350px;">
                                                                 <table class="table table-hover table-borderless m-0">
-                                                                    <tbody class="text-white fs-6">
+                                                                    <tbody class="text-white table-success fs-6">
                                                                         <tr class="row">
                                                                             <td class="col-3 text-end">전화번호</td>
-                                                                            <td class="col me-1">02-285-9453</td>
+                                                                            <td class="col me-1">
+                                                                            	<span id="storeInfoPhone">02-1234-1234</span>
+                                                                            </td>
                                                                         </tr>
                                                                         <tr class="row">
                                                                             <td class="col-3 text-end">가게주소</td>
-                                                                            <td class="col me-1" style="font-size: 14px;">서울시 관악구 봉천동 872-65서울시 관악구 봉천동 872-65서울시 관악구 봉천동 872-65</td>
+                                                                            <td class="col me-1" style="font-size: 14px;">
+                                                                            	<span id="storeInfoAddress">서울시 관악구 봉천동 872-65</span>
+                                                                            </td>
                                                                         </tr>
                                                                         <tr class="row">
                                                                             <td class="col-3 text-end">오픈시간</td>
-                                                                            <td class="col me-1">오전 11시</td>
+                                                                            <td class="col me-1">
+                                                                            	<span id="storeInfoOpenTime">오전 11시</span>
+                                                                            </td>
                                                                         </tr>
                                                                         <tr class="row">
                                                                             <td class="col-3 text-end">마감시간</td>
-                                                                            <td class="col me-1">오후 10시</td>
+                                                                            <td class="col me-1">
+                                                                            	<span id="storeInfoCloseTime">오후 10시</span>
+                                                                            </td>
                                                                         </tr>
                                                                         <tr class="row">
                                                                             <td class="col-3 text-end">휴식시간</td>
-                                                                            <td class="col me-1">오후 3시 ~ 오후 4시</td>
+                                                                            <td class="col me-1">
+                                                                            	<span id="storeInfoBreakTime">오후 3시 ~ 오후 4시</span>
+                                                                            </td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
                                                             </div>
                                                         </div>
 
-                                                    </span>
+                                                    </div>
+                                                    
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -495,8 +361,8 @@
                                             <!-- 홈 버튼 컨텐트 시작 -->
                                             <div id="storeDeatilHomeContent" class="h-100">
                                                 <!-- 가게 소개가 없을 때 -->
-                                                <div class="text-center h-100 d-flex justify-content-center align-items-center">
-                                                    <span>등록된 가게 소개가 없습니다</span>
+                                                <div class="text-center h-100 d-flex justify-content-center align-items-center" id="storeIntroduction">
+                                                    
                                                 </div>
                                                 <!-- 가게 소개가 있을 때 -->
                                             </div>
@@ -510,67 +376,9 @@
                                                     <span>등록된 메뉴가 없습니다</span>
                                                 </div>
                                                 <!-- 메뉴가 있을 때 -->
-                                                <div>
+                                                <div id="storeMenuDiv">
                                                     <!-- 해당 가게의 메뉴카테고리 반복문 시작 -->
-                                                    <div class="row border-bottom border-dark storeDetailMenuCategoryRow">
-                                                        <div class="col ps-3 py-3 fs-5 fw-bold">
-                                                            양념치킨
-                                                        </div>
-                                                        <div class="col-auto px-4 py-3 fs-5 fw-bold">
-                                                            <i class="bi bi-caret-down-fill"></i>
-                                                            <i class="bi bi-caret-up-fill d-none"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row d-none">
-                                                        <div class="col">
-                                                            <!-- 카테고리에 해당하는 메뉴 반복문 출력 시작 -->
-                                                            <div class="row my-3" style="height:125px; overflow-y: hidden;">
-                                                                <div class="col-3 p-0">
-                                                                    <img src="https://via.placeholder.com/125" class="rounded">
-                                                                </div>
-                                                                <div class="col-9">
-                                                                    <div class="row">
-                                                                        <div class="col fs-4 fw-bold">
-                                                                            황금올리브 양념치킨
-                                                                        </div>
-                                                                        <div class="col-auto p-0 m-0 me-1 d-flex align-items-center">
-                                                                            <input type="button" value="원산지" 
-                                                                            class="btn btn-sm btn-primary"
-                                                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                            data-bs-custom-class="custom-tooltip"
-                                                                            data-bs-html="true" 
-                                                                            data-bs-title="닭고기 : 국내산<br>마늘 : 중국산">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col fs-4">
-                                                                            20,000원
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col storeDetailMenuInfo bg-white">
-                                                                            <div>
-                                                                                국내산 앞다리로 만든 바삭바삭하고 촉촉한 양념치킨
-                                                                                국내산 앞다리로 만든 바삭바삭하고 촉촉한 양념치킨
-                                                                                국내산 앞다리로 만든 바삭바삭하고 촉촉한 양념치킨
-                                                                                국내산 앞다리로 만든 바삭바삭하고 촉촉한 양념치킨
-                                                                                국내산 앞다리로 만든 바삭바삭하고 촉촉한 양념치킨
-                                                                            </div>
-                                                                            <div class="rounded p-2 storeDetailMenuInfo2 d-none">
-                                                                                국내산 앞다리로 만든 바삭바삭하고 촉촉한 양념치킨
-                                                                                국내산 앞다리로 만든 바삭바삭하고 촉촉한 양념치킨
-                                                                                국내산 앞다리로 만든 바삭바삭하고 촉촉한 양념치킨
-                                                                                국내산 앞다리로 만든 바삭바삭하고 촉촉한 양념치킨
-                                                                                국내산 앞다리로 만든 바삭바삭하고 촉촉한 양념치킨
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- 카테고리에 해당하는 메뉴 반복문 출력 끝 -->
 
-                                                        </div>
-                                                    </div>
                                                     <!-- 해당 가게의 메뉴카테고리 반복문 끝 -->
                                                     
 
@@ -639,9 +447,9 @@
                                                 </div>
                                                 <div class="row my-2 p-0 justify-content-center">
                                                     <div class="col px-0 py-3 rounded text-center text-dark fw-bold" style="background-color: #ccc;">
-                                                        <span class="m-0 p-0 fs-5">BBQ 봉천점</span>
+                                                        <span class="m-0 p-0 fs-5 storeBusinessNameDiv">BBQ 봉천점</span>
                                                         의 1인당 예약금<br>
-                                                        <span class="fs-1 fw-bold text-white" style="
+                                                        <span class="fs-1 fw-bold text-white" id="storeDeposit" style="
                                                             text-shadow: -1px -1px 0 #000,  
                                                             1px -1px 0 #000,
                                                             -1px 1px 0 #000,
@@ -724,28 +532,10 @@
                                 </div>
                                 <div class="row p-0" style="height: 670px; overflow-x: hidden; overflow-y: auto;">
                                     <div class="col p-0">
-                                        <div class="row p-3 g-3">
+                                        <div class="row p-3 g-3" id="storeRow">
 
                                             <!-- 가게리스트 반복문 시작 -->
-                                            <div class="col-4 text-center px-3 pb-2 my-2 storeDiv" draggable="true" style="cursor: pointer;"
-                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                            data-bs-custom-class="custom-tooltip"
-                                            data-bs-title="채팅창으로 드래그해보세요! 이 가게를 채팅창 멤버들에게 소개 할 수 있어요">
-                                                <div class="my-3" style="position: relative;">
-                                                    <img src="https://via.placeholder.com/162" class="rounded storeProfileImg" draggable="false"
-                                                    style="max-width: 100%; height: 100%;">
-                                                </div>
-                                                <div class="fw-bold storeName" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-break:break-all">
-                                                    BBQ 봉천점
-                                                </div>
-                                                <div style="font-size: 14px;" class="storeReviewCount">
-                                                    리뷰 5 별점 5
-                                                </div>
-                                                <div style="font-size: 14px;" class="storeDeposit">
-                                                    인당예약금 : 2000원
-                                                    <input type="hidden" class="storeAddress" value="서울시 봉천동 872-65 서울시 봉천동 872-65">
-                                                </div>
-                                            </div>
+
                                             <!-- 가게리스트 반복문 끝 -->
 
                                         </div>
