@@ -117,6 +117,14 @@ public class JinController {
 		return "login/joinForm";
 	}
 	
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		
+		return "redirect:login";
+	}
+	
 	//로그인 폼
 	@RequestMapping("login")
 	public String login(@CookieValue(name= "saveId",required = false) String id,Model model) {
@@ -149,10 +157,12 @@ public class JinController {
 		
 		NormalUser nuser = jinloginService.loginNormalUser(id, pass);
 		
+		System.out.println("buser : " + buser + ", nuser : " + nuser);
+		
 		if(buser != null) {
 			System.out.println(buser.getBusinessId());
 			session.setAttribute("BusinessUser", buser);
-			return "redirect:BusinessMenu?businessId="+buser.getBusinessId();
+			return "redirect:businessMenu?businessId="+buser.getBusinessId();
 		}else if(nuser != null) {
 			System.out.println(nuser.getNormalId());
 			session.setAttribute("NormalUser", nuser);
@@ -163,7 +173,7 @@ public class JinController {
 		
 	}
 	
-	@RequestMapping("BusinessMenu")
+	@RequestMapping("businessMenu")
 	public String BusinessMenu(String businessId,Model model, @RequestParam(name="menuCategoryNo",required = false) String menuCategoryNo) {
 		
 		System.out.println(menuCategoryNo);

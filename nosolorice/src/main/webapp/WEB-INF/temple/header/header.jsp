@@ -4,8 +4,9 @@
 <nav class="navbar navbar-expand-lg">
 
     <div class="container-fluid">
-    <!-- 관리자_헤더 -->
-    <c:if test="${sessionScope.root eq '0'}">
+    
+    <!-- 관리자헤더_아직 관리자회원 로그인 성공 시 세션저장 기능 없음 -->
+    <c:if test="${not empty sessionScope.BusinessUser}">
 		<!-- nav_logo -->
 		<a class="logo" href="main.jsp"><img src="./logo/nosolorice_logo_s.png"></a>
       
@@ -16,7 +17,7 @@
 	    
 	          <!-- nav_content -->
 	          <li class="nav-item dropdown">
-	            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 문의 </a>
+	            <button class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 문의 </button>
 	            <ul class="dropdown-menu">
 	              <li><a class="dropdown-item" href="#">일반회원 문의</a></li>
 	              <li><a class="dropdown-item" href="#">사업자회원 문의</a></li>
@@ -55,16 +56,17 @@
 	    
 	        <!-- login -->
 	        <div class="d-flex">
-	        	<div>${sessionScope.rootName}</div>
-	          <!-- who_login -->
-	          <a class="nav-link" href="#">로그아웃</a>
+		          <!-- who_login -->
+		          <a class="nav-link" href='${ not empty sessionScope.BusinessUser ? "logout" : "loginForm" }'>
+							${ not empty sessionScope.BusinessUser ? "로그아웃" : "로그인" }
+				  </a>
 	        </div>
 	    
 	      </div>
     </c:if>
         
-    <!-- 일반유저_헤더 -->
-    <c:if test="${sessionScope.root eq '1'}">
+    
+    <c:if test="${not empty sessionScope.NormalUser}">
     	
 		      <!-- nav_logo -->
 		
@@ -84,7 +86,7 @@
 		          </li>
 		
 		          <li class="nav-item">
-		            <a class="nav-link " aria-current="page" href="#">매칭하기</a>
+		            <a class="nav-link " aria-current="page" href="/matching">매칭하기</a>
 		          </li>
 		    
 		          <li class="nav-item">
@@ -92,11 +94,7 @@
 		          </li>
 		
 		          <li class="nav-item">
-		            <a class="nav-link " aria-current="page" href="#">마이페이지</a>
-		          </li>
-		
-		          <li class="nav-item">
-		            <a class="nav-link " aria-current="page" href="#">고객센터</a>
+		            <a class="nav-link " aria-current="page" href="/question">고객센터</a>
 		          </li>
 		    
 		        </ul>
@@ -111,19 +109,19 @@
 		          </form>
 		
 		          <!-- 유저_프로필 -->
-		          <a href="#"><img src="http://placehold.it/40x40?text=sample" class="rounded-circle me-2 "/></a>
+		          <a href="#"><img src="${sessionScope.NormalUser.profile}" class="rounded-circle me-2 "/></a>
 		
 		          <!-- 포인트 -->          
 		          <div class="d-flex flex-column mb-2 ">
 		            <p class="me-2 mb-2 fs-6 align-items-end">보유 포인트</p>
-		            <p class="me-2 mb-2 align-items-start fw-bold">99999</p>
+		            <p class="me-2 mb-2 align-items-start fw-bold">${ sessionScope.NormalUser.myPoint }</p>
 		          </div>  
 		          
 		
 		          <!-- 버튼들 -->
 		          <button type="button" class="btn btn-danger me-2">충전</button>
-		          <a class="nav-link" class="btn btn-primary" href='${ sessionScope.isLogin ? "logout" : "loginForm" }'>
-						${ sessionScope.isLogin ? "로그아웃" : "로그인" }
+		          <a class="nav-link" class="btn btn-primary" href='${  not empty sessionScope.NormalUser  ? "logout" : "login" }'>
+						${ not empty sessionScope.NormalUser  ? "로그아웃" : "로그인" }
 				  </a>
 
 		
