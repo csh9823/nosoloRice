@@ -166,6 +166,7 @@ Map<String, Object> map = new HashMap<String, Object>();
 
 		sqlSession.delete(Mapper + ".businessDelete",id);
 		
+		
 	}
 
 	
