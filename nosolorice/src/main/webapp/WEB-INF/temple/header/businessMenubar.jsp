@@ -13,7 +13,7 @@
     }
   </style>
 <body>
-      <div class="col-md-3 darkgray" style="height: 100vh">
+      <div class="col-md-3 darkgray" style="height: 100hv;">
         <div class="row">
           <div class="col">
             <div class="row red p-4" onclick="location.href=''">
@@ -56,3 +56,5 @@
     });
 
   </script>
+</html>
+
