@@ -40,6 +40,7 @@ public class NormalUserServiceImpl implements NormalUserService {
 	
 	@Override
 	public void addNormalUser(NormalUser normalUser) {
+		
 	    if (normalUser.getPass() != null) {
 	        normalUser.setPass(passwordEncoder.encode(normalUser.getPass()));
 	    }

@@ -44,6 +44,7 @@ public class JinController {
 	private JinloginService jinloginService;
 	
 	
+	
 	// 메뉴 카테고리 관련 서비스
 	@Autowired
 	private JinMenuCateService jinMenuCateService;
@@ -151,14 +152,14 @@ public class JinController {
 			System.out.println(buser.getBusinessId());
 			session.setAttribute("BusinessUser", buser);
 			return "redirect:BusinessMenu?businessId="+buser.getBusinessId();
-		}
-		
-		if(nuser != null) {
+		}else if(nuser != null) {
 			System.out.println(nuser.getNormalId());
 			session.setAttribute("NormalUser", nuser);
+			return "redirect:idFind";
+		}else {
+			return "redirect:idFind";
 		}
 		
-		return "redirect:idFind";
 	}
 	
 	@RequestMapping("BusinessMenu")

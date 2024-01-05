@@ -458,11 +458,13 @@ $(function(){
 	
 	//가져온 room_id를 이용해 웹소켓채팅서버를 연다 - 완료
 	//학원꺼
-	let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
+	//let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
 	
 	//집꺼
 	//let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
 	
+	//현진이꺼
+	let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
     socket = new WebSocket(url);
     
     $(socket).on("open", function(event) {
