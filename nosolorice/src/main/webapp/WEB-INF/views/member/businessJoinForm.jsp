@@ -1,201 +1,177 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 
-	<form class="form form-center" action="/uploads" method="post" enctype="multipart/form-data">
-    <div class="row">
+<script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="resources/js/jquery-3.2.1.min.js"></script>
+<link href="resources/bootstrap/main.css" rel="stylesheet">
 
+<!-- favicon 404 에러 방지용(파비폰은 resources/image 안에 있습니다.) -->
+<link rel="icon" href="data:,">
+
+<!-- 다음우편번호찾기 -->
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<!-- 다음좌표 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=685bdba705a3c08af0c489199df63809&libraries=services"></script>
+
+<div class="container justify-content-center">
+	
+	<form class="form form-center" id="businessJoinForm" action="normalJoinResult" method="post" onsubmit="return submitCheck();" enctype="multipart/form-data">
+		<input type="hidden" name="bPhoneCheck" id="bPhoneCheck" value="false" />
+		<input type="hidden" name="isBusinessIdCheck" id="isBusinessIdCheck" value="false" />
+		<input type="hidden" name="bNoCheck" id="bNoCheck" value="false" />
+		<input type="hidden" name="xpoint1" id="xpoint1" />
+		<input type="hidden" name="ypoint1" id="ypoint1" />
+	
         <div class="row-12 p-5">
           <div class="d-flex justify-content-center">
-            <img src="/img/logo/nosolorice_logo_M.png">
+            <img src="resources/image/nosolorice_logo_M.png">
           </div>
-          <div class="d-flex justify-content-center">
-            <p class="fs-1 fw-bold">사업자 가입</p>
+          
+          <div class="d-flex justify-content-center">  
+          
+            <p class="fs-1 fw-bold">사업자회원 가입</p>
           </div>
         </div>
 
-        <div class="row-12 p-3 d-flex justify-content-center">
+        <div class="row-12 d-flex p-3 justify-content-center">
+          
           <!-- profile_img -->
-          <div class="col-2">
-            <img src="../img/profile_img.png">
-            <input type="file" accept="image/*">
+         <div class="col-md-4">
+          <div class="col-sm-2">
+            <img src="resources/image/profile_img.png" id="profileImageInput" style="width: 348px; height: 400px;">
+            <input type="file" accept="image/*" onchange="previewProfileImage(this)" id="businessProfileImage" name="profileImageInput">
           </div> 
+         </div> 
 
-          <div class="col-sm-8">
+		  <div class="col-sm-1">
+          	<div class="form-group">
+            </div>
+          </div>
+
+           <div class="col-md-8">
             <div class="row">
             
-              <div class="col-5 p-2">
+              <div class="col-7 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" id="normalId" name="normalId" placeholder="ID" required>
+                  <input type="text" class="form-control" id="businessId" name="businessId" placeholder="ID" >
                 </div>
               </div>
 
               <div class="col-3 text-end p-2">
                 <div class="form-group">
-                  <button type="button" class="btn btn-success" id="overlapCheck">증복확인</button>
+                  <input type="button" class="btn btn-success" id="businessOverlapCheck" name="businessOverlapCheck" value="증복확인">
+                </div>
+              </div>
+              
+              <div class="col-10 p-2">
+                <div class="form-group">
+                  <input type="password" class="form-control" id="bPass" name="bPass" placeholder="비밀번호" >
                 </div>
               </div>
 
-              <div class="col-5 p-2">
+              <div class="col-10 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="nickname" placeholder="닉네임" required>
+                  <input type="password" class="form-control" id="checkBPass" name="checkBPass" placeholder="비밀번호확인" >
                 </div>
               </div>
 
-              <div class="col-3 text-end p-2">
+			  <div class="col-8 p-2">
                 <div class="form-group">
-                  <input type="button" class="btn btn-success" id="BusinessNickOverlapCheck">증복확인
+                  <input type="text" class="form-control" name="bPhone" id="bPhone" placeholder="01012345678" >
                 </div>
               </div>
 
-              <div class="col-8 p-2">
+              <div class="col-2 text-end p-2">
                 <div class="form-group">
-                  <input type="password" class="form-control" name="pass" placeholder="비밀번호" required>
-                </div>
-              </div>
-
-              <div class="col-8 p-2">
-                <div class="form-group">
-                  <input type="password" class="form-control" name="checkPass" placeholder="비밀번호확인" required>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group">
+                  <input type="button" class="btn btn-success" id="getBPhoneCheck" value="인증번호 받기">
                 </div>
               </div>
               
               <div class="col-8 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="phone" id="phone" placeholder="01012345678" required>
-                </div>
-              </div>
-
-              <div class="col-2 p-2">
-                <div class="form-group">
-                  <input type="button" class="btn btn-success" id="getNormalPhoneCheck">인증번호 받기
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group">
+                  <input type="number" class="form-control" name="checkNum" id="checkNum" placeholder="인증번호를 입력해 주세요" >
                 </div>
               </div>
               
-              <div class="col-5 p-2">
+              <div class="col-2 p-2 text-end">
                 <div class="form-group">
-                  <input type="password" class="form-control" name="pass" placeholder="인증번호를 입력해 주세요" required>
-                </div>
-              </div>
-
-              <div class="col-2 p-2">
-                <div class="form-group">
-                  <input type="button" class="btn btn-success" id="normalPhoneCheck">인증하기
+                  <input type="button" class="btn btn-success" id="businessPhoneCheck" value="인증하기">
                 </div>
               </div>
               
-              <div class="col-5 p-2">
+              <div class="col-6 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="email" id="email" placeholder="이메일을 입력해 주세요" required>
+                  <input type="text" class="form-control" name="email" id="bEmail" placeholder="이메일을 입력해 주세요" >
                 </div>
               </div>
               
               <!-- option으로 수정 -->
-              <div class="col-3 p-2">
-                <select class="form-select">
+              <div class="col-4 p-2">
+                <select class="form-select" id="emailDomain">
                   <option value="@naver.com">@naver.com</option>
-                  <option value="@naver.com">@gmail.com</option>
-                  <option value="@naver.com">@daum.net</option>
+                  <option value="@gmail.com">@gmail.com</option>
+                  <option value="@daum.net">@daum.net</option>
                 </select>
               </div>
-
-			<!-- 가름줄 -->
-			  <div class="col-12">
-		      	<div class="form-group">
-		      		<span class="border-bottom border-5 border-black border-opacity-75"></span>
-			    </div>
-			  </div>				
-			<!-- 가름줄 -->
-			
-			  <div class="col-auto p-2">
-				<div class="form-group">
-                  <input type="text" class="form-control" name="name" id="name" placeholder="대표자명" required>
-                </div>
+              
+              
+              <div class="col-10 m-2">  
+             	<div class="row">
+             		<span class="border border-bottom"></span>
+             	</div>		
               </div>
               
-              <div class="col-5 p-2">
-				<div class="form-group">
-                  <input type="text" class="form-control" name="brand" id="brand" placeholder="상호명" required>
-                </div>
-              </div>
-              
-              <div class="col-5 p-2">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="businessNumber" name="businessNumber" placeholder="사업자등록번호" required>
-                </div>
-              </div>
-
-              <div class="col-3 text-end p-2">
-                <div class="form-group">
-                  <button type="button" class="btn btn-success" id="businessNumberCheck">진위확인</button>
-                </div>
-              </div>
-              
-              <div class="col-5 p-2">
-                <h5>사업자등록증 이미지를 업로드 해주세요</h5>
-                <div class="form-group">
-                  <input type="file" class="form-control" id="businessPicture" name="businessPicture" required>
-                </div>
-              </div>
-
-			<div class="col-3 text-end p-2">
-                <div class="form-control">
-                  <input type="button" class="btn btn-success" id="bNoPhotoUpload">업로드
-                </div>
-              </div>
-			
-			<div class="col-12">
-                <div class="form-group">
-                </div>
-              </div>
-				
-			<div class="col-12">
-                <div class="form-group">
-                </div>
-              </div>
-              
-              <div class="col-3 p-2">
-              	<div class="form-control">
-	              	<select class="form-select" aria-label="selectBank">
-					  <option selected>-- 은행을 선택해 주세요 --</option>
-					  <option value="002">KDB산업은행</option>
-					  <option value="003">IBK기업은행</option>
-					  <option value="004">KB국민은행</option>
-					  <option value="007">수협은행</option>
-					  <option value="011">NH농협은행</option>
-					  <option value="020">우리은행</option>
-					  <option value="023">SC제일은행</option>
-					  <option value="027">한국씨티은행</option>
-					  <option value="031">대구은행</option>
-					  <option value="032">부산은행</option>
-					  <option value="034">광주은행</option>
-					  <option value="035">제주은행</option>
-					  <option value="037">전북은행</option>
-					  <option value="039">경남은행</option>
-					  <option value="081">하나은행</option>
-					  <option value="088">신한은행</option>
-					  <option value="089">케이뱅크</option>
-					  <option value="090">카카오뱅크</option>
-					  <option value="092">토스뱅크</option>
-					  <option value="012">농협중앙회</option>
-					  <option value="071">우체국</option>
-					</select>
+              <div class="col-4 p-2">
+              	<div class="form-group">
+              		<input type="text" class="form-control" id="businessUserName" name="businessUserName" placeholder="대표자명">
               	</div>
               </div>
-			
-              <div class="col-5 end p-2">
-                <div class="form-control">
-                  <input type="number" class="form-control" id="accountNumber" placeholder="대표자명의 계좌번호를 입력해 주세요">
+
+              <div class="col-6 p-2">
+                <div class="form-group">
+                  <input type="text" class="form-control" name="bName" id="bName" placeholder="상호명" >
+                </div>
+              </div>
+
+			  <div class="col-7 p-2">
+			  	<div class="form-group">
+			  		<input type="number" class="form-control" id="businessNumber" name="businessNumber" placeholder="사업자번호를 입력해주세요">
+			  	</div>
+			  </div>
+			  
+			  <div class="col-3 text-end p-2">
+                <div class="form-group">
+                  <input type="button" class="btn btn-success" name="checkBusinessReg" id="checkBusinessReg" value="진위확인">
+                </div>
+              </div>
+              
+              <div class="col-10 p-2">
+			  	<div class="form-group">
+			  		<input type="file" class="form-control" id="businessRegImg" name="businessRegImg">
+			  	</div>
+			  </div>
+              
+              <!-- option으로 수정 -->
+              <div class="col-3 p-2">
+                <select class="form-select" id="bankcode" name="bankcode">
+                  <option value="002">한국산업은행</option>
+                  <option value="004">국민은행</option>
+                  <option value="005">한국외환은행</option>
+                  <option value="010">농협</option>
+                  <option value="011">농업협동조합중앙회</option>
+                </select>
+              </div>
+              
+              <div class="col-7 p-2">
+			  	<div class="form-group">
+			  		<input type="number" class="form-control" id="accountNumber" name="accountNumber" placeholder="계좌번호를 입력해 주세요." maxlength="14">
+			  	</div>
+			  </div>
+              
+              <div class="col-10 p-2">
+                <div class="form-group">
+                  <input type="text" class="form-control" name="callPhone" id="callPhone" placeholder="대표번호" >
                 </div>
               </div>
               
@@ -204,73 +180,36 @@
                 </div>
               </div>
               
-              <div class="col-8 p-2">
-                <div class="form-group">
-                  <input type="number" class="form-control" name="storeNumber" id="storeNumber" placeholder="메장 전화번호를 입력해 주세요">
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group">
-                </div>
-              </div>
-
-              <div class="col-4 p-2">
-                <p>성별을 선택해 주세요</p>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="man" id="man">
-                  <label class="form-check-label" for="man">
-                    남성
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="woman" id="woman" checked>
-                  <label class="form-check-label" for="woman">
-                    여성
-                  </label>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group">
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group">
-                </div>
-              </div>
-
               <div class="col-3 p-1">
                 <div class="form-group">
-                  <input type="number" maxlength="5" class="form-control" name="postNum" id="postNum" readonly>
+                  <input type="number" maxlength="5" class="form-control" name="zipcode" id="zipcode" readonly>
                 </div>
               </div>
 
-              <div class="col-3">
+              <div class="col-4">
                 <div class="form-group">
                 </div>
               </div>
 
-              <div class="col-2 text-end p-1">
+              <div class="col-3 text-end p-1">
                 <div class="form-group">
-                  <button type="button" class="btn btn-success" id="searchZipcode">우편코드 찾기</button>
+                  <input type="button" class="btn btn-success" id="btnZipcode" value="우편코드 찾기">
                 </div>
               </div>
 
-              <div class="col-8 p-1">
+              <div class="col-10 p-1">
                 <div class="form-group">
-                  <input type="number" maxlength="5" class="form-control" name="address1" id="address1" readonly>
+                  <input type="text" class="form-control" name="address1" id="address1" readonly>
                 </div>
               </div>
 
-              <div class="col-8 p-1">
+              <div class="col-10 p-1">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="detailAdress" readonly>
+                  <input type="text" class="form-control" id="address2" name="address2">
                 </div>
               </div>
-
-              <div class="col-8 p-2">
+             
+              <div class="col-10 p-2">
                 <h5>이용약관</h5>
                   <div class="form-group" style="overflow: scroll; height: 150px; padding:16px; border-radius:4px; border: 1px solid #979797;" id="termOfUse">
                     <p> 가. 개인정보의 수집 및 이용 목적
@@ -305,9 +244,9 @@
                 </div>
               </div>
 
-              <div class="col-8 p-2">
+              <div class="col-10 p-2">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="termOK" required>
+                  <input class="form-check-input" type="checkbox" value="" id="termOK" >
                   <label class="form-check-label" for="termOK"> 위 이용약관에 동의합니다. (필수)</label>
                 </div>
               </div>
@@ -317,13 +256,18 @@
                 </div>
               </div>
 
-              <div class="col-8 text-center p-2">
+              <div class="col-10 text-center p-2">
                 <div class="form-group">
-                  <button type="submit" class="btn btn-success" id="normalJoin">&nbsp&nbsp가입하기&nbsp&nbsp</button>
+                  <input type="submit" class="btn btn-success" id="businessJoin" value="&nbsp&nbsp&nbsp&nbsp가입하기&nbsp&nbsp&nbsp&nbsp">
                 </div>
               </div>
+              
 				</div>
             </div>
         </div>
-      </div>
-  </form>
+      
+  </form>  
+</div>
+<script src="resources/js/businessUserPhoneCheck.js"></script>
+<script src="resources/js/business.js"></script>
+<script src="resources/js/member.js"></script>

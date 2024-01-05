@@ -1,11 +1,16 @@
-package com.nosolorice.app.service;
+package com.nosolorice.app.eunservice;
+
+import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.nosolorice.app.dao.normalUserDao;
+import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.eundao.BusinessUserDao;
+import com.nosolorice.app.eundao.normalUserDao;
 
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
@@ -19,39 +24,55 @@ public class NormalUserServiceImpl implements NormalUserService {
 
 	@Autowired
 	private normalUserDao normalUserDao;
-
-	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public boolean overlapNormalIdCheck(String normalId) {
-		NormalUser normalUser = normalUserDao.getNormalId(normalId);
-
-		if(normalUser == null) {
-			return false;
-		}
-		
-		return true;
-	}
+    public boolean overlapIdCheck(String normalId) {
+        List<String> normalUser = normalUserDao.getNormalUser(normalId);
+        return normalUser.size() > 0 ? true : false;
+    }
 
 	@Override
-	public void addNormalUser(NormalUser normalUser) {
-		String encodedPassword = passwordEncoder.encode(normalUser.getPass());
-		normalUser.setPass(encodedPassword);
-
-		normalUserDao.addNormalUser(normalUser);
+	public boolean overlapNickCheck(String nickName) {
+		return normalUserDao.getNickName(nickName);
+	    
 	}
 	
 	@Override
-	public void normalPhoneCheck(String phone, String numStr) {
+	public void addNormalUser(NormalUser normalUser) {
+	    if (normalUser.getPass() != null) {
+	        normalUser.setPass(passwordEncoder.encode(normalUser.getPass()));
+	    }
+
+	    normalUserDao.addNormalUser(normalUser);
+	}
+
+	@Override
+	public String certNum() {
+		Random rnd = new Random();
+		StringBuilder numStr = new StringBuilder();
 		
-		System.out.println("certifiedPhoneNumber" + phone +"인증번호 : " + numStr);
+		for (int i = 0; i < 4; i++) {
+            String ran = Integer.toString(rnd.nextInt(10));
+            numStr.append(ran);
+		}
+
+		System.out.println("서비스 : " + numStr);
+		
+		return numStr.toString();
+		
+	}
+	
+	@Override
+	public void normalPhoneCheck(String mobile, String numStr) {
+		
+		System.out.println("certifiedPhoneNumber" + mobile +"인증번호 : " + numStr);
 		
 		DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCS9KK7TUTOME4MO", "PTWS3OHSRCMQFQRNYHJOHHJAQ6NSQCUM", "https://api.coolsms.co.kr");
 		 
 		Message message = new Message();
 		message.setFrom("01040969353");
-		message.setTo(phone);
+		message.setTo(mobile);
 		message.setText("인증번호는"+numStr+"입니다.");
 	    
 		try {

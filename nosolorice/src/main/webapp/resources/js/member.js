@@ -1,38 +1,47 @@
+// 입력한 이미지를 미리보기
+    function profileImage(input) {
+	    var preview = document.getElementById('profilePreview');
+	    var file = input.files[0];
+
+	
+	    if (file) {
+	        var reader = new FileReader();
+	
+	        reader.onload = function (e) {
+	            preview.src = e.target.result;
+	            preview.style.width = '348px';
+	            preview.style.height = '400px';
+	        };
+	
+	        reader.readAsDataURL(file);
+	    }
+	}
+
 $(document).ready(function () {
-            
-            $('#profileImageInput').change(function () {
-                var fileName = $(this).val().split("\\").pop();
-                $('#profileImage').attr('src', '/normal_uploads/' + fileName);
-            });
+	
+	// 이미지 입력시
+    $('#profileImageInput').change(function () {
+        profileImage(this);
+    });
 
+});
 
-        });
-        
-function previewProfileImage(input) {
-    var preview = document.getElementById('profilePreview');
-    var file = input.files[0];
+$("#btnZipcode").click(normalFindZipcode);
 
-    if (file) {
-      var reader = new FileReader();
- 	
-      reader.onload = function (e) {
-        preview.src = e.target.result;
-        preview.style.width = '348px';
-        preview.style.height = '400px';
-        
-      };
-
-      reader.readAsDataURL(file);
-    }
-  }
-
-$("#btnZipcode").click(findZipcode);
-
-function findZipcode(){
+function normalFindZipcode(){
  	 new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
+	        oncomplete: function(data) {
+	            // 주소 - 좌표 변환
+	            var geocoder = new daum.maps.services.Geocoder(); // Geocoder 객체 생성
+	
+	            var callback = function(result, status) {
+				    if (status === kakao.maps.services.Status.OK) {
+				        console.log(result);
+				    }
+				};
+				
+				geocoder.addressSearch('#address1', callback);
+					
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                 var addr = ''; // 주소 변수
@@ -43,7 +52,6 @@ function findZipcode(){
                     addr = data.roadAddress;
                 } else { // 사용자가 지번 주소를 선택했을 경우(J)
                 	addr = data.roadAddress; // 도로명으로 바꿔버림
-                    //addr = data.jibunAddress; 지번 안쓰니 지번을 지워줌 
                 }
 
                 // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
@@ -70,9 +78,35 @@ function findZipcode(){
                 $("#address1").val(addr);
                 // 커서를 상세주소 필드로 이동한다.
                 $("#address2").focus();
+                
+                // 주소를 가져옴
+			    var address = $("#address1").val();
+			
+			    // 주소를 좌표로 변환하는 Geocoder 객체 생성
+			    var geocoder = new kakao.maps.services.Geocoder();
+			
+			    // 주소 검색 요청
+			    geocoder.addressSearch(address, function(result, status) {
+			        if (status === kakao.maps.services.Status.OK) {
+			            // 검색 결과에서 좌표값 가져오기
+			            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			
+			            // hidden 폼에 좌표값 설정
+			            $("#xpoint").val(coords.getLat());
+			            $("#ypoint").val(coords.getLng());
+			
+			            // 콘솔에 좌표값 출력
+			            console.log('x :', coords.getLat());
+			            console.log('y :', coords.getLng());
+			        }
+			   
+			    });
+    
             }
         }).open();
 }
+
+
 
 
 function inputCharReplace(){
@@ -144,7 +178,7 @@ function joinFormCheck(elem){
 	
 
 	if($("#mobile").val().length == 0){
-		alert("핸드폰 번호를 입력해주세여");
+		alert("핸드폰 번호를 입력해주세요.");
 	}
 	
 }
@@ -206,23 +240,20 @@ $(function() {
 		return joinFormCheck();
 	});
 	
-	
-	$("#selectDomain").on("change",function(){
-		let str = $(this).val();
-		
-		if(str == "@naver.com") {
-			$("#emailDomain").val("");
-			$("#emailDomain").prop("readonly", false);
-		} else if(str == "@gmail.com"){
-			$("#emailDomain").val("naver.com");
-			$("#emailDomain").prop("readonly", true);
-		} else if(str == "@daum.net") {
-			$("#emailDomain").val("daum.net");
-			$("#emailDomain").prop("readonly", true);
-		}
+	$(document).ready(function () {
+		$("#selectDomain").on("change", function() {
+			var str = $(this).val();
+			
+			if(str == "naver.com") {
+				$("#emailDomain").val("naver.com");
+			} else if(str == "gmail.com") {
+				$("#emailDomain").val("gmail.com");
+			}else if(str == "daum.net") {
+				$("#emailDomain").val("daum.net");
+			}
+		});
 	});
 	
-	$("#btnZipcode").on("click",findZipcode)
 	
 	//입력 값이 숫자 또는 영문자인지 판단
 	$("#pass").on("keyup",inputCharReplace);
@@ -256,8 +287,9 @@ $(function() {
 			return false;
 		}
 		
-	})
 
+		
+	})
 	// 회원 아이디 중복 확인 버튼이 클릭되면
 	$("#overlapCheck").on("click", function() {	
 		var id = $("#normalId").val();
@@ -274,59 +306,43 @@ $(function() {
 		window.open(url, "IdCheck", "toolbar=no, location=no, " + "status=no, memubar=no, width=500, height=400");
 	
 	});
+
+	// 닉네임 중복 확인 버튼이 클릭되면
+	$("#nickOverlapCheck").on("click", function() {
+	    var nickName = $("#nickName").val();
+	    var url = "nickOverlapCheck?nickName=" + nickName;
 	
-	// 회원 닉네임 중복 확인 버튼이 클릭되면
-	$("#nickOverlapCheck").on("click", function() {	
-		var nickname = $("#nickname").val();
-		url = "nickOverlapCheck?nickname="+ nickname;
-		if(nickname.length <= 0) {
-			alert("닉네임이 입력되지 않았습니다. \n 입력 후 다시 시도해 주세요.");
-			return false;	
-		}
-		if(nickname.length < 5) {
-			alert("닉네임은 5자 이상 입력해주세요.");
-			return false;
-		}
-	
-		window.open(url, "nickCheck", "toolbar=no, location=no, " + "status=no, memubar=no, width=500, height=400");
-	
-	});
-	
-	$("#btnIdCheckClose").on("click", function() {
-	    var id = $(this).attr("data-id-value");
-	
-	    // Check if normalJoinForm exists
-	    if (opener.document.normalJoinForm) {
-	        // Check if normalId exists
-	        if (opener.document.normalJoinForm.normalId) {
-	            opener.document.normalJoinForm.normalId.value = id;
-	            opener.document.normalJoinForm.isIdCheck.value = true;
-	        } else {
-	            console.error("에러가 발생하였습니다.");
-	        }
-	    } else {
-	        console.error("에러가 발생하였습니다.");
+	    if (nickName.length <= 0) {
+	        alert("닉네임이 입력되지 않았습니다. \n 입력 후 다시 시도해 주세요.");
+	        return false;
 	    }
 	
+	    if (nickName.length < 3) {
+	        alert("닉네임은 3자 이상 입력해주세요.");
+	        return false;
+	    }
+	
+	    window.open(url, "NickCheck", "toolbar=no, location=no, " + "status=no, memubar=no, width=500, height=400");
+	});
+	
+	$("#btnIdCheckClose").on("click", function () {
+	    var id = $(this).attr("data-id-value");
+	    var normalIdElement = $(window.opener.document).find("#normalId");
+	    var idCheck = $(window.opener.document).find("#isIdCheck").val(true);
+	    let bIdCheck = $(window.opener.document).find("#isBusinessIdCheck").val(true);
+	    
+		normalIdElement.val(id);
+
 	    window.close();
 	});
-	
+
 	$("#btnNickCheckClose").on("click", function() {
 	    var nickName = $(this).attr("data-nickname-value");
-	
+		var normalNickElement = $(window.opener.document).find("#nickName");
+		var isNickCheck = $(window.opener.document).find("#isNickCheck").val(true);
+
+	    normalNickElement.val(nickName);
 	    
-	    if (opener.document.normalJoinForm) {
-	    
-	        if (opener.document.normalJoinForm.normalId) {
-	            opener.document.normalJoinForm.nickname.value = nickName;
-	            opener.document.normalJoinForm.isNickCheck.value = true;
-	        } else {
-	            console.error("에러가 발생하였습니다.");
-	        }
-	    } else {
-	        console.error("에러가 발생하였습니다.");
-	    }
-	
 	    window.close();
 	});
 
@@ -350,4 +366,9 @@ $(function() {
 		}
 	});
 	
+	// 회원가입 버튼을 누르면
+	$("#normalJoin").click(function() {
+        $("#normalJoinForm").submit();
+    });
+    	
 });

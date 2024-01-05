@@ -4,11 +4,12 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Insert title here</title>
+  <title>아이디 중복확인</title>
   
   	<script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 	<script src="resources/js/jquery-3.2.1.min.js"></script>
 	<script src="resources/js/member.js"></script>
+	<script src="resources/js/business.js"></script>
 	<link href="resources/bootstrap/main.css" rel="stylesheet">
 </head>
 
@@ -26,12 +27,14 @@
               </div>       
          	</div>
          	
-         	<form action="overlapCheck.mvc" name="idCheckForm" method="post" id="idCheckForm" class="row mt-5">
+         	<form action="overlapIdCheck" name="idCheckForm" method="post" id="idCheckForm" class="row mt-5">
+         		<input type="hidden" name="normalId" value="${ checkId }" id="checkIdOverlap">
+         		
          		<div class="col-10 offset-1">
          			<div class="input-group">
          				<span class="input-group-text">* 아이디</span>
          				<input type="text" class="form-control" name="id" id="checkId">
-         				<input type="submit" class="btn btn-success" value="중복확인">
+         				<input type="submit" class="btn btn-success" value="중복확인" id="btnCheckId">
          			</div>
          		</div>
          	</form>
@@ -43,12 +46,12 @@
 	          	<div class="row text-center">
 	              <div class="col">
 	                <p class="fs-1 fw-bold">사용할 수 있는 아이디 입니다.</p>
-	                <p class="fs-6">입력하신 ${ normalId }는 사용할 수 있는 아이디 입니다.</p>
+	                <p class="fs-6">입력하신 ${ !overlap ? normalId : checkIdOverlap }는 사용할 수 있는 아이디 입니다.</p>
 	              </div>       
 	         	</div>
 	         	<div class="row mt-5">
 	         		<div class="col text-center">
-	         			<input type="button" value="${ normalId }을(를) 아이디로 사용하기" id="btnIdCheckClose" data-id-value="${ normalId }" class="btn btn-success" />
+	         			<input type="button" value="${ !overlap ? normalId : checkIdOverlap }을(를) 아이디로 사용하기" id="btnIdCheckClose" data-id-value="${ !overlap ? normalId : checkIdOverlap }" class="btn btn-success" />
 	         		</div>
 	         	</div>
             </div>
@@ -56,6 +59,13 @@
         </c:choose>
   	</div>
   	
-  	
+  	<script>
+	    // 중복확인 폼에서 새로운값으로 업뎃
+	    $(document).ready(function () {
+	        $("#checkId").on("input", function () {
+	            $("#checkIdOverlap").val($(this).val());
+	        });
+	   });
+	</script>
 </body>
 </html>

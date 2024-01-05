@@ -33,6 +33,10 @@ public class BusinessUser {
 	private String okNoOk;				// 가입승인여부
 	private int root; // 권한
 	
+	//여기서부터 3개 추가함. 대현
+	private double distance;
+	private double totalScore;
+	private int totalReviewCount;
 
 	
 	
@@ -285,6 +289,30 @@ public class BusinessUser {
 
 	public void setRoot(int root) {
 		this.root = root;
+	}
+	
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+	public double getTotalScore() {
+		return totalScore;
+	}
+
+	public void setTotalScore(double totalScore) {
+		this.totalScore = totalScore;
+	}
+
+	public int getTotalReviewCount() {
+		return totalReviewCount;
+	}
+
+	public void setTotalReviewCount(int totalReviewCount) {
+		this.totalReviewCount = totalReviewCount;
 	}
 
 	@Override

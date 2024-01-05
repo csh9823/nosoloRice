@@ -68,6 +68,7 @@ $(function() {
 
 
   // $('input.timepicker').timepicker({});
+  /*
   $('.timepicker').timepicker({
 	    timeFormat: 'HH:mm',
 	    interval: 30,
@@ -77,13 +78,14 @@ $(function() {
 	    scrollbar: true
 	});
 
-  /* 위즈윅 API summernote */
+
+  위즈윅 API summernote
   $('.summernote').summernote({
     height: 300,
     lang: "ko-KR"
   });
 
-
+*/
 
 
 

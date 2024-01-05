@@ -1,9 +1,11 @@
+let code = "";
+
 $('#getNormalPhoneCheck').click(function() {
-	const phone = $('#phone').val();
+	const mobile = $('#mobile').val();
 	
-	console.log(phone)
+	console.log(mobile)
 	
-	if(phone.trim() === '') {
+	if(mobile.trim() === '') {
 		alert("휴대폰번호를 입력해 주세요.");
 		
 		return;
@@ -12,12 +14,13 @@ $('#getNormalPhoneCheck').click(function() {
 	$.ajax({
 	
 		"url" : "getNormalPhoneCheck",
-		"data" : "phone=" + phone ,
+		"data" : "mobile=" + mobile ,
     	"type" : "POST" ,
     	"dataType" : "json",
 		
 		success : function(data) {
-		    console.log(data.certNum)
+		    console.log(data.certNum);
+		    code = data.certNum;
 		},
 		
 		error : function() {
@@ -28,11 +31,14 @@ $('#getNormalPhoneCheck').click(function() {
 });
 
 
-$("#normalJoin").click(function submitCheck() {
-	
-	if(certCheck == false) {
-		alert("인증이 진행되지 않았습니다. \n 먼저 인증을 진행해 주세요.");
-		return false;
-	} else
-		true;
+$("#normalPhoneCheck").click(function() {
+    if($("#chkNum").val() == code) {
+    	alert("인증이 완료되었습니다.");
+        $("#certCheck").val(true); 
+    } else {
+    	alert("인증번호가 맞지 않습니다. \n다시 시도해 주세요.");
+		$("#certCheck").val(false); 
+    };
+
+    
 });
