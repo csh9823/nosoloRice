@@ -133,35 +133,6 @@ public class JinController {
 			HttpServletResponse response,HttpSession session,PrintWriter out) {
 
 		
-		// 쿠키에 값 저장하기
-		if(idsave != 0) {
-			Cookie cookie = new Cookie("saveId" ,id);
-			cookie.setMaxAge(60*60*24*30);
-			response.addCookie(cookie);
-		}else {
-			Cookie cookie = new Cookie("saveId" ,id);
-			cookie.setMaxAge(0);
-			response.addCookie(cookie);
-		}
-
-			return "redirect:idFind";	
-
-		
-		BusinessUser buser = jinloginService.loginBusinessUser(id, pass);
-		
-		NormalUser nuser = jinloginService.loginNormalUser(id, pass);
-		
-		if(buser != null) {
-			System.out.println(buser.getBusinessId());
-			session.setAttribute("BusinessUser", buser);
-			return "redirect:BusinessMenu?businessId="+buser.getBusinessId();
-		}
-		
-		if(nuser != null) {
-			System.out.println(nuser.getNormalId());
-			session.setAttribute("NormalUser", nuser);
-		}
-		
 		return "redirect:idFind";
 
 	}
