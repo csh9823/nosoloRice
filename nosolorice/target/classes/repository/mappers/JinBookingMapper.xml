@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nosolorice.app.mapper.JinBooking" >
+
+<select id="BookingList" parameterType="String" resultType="Booking">
+select
+	booking_no bookingNo,
+    booking_count bookingCount,
+    booking_request bookingRequest,
+    booking_time bookingTime,
+    booking_state bookingState,
+    booking_book_no bookingState
+from booking
+where business_id = #{businessId}
+</select>
+
+
+<update id="BookingOkNumberupdate" parameterType="Map">
+UPDATE booking
+SET booking_book_no = booking_book_no + 1
+WHERE business_id = #{businessId}
+  AND (booking_no = #{bookingno} OR booking_book_no = (
+    SELECT max_booking_book_no
+    FROM (SELECT MAX(booking_book_no) AS max_booking_book_no FROM booking WHERE business_id = #{businessId}) AS derived
+  ))
+</update>
+
+<update id="bookingState">
+UPDATE booking
+SET
+booking_state = "1"
+where booking_no = #{businessId}
+and business_id = #{bookingNo}
+</update>
+
+</mapper>	
+
+
+

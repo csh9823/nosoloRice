@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nosolorice.app.domain.booking.Booking;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.businessUser.Menu;
 import com.nosolorice.app.domain.businessUser.MenuCategory;
@@ -27,6 +28,7 @@ import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.jinservice.JinFindService;
 import com.nosolorice.app.jinservice.JinMenuCateService;
 import com.nosolorice.app.jinservice.JinMenuService;
+import com.nosolorice.app.jinservice.JinbookService;
 import com.nosolorice.app.jinservice.JinloginService;
 
 @Controller
@@ -50,6 +52,9 @@ public class JinController {
 	// 메뉴 관련 서비스
 	@Autowired
 	private JinMenuService jinMenuService;
+	
+	@Autowired
+	private JinbookService jinbookService;
 	
 	// 아이디 비밀번호 찾기 폼
 	@RequestMapping("findForm")
@@ -244,4 +249,31 @@ public class JinController {
 		
 		return "redirect:BusinessMenu?businessId="+buser.getBusinessId()+"&"+"menuCategoryNo="+menu.getMenuCategoryNo();
 	}
+	
+	//  예약 리스트 페이지
+	@RequestMapping("yesnoList")
+	public String yesnoList(String businessId , Model model) {
+		
+		List<Booking> booking = jinbookService.BookingList(businessId);
+		
+		model.addAttribute("booking",booking);
+		
+		return "BusinessMenu/yesnoList";
+	}
+	
+	@RequestMapping("bookingState")
+	public String bookingState(String businessId,int bookingNo) {
+		
+		
+		return "";
+	}
+	
+	@RequestMapping("BookingOkNumberupdate")
+	public String BookingOkNumberupdate(String businessId,int bookingNo) {
+		
+		
+		
+		return "";
+	}
+	
 }
