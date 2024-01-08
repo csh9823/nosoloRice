@@ -92,7 +92,7 @@
 <div class="container">
     <div class="row">
 <%@ include file="../../temple/header/businessMenubar.jsp" %>
-		<input type="hidden" id="bId" value="sessionScope.BusinessUser.businessId">
+		<input type="hidden" id="bId" value="${sessionScope.BusinessUser.businessId}">
         <div class="col">
             <div class="row">
 
@@ -254,6 +254,7 @@
     const closeModal2Btn = document.getElementById("close-modal2");
     
     const loginId = $("#bId").val();
+    console.log("사장님 loginId : ", loginId);
     
     //예약관리 페이지에 접속하면 웹소켓 서버에 연결한다. 서버 아이피 입력
     let url = "ws://192.168.0.14:8081/app/booking/" + loginId;

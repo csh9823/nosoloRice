@@ -56,14 +56,17 @@ public class BookingServer {
     		System.out.println("예약관리 서버에서 businessId : " + businessId);
     		String roomId = (String)msg.get("roomId");
     		System.out.println("예약관리 서버에서 roomId : " + roomId);
+    		
+    		
     		for(Session s : sessions) {
-    			System.out.println("예약관리 서버에서 s.getUserProperties().get(\"businessId\") : " + s.getUserProperties().get("businessId"));
-    			if(s.getUserProperties().get("businessId").equals(businessId)) {
+    			System.out.println("s.getUserProperties().get(\"loginId\")" + s.getUserProperties().get("loginId"));
+    			if(s.getUserProperties().get("loginId").equals(businessId)) {
     				Map<String, Object>dataMap = new HashMap<>();
     				dataMap.put("type", "request");
     				dataMap.put("roomId", roomId);
 	    			String jsonData = om.writeValueAsString(dataMap);
 	    			s.getBasicRemote().sendText(jsonData);
+	    			System.out.println("예약관리서버에서 사장에게 메시지 발송");
     			}
     		}
     		return;
@@ -71,6 +74,8 @@ public class BookingServer {
     	
     	//메시지 type이 approve이면 
     	if(msg.get("type").equals("approve")) {
+    		System.out.println("사장님이 보낸 날것 그대로의 승인메시지 : " + message);
+    		System.out.println("사장님이 보낸 승인메시지 msg : " + msg);
     		//사장이 보내준 roomId를 가진 유저에게 답장 { type : 'approve'}
     		String roomId = (String)msg.get("roomId");
     		for(Session s : sessions) {
@@ -79,6 +84,7 @@ public class BookingServer {
     				dataMap.put("type", "approve");
 	    			String jsonData = om.writeValueAsString(dataMap);
 	    			s.getBasicRemote().sendText(jsonData);
+	    			System.out.println("유저들에게 사장님 예약승인 메시지 발송 완료");
     			}
     		}    		
     		return;
@@ -86,6 +92,8 @@ public class BookingServer {
     	
     	//메시지 type이 reject이면 
     	if(msg.get("type").equals("reject")) {
+    		System.out.println("사장님이 보낸 날것 그대로의 거부메시지 : " + message);
+    		System.out.println("사장님이 보낸 거부메시지 msg : " + msg);
     		//사장이 보내준 roomId를 가진 유저에게 답장 { type : 'reject', reason: 거절사유 }
     		String roomId = (String)msg.get("roomId");
     		String reason = (String)msg.get("reason");
@@ -96,6 +104,7 @@ public class BookingServer {
     				dataMap.put("reason", reason);
 	    			String jsonData = om.writeValueAsString(dataMap);
 	    			s.getBasicRemote().sendText(jsonData);
+	    			System.out.println("유저들에게 사장님 예약거부 메시지 발송 완료");
     			}
     		}    
     		return;
