@@ -220,7 +220,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void deleteBookingUserList(String normalId) {
-		sqlSession.delete(NAME_SPACE + ".deleteBookingUserList" + normalId);
+		sqlSession.delete(NAME_SPACE + ".deleteBookingUserList", normalId);
 	}
 
 }

@@ -160,7 +160,9 @@ public class JinController {
 		RootUser ruser = jinloginService.loginRootUser(id, pass);
 		
 		if(buser != null) {
+			
 			System.out.println(buser.getBusinessId());
+			
 			session.setAttribute("BusinessUser", buser);
 			return "redirect:businessUserStoreInfo?id="+buser.getBusinessId();
 		}else if(nuser != null) {
@@ -168,6 +170,7 @@ public class JinController {
 			session.setAttribute("NormalUser", nuser);
 			return "redirect:mainPage";
 		}else if(ruser != null) {
+			System.out.println(id);
 			System.out.println(ruser.getRootId());
 			session.setAttribute("RootUser", ruser);
 			return "redirect:adminPage?RootId="+ruser.getRootId();
@@ -291,7 +294,6 @@ public class JinController {
 	@RequestMapping("bookingStateDelete")
 	public String bookingStateDelete(String businessId,int bookingNo) {
 		
-		System.out.println(bookingNo + businessId);
 		jinbookService.bookinguserdelete(businessId, bookingNo);
 		jinbookService.bookingStateDelete(businessId, bookingNo);
 		return "redirect:yesnoList?businessId="+businessId;
