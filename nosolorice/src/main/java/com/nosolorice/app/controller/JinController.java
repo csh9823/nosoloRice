@@ -280,7 +280,6 @@ public class JinController {
 		
 		return "redirect:yesnoList?businessId="+businessId;
 	}
-
 	
 	@RequestMapping("bookingStateDelete")
 	public String bookingStateDelete(String businessId,int bookingNo) {
@@ -293,7 +292,8 @@ public class JinController {
 	}
 	
 	@RequestMapping("Bookingok")
-	public String Bookingok(BookingOk bookingOk) {
+	public String Bookingok(BookingOk bookingOk,String bookingState) {
+		jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingState);
 		jinbookService.bookingOkinsert(bookingOk);
 		return "redirect:yesnoList?businessId="+bookingOk.getBusinessId();
 	}
