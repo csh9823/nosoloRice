@@ -278,14 +278,13 @@
         }
     });
 });
-    // 버튼 값 가져오기
-    const rejectButton = document.querySelector('.pnolist');
     
     openModal2Btns.forEach((openModal2Btn) => {
     	  openModal2Btn.addEventListener("click", (event) => {
     		  let buttonValue = event.target.value;
     	        // 콘솔에 출력
     	        console.log(buttonValue);
+    	        
     	        // 아이디가 bookingNo인걸 선택
     	        let hiddenInput = document.getElementById('bookingNo');
     	        

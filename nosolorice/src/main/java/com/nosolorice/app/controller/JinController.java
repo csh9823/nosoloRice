@@ -156,13 +156,15 @@ public class JinController {
 		if(buser != null) {
 			System.out.println(buser.getBusinessId());
 			session.setAttribute("BusinessUser", buser);
-			return "redirect:BusinessMenu?businessId="+buser.getBusinessId();
+			return "redirect:businessUserStoreInfo?businessId="+buser.getBusinessId();
 		} else if(nuser != null) {
 			System.out.println(nuser.getNormalId());
 			session.setAttribute("NormalUser", nuser);
+			return "redirect:mainPage";
 		}else if(ruser != null) {
 			System.out.println(ruser.getRootId());
 			session.setAttribute("RootUser", ruser);
+			return "redirect:adminPage?RootId="+ruser.getRootId();
 		}
 		
 		response.setContentType("text/html; charset=utf-8");
