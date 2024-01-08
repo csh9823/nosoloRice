@@ -77,6 +77,11 @@ public interface SehwaDao {
 	
 	public NormalUser checkNormalNickName(String nickName);
 	
+	public void deleteBusinessUser(String id);
+	
+	public void deleteNormalUser(String id);
+	
+	
 	
 	
 }

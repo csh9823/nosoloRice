@@ -30,6 +30,7 @@
   <div class="container">
   	<input type="hidden" value="${sessionScope.NormalUser.normalId}">
     <div class="row">
+    <%@ include file="../../temple/header/mypageMenubar.jsp" %>
       <div class="col">
         <div class="row mb-3">
           <div class="col">

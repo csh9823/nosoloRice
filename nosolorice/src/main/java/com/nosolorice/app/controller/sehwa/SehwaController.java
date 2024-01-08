@@ -314,8 +314,10 @@ public class SehwaController {
 	
 	@RequestMapping(value="/rechargePoint.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public void rechargePoint(String id, String payment, int amount, int point) {
+	public void rechargePoint(String id, String payment, int amount, int point,HttpSession session) {
 		service.rechargePoint(id, payment, amount, point);
+		// 세션업데이트
+		session.setAttribute("NormalUser", service.getNormalUserInfo(id));
 	}
 	
 	@RequestMapping("/pointList")
@@ -343,10 +345,22 @@ public class SehwaController {
 	
 	@RequestMapping(value="/businessUserSecession.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean businessUserSecession(String id) {
-		// 사업자회원 회원탈퇴
-		
-		return true;
+	public void businessUserSecession(String id) {
+		service.deleteBusinessUser(id);
 	}
+	
+	@RequestMapping(value="/normalUsesrSecession")
+	public String normalUserSecession(Model model, String id) {
+		model.addAttribute("id", id);
+		return "sehwa/normalUserSecession";
+	}
+	
+	@RequestMapping(value="/normalUsesrSecession.ajax", method=RequestMethod.POST)
+	@ResponseBody
+	public void normalUserSecession(String id) {
+		service.deleteNormalUser(id);
+	}
+	
+	
 	
 }
