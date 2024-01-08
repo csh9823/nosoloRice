@@ -61,7 +61,7 @@
             <li class="my-5"><a href="#" class="textColor">사업자회원 문의</a></li>
             <li class="my-5"><a href="adminReportList" class="textColor">신고내역</a></li>
             <li class="my-5"><a href="joinApprove" class="textColor">가입승인</a></li>
-            <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제 요청</a></li>
+            <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제요청</a></li>
             <li class="my-5"><a href="businessDeleteList" class="textColor">업체삭제</a></li>
             <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
             <li class="my-5"><a href="businessSales" class="textColor">매출현황</a></li>
@@ -77,7 +77,7 @@
   					<div class="col">
 			  		<form action="#" id="businessIdSearchForm" name="businessIdSearchForm" method="post">
 				    <div class="col-5 py-5 d-flex align-items-center">
-				        <input type="text" id="businessSearchId" name="searchId" placeholder="업체명/사업자 아이디" class="form-control">
+				        <input type="text" id="businessSearchId" name="searchId" placeholder="사업자 아이디를 정확하게 입력하세요" class="form-control">
 				        <button type="submit" class="btn col-2 mx-3">검색</button>
 				    </div>
 					</form>
@@ -121,13 +121,13 @@
 				    <div class="col-md-3">
 				        <img src="resources/upload/${b.businessProfile}" style="max-width: 100%; height: auto;">
 				    </div>
-				    <div class="col-md-3 py-4">
+				    <div class="col-md-5 py-4">
 				        <div class="fs-2">${b.businessName}</div>
-				        <div class="fs-4">${b.name}</div>
+				        <div class="fs-4">${b.businessId}(${b.name})</div>
 				        <div class="fs-4">${b.phone}</div>
 				        <div class="fs-4">${b.address1} ${b.address2}</div>
 				    </div>
-				    <div class="col-md-6 text-md-end align-self-center">
+				    <div class="col-md-auto text-md-end align-self-center">
 				        <input type="button" value="삭제" class="btn btn-lg deleteBtn" style="background-color:#C93C3C; color:white;">
 				    </div>
 						</div>
@@ -195,7 +195,7 @@
 	 
 	 console.log(id);
 	 
-	 const resData = await axios.post("/app/searchBusinessId", { id : `%{id}%` });
+	 const resData = await axios.post("/app/searchBusinessId", { id : id });
 	 
 	 console.log(resData.data);
 	 

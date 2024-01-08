@@ -145,7 +145,7 @@
 		ok_nook as okNoOk,
 		root
 		from  business_user
-		where business_id = #{id} || business_name = #{id}
+		where business_id like #{id}
 
 	</select>
 

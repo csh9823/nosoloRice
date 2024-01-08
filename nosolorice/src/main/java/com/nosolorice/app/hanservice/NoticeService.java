@@ -1,6 +1,5 @@
 package com.nosolorice.app.hanservice;
 
-import java.util.List;
 import java.util.Map;
 
 import com.nosolorice.app.domain.businessUser.BusinessNotice;

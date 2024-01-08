@@ -14,7 +14,7 @@ import com.nosolorice.app.domain.normalUser.ReportDetails;
 @Repository
 public class UserPageDaoImpl implements UserPageDao {
 	
-private static final String Mapper = "com.solorice.app.mapper.UserPageMapper";
+private static final String Mapper = "com.nosolorice.app.mapper.UserPageMapper";
 
 	
 	private SqlSessionTemplate sqlSession;
@@ -33,7 +33,7 @@ private static final String Mapper = "com.solorice.app.mapper.UserPageMapper";
 		map.put("num", num);
 	
 		
-		return sqlSession.selectList(Mapper + ".userReportList");
+		return sqlSession.selectList(Mapper + ".userReportList",map);
 	}
 
 	@Override
@@ -45,13 +45,13 @@ private static final String Mapper = "com.solorice.app.mapper.UserPageMapper";
 		map.put("num", num);
 	
 		
-		return sqlSession.selectList(Mapper+".blockList");
+		return sqlSession.selectList(Mapper+".blockList",map);
 	}
 
 	@Override
 	public int getUserReportCount() {
 		
-		return sqlSession.selectOne(Mapper + ".getUserReportCount");
+		return sqlSession.selectOne(Mapper + ".getReportCount");
 	}
 
 	@Override
@@ -59,6 +59,13 @@ private static final String Mapper = "com.solorice.app.mapper.UserPageMapper";
 		
 		return sqlSession.selectOne(Mapper + ".getBlockCount");
 	}
-	
+
+	@Override
+	public void blockUnlock(int blockHistoryNo) {
+
+		sqlSession.delete(Mapper + ".blockUnlock");
+		
+	}
+
 
 }
