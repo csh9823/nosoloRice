@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nosolorice.app.domain.booking.Booking;
+import com.nosolorice.app.domain.booking.BookingOk;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.businessUser.Menu;
 import com.nosolorice.app.domain.businessUser.MenuCategory;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.domain.rootUser.RootUser;
 import com.nosolorice.app.jinservice.JinFindService;
 import com.nosolorice.app.jinservice.JinMenuCateService;
 import com.nosolorice.app.jinservice.JinMenuService;
@@ -132,7 +134,7 @@ public class JinController {
 
 	@RequestMapping("loginservice")
 	public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,
-			HttpServletResponse response,HttpSession session) {
+			HttpServletResponse response,HttpSession session ,PrintWriter out) {
 		
 		// 쿠키에 값 저장하기
 		if(idsave != 0) {
@@ -149,19 +151,26 @@ public class JinController {
 		
 		NormalUser nuser = jinloginService.loginNormalUser(id, pass);
 		
+		RootUser ruser = jinloginService.loginRootUser(id, pass);
+		
 		if(buser != null) {
 			System.out.println(buser.getBusinessId());
 			session.setAttribute("BusinessUser", buser);
 			return "redirect:BusinessMenu?businessId="+buser.getBusinessId();
-		}
-		
-		
-		if(nuser != null) {
+		} else if(nuser != null) {
 			System.out.println(nuser.getNormalId());
 			session.setAttribute("NormalUser", nuser);
+		}else if(ruser != null) {
+			System.out.println(ruser.getRootId());
+			session.setAttribute("RootUser", ruser);
 		}
 		
-		return "redirect:idFind";
+		response.setContentType("text/html; charset=utf-8");
+		out.println("<script>");
+		out.println("	alert('회원 정보가 일치하지 않습니다.');");
+		out.println("	history.back();");
+		out.println("</script>");
+    	return null;
 	}
 	
 	@RequestMapping("BusinessMenu")
@@ -254,6 +263,7 @@ public class JinController {
 	@RequestMapping("yesnoList")
 	public String yesnoList(String businessId , Model model) {
 		
+		// 부킹 no가 있는지 먼저 체크
 		List<Booking> booking = jinbookService.BookingList(businessId);
 		
 		model.addAttribute("booking",booking);
@@ -261,19 +271,30 @@ public class JinController {
 		return "BusinessMenu/yesnoList";
 	}
 	
-	@RequestMapping("bookingState")
-	public String bookingState(String businessId,int bookingNo) {
+	@RequestMapping("bookingStateOk")
+	public String bookingState(String businessId,int bookingNo ,String bookingState) {
 		
+		// ${bookingTime}
 		
-		return "";
+		jinbookService.bookingState(businessId, bookingNo, bookingState);
+		
+		return "redirect:yesnoList?businessId="+businessId;
+	}
+
+	
+	@RequestMapping("bookingStateDelete")
+	public String bookingStateDelete(String businessId,int bookingNo) {
+		
+		System.out.println(bookingNo + businessId);
+		
+		jinbookService.bookingStateDelete(businessId, bookingNo);
+		
+		return "redirect:yesnoList?businessId="+businessId;
 	}
 	
-	@RequestMapping("BookingOkNumberupdate")
-	public String BookingOkNumberupdate(String businessId,int bookingNo) {
-		
-		
-		
-		return "";
+	@RequestMapping("Bookingok")
+	public String Bookingok(BookingOk bookingOk) {
+		jinbookService.bookingOkinsert(bookingOk);
+		return "redirect:yesnoList?businessId="+bookingOk.getBusinessId();
 	}
-	
 }

@@ -59,6 +59,5 @@
     $(document).on("mouseleave", ".menu", function() {
       $(this).css("opacity", "100%");
     });
-
   </script>
 </html>

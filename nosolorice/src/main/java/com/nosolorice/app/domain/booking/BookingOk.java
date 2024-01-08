@@ -12,10 +12,30 @@ public class BookingOk {
 	private String bookingOkState;			// 방문여부
 	private int bookingNo;						// 관리번호 ==> NO랑 나눠놓은 이유 설명필요
 	private String businessId;				// 사업자 아이디
+	private int deposit; // 예약금
+	
+	
 	
 	public BookingOk() {
 	
 	}
+
+	
+	
+	
+	public int getDeposit() {
+		return deposit;
+	}
+
+
+
+
+	public void setDeposit(int deposit) {
+		this.deposit = deposit;
+	}
+
+
+
 
 	public int getBookingOkNo() {
 		return bookingOkNo;

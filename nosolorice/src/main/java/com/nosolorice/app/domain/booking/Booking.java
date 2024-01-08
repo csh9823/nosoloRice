@@ -13,10 +13,22 @@ public class Booking {
 	private int bookingBookNo;				// 가게별 예약번호 ==> 변수명 동일
 	private String businessId;			// 사장님 아이디
 	private String bookingChatName;	// 채팅방 이름
+	private int deposit; // 예약금
 	
 	public Booking() {
 		
 	}
+	
+	
+	public int getDeposit() {
+		return deposit;
+	}
+
+
+	public void setDeposit(int deposit) {
+		this.deposit = deposit;
+	}
+
 
 	public int getBookingNo() {
 		return bookingNo;

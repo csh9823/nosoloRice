@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nosolorice.app.domain.booking.Booking;
+import com.nosolorice.app.domain.booking.BookingOk;
 import com.nosolorice.app.jindao.JinBookingDaoImpl;
 
 @Service
@@ -18,9 +19,16 @@ public class JinbookService implements JinBookInterface {
 		
 		return jinBookingDaoImpl.BookingList(businessId);
 	}
-
-	public void BookingOkNumberupdate(String businessId, int bookingno) {
-		
-		
+	
+	public void bookingState(String businessId,int bookingNo ,String bookingState) {
+		jinBookingDaoImpl.bookingState(businessId, bookingNo, bookingState);
+	}
+	
+	public void bookingStateDelete(String businessId,int bookingNo) {
+		jinBookingDaoImpl.bookingStateDelete(businessId, bookingNo);
+	}
+	
+	public void bookingOkinsert(BookingOk bookingOk) {
+		jinBookingDaoImpl.bookingOkinsert(bookingOk);
 	}
 }

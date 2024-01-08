@@ -76,7 +76,15 @@
             padding: 20px;
             width: 600px;
             height: 400px;
-        }   
+        }
+        .yeslistbtn{
+        background-color: cadetblue;
+        border: none;
+        }
+        .nolisttbtn{
+        background-color: red;
+        border: none;
+        }
 </style>
 <title>Insert title here</title>
 </head>
@@ -95,7 +103,7 @@
                     <div class="col" style="font-size: 20px; margin-bottom: 50px; margin-top: 20px; margin-left: 43px;">예약 대기 리스트</div>
                 </div>
      			<c:forEach var="booking" items="${booking}">
-				<c:if test="${booking.bookingState eq '0'}">
+				<c:if test="${booking.bookingState eq '미승인'}">
 				<fmt:formatDate value="${booking.bookingTime}" pattern="HH:mm" var="bookingTime" />
                 <div class="row" style="margin-left: 30px; padding: 0px; margin-bottom: 15px;">
 		                <div class="col-2" style="border: solid 1px black; border-right: none; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
@@ -124,13 +132,13 @@
 		                    </div>
 		                </div>
 		                <div class="col-2" style="background-color: cadetblue;">
-		                    <a href="bookingState?businessId=${sessionScope.BusinessUser.businessId}&bookingNo=${booking.bookingNo}" class="yeslist">
+		                    <a href="bookingStateOk?businessId=${sessionScope.BusinessUser.businessId}&bookingNo=${booking.bookingNo}&bookingState=승인" class="yeslist">
 		                    	<p class="pyeslist">승인</p>
 		                    </a>
 		                </div>
 		    
 		                <div class="col-2" style="background-color: red; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
-		                    <p><button class="pnolist" style="border: none; background-color: red;" value="4">거절</button> </p>
+		                    <p><button class="pnolist" style="border: none; background-color: red;" value="${booking.bookingNo}">거절</button> </p>
 		                </div>
                 </div>
         		</c:if>
@@ -146,7 +154,7 @@
                     </div>
                 </div>
 				<c:forEach var="booking" items="${booking}">
-				<c:if test="${booking.bookingState eq '1'}">
+				<c:if test="${booking.bookingState eq '승인'}">
 				<fmt:formatDate value="${booking.bookingTime}" pattern="HH:mm" var="bookingTime" />
                 <div class="row" style="margin-left: 30px; padding: 0px; margin-bottom: 15px;">
 
@@ -183,11 +191,29 @@
                         </div>
                     </div>
                     <div class="col-2" style="background-color: cadetblue;">
-                        <a href="naver.com" class="yeslist"><p class="pyeslist">방문완료</p></a>
+                    <form action="Bookingok" method="get">
+                        <button type="submit" class="yeslist yeslistbtn"><p class="pyeslist">방문완료</p></button>
+                        <input type="hidden" name="bookingOkCount" value="${booking.bookingCount}">
+                        <input type="hidden" name="bookingOkRequest" value="${booking.bookingRequest}">
+                        <input type="hidden" name="bookingOkTime" value="${booking.bookingTime}">
+                        <input type="hidden" name="bookingOkState" value="방문">
+                        <input type="hidden" name="bookingNo" value="${booking.bookingNo}">
+                        <input type="hidden" name="businessId" value="${sessionScope.BusinessUser.businessId}">
+                        <input type="hidden" name="deposit" value="${booking.deposit}">
+                     </form>
                     </div>
     
                     <div class="col-2" style="background-color: red; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
-                        <a href="naver.com" class="nolist"><p class="pnolist2">미방문</p></a>
+                    <form action="Bookingok" method="get">
+                        <button type="submit" class="nolist nolisttbtn"><p class="pnolist2">미방문</p></button>
+                        <input type="hidden" name="bookingOkCount" value="${booking.bookingCount}">
+                        <input type="hidden" name="bookingOkRequest" value="${booking.bookingRequest}">
+                        <input type="hidden" name="bookingOkTime" value="${booking.bookingTime}">
+                        <input type="hidden" name="bookingOkState" value="미방문">
+                        <input type="hidden" name="bookingNo" value="${booking.bookingNo}">
+                        <input type="hidden" name="businessId" value="${sessionScope.BusinessUser.businessId}">
+                        <input type="hidden" name="deposit" value="${booking.deposit}">
+                     </form>
                     </div>
                 </div>
                 </c:if>
@@ -203,9 +229,9 @@
 
             <div class="row">
                 <div class="col">
-                    <form accept="##" method="get">
-                        <input type="text" style="width: 500px; height: 250px; margin-left: 30px;" name=""><br>
-                        <input type="hidden" name="시발" value="" id="nonono">
+                    <form action="bookingStateDelete" method="get">
+                        <input type="text" style="width: 500px; height: 250px; margin-left: 30px;" id="reason"><br>
+                        <input type="hidden" name="bookingNo" value="" id="bookingNo">
                         <input type="hidden" name="businessId" value="${sessionScope.BusinessUser.businessId}">
                         <button type="submit" class="btn btn-success" style="margin-top: 15px; margin-left: 345px;">거절하기</button>
                         <button type="button" class="btn btn-danger" id="close-modal2" style="width: 90px; margin-top: 15px;">취소</button>
@@ -218,15 +244,20 @@
 </div>
 <script>
     const modal2 = document.getElementById("modal2");
-    const openModal2Btn = document.querySelector(".pnolist");
+    
+    const openModal2Btns = document.querySelectorAll(".pnolist");
+    
     const closeModal2Btn = document.getElementById("close-modal2");
 
     // 모달창 열기
-    openModal2Btn.addEventListener("click", () => {
-      modal2.style.display = "block"
-      document.body.style.overflow = "hidden"; // 스크롤바 제거
-      
-    });
+	openModal2Btns.forEach((openModal2Btn) => {
+	  openModal2Btn.addEventListener("click", () => {
+	    if (modal2) {
+	      modal2.style.display = "block";
+	      document.body.style.overflow = "hidden"; // remove scrollbar
+	    }
+	  });
+	});
     
     // 모달창 닫기
     closeModal2Btn.addEventListener("click", () => {
@@ -247,21 +278,19 @@
 });
     // 버튼 값 가져오기
     const rejectButton = document.querySelector('.pnolist');
-    document.addEventListener('DOMContentLoaded', function() {
-
-        // 버튼이 클릭 됐을때 이벤트 주기
-        rejectButton.addEventListener('click', function() {
-
-        // 버튼 값 담아주기
-        let buttonValue = this.value;
-        // 콘솔에 출력
-        console.log(buttonValue);
-        // Get the reference to the hidden input element
-        let hiddenInput = document.getElementById('nonono');
-        // Change the value of the hidden input
-        hiddenInput.value = buttonValue;
-        });
-    });
+    
+    openModal2Btns.forEach((openModal2Btn) => {
+    	  openModal2Btn.addEventListener("click", (event) => {
+    		  let buttonValue = event.target.value;
+    	        // 콘솔에 출력
+    	        console.log(buttonValue);
+    	        // 아이디가 bookingNo인걸 선택
+    	        let hiddenInput = document.getElementById('bookingNo');
+    	        
+    	        // value를 선택된 버튼의 value로 변환
+    	        hiddenInput.value = buttonValue;
+    	  });
+    	});
 
 </script>
 </body>

@@ -4,35 +4,46 @@
 <mapper namespace="com.nosolorice.app.mapper.JinBooking" >
 
 <select id="BookingList" parameterType="String" resultType="Booking">
-select
-	booking_no bookingNo,
-    booking_count bookingCount,
-    booking_request bookingRequest,
-    booking_time bookingTime,
-    booking_state bookingState,
-    booking_book_no bookingState
-from booking
+SELECT
+    booking_no AS bookingNo,
+    booking_count AS bookingCount,
+    booking_request AS bookingRequest,
+    booking_time AS bookingTime,
+    booking_state AS bookingState,
+    booking_count * deposit AS deposit,
+	booking_book_no AS bookingBookNo
+FROM booking
 where business_id = #{businessId}
 </select>
 
 
-<update id="BookingOkNumberupdate" parameterType="Map">
-UPDATE booking
-SET booking_book_no = booking_book_no + 1
-WHERE business_id = #{businessId}
-  AND (booking_no = #{bookingno} OR booking_book_no = (
-    SELECT max_booking_book_no
-    FROM (SELECT MAX(booking_book_no) AS max_booking_book_no FROM booking WHERE business_id = #{businessId}) AS derived
-  ))
-</update>
-
-<update id="bookingState">
+<update id="bookingState" parameterType="Map">
 UPDATE booking
 SET
-booking_state = "1"
-where booking_no = #{businessId}
-and business_id = #{bookingNo}
+booking_state = #{bookingState}
+where booking_no = #{bookingNo}
+and business_id = #{businessId}
 </update>
+
+
+<delete id="bookingStateDelete" parameterType="Map">
+DELETE FROM booking 
+where booking_no = #{bookingNo}
+and business_id = #{businessId}
+</delete>
+
+<insert id="bookingOkinsert" parameterType="BookingOk">
+INSERT INTO bookingok ( bookingok_count, bookingok_request, bookingok_time, bookingok_state, booking_no, business_id,deposit) 
+VALUES (
+    #{bookingOkCount},
+    #{bookingOkRequest},
+    #{bookingOkTime}, 
+    #{bookingOkState},
+    #{bookingNo},
+    #{businessId},
+    #{deposit}
+);
+</insert>
 
 </mapper>	
 
