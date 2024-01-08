@@ -32,6 +32,12 @@ where booking_no = #{bookingNo}
 and business_id = #{businessId}
 </delete>
 
+<delete id="bookinguserdelete" parameterType="Map">
+DELETE FROM booking_userlist
+where booking_no = #{bookingNo}
+and business_id = #{businessId}
+</delete>
+
 <insert id="bookingOkinsert" parameterType="BookingOk">
 INSERT INTO bookingok ( bookingok_count, bookingok_request, bookingok_time, bookingok_state, booking_no, business_id,deposit) 
 VALUES (
