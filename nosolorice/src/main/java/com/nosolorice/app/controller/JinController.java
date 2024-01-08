@@ -20,13 +20,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nosolorice.app.domain.booking.Booking;
+import com.nosolorice.app.domain.booking.BookingOk;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.businessUser.Menu;
 import com.nosolorice.app.domain.businessUser.MenuCategory;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.domain.rootUser.RootUser;
 import com.nosolorice.app.jinservice.JinFindService;
 import com.nosolorice.app.jinservice.JinMenuCateService;
 import com.nosolorice.app.jinservice.JinMenuService;
+import com.nosolorice.app.jinservice.JinbookService;
 import com.nosolorice.app.jinservice.JinloginService;
 
 @Controller
@@ -53,6 +57,10 @@ public class JinController {
 	@Autowired
 	private JinMenuService jinMenuService;
 	
+
+	@Autowired
+	private JinbookService jinbookService;
+
 	
 	// 아이디 비밀번호 찾기 폼
 	@RequestMapping("findForm")
@@ -132,7 +140,7 @@ public class JinController {
 	//로그인 하기
 	@RequestMapping("loginservice")
 	public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,
-			HttpServletResponse response,HttpSession session) {
+			HttpServletResponse response,HttpSession session ,PrintWriter out) {
 		
 		// 쿠키에 값 저장하기
 		if(idsave != 0) {
@@ -149,6 +157,8 @@ public class JinController {
 		
 		NormalUser nuser = jinloginService.loginNormalUser(id, pass);
 		
+		RootUser ruser = jinloginService.loginRootUser(id, pass);
+		
 		if(buser != null) {
 			System.out.println(buser.getBusinessId());
 			session.setAttribute("BusinessUser", buser);
@@ -157,10 +167,18 @@ public class JinController {
 			System.out.println(nuser.getNormalId());
 			session.setAttribute("NormalUser", nuser);
 			return "redirect:idFind";
-		}else {
-			return "redirect:idFind";
+		}else if(ruser != null) {
+			System.out.println(ruser.getRootId());
+			session.setAttribute("RootUser", ruser);
 		}
-		
+
+		response.setContentType("text/html; charset=utf-8");
+		out.println("<script>");
+		out.println("	alert('회원 정보가 일치하지 않습니다.');");
+		out.println("	history.back();");
+		out.println("</script>");
+    	return null;
+
 	}
 	
 	@RequestMapping("BusinessMenu")
@@ -247,5 +265,44 @@ public class JinController {
 		jinMenuService.Nofilemenuadd(menu);
 		
 		return "redirect:BusinessMenu?businessId="+buser.getBusinessId()+"&"+"menuCategoryNo="+menu.getMenuCategoryNo();
+	}
+	
+	//  예약 리스트 페이지
+	@RequestMapping("yesnoList")
+	public String yesnoList(String businessId , Model model) {
+		
+		// 부킹 no가 있는지 먼저 체크
+		List<Booking> booking = jinbookService.BookingList(businessId);
+		
+		model.addAttribute("booking",booking);
+		
+		return "BusinessMenu/yesnoList";
+	}
+	
+	@RequestMapping("bookingStateOk")
+	public String bookingState(String businessId,int bookingNo ,String bookingState) {
+		
+		// ${bookingTime}
+		
+		jinbookService.bookingState(businessId, bookingNo, bookingState);
+		
+		return "redirect:yesnoList?businessId="+businessId;
+	}
+
+	
+	@RequestMapping("bookingStateDelete")
+	public String bookingStateDelete(String businessId,int bookingNo) {
+		
+		System.out.println(bookingNo + businessId);
+		
+		jinbookService.bookingStateDelete(businessId, bookingNo);
+		
+		return "redirect:yesnoList?businessId="+businessId;
+	}
+	
+	@RequestMapping("Bookingok")
+	public String Bookingok(BookingOk bookingOk) {
+		jinbookService.bookingOkinsert(bookingOk);
+		return "redirect:yesnoList?businessId="+bookingOk.getBusinessId();
 	}
 }
