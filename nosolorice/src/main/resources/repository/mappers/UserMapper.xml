@@ -259,6 +259,14 @@
 		insert into booking_userlist values(#{normalId}, #{businessId}, #{bookingNo})
 	</insert>
 	
+	<select id="getBookingIndex" parameterType="BookingUserList" resultType="int">
+		select booking_no from booking where business_id = #{businessId} and booking_book_no = #{bookNo}
+	</select>
+	
+	<delete id="deleteBookingUserList">
+		delete from booking_userlist where normal_id = #{normalId}
+	</delete>
+	
 	
 	<resultMap id="bookingMap" type="Booking">
 		<id property="bookingNo" column="booking_no"/>

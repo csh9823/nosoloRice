@@ -305,9 +305,22 @@ public class UserController {
 	
 	@RequestMapping("addBookingUserList")
 	@ResponseBody
-	public Map<String, Boolean> addBookingUserList(BookingUserList bul){
+	public Map<String, Boolean> addBookingUserList(String businessId, String normalId, @RequestParam("bookNo") int bookNo){
+		BookingUserList bul = new BookingUserList();
+		bul.setBusinessId(businessId);
+		bul.setNormalId(normalId);
 		System.out.println("컨트롤러에서 bul : " + bul);
-		userService.addBookingUserList(bul);
+		System.out.println("컨트롤러에서 bookNo : " + bookNo);
+		userService.addBookingUserList(bul, bookNo);
+		Map<String, Boolean> map = new HashMap<>();
+		map.put("result", true);
+		return map;
+	}
+	
+	@RequestMapping("deleteBookingUserList")
+	@ResponseBody
+	public Map<String, Boolean> deleteBookingUserList(String normalId){
+		userService.deleteBookingUserList(normalId);
 		Map<String, Boolean> map = new HashMap<>();
 		map.put("result", true);
 		return map;

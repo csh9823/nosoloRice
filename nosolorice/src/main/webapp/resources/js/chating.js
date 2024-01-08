@@ -168,13 +168,13 @@ $(function(){
 	
 	//가져온 room_id를 이용해 웹소켓채팅서버를 연다 - 완료
 	//학원꺼
-	//let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
+	let url = "ws://192.168.0.14:8081/app/chating/" + roomId;
 	
 	//집꺼
-	let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
+	//let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
 	
 	//현진이꺼
-	let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
+	//let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
     socket = new WebSocket(url);
     
     $(socket).on("open", function(event) {
@@ -202,7 +202,6 @@ $(function(){
 			$(".currentMemberList").text(nickNames);
 			$(".currentMemberCount").text(memberList.length);
 			chatContent.scrollTo(0, chatContent.scrollHeight);
-			return;
 		}
 		
 		if(chatType == 'agree'){
@@ -241,22 +240,22 @@ $(function(){
 						console.log(err);
 					}
 				});
-			}
 			$(".bookingBookNo").text(bookingBookNo);		
 			
 			//예약번호를 멤버전원에게 전달한다
 			let chatHistory = {
 				chatType : 'bookNo',
-				bookNo : $(".bookingBookNo").text().trim()
+				bookNo : $(".bookingBookNo:first").text().trim()
 			}
 			const jsonData = JSON.stringify(chatHistory);
         	socket.send(jsonData);
-			return;
+			}
 		}
 		
 		if(chatType == 'bookNo'){
 			
 			let bookNo = chatObj.bookNo;
+			console.log("bookNo타입 메시지 받을때 chatObj : ", chatObj);
 			let businessId = $("#storeDetailModalBusinessId").val();
 			let bookingBookNo = bookNo;
 			
@@ -266,12 +265,16 @@ $(function(){
 			$("#bookAgreeBtn").val("동의");
 			$("#bookPropose").addClass("d-none");
 			$("#bookWait").removeClass("d-none");
+			console.log("addBookingUserList ajax시 loginId : ", loginId);
+			console.log("addBookingUserList ajax시 businessId : ", businessId);
+			console.log("addBookingUserList ajax시 bookNo : ", bookNo);
 			
 			
 			//멤버 전원 booking_userlist에 자기 자신 등록
+
 			$.ajax({
 				url : "/app/addBookingUserList",
-				data : "normalId=" + loginId + "&businessId=" + businessId + "&bookingNo=" + bookNo,
+				data : "normalId=" + loginId + "&businessId=" + businessId + "&bookNo=" + parseInt($(".bookingBookNo:first").text().trim()),
 				type : "post",
 				dataType : "json",
 				async : false,
@@ -284,11 +287,13 @@ $(function(){
 			
 			//사장님과 통신할 웹소켓서버에 연결
 			//학원꺼
-			//let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
+			let url = "ws://192.168.0.14:8081/app/booking/" + businessId;
 			//집꺼
-			let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
+			//let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
 			
 			bookingSocket = new WebSocket(url);
+			console.log("예약관리 서버 접속");
+			
 			
 			$(bookingSocket).on("open", function(event) {
 				
@@ -299,7 +304,8 @@ $(function(){
 					roomId : roomId
 				}
 				const jsonData = JSON.stringify(conncectMsg);
-        		socket.send(jsonData);
+        		bookingSocket.send(jsonData);
+				console.log("예약관리 서버접속 후 메시지 발송");
 				
 				//서버에 { type : 'request', businessId : businessId, roomId : roomId } 메시지 보내기
 				if(loginNickName == $("#bookModalName").text()){
@@ -309,9 +315,13 @@ $(function(){
 						roomId : roomId
 					}
 					const jsonData = JSON.stringify(msg);
-	        		socket.send(jsonData);
+	        		bookingSocket.send(jsonData);
+	        		console.log("예약관리 서버접속 후 제안자만 방정보 발송");
 				}
+				
+				
 			});
+			console.log("예약관리서버 open메서드 실행완료");
 			
 			bookingSocket.addEventListener('message', function(event){
 			
@@ -328,7 +338,6 @@ $(function(){
 			});
 			
 			timerStart(0, 0);
-			return;
 		}
 		if(chatType == 'reject'){
 			//예약 실패 화면으로 이동
@@ -389,8 +398,22 @@ $(function(){
 	    				console.log(err);
 	    			}
 	    		});
-			
 			}
+			
+			//멤버 전원다 booking_userlist에서 자신 지우기
+			$.ajax({
+    			url : "/app/deleteBookingUserList",
+    			data : "normalId=" + loginId,
+    			type : "post",
+    			dataType : "json",
+    			async : false,
+    			success : function(resData) {
+    				console.log(resData);
+    			}, error : function(err){
+    				console.log(err);
+    			}
+    		});
+			
 			//예약 실패 화면으로 이동
 			$("#bookRejectBtn").val("거절");
 			$("#bookWait").addClass("d-none");

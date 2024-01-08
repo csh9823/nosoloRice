@@ -11,7 +11,8 @@ SELECT
     booking_time AS bookingTime,
     booking_state AS bookingState,
     booking_count * deposit AS deposit,
-	booking_book_no AS bookingBookNo
+	booking_book_no AS bookingBookNo,
+	booking_chatname AS bookingChatName 
 FROM booking
 where business_id = #{businessId}
 </select>

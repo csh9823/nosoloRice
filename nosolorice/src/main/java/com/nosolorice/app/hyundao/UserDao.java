@@ -55,4 +55,8 @@ public interface UserDao {
 	
 	public void deleteChatMember(String normalId);
 	public void addBookingUserList(BookingUserList bul);
+	public int getBookingIndex(BookingUserList bul, int bookNo);
+	
+	public void deleteBookingUserList(String normalId);
+
 }

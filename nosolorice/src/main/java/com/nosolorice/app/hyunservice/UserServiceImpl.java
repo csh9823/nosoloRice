@@ -184,8 +184,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void addBookingUserList(BookingUserList bul) {
+	public void addBookingUserList(BookingUserList bul, int bookNo) {
+		int index = userDao.getBookingIndex(bul, bookNo);
+		bul.setBookingNo(index);
 		userDao.addBookingUserList(bul);
+	}
+
+	@Override
+	public void deleteBookingUserList(String normalId) {
+		userDao.deleteBookingUserList(normalId);
 	}
 	
 }

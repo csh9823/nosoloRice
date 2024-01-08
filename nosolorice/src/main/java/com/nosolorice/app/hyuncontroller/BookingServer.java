@@ -36,6 +36,9 @@ public class BookingServer {
     	//현재 접속 세션Set
     	Set<Session> sessions = session.getOpenSessions();
     	
+    	System.out.println("예약관리서버에서 날것의 message : " + message);
+    	System.out.println("예약관리서버에서 Map객체 msg : " + msg);
+    	
     	//메시지 type이 connect이면
     	if(msg.get("type").equals("connect")) {
     		//서버에 접속되면 각자의 세션에 메시지로 도착한 자신의 loginId와 roomId를 저장.
@@ -50,8 +53,11 @@ public class BookingServer {
     	if(msg.get("type").equals("request")) {
     		//유저가 보내준 buisinessId를 가진 유저에게 답장 { type : 'request', roomId : roomId }
     		String businessId = (String)msg.get("businessId");
+    		System.out.println("예약관리 서버에서 businessId : " + businessId);
     		String roomId = (String)msg.get("roomId");
+    		System.out.println("예약관리 서버에서 roomId : " + roomId);
     		for(Session s : sessions) {
+    			System.out.println("예약관리 서버에서 s.getUserProperties().get(\"businessId\") : " + s.getUserProperties().get("businessId"));
     			if(s.getUserProperties().get("businessId").equals(businessId)) {
     				Map<String, Object>dataMap = new HashMap<>();
     				dataMap.put("type", "request");

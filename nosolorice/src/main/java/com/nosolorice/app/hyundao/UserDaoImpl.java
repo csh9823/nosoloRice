@@ -209,4 +209,18 @@ public class UserDaoImpl implements UserDao {
 		sqlSession.insert(NAME_SPACE + ".addBookingUserList", bul);
 	}
 
+	@Override
+	public int getBookingIndex(BookingUserList bul, int bookNo) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("businessId", bul.getBusinessId());
+		map.put("bookNo", bookNo);
+		System.out.println("DAO에서 bookNo : " + bookNo);
+		return sqlSession.selectOne(NAME_SPACE + ".getBookingIndex", map);
+	}
+
+	@Override
+	public void deleteBookingUserList(String normalId) {
+		sqlSession.delete(NAME_SPACE + ".deleteBookingUserList" + normalId);
+	}
+
 }

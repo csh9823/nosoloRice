@@ -48,5 +48,7 @@ public interface UserService {
 	public void deleteBooking(String businessId, int bookingBookNo);
 	
 	public void deleteChatMember(String normalId);
-	public void addBookingUserList(BookingUserList bul);
+	public void addBookingUserList(BookingUserList bul, int bookNo);
+	
+	public void deleteBookingUserList(String normalId);
 }

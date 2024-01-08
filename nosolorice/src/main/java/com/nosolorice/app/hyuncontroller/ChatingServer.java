@@ -57,6 +57,7 @@
 	    	if(msg.get("chatType").equals("connect")) {
 	    		
 	    		String nickName = (String)msg.get("nickName").toString();
+	    		System.out.println("유저가 처음에 등록한 NickName" + nickName);
 	    		session.getUserProperties().put("nickName", nickName);
 	    		Set<String> nickNames = new HashSet<>();
 	    		Map<String, Object>dataMap = new HashMap<>();
@@ -67,7 +68,7 @@
 	    			dataMap.put("chatType", "connect");
 	    			dataMap.put("memberList", nickNames);
 	    			String jsonData = om.writeValueAsString(dataMap);
-	    			s.getBasicRemote().sendText(jsonData);    		
+	    			s.getBasicRemote().sendText(jsonData);
 	    		}
 	    		return;
 	    	}
