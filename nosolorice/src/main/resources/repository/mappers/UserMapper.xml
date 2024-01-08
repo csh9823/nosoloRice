@@ -264,7 +264,7 @@
 	</select>
 	
 	<delete id="deleteBookingUserList">
-		delete from booking_userlist where normal_id = #{normalId}
+		delete from booking_userlist WHERE normal_id = #{normalId}
 	</delete>
 	
 	
