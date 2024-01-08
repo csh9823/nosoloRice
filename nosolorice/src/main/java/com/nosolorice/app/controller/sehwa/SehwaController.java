@@ -361,6 +361,26 @@ public class SehwaController {
 		service.deleteNormalUser(id);
 	}
 	
+	@RequestMapping("/storeOpen")
+	public String storeOpen(String id, HttpSession session) {
+		BusinessUser user = service.getBusinessUserInfo(id);
+		user.setStoreOnoff("open");
+		
+		session.setAttribute("BusinessUser", user);
+		return "redirect:/businessUserStoreInfo?id=testBusinessId";
+	}
+	
+	@RequestMapping("/storeClose")
+	public String storeClose(String id, HttpSession session) {
+		BusinessUser user = service.getBusinessUserInfo(id);
+		user.setStoreOnoff("close");
+		
+		session.setAttribute("BusinessUser", user);
+		return "redirect:/businessUserStoreInfo?id=testBusinessId";
+	}
+	
+	
+	
 	
 	
 }

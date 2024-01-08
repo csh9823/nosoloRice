@@ -364,6 +364,7 @@
 		<result property="regDate" column="regdate"/>
 		<result property="storeOnoff" column="store_onoff"/>
 		<result property="okNoOk" column="ok_nook"/>
+		<result property="root" column="root"/>
 	</resultMap>
 
 	<resultMap type="Booking" id="BookingResultMap">
