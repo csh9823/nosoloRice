@@ -395,6 +395,7 @@
 		<result property="email" column="email"/>
 		<result property="regDate" column="regdate"/>
 		<result property="myPoint" column="myPoint"/>
+		<result property="root" column="root"/>
 	</resultMap>
 	
 	<resultMap type="BookingOk" id="BookingOkResultMap">

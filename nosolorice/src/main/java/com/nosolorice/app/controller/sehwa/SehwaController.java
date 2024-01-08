@@ -143,7 +143,7 @@ public class SehwaController {
 							String mobile1, String mobile2, String mobile3, String mail, String domain,
 							int postNum, String address1, @RequestParam(required = false) String address2, 
 							@RequestParam(value="fileInput", required=false) MultipartFile multi,
-							HttpServletRequest request) throws IOException {
+							HttpServletRequest request, HttpSession session) throws IOException {
 
 		String nPass = oldPass;
 		if(pass != null && !pass.isEmpty()) nPass = pass;
@@ -175,6 +175,8 @@ public class SehwaController {
 		}
 		
 		service.normalUserInfoUpdate(user);
+		
+		session.setAttribute("NormalUser", service.getNormalUserInfo(normalId));
 		
 		return "redirect:/normalUserInfoUpdate?id=" + normalId;
 	}
