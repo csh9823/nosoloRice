@@ -171,7 +171,6 @@ public class JinController {
 			System.out.println(ruser.getRootId());
 			session.setAttribute("RootUser", ruser);
 		}
-
 		response.setContentType("text/html; charset=utf-8");
 		out.println("<script>");
 		out.println("	alert('회원 정보가 일치하지 않습니다.');");
