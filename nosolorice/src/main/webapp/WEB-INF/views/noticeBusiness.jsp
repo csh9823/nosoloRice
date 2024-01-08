@@ -21,6 +21,21 @@
       
        	background-color : #FFE5CA;
       }
+       .pagination .page-item.active .page-link {
+    background-color: #FA9884;
+    border-color: #FA9884;
+    color: #fff; 
+	}
+
+	.pagination .page-link {
+    color: #C93C3C;
+	}
+
+	.pagination .page-link:hover {
+    color: #fff; 
+    background-color: #C93C3C;
+    border-color: #C93C3C;
+	}
 
   </style>
 </head>
@@ -32,7 +47,7 @@
       <div class="col">
         <div class="row">
           <div class="col d-flex align-items-center">
-            <h2 class="fs-3 fw-bold my-5">사업 공지관리</h2>
+            <h2 class="fs-3 fw-bold my-5">사업 공지사항</h2>
             <div class="col"></div> <!-- 공간 확보를 위한 비어있는 컬럼 -->
             <div class="col-auto">
               
@@ -45,7 +60,6 @@
       <div class="col-2">번호</div>
       <div class="col-4">제목</div>
       <div class="col-4">등록일</div>
-      <div class="col-2">삭제</div>
     </div>
 
   <c:if test="${empty bList}"> 
@@ -62,8 +76,6 @@
       			<div class="col-4">${b.businessNoticeTitle}</div>
       			<div class="col-4"><fmt:formatDate value="${b.businessNoticeRegDate}" pattern="yyyy-MM-dd" /></div>
       			<div class="col-2">
-      		<input type="button" value="수정" class="btn mx-2" style="background-color:#FA9884;" onclick="location.href='noticeUpdate?noticeNo=${b.noticeNo}&pageNum=${currentPage}&noticeType=business'">
-      		<input type="button" value="삭제" class="btn mx-2" style="background-color:#C93C3C ;" onclick="location.href='noticeDelete?noticeNo=${b.noticeNo}'">
     		</div>
     	</div>
     <div class="row p-5 border-bottom d-none noticeContentRow">
@@ -73,8 +85,46 @@
     </div>
     </c:forEach>
   </c:if>
- </div>   
-</div>  <!-- container end -->
+ 
+ 					
+ 					<c:if test="${not empty bList}">
+  	 <div class="row my-5">
+				<div class="col">
+					<nav aria-label="Page navigation">
+					  <ul class="pagination justify-content-center">
+					
+					  	<c:if test="${ bstartPage > bPG }">
+						    <li class="page-item">
+						      <a class="page-link" href="noticeList?pageNum=${ bstartPage - bPG }">Pre</a>
+						    </li>
+					    </c:if>
+							
+					    <c:forEach var="i" begin="${bstartPage}" end="${bendPage}">
+			   			 
+					    	<c:if test="${i == bcurrentPage }">
+					    	<li class="page-item active" aria-current="page">
+					    		<span class="page-link">${i}</span>
+					    	</li>
+					    	</c:if>
+					    	<c:if test="${i != bcurrentPage }">
+						    	<li class="page-item">
+						    		<a class="page-link" href="noticeList?pageNum=${i}">${i}</a>
+						    	</li>
+						    </c:if>					    
+					    </c:forEach>	    
+				
+						<c:if test="${ bendPage < bpageCount }">
+						    <li class="page-item">
+						      <a class="page-link" href="noticeList?pageNum=${ bstartPage + bPG }">Next</a>
+						    </li>
+					  	</c:if>
+					  </ul>
+						</nav>
+					</div>
+				</div>
+		</c:if>		
+  	</div>				
+	</div>  <!-- container end -->
 
 
     

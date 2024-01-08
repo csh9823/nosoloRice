@@ -9,5 +9,7 @@ public interface UserPageService {
 		
 		//차단 목록
 		public abstract Map<String,Object> blockList(int pageNum);
+		
+		public abstract void blockUnlock(int blockHistoryNo);
 
 }
