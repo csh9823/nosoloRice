@@ -10,4 +10,6 @@ public interface JinBookingInterfaceDao {
 	abstract public void bookingState(String businessId,int bookingNo ,String bookingState);
 	abstract public void bookingStateDelete(String businessId,int bookingNo);
 	abstract public void bookingOkinsert(BookingOk bookingOk);
+	abstract public void bookinguserdelete(String businessId,int bookingNo);
+
 }
