@@ -56,8 +56,8 @@ public interface SehwaService {
 	
 	public boolean checkNormalNickName(String nickName);
 	
+	public void deleteBusinessUser(String id);
 	
-	
-	
+	public void deleteNormalUser(String id);
 	
 }

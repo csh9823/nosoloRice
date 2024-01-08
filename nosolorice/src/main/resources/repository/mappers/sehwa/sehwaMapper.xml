@@ -317,6 +317,18 @@
 			nickName = #{nickName}
 	</select>
 	
+	<delete id="deleteBusinessUser">
+		DELETE FROM business_user
+			WHERE
+				business_id = #{id}
+	</delete>
+	
+	<delete id="deleteNormalUser">
+		DELETE FROM normal_user
+			WHERE
+				normal_id = #{id}
+	</delete>
+	
 	
 	
 	

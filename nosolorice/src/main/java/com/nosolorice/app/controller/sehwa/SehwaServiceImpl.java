@@ -302,6 +302,16 @@ public class SehwaServiceImpl implements SehwaService {
 		
 		return result;
 	}
+
+	@Override
+	public void deleteBusinessUser(String id) {
+		dao.deleteBusinessUser(id);
+	}
+
+	@Override
+	public void deleteNormalUser(String id) {
+		dao.deleteNormalUser(id);
+	}
 	
 	
 }

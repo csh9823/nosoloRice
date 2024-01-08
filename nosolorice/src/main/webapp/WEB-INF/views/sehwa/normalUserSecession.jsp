@@ -17,7 +17,7 @@
 <body>
 <div class="container">
 	<div class="row">
-		<%@ include file="../../temple/header/businessMenubar.jsp" %>
+		<%@ include file="../../temple/header/mypageMenubar.jsp" %>
 	 	<div class="col-md-9">
 	 		<div class="row my-5">
 	 			<div class="col-8 offset-2">
@@ -56,7 +56,7 @@
 			"data" : {
 				"id" : id,
 				"inputPass" : pass,
-				"type" : "business"
+				"type" : "normal"
 			},
 			"type" : "post",
 			"dataType" : "text",
@@ -65,7 +65,7 @@
 				if(resData == "true") {
 					
 					$.ajax({
-						"url" : "businessUserSecession.ajax",
+						"url" : "normalUsesrSecession.ajax",
 						"data" : {
 							"id" : id
 						},

@@ -56,7 +56,8 @@
   <div class="container">
   <input type="hidden" id="loginId" value="${sessionScope.NormalUser.normalId}">
     <div class="row">
-      <div class="col">
+	   <%@ include file="../../temple/header/mypageMenubar.jsp" %>
+	    <div class="col-md-9">
         <div class="row mb-3">
           <div class="col">
             <h3 class="text-red">진행중인 예약</h3>
