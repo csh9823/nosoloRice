@@ -52,7 +52,10 @@ Map<String, Object> map = new HashMap<String, Object>();
 			map.put("start", start);
 			map.put("num", num);
 	
-		return sqlSession.selectList(Mapper +".reviewList",map);
+			List<Review> rList = sqlSession.selectList(Mapper +".reviewList",map);
+			System.out.println(rList.size());
+			
+		return rList;
 	}
 
 	@Override
@@ -92,7 +95,6 @@ Map<String, Object> map = new HashMap<String, Object>();
 
 	@Override
 	public void addDenied(String id, String reason, int day) {
-		
 		Map <String,Object> map = new HashMap<String,Object>();
 		
 		map.put("id", id);

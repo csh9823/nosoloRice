@@ -37,7 +37,7 @@
               <span class="fs-4 fw-bold">업체정보</span>
             </div>
             <div class="menu row p-4" onclick="location.href=''">
-              <span class="fs-4 fw-bold">예약관리</span>
+              <span class="fs-4 fw-bold"><a href="yesnoList?businessId=${sessionScope.BusinessUser.businessId}">예약관리</a></span>
             </div>
             <div class="menu row p-4" onclick="location.href=''">
               <span class="fs-4 fw-bold">예약이력</span>
@@ -70,10 +70,6 @@
     $(document).on("mouseleave", ".menu", function() {
       $(this).css("opacity", "100%");
     });
-
-
-    
-    
 
   </script>
 </html>

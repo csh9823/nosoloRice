@@ -52,9 +52,6 @@
 <body>
 
   <div class="container">
-    
-      
-  
       <div class="row">
         <div class="col-md-3">
             <ul class="my-3 fs-5">
@@ -82,10 +79,11 @@
            <c:if test="${not empty blockList}"> 
           <c:forEach var="b" items="${blockList}">
             <div class="row align-items-center text-center">
-                <div class="col-3">${b.blockHistoryNo}</div>
-                <div class="col-3">${b.blockAttacker}</div>
-                <div class="col-3">${b.blockDate}</div>
-                <div class="col-3 py-3">
+                <div class="col-2">${b.blockHistoryNo}</div>
+                <div class="col-2">${b.blockAttacker}</div>
+                <div class="col-4">${b.blockDate}</div>
+                <div class="col-2">${b.blockState}</div>
+                <div class="col-2 py-3">
                   <input type="button" value="해제하기" style="color:#C93C3C" id="blockUnlockBtn">
                 </div>    
             </div>
@@ -134,6 +132,34 @@
   
   </div>
 </div>
+
+
+<script>
+
+
+$("#blockUnlockBtn").on('click',function(){
+	
+	
+	if(confirm("해제하시겠습니까?")){
+		
+		$.ajax({
+			
+			url: "/app/blockUnlockProcess",
+			type : "post",
+			data : ""
+			
+			
+			
+		});
+		
+		
+	}
+	
+	
+	
+});
+
+</script>
        
  
 

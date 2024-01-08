@@ -28,13 +28,13 @@ public class NoticeDaoImpl implements NoticeDao {
 	@Override
 	public List<Notice> NoticeList(int start, int num) {
 		
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		params.put("start", start);
-		params.put("num", num);
+		map.put("start", start);
+		map.put("num", num);
 		
 		
-		return  sqlSession.selectList(Mapper + ".noticeList",params);
+		return  sqlSession.selectList(Mapper + ".noticeList",map);
 	}
 
 	@Override

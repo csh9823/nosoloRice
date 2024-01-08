@@ -14,9 +14,12 @@ public class BookingOk {
 	private String businessId;				// 사업자 아이디
 	private String businessName;
 	
+	
+	
 	public BookingOk() {
 	
 	}
+
 
 	public int getBookingOkNo() {
 		return bookingOkNo;

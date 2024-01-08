@@ -21,6 +21,22 @@
       
        	background-color : #FFE5CA;
       }
+      
+     .pagination .page-item.active .page-link {
+    background-color: #FA9884;
+    border-color: #FA9884;
+    color: #fff; 
+	}
+
+	.pagination .page-link {
+    color: #C93C3C;
+	}
+
+	.pagination .page-link:hover {
+    color: #fff; 
+    background-color: #C93C3C;
+    border-color: #C93C3C;
+	}
   </style>
 </head>
 <body>
@@ -31,7 +47,7 @@
       <div class="col">
         <div class="row">
           <div class="col d-flex align-items-center">
-            <h2 class="fs-3 fw-bold my-5">일반 공지관리</h2>
+            <h2 class="fs-3 fw-bold my-5">일반 공지사항</h2>
             <div class="col"></div> <!-- 공간 확보를 위한 비어있는 컬럼 -->
             <div class="col-auto">
             
@@ -45,7 +61,6 @@
       <div class="col-2">번호</div>
       <div class="col-4">제목</div>
       <div class="col-4">등록일</div>
-      <div class="col-2">삭제</div>
     </div>
 
   <c:if test="${empty nList}"> 
@@ -70,7 +85,56 @@
     </div>
     </c:forEach>
   </c:if>
-  </div>
+  
+  
+  					<c:if test="${not empty nList }">
+  				<div class="row my-5">
+				<div class="col">
+					<nav aria-label="Page navigation">
+					  <ul class="pagination justify-content-center">
+					
+					  	<c:if test="${ startPage > PG }">
+						    <li class="page-item">
+						      <a class="page-link" href="noticeNormal?pageNum=${ startPage - PG }">Pre</a>
+						    </li>
+					    </c:if>
+				
+							
+							
+					    <c:forEach var="i" begin="${startPage}" end="${endPage}">
+			   			 
+					    	<c:if test="${i == currentPage }">
+					    	<li class="page-item active" aria-current="page">
+					    		<span class="page-link">${i}</span>
+					    	</li>
+					    	</c:if>
+					    	<c:if test="${i != currentPage }">
+						    	<li class="page-item">
+						    		<a class="page-link" href="noticeNormal?pageNum=${i}">${i}</a>
+						    	</li>
+						    </c:if>					    
+					    </c:forEach>
+					    
+				
+						<c:if test="${ endPage < pageCount }">
+						    <li class="page-item">
+						      <a class="page-link" href="noticeNormal?pageNum=${ startPage + PG }">Next</a>
+						    </li>
+					  	</c:if>
+					  </ul>
+					</nav>
+				</div>
+			</div>
+  		</c:if>
+      </div>
+ 
+  
+  
+  
+  
+  
+  
+  
   
   
   <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>

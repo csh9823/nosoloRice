@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.domain.rootUser.RootUser;
 
 @Repository
 public class JinLoginDaoImpl implements JinLoginInterfaceDao {
@@ -33,5 +34,12 @@ public class JinLoginDaoImpl implements JinLoginInterfaceDao {
 		map.put("pass",  pass);
 		return sqlSession.selectOne(NAME_SPACE + ".loginNormalUser", map );
 	}
-
+	
+	
+	public RootUser loginRootUser(String id, String pass) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("id", id);
+		map.put("pass",  pass);
+		return sqlSession.selectOne(NAME_SPACE + ".loginRootUser", map );
+	}
 }

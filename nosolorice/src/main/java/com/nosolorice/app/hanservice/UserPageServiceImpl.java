@@ -2,6 +2,11 @@ package com.nosolorice.app.hanservice;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.nosolorice.app.handao.UserPageDao;
@@ -71,11 +76,11 @@ public class UserPageServiceImpl implements UserPageService {
 
 		int start = (currentPage - 1) * PS;
 
-		int listCount = 0;
+		int listCount = 0;	
 
 		listCount = userPageDao.getBlockCount();
 
-		if (listCount > 0) {
+		if (listCount >= 0) {
 
 			List<BlockHistory> blockList = userPageDao.blockList(start, PS);
 
@@ -106,5 +111,12 @@ public class UserPageServiceImpl implements UserPageService {
 		}
 
 
+	}
+
+	@Override
+	public void blockUnlock(int blockHistoryNo) {
+		
+		userPageDao.blockUnlock(blockHistoryNo);
+		
 	}
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.domain.rootUser.RootUser;
 import com.nosolorice.app.jindao.JinLoginDaoImpl;
 
 @Service
@@ -24,5 +25,9 @@ public class JinloginService implements JinloginInterface {
 		
 		return jinLoginDaoImpl.loginNormalUser(id, pass);
 	}
-
+	
+	public RootUser loginRootUser(String id, String pass) {
+		
+		return jinLoginDaoImpl.loginRootUser(id, pass);
+	}
 }

@@ -41,6 +41,29 @@ public class NoticeCotroller {
 		
 	}
 	
+	//일반 공지사항
+		@RequestMapping("/noticeNormal")
+		public String noticeNormal(Model model,@RequestParam(value="pageNum",required=false,defaultValue="1")int pageNum){
+			
+			Map<String,Object> noticeNormal = noticeService.NoticeList(pageNum);
+			
+			model.addAllAttributes(noticeNormal);
+			
+			return "/noticeNormal";
+			
+		}
+		
+	//사업 공지사항
+		@RequestMapping("/noticeBusiness")
+		public String noticeBusiness(Model model,@RequestParam(value="pageNum",required=false,defaultValue="1")int pageNum){
+			
+			Map<String,Object> noticeBusiness = noticeService.BusinessNoticeList(pageNum);
+			
+			model.addAllAttributes(noticeBusiness);
+			
+			return "/noticeBusiness";
+		}
+	
 	@RequestMapping("/noticeWrite")
 	public String noticeWrite() {
 		
@@ -142,13 +165,6 @@ public class NoticeCotroller {
 	}
 	
 	
-	
-	
-	
-	/*
-	 * @ReqeustMapping("/businessDeleteList") public STring bsuinessDelete(int )
-	 * 
-	 */
 	
 	
 
