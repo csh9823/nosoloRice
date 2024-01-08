@@ -70,7 +70,6 @@ $(function(){
 	if(bookingInfo != null && bookingInfo.bookingState == '대기'){
 		let regDate = new Date(bookingInfo.bookingTime);
 		let formatRegDate = (regDate.getHours() < 13 ? "오전" + String(regDate.getHours()) + ":" + String(regDate.getMinutes()).padStart(2,'0') : "오후" + String(regDate.getHours() - 12) + ":" + String(regDate.getMinutes()).padStart(2,'0'));
-		
 		//우선 타이머 0으로 시작하는데 booking테이블에 regDate 컬럼 추가하고 시간 계산해서 보내주던지 하자
 		timerStart(0, 0);
 		
@@ -243,7 +242,7 @@ $(function(){
 					}
 				});
 			}
-			$(".bookingBookNo").text(bookingBookNo);
+			$(".bookingBookNo").text(bookingBookNo);		
 			
 			//예약번호를 멤버전원에게 전달한다
 			let chatHistory = {
@@ -258,17 +257,32 @@ $(function(){
 		if(chatType == 'bookNo'){
 			
 			let bookNo = chatObj.bookNo;
+			let businessId = $("#storeDetailModalBusinessId").val();
+			let bookingBookNo = bookNo;
+			
 			$(".bookingBookNo").text(bookNo);
-		
 			$("#bookRejectBtn").val("거절");
 			$("#bookAgreeBtn").removeAttr("disabled");
 			$("#bookAgreeBtn").val("동의");
 			$("#bookPropose").addClass("d-none");
 			$("#bookWait").removeClass("d-none");
 			
+			
+			//멤버 전원 booking_userlist에 자기 자신 등록
+			$.ajax({
+				url : "/app/addBookingUserList",
+				data : "normalId=" + loginId + "&businessId=" + businessId + "&bookingNo=" + bookNo,
+				type : "post",
+				dataType : "json",
+				async : false,
+				success : function(resData){
+					console.log(resData);
+				}, error : function(err) {
+					console.log(err);
+				}
+			});
+			
 			//사장님과 통신할 웹소켓서버에 연결
-			let businessId = $("#storeDetailModalBusinessId").val();
-			let bookingBookNo = bookNo;
 			//학원꺼
 			//let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
 			//집꺼
@@ -277,15 +291,32 @@ $(function(){
 			bookingSocket = new WebSocket(url);
 			
 			$(bookingSocket).on("open", function(event) {
-				if(loginNickName == $("#bookModalName").text()) bookingSocket.send(bookingBookNo);				
+				
+				//모든 사용자는 서버에 접속 하면 메시지를 보낸다. { loginId : loginId, roomId : roomId} (사장의 경우 roomId : 자기 아이디)
+				let conncectMsg = {
+					type : 'connect',
+					loginId : loginId,
+					roomId : roomId
+				}
+				const jsonData = JSON.stringify(conncectMsg);
+        		socket.send(jsonData);
+				
+				//서버에 { type : 'request', businessId : businessId, roomId : roomId } 메시지 보내기
+				if(loginNickName == $("#bookModalName").text()){
+					let msg = {
+						type : 'request',
+						businessId : businessId,
+						roomId : roomId
+					}
+					const jsonData = JSON.stringify(msg);
+	        		socket.send(jsonData);
+				}
 			});
 			
 			bookingSocket.addEventListener('message', function(event){
-				if(event.data == 'approve'){
-					alert("사장님이 승인!");
-				} else {
-					alert("사장님이 거절ㅠ");
-				}
+			
+			//사장님 승인/거절 응답대기 로직
+			
 			});
 			
 			$(bookingSocket).on('close', function(event) {		
@@ -297,6 +328,7 @@ $(function(){
 			});
 			
 			timerStart(0, 0);
+			return;
 		}
 		if(chatType == 'reject'){
 			//예약 실패 화면으로 이동

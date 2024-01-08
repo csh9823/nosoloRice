@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nosolorice.app.domain.Review.Review;
 import com.nosolorice.app.domain.booking.Booking;
+import com.nosolorice.app.domain.booking.BookingUserList;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.businessUser.Menu;
 import com.nosolorice.app.domain.normalUser.BlockHistory;
@@ -201,6 +202,11 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void deleteChatMember(String normalId) {
 		sqlSession.delete(NAME_SPACE + ".deleteChatMember", normalId);
+	}
+
+	@Override
+	public void addBookingUserList(BookingUserList bul) {
+		sqlSession.insert(NAME_SPACE + ".addBookingUserList", bul);
 	}
 
 }

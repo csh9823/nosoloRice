@@ -255,6 +255,10 @@
 		delete from chat_member where normal_id = #{normalId}
 	</delete>
 	
+	<insert id="addBookingUserList" parameterType="BookingUserList">
+		insert into booking_userlist values(#{normalId}, #{businessId}, #{bookingNo})
+	</insert>
+	
 	
 	<resultMap id="bookingMap" type="Booking">
 		<id property="bookingNo" column="booking_no"/>

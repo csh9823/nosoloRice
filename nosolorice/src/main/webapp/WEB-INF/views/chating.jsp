@@ -97,9 +97,9 @@
                      <div class="col" style="position: relative;" id="storeContainer">
 
                          <!-- 예약 모달 시작 -->
-                         <div id="bookModal" class="rounded border px-4 py-2 d-none">
+                         <div id="bookModal" class="rounded border px-4 py-2">
                              <!-- 예약제안 시작 -->
-                             <div class="row h-100" id="bookPropose">
+                             <div class="row h-100 d-none" id="bookPropose">
                                  <div class="col">
 
                                      <div class="row my-3">
@@ -204,7 +204,7 @@
                              <!-- 예약제안 끝 -->
                              
                              <!-- 예약 대기 시작  -->
-                             <div class="row p-3 d-none" id="bookWait">
+                             <div class="row p-3" id="bookWait">
                              	<div class="col">
                              		<div class="row">
 		                             	<div class="col rounded" id="bookWaitContent">

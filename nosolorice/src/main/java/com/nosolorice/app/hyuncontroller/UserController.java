@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nosolorice.app.domain.Review.Review;
 import com.nosolorice.app.domain.booking.Booking;
+import com.nosolorice.app.domain.booking.BookingUserList;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.businessUser.Menu;
 import com.nosolorice.app.domain.normalUser.BlockHistory;
@@ -297,6 +298,16 @@ public class UserController {
 	public Map<String, Boolean> deleteChatMember(String normalId){
 		System.out.println("컨트롤러에서 normalId : " + normalId);
 		userService.deleteChatMember(normalId);
+		Map<String, Boolean> map = new HashMap<>();
+		map.put("result", true);
+		return map;
+	}
+	
+	@RequestMapping("addBookingUserList")
+	@ResponseBody
+	public Map<String, Boolean> addBookingUserList(BookingUserList bul){
+		System.out.println("컨트롤러에서 bul : " + bul);
+		userService.addBookingUserList(bul);
 		Map<String, Boolean> map = new HashMap<>();
 		map.put("result", true);
 		return map;

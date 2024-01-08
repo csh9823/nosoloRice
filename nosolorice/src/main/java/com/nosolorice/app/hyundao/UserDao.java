@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.nosolorice.app.domain.Review.Review;
 import com.nosolorice.app.domain.booking.Booking;
+import com.nosolorice.app.domain.booking.BookingUserList;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.businessUser.Menu;
 import com.nosolorice.app.domain.normalUser.BlockHistory;
@@ -53,4 +54,5 @@ public interface UserDao {
 	public Booking getBookingInfo(String roomId);
 	
 	public void deleteChatMember(String normalId);
+	public void addBookingUserList(BookingUserList bul);
 }

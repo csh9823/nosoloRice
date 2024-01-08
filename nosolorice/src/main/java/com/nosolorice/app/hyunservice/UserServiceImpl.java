@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.nosolorice.app.domain.Review.Review;
 import com.nosolorice.app.domain.booking.Booking;
+import com.nosolorice.app.domain.booking.BookingUserList;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.businessUser.Menu;
 import com.nosolorice.app.domain.normalUser.BlockHistory;
@@ -180,6 +181,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteChatMember(String normalId) {
 		userDao.deleteChatMember(normalId);
+	}
+
+	@Override
+	public void addBookingUserList(BookingUserList bul) {
+		userDao.addBookingUserList(bul);
 	}
 	
 }
