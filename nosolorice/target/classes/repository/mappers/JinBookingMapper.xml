@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nosolorice.app.mapper.JinBooking" >
+
+<select id="BookingList" parameterType="String" resultType="Booking">
+SELECT
+    booking_no AS bookingNo,
+    booking_count AS bookingCount,
+    booking_request AS bookingRequest,
+    booking_time AS bookingTime,
+    booking_state AS bookingState,
+    booking_count * deposit AS deposit,
+	booking_book_no AS bookingBookNo
+FROM booking
+where business_id = #{businessId}
+</select>
+
+
+<update id="bookingState" parameterType="Map">
+UPDATE booking
+SET
+booking_state = #{bookingState}
+where booking_no = #{bookingNo}
+and business_id = #{businessId}
+</update>
+
+
+<delete id="bookingStateDelete" parameterType="Map">
+DELETE FROM booking 
+where booking_no = #{bookingNo}
+and business_id = #{businessId}
+</delete>
+
+<insert id="bookingOkinsert" parameterType="BookingOk">
+INSERT INTO bookingok ( bookingok_count, bookingok_request, bookingok_time, bookingok_state, booking_no, business_id,deposit) 
+VALUES (
+    #{bookingOkCount},
+    #{bookingOkRequest},
+    #{bookingOkTime}, 
+    #{bookingOkState},
+    #{bookingNo},
+    #{businessId},
+    #{deposit}
+);
+</insert>
+
+</mapper>	
+
+
+

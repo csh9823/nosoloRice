@@ -58,6 +58,16 @@ where normal_id = #{id} and pass = #{pass}
 </select>
 
 
+<select id="loginRootUser" parameterType="Map" resultType="RootUser">
+select
+root_no rootNo,
+root_name rootName,
+root_id rootId,
+root_pass rootPass,
+root root
+from root_user
+</select>
+
 </mapper>	
 
 
