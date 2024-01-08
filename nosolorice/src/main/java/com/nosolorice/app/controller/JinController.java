@@ -293,7 +293,6 @@ public class JinController {
 		System.out.println(bookingNo + businessId);
 		jinbookService.bookinguserdelete(businessId, bookingNo);
 		jinbookService.bookingStateDelete(businessId, bookingNo);
-		
 		return "redirect:yesnoList?businessId="+businessId;
 	}
 	
