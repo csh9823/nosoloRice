@@ -254,6 +254,11 @@ public class SehwaDaoImpl implements SehwaDao {
 		
 		return sqlSession.selectList(NAME_SPACE + ".usePointListPage", params);
 	}
+
+	@Override
+	public NormalUser checkNormalNickName(String nickName) {
+		return sqlSession.selectOne(NAME_SPACE + ".checkNormalNickName", nickName);
+	}
 	
 	
 	

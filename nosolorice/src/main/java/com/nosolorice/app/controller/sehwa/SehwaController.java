@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,6 +69,14 @@ public class SehwaController {
 		if(mobile.equals(inputMobile)) isMobile = true;
 		
 		return isMobile;
+	}
+	
+	@RequestMapping(value="/checkNormalNickName.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean checkNormalNickName(String nickName) {
+		boolean result = service.checkNormalNickName(nickName);
+		
+		return result;
 	}
 	
 	@RequestMapping(value={"/businessUserInfoUpdate"}, method=RequestMethod.GET)
@@ -129,10 +139,10 @@ public class SehwaController {
 	@RequestMapping(value="/normalUserInfoUpdate", method = RequestMethod.POST)
 	public String normalUserInfoUpdate(String normalId, String name, String nickName, 
 							String oldPass, @RequestParam(required = false) String pass,
-							int birth1, int birth2, int birth3, String gender,
+							int birth1, int birth2, int birth3, 
 							String mobile1, String mobile2, String mobile3, String mail, String domain,
 							int postNum, String address1, @RequestParam(required = false) String address2, 
-							@RequestParam(value="fileInput", required=false, defaultValue = "defaultImg") MultipartFile multi,
+							@RequestParam(value="fileInput", required=false) MultipartFile multi,
 							HttpServletRequest request) throws IOException {
 
 		String nPass = oldPass;
@@ -147,19 +157,21 @@ public class SehwaController {
 		user.setNickName(nickName);
 		user.setPass(nPass);
 		user.setBirth(birth);
-		user.setGender(gender);
 		user.setMobile(mobile);
 		user.setEmail(email);
 		user.setPostNum(postNum);
 		user.setAddress1(address1);
 		user.setAddress2(address2);
-		if(!multi.getOriginalFilename().equals("defaultImg")) {
+		
+		if(multi != null && !multi.isEmpty()) {
 			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
 			UUID uid = UUID.randomUUID();
 			String saveName = uid.toString() + "_" + multi.getOriginalFilename();
 			File file = new File(filePath, saveName);
 			multi.transferTo(file);
 			user.setProfile(saveName);
+		} else {
+			user.setProfile("defaultImg");
 		}
 		
 		service.normalUserInfoUpdate(user);
@@ -317,5 +329,24 @@ public class SehwaController {
 		return "sehwa/noramlUserPointList";
 	}
 
+	@RequestMapping("/businessUserLogOut")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/login";
+	}
+	
+	@RequestMapping(value="/businessUserSecession")
+	public String businessUserSecession(Model model, String id) {
+		model.addAttribute("id", id);
+		return "forward:/WEB-INF/views/sehwa/businessUserSecession.jsp";
+	}
+	
+	@RequestMapping(value="/businessUserSecession.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean businessUserSecession(String id) {
+		// 사업자회원 회원탈퇴
+		
+		return true;
+	}
 	
 }

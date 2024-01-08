@@ -38,11 +38,16 @@
           </div>
         </div>
         <div class="row mb-3">
-          <div class="col-8">
+          <div class="col-6">
             <input type="text" name="nickName" id="nickName" class="form-control w-100" value="${NormalUser.nickName}">
           </div>
-          <div class="col-4 text-end">
-            <input type="button" value="중복확인" class="green btn px-4">
+          <div class="col-6 text-end">
+            <input type="button" id="checkNormalNickNameBtn" value="닉네임 중복확인" class="green btn px-4 w-100">
+          </div>
+          <div class="col-12">
+          	<span id="nickNameFalse" class="text-red" style="display:none;">중복된 닉네임 입니다.</span>
+          	<span id="nickNameTrue" class="text-green" style="display:none;">사용가능한 닉네임 입니다.</span>
+          	<input type="hidden" id="nickNameResult" value="true">
           </div>
         </div>
         <div class="row mb-3">
@@ -75,11 +80,11 @@
         </div>
         <div class="row mb-3 radio-btn gx-0 text-center">
           <div class="col">
-            <input type="radio" id="male" name="gender" value="남성" ${NormalUser.gender eq '남성' ? 'checked' : ''}>
+            <input type="radio" id="male" name="gender" value="남성" ${NormalUser.gender eq '남성' ? 'checked' : ''} disabled>
             <label for="male">남자</label>
           </div>
           <div class="col">
-            <input type="radio" id="female" name="gender" value="여성" ${NormalUser.gender eq '여성' ? 'checked' : ''}>
+            <input type="radio" id="female" name="gender" value="여성" ${NormalUser.gender eq '여성' ? 'checked' : ''} disabled>
             <label for="female">여자</label>
           </div>
         </div>
@@ -95,13 +100,13 @@
             </select>
           </div>
           <div class="col-3">
-            <input type="text" name="mobile2" id="mobile2" class="form-control" value="${NormalUser.mobile.split('-')[1]}">
+            <input type="text" name="mobile2" id="mobile2" class="form-control" maxlength="4" value="${NormalUser.mobile.split('-')[1]}">
           </div>
           <div class="col-3">
-            <input type="text" name="mobile3" id="mobile3" class="form-control" value="${NormalUser.mobile.split('-')[2]}">
+            <input type="text" name="mobile3" id="mobile3" class="form-control" maxlength="4" value="${NormalUser.mobile.split('-')[2]}">
           </div>
           <div class="col-3">
-            <input type="button" id="verifyBtn" value="인증하기" class="green btn w-100" disabled>
+            <input type="button" id="verifyBtn" value="인증하기" class="green btn w-100">
             <input type="hidden" id="verifyResult" value="true">
           </div>
         </div>
@@ -128,7 +133,7 @@
         </div>
         <div class="row mb-3">
           <div class="col-6">
-            <input type="text" name="postNum" id="sample6_postcode" value="${NormalUser.postNum}" class="form-control">
+            <input type="text" name="postNum" id="postNum" value="${NormalUser.postNum}" class="form-control">
           </div>
           <div class="col-4 offset-2 text-end">
             <input type="button" value="우편번호 조회" class="green btn w-100" onclick="sample6_execDaumPostcode()">
@@ -136,12 +141,12 @@
         </div>
         <div class="row mb-3">
           <div class="col">
-            <input type="text" name="address1" id="sample6_address" value="${NormalUser.address1}" class="form-control">
+            <input type="text" name="address1" id="address1" value="${NormalUser.address1}" class="form-control">
           </div>
         </div> 
         <div class="row mb-3">
           <div class="col">
-            <input type="text" name="address2" id="sample6_detailAddress" value="${NormalUser.address2}" class="form-control">
+            <input type="text" name="address2" id="address2" value="${NormalUser.address2}" class="form-control">
           </div>
         </div> 
         <div class="row mb-3">
@@ -237,6 +242,45 @@
 		});
 	});
 	
+	// 닉네임 중복체크
+	$(document).on("keyup", "#nickName", function() {
+		$("#nickNameResult").val(false);
+		$("#nickNameFalse, #nickNameTrue").css("display", "none");
+	});
+	$(document).on("click", "#checkNormalNickNameBtn", function(){
+		let nickName = $("#nickName").val();
+		
+		$.ajax({
+			"url" : "checkNormalNickName.ajax",
+			"data" : {
+				nickName : nickName
+			},
+			"type" : "post",
+			"dataType" : "text",
+			"success" : function(resData) {
+				console.log(resData);
+				if(resData == true) { // 닉네임이 있을 경우
+					$("#nickNameFalse").css("display", "block");
+					$("#nickNameTrue").css("display", "none");
+				} else  {		// 닉네임 사용 가능 할 경우
+					$("#nickNameFalse").css("display", "none");
+					$("#nickNameTrue").css("display", "block");
+					$("#nickNameResult").val(true);
+				}
+			},
+			"error" : function(xhr, status, err) {
+				console.log("err : ", xhr, "-", err);
+			}
+		});
+	});
+	
+	// 엔터키 방지
+	$('input[type="text"]').keydown(function() {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+		};
+	});
+		
 	
 	
 	

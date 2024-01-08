@@ -54,6 +54,7 @@ public interface SehwaService {
 	
 	public Map<String, Object> usePointList(String id, int usePageNum);
 	
+	public boolean checkNormalNickName(String nickName);
 	
 	
 	

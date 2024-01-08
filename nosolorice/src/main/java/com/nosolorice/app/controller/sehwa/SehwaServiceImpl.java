@@ -293,6 +293,15 @@ public class SehwaServiceImpl implements SehwaService {
 		return resultMap;
 		
 	}
+
+	@Override
+	public boolean checkNormalNickName(String nickName) {
+		boolean result = false;
+		NormalUser user = dao.checkNormalNickName(nickName);
+		if(user != null) result = true;
+		
+		return result;
+	}
 	
 	
 }
