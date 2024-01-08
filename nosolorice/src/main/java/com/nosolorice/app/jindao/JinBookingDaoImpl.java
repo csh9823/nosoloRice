@@ -48,4 +48,13 @@ public class JinBookingDaoImpl implements JinBookingInterfaceDao {
 	public void bookingOkinsert(BookingOk bookingOk) {
 		sqlSession.insert(NAME_SPACE + ".bookingOkinsert", bookingOk);
 	}
+	
+	public void bookinguserdelete(String businessId,int bookingNo) {
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("businessId", businessId);
+		map.put("bookingNo", bookingNo);
+		
+		sqlSession.delete(NAME_SPACE + ".bookinguserdelete",map);
+	}
 }

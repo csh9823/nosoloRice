@@ -31,4 +31,8 @@ public class JinbookService implements JinBookInterface {
 	public void bookingOkinsert(BookingOk bookingOk) {
 		jinBookingDaoImpl.bookingOkinsert(bookingOk);
 	}
+	
+	public void bookinguserdelete(String businessId,int bookingNo) {
+		jinBookingDaoImpl.bookinguserdelete(businessId, bookingNo);
+	}
 }

@@ -200,6 +200,7 @@
                         <input type="hidden" name="bookingNo" value="${booking.bookingNo}">
                         <input type="hidden" name="businessId" value="${sessionScope.BusinessUser.businessId}">
                         <input type="hidden" name="deposit" value="${booking.deposit}">
+                        <input type="hidden" name="bookingState" value="방문완료">
                      </form>
                     </div>
     
@@ -213,6 +214,7 @@
                         <input type="hidden" name="bookingNo" value="${booking.bookingNo}">
                         <input type="hidden" name="businessId" value="${sessionScope.BusinessUser.businessId}">
                         <input type="hidden" name="deposit" value="${booking.deposit}">
+                        <input type="hidden" name="bookingState" value="미방문">
                      </form>
                     </div>
                 </div>

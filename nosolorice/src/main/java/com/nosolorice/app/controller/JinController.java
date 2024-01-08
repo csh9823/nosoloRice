@@ -281,26 +281,24 @@ public class JinController {
 	@RequestMapping("bookingStateOk")
 	public String bookingState(String businessId,int bookingNo ,String bookingState) {
 		
-		// ${bookingTime}
 		
 		jinbookService.bookingState(businessId, bookingNo, bookingState);
 		
 		return "redirect:yesnoList?businessId="+businessId;
 	}
-
 	
 	@RequestMapping("bookingStateDelete")
 	public String bookingStateDelete(String businessId,int bookingNo) {
 		
 		System.out.println(bookingNo + businessId);
-		
+		jinbookService.bookinguserdelete(businessId, bookingNo);
 		jinbookService.bookingStateDelete(businessId, bookingNo);
-		
 		return "redirect:yesnoList?businessId="+businessId;
 	}
 	
 	@RequestMapping("Bookingok")
-	public String Bookingok(BookingOk bookingOk) {
+	public String Bookingok(BookingOk bookingOk,String bookingState) {
+		jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingState);
 		jinbookService.bookingOkinsert(bookingOk);
 		return "redirect:yesnoList?businessId="+bookingOk.getBusinessId();
 	}
