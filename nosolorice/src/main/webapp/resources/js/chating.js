@@ -168,13 +168,14 @@ $(function(){
 	
 	//가져온 room_id를 이용해 웹소켓채팅서버를 연다 - 완료
 	//학원꺼
-	let url = "ws://192.168.0.14:8081/app/chating/" + roomId;
+	//let url = "ws://192.168.0.14:8081/app/chating/" + roomId;
 	
 	//집꺼
 	//let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
 	
 	//현진이꺼
-	//let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
+	let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
+	
     socket = new WebSocket(url);
     
     $(socket).on("open", function(event) {
@@ -209,7 +210,6 @@ $(function(){
 			let agreeCount = chatObj.agreeCount;
 			console.log(loginId + "에서 agreeCount : " + agreeCount);
 			$("#bookAgreeBtn").val(agreeCount + "명 동의중...");
-			return;
 		}
 		
 		if(chatType == 'agreeComplete'){
@@ -287,9 +287,11 @@ $(function(){
 			
 			//사장님과 통신할 웹소켓서버에 연결
 			//학원꺼
-			let url = "ws://192.168.0.14:8081/app/booking/" + businessId;
+			//let url = "ws://192.168.0.14:8081/app/booking/" + businessId;
 			//집꺼
 			//let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
+			//현진이꺼			
+			let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
 			
 			bookingSocket = new WebSocket(url);
 			console.log("예약관리 서버 접속");
@@ -325,7 +327,23 @@ $(function(){
 			
 			bookingSocket.addEventListener('message', function(event){
 			
-			//사장님 승인/거절 응답대기 로직
+				//사장님 승인/거절 응답대기 로직
+				let msgObj = JSON.parse(event.data);
+				if(msgObj.type="approve"){
+					bookComplete = true;
+					$("#bookWait").addClass("d-none");
+					$("#bookFail").addClass("d-none");
+					$("#bookPropose").addClass("d-none");
+					$("#bookSuccess").removeClass("d-none");
+				}
+				if(msgObj.type="reject"){
+					isBooking = false;
+					bookComplete = false;
+					$("#bookWait").addClass("d-none");
+					$("#bookFail").addClass("d-none");
+					$("#bookPropose").addClass("d-none");
+					$("#bookSuccess").removeClass("d-none");
+				}
 			
 			});
 			
