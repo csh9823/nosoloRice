@@ -58,5 +58,7 @@ public interface UserDao {
 	public int getBookingIndex(BookingUserList bul, int bookNo);
 	
 	public void deleteBookingUserList(String normalId);
-
+	public void payWithPoint(String normalId, int deposit);
+	
+	public List<NormalUser> getBookingUserList(int bookingNo);
 }

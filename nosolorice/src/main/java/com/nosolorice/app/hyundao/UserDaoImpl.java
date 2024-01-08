@@ -223,4 +223,17 @@ public class UserDaoImpl implements UserDao {
 		sqlSession.delete(NAME_SPACE + ".deleteBookingUserList", normalId);
 	}
 
+	@Override
+	public void payWithPoint(String normalId, int deposit) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("normalId", normalId);
+		map.put("deposit", deposit);
+		sqlSession.update(NAME_SPACE + ".payWithPoint", map);
+	}
+
+	@Override
+	public List<NormalUser> getBookingUserList(int bookingNo) {
+		return sqlSession.selectList(NAME_SPACE + ".getBookingUserList", bookingNo);
+	}
+
 }

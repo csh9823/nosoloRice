@@ -248,7 +248,7 @@
 	</delete>
 	
 	<select id="getBookingInfo" parameterType="Booking" resultType="Booking" resultMap="bookingMap">
-		select * from booking where booking_chatname = #{roomId} and booking_state = '대기'
+		select * from booking where booking_chatname = #{roomId}
 	</select>
 	
 	<delete id="deleteChatMember">
@@ -266,6 +266,17 @@
 	<delete id="deleteBookingUserList">
 		delete from booking_userlist WHERE normal_id = #{normalId}
 	</delete>
+	
+	<update id="payWithPoint" parameterType="hashmap">
+		update normal_user set mypoint = (mypoint - #{deposit}) where normal_id = #{normalId}
+	</update>
+	
+	<select id="getBookingUserList" parameterType="hashmap" resultType="NormalUser">
+		SELECT nu.nickname as nickName
+		FROM booking_userlist bu
+		JOIN normal_user nu ON bu.normal_id = nu.normal_id
+		WHERE bu.booking_no = #{bookingNo}
+	</select>
 	
 	
 	<resultMap id="bookingMap" type="Booking">

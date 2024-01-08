@@ -46,6 +46,8 @@ public class BookingServer {
     		String roomId = (String)msg.get("roomId");
     		session.getUserProperties().put("loginId", loginId);
     		session.getUserProperties().put("roomId", roomId);
+    		System.out.println("서버가 받은 메시지가 connect일때 저장된 loginId : " + session.getUserProperties().put("loginId", loginId)); 
+    		System.out.println("서버가 받은 메시지가 connect일때 저장된 roomId : " + session.getUserProperties().put("roomId", roomId)); 
     		return;
     	}
     	
@@ -59,8 +61,8 @@ public class BookingServer {
     		
     		
     		for(Session s : sessions) {
-    			System.out.println("s.getUserProperties().get(\"loginId\")" + s.getUserProperties().get("loginId"));
-    			if(s.getUserProperties().get("loginId").equals(businessId)) {
+    			Object loginIdObj = s.getUserProperties().get("loginId");
+    			if(loginIdObj.equals(businessId)) {
     				Map<String, Object>dataMap = new HashMap<>();
     				dataMap.put("type", "request");
     				dataMap.put("roomId", roomId);
@@ -109,6 +111,26 @@ public class BookingServer {
     		}    
     		return;
     	}
+    	
+    	//메시지 type이 userCancel이면 
+    	if(msg.get("type").equals("userCancel")) {
+    		System.out.println("사장님이 보낸 날것 그대로의 거부메시지 : " + message);
+    		System.out.println("사장님이 보낸 거부메시지 msg : " + msg);
+    		//사장에게 취소된 예약번호를 알림
+    		String businessId = (String)msg.get("businessId");
+    		String bookNo = (String)msg.get("bookNo");
+    		for(Session s : sessions) {
+    			if(s.getUserProperties().get("loginId").equals(businessId)) {
+    				Map<String, Object>dataMap = new HashMap<>();
+    				dataMap.put("type", "userCancel");
+    				dataMap.put("bookNo", bookNo);
+    				String jsonData = om.writeValueAsString(dataMap);
+    				s.getBasicRemote().sendText(jsonData);
+    				System.out.println("유저들에게 사장님 예약이 취소됬다고 메시지 발송 완료");
+    			}
+    		}    
+    		return;
+    	}
 
     	
     	
@@ -116,7 +138,7 @@ public class BookingServer {
     
     @OnClose
     public void onClose(Session session) throws IOException {
-    	System.out.println(session.getId() + "님의 예약관리 서버 연결이 해제되었습니다.");
+    	System.out.println(session.getUserProperties().get("loginId") + "님의 예약관리 서버 연결이 해제되었습니다.");
     }
 
     @OnError
