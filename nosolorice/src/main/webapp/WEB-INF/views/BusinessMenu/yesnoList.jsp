@@ -92,6 +92,7 @@
 <div class="container">
     <div class="row">
 <%@ include file="../../temple/header/businessMenubar.jsp" %>
+		<input type="hidden" id="bId" value="sessionScope.BusinessUser.businessId">
         <div class="col">
             <div class="row">
 
@@ -103,7 +104,7 @@
                     <div class="col" style="font-size: 20px; margin-bottom: 50px; margin-top: 20px; margin-left: 43px;">예약 대기 리스트</div>
                 </div>
      			<c:forEach var="booking" items="${booking}">
-				<c:if test="${booking.bookingState eq '미승인'}">
+				<c:if test="${booking.bookingState eq '대기'}">
 				<fmt:formatDate value="${booking.bookingTime}" pattern="HH:mm" var="bookingTime" />
                 <div class="row" style="margin-left: 30px; padding: 0px; margin-bottom: 15px;">
 		                <div class="col-2" style="border: solid 1px black; border-right: none; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
@@ -132,13 +133,13 @@
 		                    </div>
 		                </div>
 		                <div class="col-2" style="background-color: cadetblue;">
-		                    <a href="bookingStateOk?businessId=${sessionScope.BusinessUser.businessId}&bookingNo=${booking.bookingNo}&bookingState=승인" class="yeslist">
+		                    <a href="bookingStateOk?businessId=${sessionScope.BusinessUser.businessId}&bookingNo=${booking.bookingNo}&bookingState=승인" class="yeslist" data-id="${booking.bookingChatName}">
 		                    	<p class="pyeslist">승인</p>
 		                    </a>
 		                </div>
 		    
 		                <div class="col-2" style="background-color: red; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
-		                    <p><button class="pnolist" style="border: none; background-color: red;" value="${booking.bookingNo}">거절</button> </p>
+		                    <p><button class="pnolist" style="border: none; background-color: red;" value="${booking.bookingNo}" data-id="${booking.bookingChatName}">거절</button> </p>
 		                </div>
                 </div>
         		</c:if>
@@ -231,9 +232,10 @@
 
             <div class="row">
                 <div class="col">
-                    <form action="bookingStateDelete" method="get">
+                    <form action="bookingStateDelete" method="get" id="bookingStateDelete">
                         <input type="text" style="width: 500px; height: 250px; margin-left: 30px;" id="reason"><br>
                         <input type="hidden" name="bookingNo" value="" id="bookingNo">
+                        <input type="hidden" id="roomId" value="">
                         <input type="hidden" name="businessId" value="${sessionScope.BusinessUser.businessId}">
                         <button type="submit" class="btn btn-success" style="margin-top: 15px; margin-left: 345px;">거절하기</button>
                         <button type="button" class="btn btn-danger" id="close-modal2" style="width: 90px; margin-top: 15px;">취소</button>
@@ -250,6 +252,43 @@
     const openModal2Btns = document.querySelectorAll(".pnolist");
     
     const closeModal2Btn = document.getElementById("close-modal2");
+    
+    const loginId = $("#bId").val();
+    
+    //예약관리 페이지에 접속하면 웹소켓 서버에 연결한다. 서버 아이피 입력
+    let url = "ws://192.168.0.14:8081/app/booking/" + loginId;
+			
+			bookingSocket = new WebSocket(url);
+			
+			$(bookingSocket).on("open", function(event) {
+				//모든 사용자는 서버에 접속 하면 메시지를 보낸다. { loginId : loginId, roomId : roomId} (사장의 경우 roomId : 자기 아이디)
+				let conncectMsg = {
+					type : 'connect',
+					loginId : loginId,
+					roomId : loginId
+				}
+				const jsonData = JSON.stringify(conncectMsg);
+				bookingSocket.send(jsonData);
+			});
+			
+			bookingSocket.addEventListener('message', function(e){
+				//서버로부터 받은 json문자열 메시지를 자바스크립트로 객체로 변환.
+				let msgObj = JSON.parse(e.data);
+				if(msgObj.type == 'request'){
+					//알림
+					alert("새로운 예약이 접수되었습니다");
+					location.reload();
+				}
+			});
+			
+			$(bookingSocket).on('close', function(event) {		
+			    console.log('WebSocket 연결이 닫혔습니다.');
+			});
+		
+			$(bookingSocket).on('error', function(event) {
+			    console.error('WebSocket 오류:', event);
+			});
+    
 
     // 모달창 열기
 	openModal2Btns.forEach((openModal2Btn) => {
@@ -282,6 +321,8 @@
     openModal2Btns.forEach((openModal2Btn) => {
     	  openModal2Btn.addEventListener("click", (event) => {
     		  let buttonValue = event.target.value;
+    		  let clickEl = event.target;
+    		  let roomId = $(clickEl).attr("data-id");
     	        // 콘솔에 출력
     	        console.log(buttonValue);
     	        
@@ -290,9 +331,37 @@
     	        
     	        // value를 선택된 버튼의 value로 변환
     	        hiddenInput.value = buttonValue;
+    	        $("#roomId").val(roomId);
     	  });
     	});
 
+    
+    
+    
+    //승인 버튼 눌렀을 때
+    $(document).on("click", ".yeslist", function(){
+    	let roomId = $(this).attr("data-id");
+		let approveMsg = {
+				type : 'connect',
+				roomId : roomId 
+		}
+		const jsonData = JSON.stringify(approveMsg);
+		bookingSocket.send(jsonData);
+    });
+    
+    //거절 사유입력 후 버튼 눌렀을 때
+    $("#bookingStateDelete").on("submit", function(){
+    	let reason = $("#reason").val();
+    	let roomId = $(this).find("#roomId").val();
+    	let rejectMsg = {
+				type : 'connect',
+				roomId : roomId,
+				reason : reason
+		}
+		const jsonData = JSON.stringify(rejectMsg);
+    	bookingSocket.send(jsonData);
+    });
+    
 </script>
 </body>
 </html>
