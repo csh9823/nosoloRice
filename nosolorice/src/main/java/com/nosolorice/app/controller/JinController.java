@@ -132,6 +132,7 @@ public class JinController {
 		return "login/login";
 	}
 
+	//로그인 하기
 	@RequestMapping("loginservice")
 	public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,
 			HttpServletResponse response,HttpSession session ,PrintWriter out) {
@@ -156,23 +157,24 @@ public class JinController {
 		if(buser != null) {
 			System.out.println(buser.getBusinessId());
 			session.setAttribute("BusinessUser", buser);
-			return "redirect:businessUserStoreInfo?businessId="+buser.getBusinessId();
-		} else if(nuser != null) {
+			return "redirect:BusinessMenu?businessId="+buser.getBusinessId();
+		}else if(nuser != null) {
 			System.out.println(nuser.getNormalId());
 			session.setAttribute("NormalUser", nuser);
 			return "redirect:mainPage";
 		}else if(ruser != null) {
+			System.out.println(id);
 			System.out.println(ruser.getRootId());
 			session.setAttribute("RootUser", ruser);
 			return "redirect:adminPage?RootId="+ruser.getRootId();
 		}
-		
 		response.setContentType("text/html; charset=utf-8");
 		out.println("<script>");
 		out.println("	alert('회원 정보가 일치하지 않습니다.');");
 		out.println("	history.back();");
 		out.println("</script>");
     	return null;
+
 	}
 	
 	@RequestMapping("BusinessMenu")
