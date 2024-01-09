@@ -49,7 +49,7 @@ public class NormalUserController {
             Model model, HttpServletRequest req, NormalUser normalUser, String pass, String mobile, String gender,
             @RequestPart("profileImageInput") MultipartFile profileImage,
             @RequestParam("year") String year, @RequestParam("month") String month, @RequestParam("day")String day,
-            @RequestParam("zipcode") int postNum, String address1, String address2, String xpoint, String ypoint, int mypoint, String email, String emailDomain) throws IOException {
+            @RequestParam("zipcode") int postNum, String address1, String address2, String xpoint, String ypoint, int mypoint, String emailId, String emailDomain) throws IOException {
 
     	System.out.println(profileImage);
     	System.out.println(mypoint);
@@ -57,15 +57,15 @@ public class NormalUserController {
     	System.out.println("이메일 :" + emailDomain);
     	
         normalUser.setPass(pass);
+      
+        normalUser.setEmail(emailId + "@" +emailDomain);
         
-        normalUser.setEmail(email + "@" +emailDomain);
-        
-        System.out.println(email);
+        System.out.println(emailId);
         
         String birth = year + "-" + month + "-" + day;
         normalUser.setBirth(birth);
 
-        normalUser.setGender(gender);
+        normalUser.setGender(gender);	
         System.out.println(gender);
         
         if(!profileImage.isEmpty()) {
@@ -80,6 +80,10 @@ public class NormalUserController {
         	profileImage.transferTo(file);
         	
         	normalUser.setProfile(newName);
+        } else {
+        	String defaultImagePath = "/resources/upload/normal_upload/profile_img.png";
+        	System.out.println("이용자_기본프로필 등록완료! : " + defaultImagePath);
+        	normalUser.setProfile(defaultImagePath);
         }
 
         normalUserService.addNormalUser(normalUser);

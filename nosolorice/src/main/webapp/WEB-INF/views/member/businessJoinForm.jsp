@@ -14,14 +14,37 @@
 <!-- 다음좌표 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=685bdba705a3c08af0c489199df63809&libraries=services"></script>
 
+<!-- number 화살표 제거_(위)chrome용 / (아래)firefox용 -->
+<style type="text/css">
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+</style>
+
 <div class="container justify-content-center">
 	
-	<form class="form form-center" id="businessJoinForm" action="normalJoinResult" method="post" onsubmit="return submitCheck();" enctype="multipart/form-data">
+	<form class="form form-center" id="businessJoinForm" action="businessJoinResult" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="isBidCheck" id="isBidCheck" value="false" />
 		<input type="hidden" name="bPhoneCheck" id="bPhoneCheck" value="false" />
 		<input type="hidden" name="isBusinessIdCheck" id="isBusinessIdCheck" value="false" />
 		<input type="hidden" name="bNoCheck" id="bNoCheck" value="false" />
-		<input type="hidden" name="xpoint1" id="xpoint1" />
-		<input type="hidden" name="ypoint1" id="ypoint1" />
+		<input type="hidden" name="xpoint" id="xpoint" />
+		<input type="hidden" name="ypoint" id="ypoint" />
+		<input type="hidden" name="emailDomain" id="emailDomain" />
+		<input type="hidden" name="deposit" id="" value="0" />
+		<input type="hidden" name="openTime" id="" value="0" />
+		<input type="hidden" name="closeTime" id="" value="0" />
+		<input type="hidden" name="breakTime" id="" value="0" />
+		<input type="hidden" name="dayOff" id="" value="0" />
+		<input type="hidden" name="storeOnoff" id="" value="0" />
+		<input type="hidden" name="okNoOk" id="okNook" value="0" />	
+		<input type="hidden" name="root" id="root" value="1" />		
 	
         <div class="row-12 p-5">
           <div class="d-flex justify-content-center">
@@ -39,8 +62,8 @@
           <!-- profile_img -->
          <div class="col-md-4">
           <div class="col-sm-2">
-            <img src="resources/image/profile_img.png" id="profileImageInput" style="width: 348px; height: 400px;">
-            <input type="file" accept="image/*" onchange="previewProfileImage(this)" id="businessProfileImage" name="profileImageInput">
+            <img src="resources/upload/business_upload/profile_img.png" id="profileImageInput" style="width: 400px; height: 400px; border-radius: 4px;">
+            <input type="file" accept="image/*" onchange="profileImage(this)" id="businessProfile" name="businessProfile">
           </div> 
          </div> 
 
@@ -102,16 +125,17 @@
               
               <div class="col-6 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="email" id="bEmail" placeholder="이메일을 입력해 주세요" >
+                  <input type="text" class="form-control" name="bEmail" id="bEmail" placeholder="이메일을 입력해 주세요" >
                 </div>
               </div>
               
               <!-- option으로 수정 -->
               <div class="col-4 p-2">
-                <select class="form-select" id="emailDomain">
-                  <option value="@naver.com">@naver.com</option>
-                  <option value="@gmail.com">@gmail.com</option>
-                  <option value="@daum.net">@daum.net</option>
+                <select class="form-select" id="selectDomain">
+                  <option selected>--- 선택해 주세요 ---</option>
+                  <option value="naver.com">@naver.com</option>
+                  <option value="gmail.com">@gmail.com</option>
+                  <option value="daum.net">@daum.net</option>
                 </select>
               </div>
               
@@ -127,6 +151,7 @@
               		<input type="text" class="form-control" id="businessUserName" name="businessUserName" placeholder="대표자명">
               	</div>
               </div>
+              	
 
               <div class="col-6 p-2">
                 <div class="form-group">
@@ -136,7 +161,7 @@
 
 			  <div class="col-7 p-2">
 			  	<div class="form-group">
-			  		<input type="number" class="form-control" id="businessNumber" name="businessNumber" placeholder="사업자번호를 입력해주세요">
+			  		<input type="text" class="form-control" id="businessNumber" name="businessNumber" placeholder="-를 제외한 사업자번호를 입력해주세요" maxlength="10" oninput="bNoLength(this);">
 			  	</div>
 			  </div>
 			  
@@ -148,24 +173,57 @@
               
               <div class="col-10 p-2">
 			  	<div class="form-group">
-			  		<input type="file" class="form-control" id="businessRegImg" name="businessRegImg">
+			  		<input type="file" accept="image/*" class="form-control" id="businessRegImg" name="businessRegImg">
 			  	</div>
 			  </div>
               
               <!-- option으로 수정 -->
               <div class="col-3 p-2">
                 <select class="form-select" id="bankcode" name="bankcode">
-                  <option value="002">한국산업은행</option>
-                  <option value="004">국민은행</option>
-                  <option value="005">한국외환은행</option>
-                  <option value="010">농협</option>
-                  <option value="011">농업협동조합중앙회</option>
+                  <option selected>--- 선택해 주세요 ---</option>
+                  <option value="국민은행">국민은행</option>
+                  <option value="농협중앙회">농협중앙회</option>
+                  <option value="단위농협">단위농협</option>
+                  <option value="우리은행">우리은행</option>
+                  <option value="대구은행">대구은행</option>
+                  <option value="외환은행">외환은행</option>
+                  <option value="SC제일은행">SC제일은행</option>
+                  <option value="부산은행">부산은행</option>
+                  <option value="새마을금고">새마을금고</option>
+                  <option value="한국씨티은행">한국씨티은행</option>
+                  <option value="광주은행">광주은행</option>
+                  <option value="경남은행">경남은행</option>
+                  <option value="수협">수협</option>
+                  <option value="신협">신협</option>
+                  <option value="전북은행">전북은행</option>
+                  <option value="제주은행">제주은행</option>
+                  <option value="산림조합">산림조합</option>
+                  <option value="우체국">우체국</option>
+                  <option value="하나은행">하나은행</option>
+                  <option value="신한은행">신한은행</option>
+                  <option value="동양종금증권">동양종금증권</option>
+                  <option value="한국투자증권">한국투자증권</option>
+                  <option value="삼성증권">삼성증권</option>
+                  <option value="미래에셋">미래에셋</option>
+                  <option value="우리투자증권">우리투자증권</option>
+                  <option value="현대증권">현대증권</option>
+                  <option value="SK증권">SK증권</option>
+                  <option value="신한금융투자">신한금융투자</option>
+                  <option value="하이증권">하이증권</option>
+                  <option value="HMC증권">HMC증권</option>
+                  <option value="대신증권">대신증권</option>
+                  <option value="하나대투증권">하나대투증권</option>
+                  <option value="동부증권">동부증권</option>
+                  <option value="유진증권">유진증권</option>
+                  <option value="메리츠증권">메리츠증권</option>
+                  <option value="신영증권">신영증권</option>
+                  <option value="대우증권">대우증권</option>
                 </select>
               </div>
               
               <div class="col-7 p-2">
 			  	<div class="form-group">
-			  		<input type="number" class="form-control" id="accountNumber" name="accountNumber" placeholder="계좌번호를 입력해 주세요." maxlength="14">
+			  		<input type="number" class="form-control" id="accountNumber" name="accountNumber" placeholder="-를 제외한 계좌번호를 입력해 주세요" />
 			  	</div>
 			  </div>
               
@@ -193,7 +251,7 @@
 
               <div class="col-3 text-end p-1">
                 <div class="form-group">
-                  <input type="button" class="btn btn-success" id="btnZipcode" value="우편코드 찾기">
+                  <input type="button" class="btn btn-success" id="btnZipcode" value="주소찾기">
                 </div>
               </div>
 
@@ -258,7 +316,7 @@
 
               <div class="col-10 text-center p-2">
                 <div class="form-group">
-                  <input type="submit" class="btn btn-success" id="businessJoin" value="&nbsp&nbsp&nbsp&nbsp가입하기&nbsp&nbsp&nbsp&nbsp">
+                  <button type="submit" class="btn btn-success" id="businessJoin">&nbsp&nbsp&nbsp&nbsp가입하기&nbsp&nbsp&nbsp&nbsp</button>
                 </div>
               </div>
               
@@ -270,4 +328,14 @@
 </div>
 <script src="resources/js/businessUserPhoneCheck.js"></script>
 <script src="resources/js/business.js"></script>
-<script src="resources/js/member.js"></script>
+
+<script type="text/javascript">
+	
+	/* 사업자번호 maxlength_적용 */
+	function bNoLength(object){
+	    if (object.value.length > object.maxLength){
+	      object.value = object.value.slice(0, object.maxLength);
+	    }    
+	}
+	
+</script>

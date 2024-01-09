@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,8 @@ public class BusinessUserController {
 	
 	@Autowired
 	private BusinessUserService businessUserService;
+	
+	@Autowired
 	private BusinessUserServiceImpl businessUserServiceImpl;
 	
 	private static final String REG_DEFAULT_PATH = "/resources/upload/business_upload";
@@ -39,37 +42,95 @@ public class BusinessUserController {
 		this.businessUserService = businessUserService;
 	}
 	
-	// 회원가입 완료 - 여기 작성 다 안됨 수정해주세욘 미래의 나야
-	@RequestMapping(value = "/businessJoinResult")
-    public String businessJoinResult(
-            Model model, HttpServletRequest req, BusinessUser businessUser, String pass1,
-            @RequestParam("businessProfileImage") MultipartFile businessProfileImage, @RequestParam("businessRegImg") MultipartFile businessPicture) throws IOException {
+	@RequestMapping("/businessJoin")
+    public String businessJoinForm(Model model) {
 
-        businessUser.setPass(pass1);
+        return "member/businessJoinForm"; 
+    }
+	
+	// 회원가입 완료 _사업자번호와 계좌번호가 long으로 바뀌어서 db도 int가 아닌 BigInt로 타입 바꿔줘야함
+	@RequestMapping("/businessJoinResult")
+	public String businessJoinResult(Model model, HttpServletRequest req,
+			@RequestParam("businessId")String businessId, 
+			@RequestParam("bPass")String pass, 
+			@RequestParam("businessUserName")String name, 
+			@RequestParam("callPhone")String phone,
+			@RequestParam("businessNumber")long businessNumber, 
+			@RequestParam("bName")String businessName, 
+			@RequestParam("businessProfile")MultipartFile businessProfile, 
+			@RequestParam("bEmail")String email, 
+			String emailDomain, 
+			@RequestParam("bPhone")String mobile,
+			@RequestParam("zipcode") int postNum, 
+			@RequestParam("address1")String address1, 
+			@RequestParam("address2")String address2, String xpoint, String ypoint, 
+			@RequestParam("bankcode")String bankName, 
+			@RequestParam("accountNumber")long bankNumber, 
+			@RequestParam("businessRegImg")MultipartFile businessPicture,
+			@RequestParam("okNoOk")String okNoOk, 
+			@RequestParam("root")int root) throws IOException {
+
+		BusinessUser businessUser = new BusinessUser();
+		System.out.println("businessId : " + businessId);
+
+        businessUser.setBusinessId(businessId);
+        businessUser.setPass(pass);
+        System.out.println("pass : " + pass);
+        businessUser.setName(name);
+        businessUser.setPhone(phone);
+        businessUser.setBusinessNumber(businessNumber);
+        businessUser.setBusinessName(businessName);
+        businessUser.setMobile(mobile);
+        businessUser.setPostNum(postNum);
+        businessUser.setAddress1(address1);
+        businessUser.setAddress2(address2);
+        businessUser.setXpoint(xpoint);
+        businessUser.setYpoint(ypoint);
+
+        businessUser.setEmail(email + "@" +emailDomain);
+        businessUser.setBusinessNumber(businessNumber);
+        
+        businessUser.setBankName(bankName);
+        businessUser.setBankNumber(bankNumber);
 
         // 이미지들
-        if(!businessProfileImage.isEmpty() && !businessPicture.isEmpty()) {
+        if(!businessProfile.isEmpty() && !businessPicture.isEmpty()) {
         	String regfilePath = req.getServletContext().getRealPath(REG_DEFAULT_PATH);
         	String profilePath = req.getServletContext().getRealPath(DEFAULT_PATH);
         	
         	UUID regUid = UUID.randomUUID();
         	UUID profileUid = UUID.randomUUID();
         	
-        	String regNewName = regUid.toString() + "_" + businessProfileImage.getOriginalFilename();
+        	String regNewName = regUid.toString() + "_" + businessProfile.getOriginalFilename();
         	String profileNewName = profileUid.toString() + "_" + businessPicture.getOriginalFilename();
         	
         	File regFile = new File(regfilePath, regNewName);
         	File proFile = new File(profilePath, profileNewName);
         	
-        	businessProfileImage.transferTo(regFile);
-        	businessPicture.transferTo(proFile);
+        	businessPicture.transferTo(regFile);
+        	businessProfile.transferTo(proFile);
         	
-        	businessUser.setBusinessProfile(regNewName);
-        	businessUser.setBusinessPicture(profileNewName);
-        }
+        	businessUser.setBusinessPicture(regNewName);
+        	businessUser.setBusinessProfile(profileNewName);
+        } else if(businessProfile.isEmpty() && !businessPicture.isEmpty()) {
+        	// 기본프로필이미지 등록
+        	String defaultImagePath = "/resources/upload/business_upload/profile_img.png";
+        	System.out.println("사업자_기본프로필 등록완료! : " + defaultImagePath);
+        	businessUser.setBusinessProfile(defaultImagePath);
+        	
+        	// 사업자등록증이미지 등록
+        	String regfilePath = req.getServletContext().getRealPath(REG_DEFAULT_PATH);
+        	UUID regUid = UUID.randomUUID();
+        	String regNewName = regUid.toString() + "_" + businessPicture.getOriginalFilename();
+        	File regFile = new File(regfilePath, regNewName);
+        	businessPicture.transferTo(regFile);
+        	businessUser.setBusinessPicture(regNewName);
+        	
+        }        
 
         businessUserService.addBusinessUser(businessUser);
 
+        // 사업자도 회원가입 후 무조건 로그인이여야 하는가
         return "redirect:login";
     }
 
@@ -89,10 +150,10 @@ public class BusinessUserController {
     // 사업자번호 중복
     @RequestMapping("businessNumberOverlapCheck")
     @ResponseBody
-    public boolean businessNumberOverlapCheck(Model model, Integer businessNumber) {
-    	Integer overlap = businessUserService.overlapBusinessNumberCheck(businessNumber);
+    public boolean businessNumberOverlapCheck(Model model, long businessNumber) {
+    	int overlap = businessUserService.overlapBusinessNumberCheck(businessNumber);
     	
-    	System.out.println("overlap " + overlap + ". businessNumber " + businessNumber);
+    	System.out.println("(controller)overlap " + overlap + ". businessNumber " + businessNumber);
     	
     	model.addAttribute("overlap", overlap);
     	model.addAttribute("businessNumber", businessNumber); 
@@ -101,7 +162,7 @@ public class BusinessUserController {
     
 
 	// 문자인증번호 전송
-	@RequestMapping("getBusinessPhoneCheck")
+	@RequestMapping("getBusinessPhoneCheck") 	
 	@ResponseBody
 	public Map<String, String> getBusinessPhoneCheck(String bPhone){
 		String businessNumStr = businessUserService.certNum();
