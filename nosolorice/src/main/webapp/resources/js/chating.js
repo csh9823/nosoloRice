@@ -13,10 +13,12 @@ $(function(){
     //채팅창 항상 최하단 유지
     let chatContent = document.querySelector("#chatContent");
     chatContent.scrollTo(0, chatContent.scrollHeight);
-
+	
+	
 	//부트스트랩 tool-tip 활성화
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+    tooltipList.forEach(tooltip => tooltip.hide());
 
 	let memberList = new Array();
 	
@@ -107,6 +109,61 @@ $(function(){
 	} 
 	
 	if(bookingInfo != null && bookingInfo.bookingState == '승인'){
+		console.log("부킹상태가 승인일때 bookingInfo : ", bookingInfo);
+		
+		let businessId = bookingInfo.businessId;
+		let businessInfo = {};
+		$.ajax({
+			url: "/app/getBusinessUserInfo",
+			data : "businessId=" + businessId,
+			type : "post",
+			dataType : "json",
+			async : false,
+			success : function(resData){
+				businessInfo = resData;
+			}, error : function(err){
+				console.log(err);
+			}
+		});
+		let bookNo = bookingInfo.bookingBookNo;
+		let originTime = bookingInfo.bookingTime;
+		let newdate = new Date(originTime);
+		let bookingTime = (newdate.getHours() < 13 ? "오전 " + String(newdate.getHours()).padStart(2,'0') + "시 " + String(newdate.getMinutes()).padStart(2,'0') + "분" : "오후" + String(newdate.getHours() - 12) + ":" + String(newdate.getMinutes()).padStart(2,'0'));
+		
+		
+		let businessName = businessInfo.businessName;
+		let businessAddress = businessInfo.address1;
+		let bookingRequest = bookingInfo.bookingRequest;
+		let bookingNo = bookingInfo.bookingNo;
+		let nickNames = "";
+		//ajax로 booking_userlist테이블에서 bookNo에 해당하는 닉네임을 다 가져온다.
+		$.ajax({
+			url: "/app/getBookingUserList",
+			data : "bookingNo=" + bookingNo,
+			type : "post",
+			dataType : "json",
+			async : false,
+			success : function(resData){
+				console.log(resData);
+				$(resData).each(function(i, v){
+					nickNames += (i==resData.length-1 ? v.nickName :  v.nickName + ", ");
+				});
+			}, error : function(err){
+				console.log("통신오류", err)
+			}
+		});
+		
+		
+		$(".bookingBookNo").text(bookNo);
+		$(".bookModalProposeTime").text(bookingTime);
+		$(".bookModalBusinessName").text(businessName);
+		$("#showStoreAddress").attr("data-bs-title", businessAddress);
+		console.log("nickNames : ",nickNames);
+		$("#bookSuccessMemberList").text(nickNames);
+		$(".bookModalProposeMsg").text(bookingRequest);
+		
+		
+		bookComplete = true;
 		$("#storeDetailModal").addClass("d-none");
 		$("#bookPropose").addClass("d-none");
 		$("#bookWait").addClass("d-none");
@@ -171,10 +228,10 @@ $(function(){
 	//let url = "ws://192.168.0.14:8081/app/chating/" + roomId;
 	
 	//집꺼
-	//let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
+	let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
 	
 	//현진이꺼
-	let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
+	// let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
 	
     socket = new WebSocket(url);
     
@@ -194,13 +251,14 @@ $(function(){
 		console.log("chatObj : ", chatObj);
 		let chatType = chatObj.chatType;
 		console.log("chatType : ", chatType);
+		
 		if(chatType == 'connect'){
 			let memberList = chatObj.memberList;
 			let nickNames = "";
 			$(memberList).each(function(i, v){
 				nickNames += (nickNames == "" ? v : ", " + v);
 			});
-			$(".currentMemberList").text(nickNames);
+			$(".currentMemberList:not(#bookSuccessMemberList)").text(nickNames);
 			$(".currentMemberCount").text(memberList.length);
 			chatContent.scrollTo(0, chatContent.scrollHeight);
 		}
@@ -210,6 +268,9 @@ $(function(){
 			let agreeCount = chatObj.agreeCount;
 			console.log(loginId + "에서 agreeCount : " + agreeCount);
 			$("#bookAgreeBtn").val(agreeCount + "명 동의중...");
+			$("#bookRejectBtn").val("취소");
+			$("#bookAgreeBtn").prop("disabled", true);
+			console.log("어그리 비티엔에 몇명동의중 밸류 넣기 실행완료");
 		}
 		
 		if(chatType == 'agreeComplete'){
@@ -261,7 +322,7 @@ $(function(){
 			
 			$(".bookingBookNo").text(bookNo);
 			$("#bookRejectBtn").val("거절");
-			$("#bookAgreeBtn").removeAttr("disabled");
+			$("#bookAgreeBtn").prop("disabled", false);
 			$("#bookAgreeBtn").val("동의");
 			$("#bookPropose").addClass("d-none");
 			$("#bookWait").removeClass("d-none");
@@ -289,9 +350,9 @@ $(function(){
 			//학원꺼
 			//let url = "ws://192.168.0.14:8081/app/booking/" + businessId;
 			//집꺼
-			//let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
-			//현진이꺼			
-			let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
+			let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
+			//현진이꺼		
+			//let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
 			
 			bookingSocket = new WebSocket(url);
 			console.log("예약관리 서버 접속");
@@ -305,6 +366,7 @@ $(function(){
 					loginId : loginId,
 					roomId : roomId
 				}
+				
 				const jsonData = JSON.stringify(conncectMsg);
         		bookingSocket.send(jsonData);
 				console.log("예약관리 서버접속 후 메시지 발송");
@@ -329,20 +391,47 @@ $(function(){
 			
 				//사장님 승인/거절 응답대기 로직
 				let msgObj = JSON.parse(event.data);
-				if(msgObj.type="approve"){
+				if(msgObj.type=="approve"){
+					//각자의 포인트 차감
+					let usePoint = $(".bookModalDeposit:first").text().trim();
+					$.ajax({
+						url : "/app/payWithPoint",
+						data : "normalId=" + loginId + "&deposit=" + usePoint,
+						dataType : "json",
+						type : "post",
+						success : function(resData){
+							console.log(resData);
+						}, error : function(err){
+							console.log("통신에러", err);
+						}
+					});
+				
 					bookComplete = true;
 					$("#bookWait").addClass("d-none");
 					$("#bookFail").addClass("d-none");
 					$("#bookPropose").addClass("d-none");
 					$("#bookSuccess").removeClass("d-none");
 				}
-				if(msgObj.type="reject"){
+				
+				
+				if(msgObj.type=="reject"){
 					isBooking = false;
 					bookComplete = false;
+					let reason = msgObj.reason;
+					$("#bookFailReason").html(`
+						<p>거절 사유<br><pre>`+ reason +`</pre></p>
+					`);
 					$("#bookWait").addClass("d-none");
-					$("#bookFail").addClass("d-none");
+					$("#bookSuccess").addClass("d-none");
 					$("#bookPropose").addClass("d-none");
-					$("#bookSuccess").removeClass("d-none");
+					$("#bookFail").removeClass("d-none");
+					
+					let msg = {
+						chatType : 'denied'
+					}
+					const jsonData = JSON.stringify(msg);
+	        		socket.send(jsonData);
+					
 				}
 			
 			});
@@ -362,7 +451,7 @@ $(function(){
             isBooking = false;
             $("#bookRejectBtn").val("거절");
 		    $("#bookPropose").addClass("d-none"); 
-			$("#bookAgreeBtn").removeAttr("disabled");
+			$("#bookAgreeBtn").prop("disabled", false);
 			$("#bookAgreeBtn").val("동의");
 		    $("#bookWait").addClass("d-none");
 		    $("#bookSuccess").addClass("d-none");
@@ -377,7 +466,7 @@ $(function(){
 			isBooking = false;
 			$("#bookRejectBtn").val("거절");
 			$("#bookPropose").addClass("d-none");
-			$("#bookAgreeBtn").removeAttr("disabled");
+			$("#bookAgreeBtn").prop("disabled", false);
 			$("#bookAgreeBtn").val("동의");
 		    $("#bookWait").addClass("d-none");
 		    $("#bookSuccess").addClass("d-none");
@@ -398,6 +487,21 @@ $(function(){
 		}
 		
 		if(chatType == 'userCancel'){
+		
+			//멤버 전원다 booking_userlist에서 자신 지우기
+			$.ajax({
+    			url : "/app/deleteBookingUserList",
+    			data : "normalId=" + loginId,
+    			type : "post",
+    			dataType : "json",
+    			async : false,
+    			success : function(resData) {
+    				console.log(resData);
+    			}, error : function(err){
+    				console.log(err);
+    			}
+    		});
+		
 			if(loginNickName == $("#bookModalName").text()){
 			
 	    		//Booking 테이블에서 business_id가 businessId 이고 booking_book_no가 bookingBookNo인 행을 찾아 삭제
@@ -417,21 +521,7 @@ $(function(){
 	    			}
 	    		});
 			}
-			
-			//멤버 전원다 booking_userlist에서 자신 지우기
-			$.ajax({
-    			url : "/app/deleteBookingUserList",
-    			data : "normalId=" + loginId,
-    			type : "post",
-    			dataType : "json",
-    			async : false,
-    			success : function(resData) {
-    				console.log(resData);
-    			}, error : function(err){
-    				console.log(err);
-    			}
-    		});
-			
+						
 			//예약 실패 화면으로 이동
 			$("#bookRejectBtn").val("거절");
 			$("#bookWait").addClass("d-none");
@@ -770,6 +860,7 @@ $(function(){
 				$("#showStoreAddress").attr("data-bs-title", businessInfo.address1+ " " + businessInfo.address2);
 				let tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
 			   	let tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+			   	tooltipList.forEach(tooltip => tooltip.hide());
 				
 				
 				$("#storeDetailModal").addClass("d-none");
@@ -805,13 +896,14 @@ $(function(){
 		
 		//화면 최하단으로 이동
 		chatContent.scrollTo(0, chatContent.scrollHeight);
-		$("#bookAgreeBtn").removeAttr("disabled");
-		$("#bookAgreeBtn").val("동의");
+		$("#bookAgreeBtn").prop("disabled", false);
 		
 	});
 
 	$(socket).on('close', function(event) {
 		if(isBooking && !$("#bookPropose").hasClass("d-none")){
+			
+			console.log("예약제안창에서 나가면 이거 실행");
 			//거절 버튼 누르면 웹소켓 서버에 'reject' 타입으로 메시지 보내고 서버에서 전체멤버에게 거절 메시지 보내기
 			let chatHistory = {
 				normalId : loginId,
@@ -822,7 +914,6 @@ $(function(){
 	        }
 	        let jsonData = JSON.stringify(chatHistory);
 	        socket.send(jsonData);
-            return;
 		}
 		
 	    console.log('WebSocket 연결이 닫혔습니다.');
@@ -838,7 +929,7 @@ $(function(){
 	
 	//예약완료여부를 체크하여 완료시 오른쪽에 예약안내 모달을 띄운다. 이 모달을 닫을 수 없다.(아직 고려중...)
 	 
-	
+	console.log("isBooking? : ", isBooking);
 	
     //... 텍스트 애니메이션
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -984,7 +1075,7 @@ $(function(){
         
         //여기에서 채팅메시지를 객체로 만들어 AJAX통신으로 DB에 저장한다
         const msg = $("#chatMessageInput").val();
-        if(msg.length == 0) return;
+        if(msg.length == 0 || msg.trim().length == 0) return;
         
         let chatHistory = {
 			normalId : loginId,
@@ -1241,6 +1332,8 @@ $(function(){
     //채팅창 나가기 확인 모달열기
     $("#chatQuitBtn").on("click", function(){
         $("#chatRoomQuitModal").removeClass("d-none");
+        console.log("나기기전에 isBooking 체크 : ", isBooking);
+        console.log("나기기전에 bookComplete 체크 : ", bookComplete);
     });
 
     //채팅창 나가기 확인 모달 취소화기
@@ -1252,7 +1345,7 @@ $(function(){
     $("#chatQuitSubmitBtn").on("click", function(){
         
         if(bookComplete){
-	        $("#chatRoomQuitModal").addClass("d-none");        	
+        	location.href="login";
         } else {
         	
         	//chat_member 테이블에서 자기 자신 삭제
@@ -1269,7 +1362,6 @@ $(function(){
         		}
         	});
         	
-        	//나 나갔다고 멤버들에게 알리기. 이 메시지를 받은 남은 멤버들 로직따로 처리할것.
 			let chatHistory = {
 				normalId : loginId,
 				nickName : loginNickName,
@@ -1470,6 +1562,7 @@ $(function(){
 				  	`);
 					let tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
 			    	let tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+			    	tooltipList.forEach(tooltip => tooltip.hide());
 				  });					  
 				}		
 				
@@ -1840,7 +1933,7 @@ $(function(){
         if($("#bookRejectBtn").val() == '취소'){
             $("#bookRejectBtn").val("거절");
             $("#bookAgreeBtn").val("동의");
-            $("#bookAgreeBtn").removeAttr("disabled");
+            $("#bookAgreeBtn").prop("disabled", false);
             
 			//취소 버튼 누르면 웹소켓 서버에 'agreeCancle' 타입으로 메시지 보내고 서버에서 agreeSet에서 자기 빼고 agreeSet멤버들에게 현재 멤버인원 다시 알려주기
 			let chatHistory = {
@@ -1866,11 +1959,6 @@ $(function(){
     		alert("포인트가 부족합니다\n포인트를 충전해 주세요");
     		return;
     	}
-    	
-    
-        $("#bookAgreeBtn").prop("disabled", true);
-        $("#bookRejectBtn").val("취소");
-        
         //동의 버튼 누르면 웹소켓 서버에 '동의' 타입으로 메시지 보내고 서버에서 동의한 사람 set만들기
 		let chatHistory = {
 			normalId : loginId,
@@ -1881,8 +1969,6 @@ $(function(){
         }
         let jsonData = JSON.stringify(chatHistory);
         socket.send(jsonData);
-		//동의 버튼 눌렀을 때 동의 버튼 글자가 현재 몇명 동의중... 으로 바꾸기 취소누르면 원래대로(혹은 부트스트랩 토스트 이용하기)
-		//동의 버튼 눌렀을 때 보유포인트가 차감포인트보다 적으면 경고메시지 띄우기
     });
     
     //예약 동의 지도표시
@@ -1923,7 +2009,27 @@ $(function(){
     $("#bookCompleteConfirmBtn").on("click", function(){
     	isBooking = false;
     	bookComplete = true;    
+    	$("#chatDiv").empty();
+    	$.ajax({
+			url: "/app/chatMemberCheck",
+			data : "id=" + loginId,
+			type : "get",
+			dataType : "json",
+			async : false,
+			success : function(resData) {
+				chatHistory = resData.chatHistory;
+				chatRoomInfo = resData.chatRoomInfo;
+				isChatMember = resData.isChatMember;		
+				roomId = resData.roomId;
+			}, error : function(err) {
+			console.log(err)
+			}
+		});
+		
+		chatAppend(chatHistory, loginId);
         $("#bookModal").addClass("d-none");
+		let chatContent = document.querySelector("#chatContent");
+    	chatContent.scrollTo(0, chatContent.scrollHeight);
     });
 
     //예약실패 후 확인버튼 클릭이벤트
@@ -1973,6 +2079,15 @@ $(function(){
         	}
     		let jsonData = JSON.stringify(chatHistory);
         	socket.send(jsonData);
+        	
+        	let msg = {
+				type : "userCancel",
+				bookNo : $(".bookingBookNo:first").text().trim(),
+				businessId : $("#storeDetailModalBusinessId").val()
+        	}
+    		let jData = JSON.stringify(msg);
+        	bookingSocket.send(jData);
+        	
     	}
     });
     
@@ -2290,6 +2405,7 @@ const storeListAppend = (storeList) => {
 		`);
 		let tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
 		let tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+		tooltipList.forEach(tooltip => tooltip.hide());
 	});
 }
 

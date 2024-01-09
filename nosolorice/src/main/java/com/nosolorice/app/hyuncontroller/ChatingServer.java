@@ -73,6 +73,11 @@
 	    		return;
 	    	}
 	    	
+	    	//사장님 cancel이면 agreeSet 비우기
+	    	if(msg.get("chatType").equals("denied")) {
+	    		agreeSet.clear();
+	    	}
+	    	
 	    	if(msg.get("chatType").equals("agree")) {
 	    		System.out.println("agree메시지 수신 : " + msg.toString());
 	    		Map<String, Object>dataMap = new HashMap<>();
