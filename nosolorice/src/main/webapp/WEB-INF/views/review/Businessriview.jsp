@@ -45,7 +45,7 @@
                         <div class="col-2"><img src="https://via.placeholder.com/30" style="width: 30px; height: 30px; border-radius: 30px;"></div>
                     </c:if>
                     
-                    <c:if test="${rev.reviewPicture == null}">
+                    <c:if test="${rev.reviewPicture != null}">
                         <div class="col-2"><img src="https://via.placeholder.com/30" style="width: 30px; height: 30px; border-radius: 30px;"></div>
                     </c:if>
                     
