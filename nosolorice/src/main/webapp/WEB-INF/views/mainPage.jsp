@@ -176,6 +176,7 @@
 <script>
 	let alarm = document.getElementById('alarm');
 	$("#matchingStartBtn").on("click", function(){
+		
 		location.href="matching";
 	});
 </script>
