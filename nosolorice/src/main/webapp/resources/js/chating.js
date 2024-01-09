@@ -226,9 +226,10 @@ $(function(){
 	//가져온 room_id를 이용해 웹소켓채팅서버를 연다 - 완료
 	//학원꺼
 	//let url = "ws://192.168.0.14:8081/app/chating/" + roomId;
+	let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
 	
 	//집꺼
-	let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
+	//let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
 	
 	//현진이꺼
 	// let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
@@ -349,8 +350,9 @@ $(function(){
 			//사장님과 통신할 웹소켓서버에 연결
 			//학원꺼
 			//let url = "ws://192.168.0.14:8081/app/booking/" + businessId;
+			let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
 			//집꺼
-			let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
+			//let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
 			//현진이꺼		
 			//let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
 			
@@ -553,7 +555,7 @@ $(function(){
 		                    <div class="row mt-2 chatRow" data-id=` + chatId + ` data-type=` + chatType + ` + data-time=` + chatRegDate + `>
 		                        <div class="col"></div>
 		                        <div class="col-5">
-		                            <div class="row my-1 justify-content-end">
+		                            <div class="row my-1 d-flex justify-content-end">
 		                            	<div class="col-auto p-0 me-1 d-flex align-items-end">
 		                            		<span style="font-size: 12px;" class="regDate">
 		                                    ` + chatRegDate + `
