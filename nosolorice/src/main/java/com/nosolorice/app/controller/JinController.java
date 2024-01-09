@@ -361,4 +361,70 @@ public class JinController {
 		model.addAttribute("review",map);
 		return "review/Businessriview";
 	}
+	
+	// 리뷰 블라인드 처리
+	@RequestMapping("Businessriviewblind")
+	public void Businessriviewblind(int revireNo,HttpServletRequest request,PrintWriter out,
+			HttpServletResponse response) {
+		BusinessUser buser = (BusinessUser) request.getSession().getAttribute("BusinessUser");
+		jinReviewService.Businessriviewblind(revireNo);
+		response.setContentType("text/html; charset=utf-8");
+		out.println("<script>");
+		out.println("	alert('블라인드 처리가 완료 되었습니다.');");
+		out.println(" window.location.href = 'Businessriview?businessId="+buser.getBusinessId() + "';");
+		out.println("</script>");
+	}
+	
+	// 리뷰 삭제 요청
+	@RequestMapping("Businessriviewdelete")
+	public void Businessriviewdelete(int revireNo,HttpServletRequest request,PrintWriter out,
+			HttpServletResponse response) {
+		jinReviewService.Businessriviewdelete(revireNo);
+		response.setContentType("text/html; charset=utf-8");
+		out.println("<script>");
+		out.println("	alert('삭제 요청이 완료 되었습니다.');");
+		out.println("	history.back();");
+		out.println("</script>");
+	}
+	
+	//답글 달기
+	@RequestMapping("Businessreviewadd")
+	public void Businessreviewadd (int reviewNo, String normalId, String businessId,String businessComment,HttpServletRequest request,PrintWriter out,
+			HttpServletResponse response) {
+		
+		jinReviewService.Businessreviewadd(reviewNo, normalId, businessId, businessComment);
+		
+		response.setContentType("text/html; charset=utf-8");
+		out.println("<script>");
+		out.println(" alert('답글 등록이 완료되었습니다.');");
+		out.println(" window.location.href = 'Businessriview?businessId="+businessId + "';");
+		out.println("</script>");
+	}
+	
+	// 답글 수정
+	@RequestMapping("OwnerCommentupdate")
+	public void OwnerCommentupdate (String businessComment2, int reviewNo,HttpServletRequest request,HttpServletResponse response,PrintWriter out) {
+		BusinessUser buser = (BusinessUser) request.getSession().getAttribute("BusinessUser");
+		
+		jinReviewService.OwnerCommentupdate(businessComment2, reviewNo);
+		
+		response.setContentType("text/html; charset=utf-8");
+		out.println("<script>");
+		out.println("	alert('답글 수정이 완료 되었습니다.');");
+		out.println(" window.location.href = 'Businessriview?businessId="+buser.getBusinessId() + "';");
+		out.println("</script>");
+	}
+	
+	//답글 삭제
+	@RequestMapping("OwnerCommentdelete")
+	public void OwnerCommentdelete(int reviewNo,HttpServletRequest request,HttpServletResponse response,PrintWriter out) {
+		BusinessUser buser = (BusinessUser) request.getSession().getAttribute("BusinessUser");
+		jinReviewService.OwnerCommentdelete(reviewNo);
+		response.setContentType("text/html; charset=utf-8");
+		
+		out.println("<script>");
+		out.println("	alert('답글 삭제가 완료 되었습니다.');");
+		out.println(" window.location.href = 'Businessriview?businessId="+buser.getBusinessId() + "';");
+		out.println("</script>");
+	}
 }
