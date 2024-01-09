@@ -30,7 +30,7 @@ $(function() {
 	 		type : "post",
 	 		"dataType" : "json",
 	 		success : function(resData) {
-	 			console.log(resData.response);
+	 			// console.log(resData.response);
 	 			console.log(resData.num);
 	 			
 	 			verifyNum = resData.num;
@@ -136,10 +136,14 @@ $(function() {
 	});
 
 	// 일반유저 개인정보 수정
-	$("#normalUserInfoUpdate").on("submit", function() {
+	$(document).on("submit", "#normalUserInfoUpdate", function() {
 		if($("#oldPassCheck").css("display") === "none") {
 			alert("기존 비밀번호가 일치하지 않습니다.");
 			$("#oldPass").focus();
+			return false;
+		}
+		if($("#nickNameResult").val() != "true") {
+			alert("닉네임 중복체크를 해주세요.");
 			return false;
 		}
 		if($("#birth1").val().length <= 0) {
@@ -198,7 +202,6 @@ $(function() {
 		    $("#mail").focus();
 		    return false;
 		}
-				
 	});
 	
 	// 리뷰모달 유효성검사

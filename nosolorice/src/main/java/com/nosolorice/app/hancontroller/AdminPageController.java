@@ -137,6 +137,8 @@ public class AdminPageController {
 	  @ResponseBody
 	  public Map<String,Object> searchBusinessId(@RequestBody String id) throws IOException{
 		  
+		  System.out.println("컨트롤러에서 아이디 : " + id);
+		  
 		  ObjectMapper om = new ObjectMapper();	
 		  
 		  id = om.readTree(id).get("id").asText();

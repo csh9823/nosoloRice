@@ -77,7 +77,7 @@
 	            			value="${BusinessUser.mobile.split('-')[2]}">
 	          </div>
 	          <div class="col">
-	            <input type="button" id="verifyBtn" class="green btn w-100" value="인증하기" disabled>
+	            <input type="button" id="verifyBtn" class="green btn w-100" value="인증하기">
 	            <input type="hidden" id="verifyResult" value="true">
 	          </div>
 	        </div>
@@ -188,10 +188,10 @@
 	            </select>
 	          </div>
 	          <div class="col">
-	            <input type="text" name="phone2" id="phone2" class="form-control" value="${BusinessUser.phone.split('-')[1]}">
+	            <input type="text" name="phone2" id="phone2" class="form-control" maxlength="4" value="${BusinessUser.phone.split('-')[1]}">
 	          </div>
 	          <div class="col">
-	            <input type="text" name="phone3" id="phone3" class="form-control" value="${BusinessUser.phone.split('-')[2]}">
+	            <input type="text" name="phone3" id="phone3" class="form-control" maxlength="4" value="${BusinessUser.phone.split('-')[2]}">
 	          </div>
 	        </div> 
 	        <div class="row mb-3">

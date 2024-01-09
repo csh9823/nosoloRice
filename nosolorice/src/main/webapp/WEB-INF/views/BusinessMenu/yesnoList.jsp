@@ -257,12 +257,16 @@
     console.log("사장님 loginId : ", loginId);
     
     //예약관리 페이지에 접속하면 웹소켓 서버에 연결한다. 서버 아이피 입력
+
+    let url = "ws://192.168.0.44:8090/app/booking/" + loginId;
+
     
     //학원꺼
     //let url = "ws://192.168.0.14:8081/app/booking/" + loginId;
     
     //집꺼
-    let url = "ws://192.168.35.92:8081/app/booking/" + loginId;
+    //let url = "ws://192.168.35.92:8081/app/booking/" + loginId;
+
 			
 			bookingSocket = new WebSocket(url);
 			
@@ -341,6 +345,7 @@
     		  let roomId = $(clickEl).attr("data-id");
     	        // 콘솔에 출력
     	        console.log(buttonValue);
+    	        
     	        // 아이디가 bookingNo인걸 선택
     	        let hiddenInput = document.getElementById('bookingNo');
     	        

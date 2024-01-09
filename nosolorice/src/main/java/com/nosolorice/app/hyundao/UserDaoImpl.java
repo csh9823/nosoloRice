@@ -221,6 +221,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void deleteBookingUserList(String normalId) {
 		sqlSession.delete(NAME_SPACE + ".deleteBookingUserList", normalId);
+
 	}
 
 	@Override
@@ -234,6 +235,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<NormalUser> getBookingUserList(int bookingNo) {
 		return sqlSession.selectList(NAME_SPACE + ".getBookingUserList", bookingNo);
+
 	}
 
 }

@@ -55,18 +55,18 @@ public class NoticeServiceImpl implements NoticeService {
 			endPage = pageCount;
 		}
 		
-		Map<String,Object> noticeMap = new HashMap<String,Object>();
+		Map<String,Object> map = new HashMap<String,Object>();
 		
-		noticeMap.put("nList", nList);
-		noticeMap.put("currentPage", currentPage);
-		noticeMap.put("pageCount", pageCount);
-		noticeMap.put("startPage", startPage);
-		noticeMap.put("endPage", endPage);
-		noticeMap.put("listCount", listCount);
-		noticeMap.put("PG", PG);
+		map.put("nList", nList);
+		map.put("currentPage", currentPage);
+		map.put("pageCount", pageCount);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
+		map.put("listCount", listCount);
+		map.put("PG", PG);
 		
 		
-		return noticeMap;
+		return map;
 		} else {
 		return null;
 		}
@@ -126,18 +126,18 @@ public class NoticeServiceImpl implements NoticeService {
 			endPage = pageCount;
 		}
 		
-		Map<String,Object> businessNoticeMap = new HashMap<String,Object>();
+		Map<String,Object> map = new HashMap<String,Object>();
 		
-		businessNoticeMap.put("bList", bList);
-		businessNoticeMap.put("bcurrentPage", currentPage);
-		businessNoticeMap.put("bpageCount", pageCount);
-		businessNoticeMap.put("bstartPage", startPage);
-		businessNoticeMap.put("bendPage", endPage);
-		businessNoticeMap.put("blistCount", listCount);
-		businessNoticeMap.put("bPG", PG);
+		map.put("bList", bList);
+		map.put("bcurrentPage", currentPage);
+		map.put("bpageCount", pageCount);
+		map.put("bstartPage", startPage);
+		map.put("bendPage", endPage);
+		map.put("blistCount", listCount);
+		map.put("bPG", PG);
 		
 		
-		return businessNoticeMap;
+		return map;
 		} else {
 		return null;
 		}

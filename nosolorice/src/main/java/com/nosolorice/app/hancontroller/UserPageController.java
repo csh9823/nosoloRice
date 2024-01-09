@@ -37,7 +37,7 @@ public class UserPageController {
 	}
 	//차단 목록 리스트
 	@RequestMapping("/blockList")
-	public String blockList(Model model,@RequestParam(value="pageNum",required=false, defaultValue="1")int pageNum) {
+	public String blockList(Model model,@RequestParam(value="pageNum",required=false, defaultValue="1")int pageNum,String blocker) {
 		
 		
 		Map<String, Object> blockList = userPageService.blockList(pageNum);
@@ -46,7 +46,6 @@ public class UserPageController {
 		
 		return "blockList";
 	}
-	
 	
 
 }

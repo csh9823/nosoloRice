@@ -100,7 +100,7 @@
 	 	WHERE
 			bu.booking_no = b.booking_no
                AND bu.normal_id = #{id}
- 			AND booking_state = '대기'
+ 			AND booking_state = '승인'
 	</select>
 	
 	<select id="getCurrentBookingMember" parameterType="hashMap" resultType="String">
@@ -200,7 +200,6 @@
 				nickname = #{nickName},
 				pass = #{pass},
 				birth = #{birth},
-				gender = #{gender},
 				mobile = #{mobile},
 				email = #{email},
 				postnum = #{postNum},
@@ -309,6 +308,26 @@
 				#{start}, #{PAGE_SIZE}
 	</select>
 
+	<select id="checkNormalNickName" resultType="NormalUser" resultMap="NormalUserResultMap">
+		SELECT
+			*
+		FROM
+			normal_user
+		WHERE
+			nickName = #{nickName}
+	</select>
+	
+	<delete id="deleteBusinessUser">
+		DELETE FROM business_user
+			WHERE
+				business_id = #{id}
+	</delete>
+	
+	<delete id="deleteNormalUser">
+		DELETE FROM normal_user
+			WHERE
+				normal_id = #{id}
+	</delete>
 	
 	
 	
