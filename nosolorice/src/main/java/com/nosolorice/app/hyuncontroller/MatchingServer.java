@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -76,6 +77,14 @@ public class MatchingServer {
     	Set<Session> matchingMember = new HashSet<>();
     	matchingMember.add(session);
     	
+    	//매칭된 멤버들이 차단리스트를 담을 빈 set객체를 생성 후 자기의 차단리스트를 넣는다.
+    	Set<String> matchingBlockSet = new HashSet<>();
+    	for(String id : blockList) {
+    		matchingBlockSet.add(id);    		
+    	}
+    	
+    	
+    	
     	//매칭된 인원(나 포함)
     	int matchingCount = 1;
     	
@@ -133,12 +142,21 @@ public class MatchingServer {
     			//매칭조건이 모두 맞았을 때 matchingMember Set에 넣는다.
     			if(option) {
     				matchingMember.add(s);
+    				ArrayList<String> sBlockList = (ArrayList<String>) s.getUserProperties().get("blockList");
+    		    	for(String id : sBlockList) {
+    		    		matchingBlockSet.add(id);
+    		    	}
+    				
     			}
     		}
     		if(matchingMember.size() == Integer.parseInt((String) dataMap.get("memberCount"))) break;
     	}
-    	    	
+    	
+    	//매칭멤버가 다 모이면
     	if(matchingMember.size() == Integer.parseInt((String) dataMap.get("memberCount"))) {
+    		
+    		System.out.println("matchingMemberSize : " + matchingMember.size());
+    		
     		//여기서부터 정보를 담아서 채팅방으로 이동하자
     		
     		//멤버의 수
@@ -190,10 +208,29 @@ public class MatchingServer {
             String jsonData = om.writeValueAsString(data);
             //변환한 json문자열을 클라이언트에 반환
             boolean blockOption = false;
-            for(Session m : matchingMember) {
-            	if(blockList.contains(m.getUserProperties().get("loginId"))) blockOption = true;
+            
+            Iterator<Session> iterator = matchingMember.iterator();
+            while (iterator.hasNext()) {
+                Session m = iterator.next();
+                if (matchingBlockSet.contains(m.getUserProperties().get("loginId").toString())) {
+                	blockOption = true;
+                    iterator.remove(); // 안전하게 Set을 수정
+                    System.out.println("차단한 멤버가 있음");
+                    
+                    // matchingBlockSet에서도 안전하게 데이터 제거
+                    Iterator<String> blockSetIterator = matchingBlockSet.iterator();
+                    while (blockSetIterator.hasNext()) {
+                        String blockedUserId = blockSetIterator.next();
+                        if (blockedUserId.equals(m.getUserProperties().get("loginId").toString())) {
+                            blockSetIterator.remove();
+                            break;
+                        }
+                    }
+                    
+                }
             }
-            if(!blockOption) {
+            
+            if(!blockOption && matchingMember.size() == Integer.parseInt((String) dataMap.get("memberCount"))) {
             	for(Session m : matchingMember) {
             		m.getBasicRemote().sendText(jsonData);
             	}            	
