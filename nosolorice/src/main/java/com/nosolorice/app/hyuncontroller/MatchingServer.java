@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -21,6 +22,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nosolorice.app.domain.normalUser.BlockHistory;
 
 
 @ServerEndpoint("/matching")
@@ -35,23 +37,28 @@ public class MatchingServer {
     
     @OnMessage
     public void onMessage(String message, Session session) throws IOException {
-    	
+    	System.out.println("message : " + message);
     	// 받은 메시지를 객체화 시키기
     	Map<String, Object> dataMap = om.readValue(message, new TypeReference<Map<String, Object>>() {});
-        
-    	System.out.println("위치메서드 : " + dataMap.get("locationMethod").toString());
+    	System.out.println("dataMap : " + dataMap.toString());
+    	List<Map<String, BlockHistory>> originBlockList = (List<Map<String, BlockHistory>>) dataMap.get("blockList");
+    	System.out.println("originBlockList의 사이즈 : " + originBlockList.size());
     	
-    	//위치설정 방법이 '주소'라면 좌표로 변환
-    	if(dataMap.get("locationMethod").toString().equals("address")) {
-    		//여기서 주소를 좌표로 변환
-    		System.out.println("주소 정보 : ");
-    		System.out.println(dataMap.get("locationInfo").toString());
-    	} else {
-    		System.out.println("지도 좌표 : ");
-    		System.out.println(dataMap.get("locationInfo").toString());
+    	List<String> blockList = new ArrayList<String>();
+    	for(int i=0; i<originBlockList.size(); i++) {
+    		System.out.println("originBlockList.get(i).get(\"blockAttacker\") : " + originBlockList.get(i).get("blockAttacker"));
+    		blockList.add(originBlockList.get(i).get("blockAttacker") + ""); 
+    		System.out.println("blockList.get(i) 출력 : " + blockList.get(i));
     	}
+		//차단 여부
+		for(String b : blockList) {
+			System.out.println("시발 " + b);    				
+		}
+		System.out.println("시발 " + blockList.size());
     	
+
     	// 메시지로 받은 사용자의 정보 및 매칭 설정정보를 세션에 저장 
+    	session.getUserProperties().put("loginId", dataMap.get("loginId"));
     	session.getUserProperties().put("memberCount", dataMap.get("memberCount"));
     	session.getUserProperties().put("locationMethod", dataMap.get("locationMethod"));
     	session.getUserProperties().put("locationInfo", dataMap.get("locationInfo"));
@@ -60,6 +67,8 @@ public class MatchingServer {
     	session.getUserProperties().put("gender", dataMap.get("gender"));
     	session.getUserProperties().put("age", dataMap.get("age"));
     	session.getUserProperties().put("sessionGender", dataMap.get("sessionGender"));
+    	session.getUserProperties().put("blockList", blockList);
+    	
     	
     	//매칭 진행
     	
@@ -72,15 +81,13 @@ public class MatchingServer {
     	
     	//매칭멤버 set 객체
     	Set<Session> sessions = session.getOpenSessions();
-    	System.out.println("sessions : " + sessions.toString());
-    	
     	for (Session s : sessions) {
+    		    		
     		if(s != session && Integer.parseInt(dataMap.get("memberCount").toString()) == Integer.parseInt(s.getUserProperties().get("memberCount").toString())) {
     			
     			boolean option = true;
     			
     			//매칭 선택조건
-    			
     			// 위치메서드 조건(address)
     			if(dataMap.get("locationMethod").toString().equals("address")) {
     				option = dataMap.get("locationMethod").toString().equals(s.getUserProperties().get("locationMethod").toString()) ? true : false;
@@ -119,8 +126,10 @@ public class MatchingServer {
     			// 같은 연령대 조건
     			if(Integer.parseInt(dataMap.get("age").toString()) != 0 ) {
     				option = Integer.parseInt(dataMap.get("age").toString()) == Integer.parseInt(s.getUserProperties().get("age").toString()) ? true : false;
-    			}		
+    			}
     			
+
+
     			//매칭조건이 모두 맞았을 때 matchingMember Set에 넣는다.
     			if(option) {
     				matchingMember.add(s);
@@ -180,12 +189,18 @@ public class MatchingServer {
             //Map을 json문자열로 변환
             String jsonData = om.writeValueAsString(data);
             //변환한 json문자열을 클라이언트에 반환
+            boolean blockOption = false;
             for(Session m : matchingMember) {
-            	m.getBasicRemote().sendText(jsonData);            	
+            	if(blockList.contains(m.getUserProperties().get("loginId"))) blockOption = true;
+            }
+            if(!blockOption) {
+            	for(Session m : matchingMember) {
+            		m.getBasicRemote().sendText(jsonData);
+            	}            	
             }
             
-            
-            
+            System.out.println(session.getUserProperties().get("loginId") + "끝까지 실행완료(매칭완료)");
+
     	}    
     }
     

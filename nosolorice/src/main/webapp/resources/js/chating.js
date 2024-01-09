@@ -1179,8 +1179,10 @@ $(function(){
     });
     
     //채팅본문에 프로필이미지를 눌렀을 때
-    $(".chatProfileImg").on("click", function (e) {
+    $(document).on("click", ".chatProfileImg", function (e) {
         $("#userConfigBox").addClass("d-none");
+        
+        console.log($("#userConfigBox"));
 		
 		let userNickName = $(this).parent().next().children().eq(0).children().text().trim();
 		let userId = $(this).parent().parent().attr("data-id");
@@ -1216,6 +1218,8 @@ $(function(){
     
     //신고하기 모달열기
     $(".reportBtn").on("click", function(){
+    	$("#reportContent").val("");
+    	$("#reportImgFile").val("");
         $("#blockModal").addClass("d-none");
         $("#reportModal").removeClass("d-none");
         $("#userConfigBox").addClass("d-none");
@@ -1287,6 +1291,7 @@ $(function(){
         	}
         	
         });
+        $("#reportTargetName").text($("#reportTargetNick").text().trim());
         $("#reportModal").addClass("d-none");
         $("#reportCompleteModal").removeClass("d-none");
     });
@@ -1301,7 +1306,7 @@ $(function(){
     
 		let blockHistoryNo;
 		let blockDate;
-		let blockState = "1";
+		let blockState = "차단";
 		let blocker = loginId;
 		let blockAttacker = $("#blockTargetId").val();
 		let nick = $(".blockTargetNick:first").text().trim();

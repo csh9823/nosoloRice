@@ -14,7 +14,6 @@
 
 </head>
 <body>
-
 	<input type="hidden" id="loginId" value="${sessionScope.NormalUser.normalId}">		
 	<div id="matchingModalBg"></div>
 	  <div class="row mt-5">

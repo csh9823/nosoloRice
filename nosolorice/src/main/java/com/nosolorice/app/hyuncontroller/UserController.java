@@ -242,6 +242,12 @@ public class UserController {
 		return map;
 	}
 	
+	@RequestMapping("getBlockList")
+	@ResponseBody
+	public List<BlockHistory> getBlockList(String blocker){
+		return userService.getBlockList(blocker);
+	}
+	
 	@RequestMapping("addBooking")
 	@ResponseBody
 	public Map<String, Integer> addBooking(

@@ -385,15 +385,34 @@ $(function(){
             const age = $("#matchingAgeSelect").val();
             //세션로그인 이용자의 정보. 일단 임시로 지정해놓음
             const sessionGender = "male";
+            let blockList = new Array();
+            //ajax로 자신의 blockList를 가져온다.
+            $.ajax({
+            	url : "/app/getBlockList",
+            	data : "blocker=" + loginId,
+            	type : "post",
+            	dataType : "json",
+            	async : false,
+            	success : function(resData){
+            		console.log(resData);
+            		blockList = resData;
+            	}, error : function(err){
+            		console.log(err);
+            	}
+            });
+            
+            console.log("blockList : ", blockList);
             
 			const matchingData = {
+				loginId : loginId,
 		        memberCount : memberCount,
 		        locationMethod: locationMethod,
 		        locationInfo : locationInfo,
 		        category : category,
 		        gender : gender,
 		        age : age,
-		        sessionGender : sessionGender
+		        sessionGender : sessionGender,
+		        blockList : blockList
 		    };
 		    matchingServerConnect(matchingData);
             
