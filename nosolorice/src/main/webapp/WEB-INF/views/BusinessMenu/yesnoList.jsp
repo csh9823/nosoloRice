@@ -377,6 +377,7 @@
     	bookingSocket.send(jsonData);
     });
     
+    
 </script>
 </body>
 </html>
