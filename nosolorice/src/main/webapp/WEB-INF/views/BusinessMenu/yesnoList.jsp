@@ -292,7 +292,6 @@
     	        hiddenInput.value = buttonValue;
     	  });
     	});
-
 </script>
 </body>
 </html>

@@ -158,23 +158,27 @@ public class JinController {
 			System.out.println(buser.getBusinessId());
 			session.setAttribute("BusinessUser", buser);
 			return "redirect:BusinessMenu?businessId="+buser.getBusinessId();
-		}else if(nuser != null) {
+		}
+		
+		if(nuser != null) {
 			System.out.println(nuser.getNormalId());
 			session.setAttribute("NormalUser", nuser);
 			return "redirect:mainPage";
-		}else if(ruser != null) {
-			System.out.println(id);
-			System.out.println(ruser.getRootId());
+		}
+		
+		if(ruser != null) {
 			session.setAttribute("RootUser", ruser);
 			return "redirect:adminPage?RootId="+ruser.getRootId();
 		}
+		
+		
 		response.setContentType("text/html; charset=utf-8");
 		out.println("<script>");
 		out.println("	alert('회원 정보가 일치하지 않습니다.');");
 		out.println("	history.back();");
 		out.println("</script>");
+		
     	return null;
-
 	}
 	
 	@RequestMapping("BusinessMenu")
@@ -299,5 +303,35 @@ public class JinController {
 		jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingState);
 		jinbookService.bookingOkinsert(bookingOk);
 		return "redirect:yesnoList?businessId="+bookingOk.getBusinessId();
+	}
+
+	// 파일이 없을때 메뉴 업데이트 하기
+	@RequestMapping("menuUpdate")
+	public String menuUpdate(HttpServletRequest request,Menu menu ,@RequestParam(value="menuimg") MultipartFile multipartFile) 
+			throws IOException {
+		
+		// 세션 값 가져오기
+		BusinessUser buser = (BusinessUser) request.getSession().getAttribute("BusinessUser");
+		if(! multipartFile.isEmpty()) {
+			// 파일이 들어갈 위치
+			String realPath = request.getServletContext().getRealPath(DEFAULT_PATH);
+			UUID uid = UUID.randomUUID();
+			String saveName = uid.toString() + "_" + multipartFile.getOriginalFilename();
+			File file = new File(realPath,saveName);
+			multipartFile.transferTo(file);
+			menu.setMenuPicture(DEFAULT_PATH+"/"+saveName);
+		}
+		jinMenuService.MenuUpdate(menu);
+		return "redirect:BusinessMenu?businessId="+buser.getBusinessId()+"&"+"menuCategoryNo="+menu.getMenuCategoryNo();
+	}
+	
+	// 파일이 없을때 메뉴 업데이트 하기
+	@RequestMapping("NofilemenuUpdate")
+	public String Nofilemenuupdate(Menu menu,HttpServletRequest request) {
+		
+		// 세견 값 가져오기
+		BusinessUser buser = (BusinessUser) request.getSession().getAttribute("BusinessUser");
+		jinMenuService.MenuUpdate(menu);
+		return "redirect:BusinessMenu?businessId="+buser.getBusinessId()+"&"+"menuCategoryNo="+menu.getMenuCategoryNo();
 	}
 }

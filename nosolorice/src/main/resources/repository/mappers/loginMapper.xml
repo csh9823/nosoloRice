@@ -66,6 +66,7 @@ root_id rootId,
 root_pass rootPass,
 root root
 from root_user
+where = 
 </select>
 
 </mapper>	

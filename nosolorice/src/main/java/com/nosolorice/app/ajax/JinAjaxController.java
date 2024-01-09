@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nosolorice.app.domain.businessUser.BusinessUser;
+import com.nosolorice.app.domain.businessUser.Menu;
 import com.nosolorice.app.jinservice.CertifiedPhoneNumberService;
 import com.nosolorice.app.jinservice.JinFindService;
 import com.nosolorice.app.jinservice.JinMenuCateService;
@@ -124,5 +125,11 @@ public class JinAjaxController {
 		}
 		jinMenuService.MenuDelete(menuNo);
 	}
-	
+
+	@RequestMapping("getMenu.ajax")
+	@ResponseBody
+	public Menu getMenu(int menuNo) {
+		Menu menu = jinMenuService.getMenuajax(menuNo); 
+		return menu;
+	}
 }
