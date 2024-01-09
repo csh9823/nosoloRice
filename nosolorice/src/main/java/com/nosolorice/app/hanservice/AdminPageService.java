@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosolorice.app.domain.Review.Review;
+import com.nosolorice.app.domain.businessUser.BusinessInquiry;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
+import com.nosolorice.app.domain.normalUser.UserInquiry;
 
 public interface AdminPageService {
 	
@@ -40,6 +42,18 @@ public interface AdminPageService {
 	public abstract NormalUser normalUser(String id);
 
 	public abstract void reviewDelete(int reviewNo);
+	
+	public abstract Map<String,Object> adminNormalInquiryList(int pageNum);
+	
+	public abstract UserInquiry getInquiry(int userInquiryNo);
+	
+	public abstract void answerInquiry(UserInquiry userInquiry);
+	
+	public abstract Map<String,Object>adminBusinessInquiryList(int pageNum);
+	
+	public abstract BusinessInquiry getBusinessInquiry(int businessInquiryNo);
+	
+	public abstract void answerBusinessInquiry(BusinessInquiry businessInquiry);
 	
 	
 
