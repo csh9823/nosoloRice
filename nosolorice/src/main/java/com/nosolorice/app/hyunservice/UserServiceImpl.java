@@ -194,5 +194,15 @@ public class UserServiceImpl implements UserService {
 	public void deleteBookingUserList(String normalId) {
 		userDao.deleteBookingUserList(normalId);
 	}
+
+	@Override
+	public void payWithPoint(String normalId, int deposit) {
+		userDao.payWithPoint(normalId, deposit);
+	}
+
+	@Override
+	public List<NormalUser> getBookingUserList(int bookingNo) {
+		return userDao.getBookingUserList(bookingNo);
+	}
 	
 }

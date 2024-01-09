@@ -326,4 +326,20 @@ public class UserController {
 		return map;
 	}
 	
+	@RequestMapping("payWithPoint")
+	@ResponseBody
+	public Map<String, Boolean> payWithPoint(String normalId, int deposit){
+		userService.payWithPoint(normalId, deposit);
+		Map<String, Boolean> map = new HashMap<>();
+		map.put("result", true);
+		return map;
+	}
+	
+	@RequestMapping("getBookingUserList")
+	@ResponseBody
+	public List<NormalUser> getBookingUserList(int bookingNo){
+		List<NormalUser> nickNames = userService.getBookingUserList(bookingNo);
+		return nickNames;
+	}
+	
 }

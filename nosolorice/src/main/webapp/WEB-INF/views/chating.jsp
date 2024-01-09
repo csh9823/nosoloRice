@@ -373,7 +373,7 @@
                                              <tr class="row">
                                                  <td class="col-3 py-3 fs-5">예약멤버</td>
                                                  <td class="col py-3 fs-5">
-                                                 	<span class="currentMemberList"></span>
+                                                 	<span class="currentMemberList" id="bookSuccessMemberList"></span>
                                                  </td>
                                              </tr>
                                              <tr class="row">

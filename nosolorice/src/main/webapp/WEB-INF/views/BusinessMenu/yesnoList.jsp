@@ -257,7 +257,16 @@
     console.log("사장님 loginId : ", loginId);
     
     //예약관리 페이지에 접속하면 웹소켓 서버에 연결한다. 서버 아이피 입력
+
     let url = "ws://192.168.0.44:8090/app/booking/" + loginId;
+
+    
+    //학원꺼
+    //let url = "ws://192.168.0.14:8081/app/booking/" + loginId;
+    
+    //집꺼
+    let url = "ws://192.168.35.92:8081/app/booking/" + loginId;
+
 			
 			bookingSocket = new WebSocket(url);
 			
@@ -275,11 +284,21 @@
 			bookingSocket.addEventListener('message', function(e){
 				//서버로부터 받은 json문자열 메시지를 자바스크립트로 객체로 변환.
 				let msgObj = JSON.parse(e.data);
+				
 				if(msgObj.type == 'request'){
 					//알림
 					alert("새로운 예약이 접수되었습니다");
 					location.reload();
 				}
+				
+				if(msgObj.type == 'userCancel'){
+					let bookNo = msgObj.bookNo; 
+					//알림
+					alert(bookNo + "번 예약이 취소 되었습니다");
+					location.reload();
+				}
+				
+				
 			});
 			
 			$(bookingSocket).on('close', function(event) {		
@@ -343,7 +362,7 @@
     $(document).on("click", ".yeslist", function(){
     	let roomId = $(this).attr("data-id");
 		let approveMsg = {
-				type : 'connect',
+				type : 'approve',
 				roomId : roomId 
 		}
 		const jsonData = JSON.stringify(approveMsg);
@@ -355,7 +374,7 @@
     	let reason = $("#reason").val();
     	let roomId = $(this).find("#roomId").val();
     	let rejectMsg = {
-				type : 'connect',
+				type : 'reject',
 				roomId : roomId,
 				reason : reason
 		}
