@@ -188,6 +188,10 @@
                     <div class="row">
                         <div class="col"> ${mapNoMenuList.menuPrice}원 </div>
                     </div>
+                    
+                    <div class="row">
+                    	<button type="button" class="btn btn-success menuno" style="margin-top: 0px" value="${mapNoMenuList.menuNo}">메뉴수정</button>
+                    </div>
                  </div>
                  </c:forEach> 
                  </c:if>
@@ -221,6 +225,10 @@
 				
 				            <div class="row">
 				                <div class="col"> ${menu.menuPrice}원 </div>
+				            </div>
+				            
+				            <div class="row">
+				            <button type="button" class="btn btn-success menuno" style="margin-top: 0px" value="${menu.menuNo}">메뉴수정</button>
 				            </div>
 				        </div>
 				    </c:forEach>
