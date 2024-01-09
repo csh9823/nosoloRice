@@ -30,7 +30,7 @@ public class BusinessController {
 
 	@RequestMapping("businessInquiry")
 	public String businessInquiry(Model model) {
-		return "businessInquiry";
+		return "forward:/WEB-INF/views/businessInquiry.jsp";
 	}
 	
 	@RequestMapping("writeBusinessInquiry")
@@ -60,7 +60,7 @@ public class BusinessController {
 		
 		model.addAllAttributes(businessService.getBusinessInquiryList(pageNum, businessId));
 		
-		return "businessInquiryList";
+		return "forward:/WEB-INF/views/businessInquiryList.jsp";
 	}
 	
 	@RequestMapping("businessSales")
@@ -73,7 +73,7 @@ public class BusinessController {
 		String businessId = "testBusinessId";
 		
 		model.addAllAttributes(businessService.getDailySalesList(pageNum, businessId));
-		return "businessSales";
+		return "forward:/WEB-INF/views/businessSales.jsp";
 	}
 	
 	@RequestMapping("businessSalesMonth")
@@ -86,7 +86,7 @@ public class BusinessController {
 		String businessId = "testBusinessId";
 		
 		model.addAllAttributes(businessService.getMonthlySalesList(pageNum, businessId));
-		return "businessSalesMonth";
+		return "forward:/WEB-INF/views/businessSalesMonth.jsp";
 	}
 	
 }

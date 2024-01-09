@@ -46,6 +46,16 @@ public class UserController {
 		this.userService = userService;
 	}
 	
+	@RequestMapping("test")
+	public String test() {
+		return "chating";		
+	} 
+	
+	
+	@RequestMapping("mainPage")
+	public String mainPage() {
+		return "mainPage";
+	}
 	
 	@RequestMapping("userInquiry")
 	public String userInquiry(Model model) {
