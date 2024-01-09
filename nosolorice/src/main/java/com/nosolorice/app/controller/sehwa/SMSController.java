@@ -30,18 +30,18 @@ public class SMSController {
     public Map<String, Object> sendOne(String mobile) {
 		int num = ThreadLocalRandom.current().nextInt(100000);
 		
+		/*
         Message message = new Message();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-        message.setFrom(mobile);
+        message.setFrom("01081313703");
         message.setTo(mobile);
         message.setText("[혼밥싫어]\n인증번호 [" + num + "]를 입력해주세요.");
 
         SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
-        System.out.println("response : " + response);
-        System.out.println("num : " + num);
+        */
         
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("response", response);
+        // resultMap.put("response", response);
         resultMap.put("num", num);
         
         return resultMap;

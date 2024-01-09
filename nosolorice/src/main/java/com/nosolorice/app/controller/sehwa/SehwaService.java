@@ -54,9 +54,10 @@ public interface SehwaService {
 	
 	public Map<String, Object> usePointList(String id, int usePageNum);
 	
+	public boolean checkNormalNickName(String nickName);
 	
+	public void deleteBusinessUser(String id);
 	
-	
-	
+	public void deleteNormalUser(String id);
 	
 }

@@ -23,7 +23,7 @@
               <span class="fs-4 fw-bold">업체정보</span>
             </div>
             <div class="menu row p-4" onclick="location.href=''">
-              <span class="fs-4 fw-bold">예약관리</span>
+              <span class="fs-4 fw-bold"><a href="yesnoList?businessId=${sessionScope.BusinessUser.businessId}">예약관리</a></span>
             </div>
             <div class="menu row p-4" onclick="location.href=''">
               <span class="fs-4 fw-bold">예약이력</span>
@@ -34,14 +34,14 @@
             <div class="menu row p-4" onclick="location.href=''">
               <span class="fs-4 fw-bold">메뉴관리</span>
             </div>
-            <div class="menu row p-4" onclick="location.href=''">
+            <div class="menu row p-4" onclick="location.href='businessUserSecession?id=${sessionScope.BusinessUser.businessId}'">
               <span class="fs-4 fw-bold">탈퇴</span>
             </div>
             <div class="row p-4 gy-2">
-              <span onclick="location.href=''">공지사항</span><br>
-              <span onclick="location.href=''">1:1문의</span><br>
-              <span onclick="location.href='businessUserInfoUpdate?id=${sessionScope.BusinessUser.businessId}'">내 정보 수정</span><br>
-              <span onclick="location.href=''" class="text-red">로그아웃</span><br>
+              <span class="menu" onclick="location.href=''">공지사항</span><br>
+              <span class="menu" onclick="location.href=''">1:1문의</span><br>
+              <span class="menu" onclick="location.href='businessUserInfoUpdate?id=${sessionScope.BusinessUser.businessId}'">내 정보 수정</span><br>
+              <span class="menu text-red" onclick="location.href='businessUserLogOut'">로그아웃</span><br>
             </div>
           </div>
         </div>
@@ -50,12 +50,12 @@
 
   <script>
     $(document).on("mouseover", ".menu", function() {
-      $(this).css("opacity", "30%");
+      $(this).css("opacity", "30%").css("cursor","pointer");
+      
     });
     $(document).on("mouseleave", ".menu", function() {
       $(this).css("opacity", "100%");
     });
-
   </script>
 </html>
 

@@ -75,6 +75,13 @@ public interface SehwaDao {
 	
 	public List<PointHistory> usePointList(String id, int start, int PAGE_SIZE);
 	
+	public NormalUser checkNormalNickName(String nickName);
+	
+	public void deleteBusinessUser(String id);
+	
+	public void deleteNormalUser(String id);
+	
+	
 	
 	
 }
