@@ -460,6 +460,7 @@
                 <div class="row" style="margin-top: 10px;">
                     <div class="col-4"><strong>원산지</strong></div>
                     <div class="col-8"><input name="menuOrigin" id="menuOriginupdate" type="text" style="width: 100%; height: 100%; font-size: 12px;"></div>
+                    <input type="hidden" id="menuupdateNo" value="" name="menuNo">
                 </div>
 
                 <div class="row" style="margin-top: 35px;">
@@ -697,8 +698,12 @@ $('input[type="text"]').keydown(function() {
     // 버튼 콘솔 출력
     openModalButtons.forEach((button) => {
         button.addEventListener("click", (event) => {
-    		  let buttonValue = event.target.value;
-  	          console.log(buttonValue);
+    		  	let buttonValue = event.target.value;
+  	          	console.log(buttonValue);
+  	        	// 아이디가 bookingNo인걸 선택
+  	        	let hiddenInput = document.getElementById('menuupdateNo');
+  				// value를 선택된 버튼의 value로 변환
+	        	hiddenInput.value = buttonValue;
 	    		let menuInfo = $("#menuInfoupdate");
 	    		let menuOrigin = $("#menuOriginupdate");
 	    		let menuPrice = $("#menuPriceupdate");
@@ -728,11 +733,6 @@ $('input[type="text"]').keydown(function() {
     		  			console.error("error...");
     		  		}
     		  })
-    	        // 아이디가 bookingNo인걸 선택
-    	        //let hiddenInput = document.getElementById('bookingNo');
-    	        
-    	        // value를 선택된 버튼의 value로 변환
-    	        //hiddenInput.value = buttonValue;
     	  });
 
     	});

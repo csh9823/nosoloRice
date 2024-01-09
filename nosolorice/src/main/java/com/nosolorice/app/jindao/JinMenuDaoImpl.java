@@ -38,8 +38,8 @@ public class JinMenuDaoImpl implements JinMenuInterfaceDao {
 	}
 	
 	public void MenuUpdate(Menu menu) {
-		
-		sqlSession.update(NAME_SPACE + ".MenuUpdate",menu);
+		System.out.println("다오 왓음");
+		sqlSession.update(NAME_SPACE+".MenuUpdate",menu);
 		
 	}
 }
