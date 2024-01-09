@@ -7,6 +7,7 @@ import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
+import com.nosolorice.app.domain.normalUser.UserInquiry;
 
 public interface AdminPageDao {
 	
@@ -44,6 +45,15 @@ public interface AdminPageDao {
 	public abstract NormalUser normalUser(String id);
 	//리뷰  삭제 요청
 	public abstract void reviewDelete(int reviewNo);
+	//관리자 문의 관리
+	public abstract List<UserInquiry>adminNormalInquiryList(int start,int num);
+	
+	public abstract int getInquiryCount();
+	
+	public abstract UserInquiry getInquiry(int userInquiryNo);
+	
+	public abstract void answerInquiry(UserInquiry userInquiry);
+
 	
 	
 	

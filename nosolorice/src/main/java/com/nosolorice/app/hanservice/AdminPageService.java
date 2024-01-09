@@ -8,6 +8,7 @@ import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
+import com.nosolorice.app.domain.normalUser.UserInquiry;
 
 public interface AdminPageService {
 	
@@ -40,6 +41,13 @@ public interface AdminPageService {
 	public abstract NormalUser normalUser(String id);
 
 	public abstract void reviewDelete(int reviewNo);
+	
+	public abstract Map<String,Object> adminNormalInquiryList(int pageNum);
+	
+	public abstract UserInquiry getInquiry(int userInquiryNo);
+	
+	public abstract void answerInquiry(UserInquiry userInquiry);
+	
 	
 	
 

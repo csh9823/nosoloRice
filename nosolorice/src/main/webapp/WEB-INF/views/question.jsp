@@ -45,7 +45,7 @@
                 <li class="my-5 fs-4"><a href="question">자주 묻는 질문</a></li>
                 <li class="my-5 fs-4"><a href="userInquiryWriteForm">1:1 문의</a></li>
                 <li class="my-5 fs-4"><a href="userInquiryList">1:1 문의내역</a></li>
-                <li class="my-5 fs-4"><a href="noticeList">공지사항</a></li>
+                <li class="my-5 fs-4"><a href="noticeNormal">공지사항</a></li>
             </ul>
         </div>
         <div class="col-md-1 d-none d-md-block my-5" style="margin-left: -50px;">

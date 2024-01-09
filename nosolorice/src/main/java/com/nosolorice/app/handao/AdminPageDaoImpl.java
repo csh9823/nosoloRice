@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,7 @@ import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
+import com.nosolorice.app.domain.normalUser.UserInquiry;
 @Repository
 public class AdminPageDaoImpl implements AdminPageDao {
 	
@@ -67,7 +69,7 @@ Map<String, Object> map = new HashMap<String, Object>();
 	@Override
 	public List<DeniedUser> deniedList(int start, int num) {
 		
-Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 			map.put("start", start);
 			map.put("num", num);
@@ -168,6 +170,37 @@ Map<String, Object> map = new HashMap<String, Object>();
 
 		sqlSession.delete(Mapper + ".businessDelete",id);
 	}
+
+	@Override
+	public List<UserInquiry> adminNormalInquiryList(int start,int num) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("start", start);
+		map.put("num", num);
+
+		return sqlSession.selectList(Mapper + ".adminInquiryList",map);
+	}
+
+	@Override
+	public UserInquiry getInquiry(int userInquiryNo) {
+		
+		return sqlSession.selectOne(Mapper + ".normalInquiryDetail",userInquiryNo);
+	}
+
+	@Override
+	public int getInquiryCount() {
+		
+		return sqlSession.selectOne(Mapper + ".getInquiryCount");
+	}
+	
+	@Override
+	public void answerInquiry(UserInquiry userInquiry) {
+
+		sqlSession.update(Mapper + ".answerInquiry",userInquiry);
+		
+	}
+
 
 	
 	

@@ -1,6 +1,7 @@
 package com.nosolorice.app.hancontroller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nosolorice.app.domain.Review.Review;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.domain.normalUser.UserInquiry;
 import com.nosolorice.app.hanservice.AdminPageService;
 
 @Controller
@@ -188,6 +190,51 @@ public class AdminPageController {
 
 		  return mapReview;
 	  }
+	  
+	  @RequestMapping("/adminNormalInquiryList")
+	  public String adminNormalInquiryList(Model model,@RequestParam(value="pageNum", defaultValue="1")int pageNum){
+		  
+		  Map<String,Object> modelMap = adminPageService.adminNormalInquiryList(pageNum);
+		  
+		  model.addAllAttributes(modelMap);
+	
+		  return "/adminNormalInquiryList";
+	  }
+	  
+	  @RequestMapping("/normalInquiryDetail")
+	  public String normalInquiryDetail(Model model,int userInquiryNo,@RequestParam(value="pageNum", required=false, 
+				defaultValue="1") int pageNum) {
+		  
+		  UserInquiry userInquiry = adminPageService.getInquiry(userInquiryNo);
+		  
+		  model.addAttribute("userInquiry",userInquiry);
+		  model.addAttribute("pageNum",pageNum);
+		  
+		  return "/normalInquiryDetail";
+	  }
+	  
+	  @RequestMapping("/answerInquiryWrite")
+	  public String answerInquiryWrite() {
+		  
+		  return "/answerInquiryWrite";
+	  }
+	  
+	  @RequestMapping("/answerInquiryProcess")
+	  public String answerInquiry(String inquiryComment,Timestamp inquiryCommentRegDate) {
+		 
+		  UserInquiry userInquiry = new UserInquiry();
+		  
+		  userInquiry.setInquiryComment(inquiryComment);
+		  userInquiry.setInquiryCommentRegDate(inquiryCommentRegDate);
+		  
+		  adminPageService.answerInquiry(userInquiry);
+		  
+		  return "redirect:/adminNormalInquiry";
+		  
+	  }
+	  
+	  
+	  
 	
 	
 

@@ -28,7 +28,7 @@ public class UserPageServiceImpl implements UserPageService {
 	}
 
 	@Override
-	public Map<String, Object> userReportList(int pageNum) {
+	public Map<String, Object> userReportList(String reporter,int pageNum) {
 		
 		int currentPage = pageNum;
 
@@ -40,7 +40,7 @@ public class UserPageServiceImpl implements UserPageService {
 
 		if (listCount > 0) {
 
-			List<ReportDetails> userReportList = userPageDao.userReportList(start, PS);
+			List<ReportDetails> userReportList = userPageDao.userReportList(reporter,start, PS);
 
 			int pageCount = listCount / PS + (listCount % PS == 0 ? 0 : 1);
 
@@ -70,8 +70,9 @@ public class UserPageServiceImpl implements UserPageService {
 	}
 
 	@Override
-	public Map<String, Object> blockList(int pageNum) {
-
+	public Map<String, Object> blockList(String blocker,int pageNum) {
+		
+		
 		int currentPage = pageNum;
 
 		int start = (currentPage - 1) * PS;
@@ -79,10 +80,19 @@ public class UserPageServiceImpl implements UserPageService {
 		int listCount = 0;	
 
 		listCount = userPageDao.getBlockCount();
+		
+		System.out.println("리스트 카운트 : " + listCount);
+		
+		
 
 		if (listCount >= 0) {
 
-			List<BlockHistory> blockList = userPageDao.blockList(start, PS);
+			List<BlockHistory> blockList = userPageDao.blockList(blocker, start, PS);
+				
+			for(BlockHistory b : blockList) {
+				System.out.println("블록 리스트" + b);
+			}
+		
 
 			int pageCount = listCount / PS + (listCount % PS == 0 ? 0 : 1);
 

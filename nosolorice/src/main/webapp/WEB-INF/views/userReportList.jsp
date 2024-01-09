@@ -32,6 +32,21 @@
     background-color: #3DB78B;
     color : white;
   }
+       .pagination .page-item.active .page-link {
+    background-color: #FA9884;
+    border-color: #FA9884;
+    color: #fff; 
+	}
+
+	.pagination .page-link {
+    color: #C93C3C;
+	}
+
+	.pagination .page-link:hover {
+    color: #fff; 
+    background-color: #C93C3C;
+    border-color: #C93C3C;
+	}
 
 </style>
 </head>
@@ -54,6 +69,7 @@
 
             </ul>
         </div>
+        
         <div class="col-md-1 d-none d-md-block my-5" style="margin-left: -50px;">
             <div style="border-left: 1px solid #616161; height: 80vh;"></div>
         </div>
@@ -76,17 +92,52 @@
                 <div class="col-2">${r.reportAttacker}</div>
                 <div class="col-3">${r.reportContent}</div>
                 <div class="col-3">${r.reportRegDate}</div>
-                <div class="col-2">${r.reportProcess}</div>
+                <div class="col-2">${r.resultDate()}</div>
             </div>
              </c:forEach>
           
-              
+          
+          <div class="row my-5">
+				<div class="col">
+					<nav aria-label="Page navigation">
+					  <ul class="pagination justify-content-center">
+					
+					  	<c:if test="${ startPage > PG }">
+						    <li class="page-item">
+						      <a class="page-link" href="blockList?pageNum=${ startPage - PG }">Pre</a>
+						    </li>
+					    </c:if>
+					    
+					    <c:forEach var="i" begin="${startPage}" end="${endPage}">
+			   			 
+					    	<c:if test="${i == currentPage }">
+					    	<li class="page-item active" aria-current="page">
+					    		<span class="page-link">${i}</span>
+					    	</li>
+					    	</c:if>
+					    	<c:if test="${i != currentPage }">
+						    	<li class="page-item">
+						    		<a class="page-link" href="blockList?pageNum=${i}">${i}</a>
+						    	</li>
+						    </c:if>					    
+					    </c:forEach>
+					    
+				
+						<c:if test="${ endPage < pageCount }">
+						    <li class="page-item">
+						      <a class="page-link" href="blockListt?pageNum=${ startPage + PG }">Next</a>
+						    </li>
+					  	</c:if>
+					  </ul>
+					</nav>
+				</div>
+			</div> 
+			
+			     
        </div>
+  </div>
 </div>
-</div>
-       <div class="text-center">
-        페이지네이션 부분
-       </div>
+	       
  
 
 

@@ -55,15 +55,15 @@
       <div class="row">
         <div class="col-md-3">
           <ul class="my-3 fs-5">
-             <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
-            <li class="my-5"><a href="userInquiryList" class="textColor">일반회원 문의</a></li>
-            <li class="my-5"><a href="#" class="textColor">사업자회원 문의</a></li>
+            <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
+            <li class="my-5"><a href="adminNormalInquiryList" class="textColor">일반회원 문의</a></li>
+            <li class="my-5"><a href="adminBusinessInquiryList" class="textColor">사업자회원 문의</a></li>
             <li class="my-5"><a href="adminReportList" class="textColor">신고내역</a></li>
-            <li class="my-5"><a href="joinApprove" class="textColor">가입승인</a></li>
+            <li class="my-5"><a href="#" class="textColor">가입승인</a></li>
             <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제 요청</a></li>
             <li class="my-5"><a href="businessDeleteList" class="textColor">업체삭제</a></li>
-            <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
-            <li class="my-5"><a href="businessSales" class="textColor">매출현황</a></li>
+            <li class="my-5"><a href="deniedList" class="textColor" style="color:#C93C3C">회원정지</a></li>
+            <li class="my-5"><a href="adminSales" class="textColor">매출현황</a></li>
             <li class="my-5"><a href="noticeList" class="textColor">공지관리</a></li>
           </ul>
         </div>     
@@ -152,7 +152,7 @@
 	        		
             <c:if test="${empty deniedList }">
             
-            <span class="d-flex justify-content-center align-items-center resultRow" style="height: 10vh;">정지된 아이디가 없습니다.</span>
+            <span class="d-flex justify-content-center align-items-center resultRow" id="emptyList" style="height: 10vh;">정지된 아이디가 없습니다.</span>
             
             </c:if>    
 
@@ -204,56 +204,53 @@
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 <script>
  
- $("#idSearchForm").on('submit',function(e){
-	 
-	 e.preventDefault();
-	 
-	 let id = $("#searchId").val();
-	 
-	 $.ajax({
-		 
-		 url : "/app/searchId",
-		 data :  "id=" + id,
-		 type : "post",
-		 dataType : "json",
-		 success : function(resData){
-		 	if(resData.result){
-		 		
-		 		console.log(resData);
-		 		
-		 		let nickName = resData.searchUserInfo.nickName;
-		 		
-		 		let profile = resData.searchUserInfo.profile;
-		 			
-		 		$("#resultNickName").text(nickName);
-		 		
-		 		$("#resultId").text(id);
-		 		
-		 		$("#searchProfileImg").attr("src", "resources/upload/"+profile);
-		 		
-		 		$(".resultRow").each(function(i,v){
-		 			$(v).removeClass("d-none");
-		 		})
-		 			 		
-		 	} else{
-		 			 		
-		 		alert("이미 정지된 회원이거나 없는 아이디입니다.");
-		 		
-		 		$("#resultId").text("");
-		 		
-		 		$(".resultRow").each(function(i,v){
-		 			$(v).addClass("d-none");
-		 		});
-		 		
-		 	}
-		 	
-		 }, error : function(){
-			 console.log("통신에러");
-		 }
-		 
-	 });
-	 
- });
+$("#idSearchForm").on('submit', function(e) {
+    e.preventDefault();
+
+    let id = $("#searchId").val();
+
+    $.ajax({
+        url: "/app/searchId",
+        data: "id=" + id,
+        type: "post",
+        dataType: "json",
+        success: function(resData) {
+            if (resData.result) {
+                // 성공적인 경우
+                console.log(resData);
+
+                let nickName = resData.searchUserInfo.nickName;
+                let profile = resData.searchUserInfo.profile;
+
+                $("#resultNickName").text(nickName);
+                $("#resultId").text(id);
+                $("#searchProfileImg").attr("src", "resources/upload/" + profile);
+
+                $(".resultRow").each(function(i, v) {
+                    $(v).removeClass("d-none");
+                });
+            } else {
+                // 실패한 경우
+                alert("이미 정지된 회원이거나 없는 아이디입니다.");
+
+                $("#resultId").text("");
+                $(".resultRow").each(function(i, v) {
+                    $(v).addClass("d-none");
+                });
+                
+                console.log(resData);
+
+                // deniedList가 비어있는 경우
+                if (resData.result == false) {
+                    $("#emptyList").removeClass("d-none");
+                }
+            }
+        },
+        error: function() {
+            console.log("통신에러");
+        }
+    });
+});
  
  
  $(document).on("click", ".unlockUser",function(){

@@ -155,6 +155,33 @@
 		DELETE FROM review WHERE review_no = #{reviewNo}
 	
 	</delete>
+	
+	
+	<select id="adminInquiryList" resultType="UserInquiry" parameterType="hashmap" resultMap="userInquiryMap">
+	
+	SELECT * FROM user_inquiry ORDER BY user_inquiry_no LIMIT #{start}, #{num}
+	
+	</select>
+	
+	<select id="getInquiryCount" resultType="int">
+	
+		SELECT COUNT(user_inquiry_no) FROM user_inquiry
+		
+	</select>
+	
+	<select id="normalInquiryDetail" resultType="UserInquiry" resultMap="userInquiryMap">
+	
+		SELECT * FROM user_inquiry WHERE user_inquiry_no = #{userInquiryNo}
+	
+	</select>
+	
+
+	<update id="answerInquiry" parameterType="UserInquiry">
+		UPDATE user_inquiry 
+		SET inquiry_comment = #{inquiryComment},  inquiry_comment_regdate = #{inquiryCommentRegDate} 
+		WHERE normal_id = #{normalId};
+			
+	</update>
 
 
 		<!-- 신고 리스트 -->
@@ -190,6 +217,18 @@
 			<result property="deniedRegDate" column="denied_regdate"/>
 			<result property="deniedUnlock" column="denied_unlock"/>
 		</resultMap>
+		
+		<resultMap id="userInquiryMap" type="UserInquiry">
+		<id property="userInquiryNo" column="user_inquiry_no" />
+		<result property="inquiryDivision" column="inquiry_division" />
+		<result property="inquiryTitle" column="inquiry_title" />
+		<result property="inquiryPicture" column="inquiry_picture" />
+		<result property="inquiryRegDate" column="inquiry_regdate" />
+		<result property="inquiryContent" column="inquiry_content" />
+		<result property="inquiryComment" column="inquiry_comment" />
+		<result property="inquiryCommentRegDate" column="inquiry_comment_regdate" />
+		<result property="normalId" column="normal_id" />
+	</resultMap>
 		
 
 </mapper>
