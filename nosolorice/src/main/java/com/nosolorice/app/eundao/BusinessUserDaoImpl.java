@@ -33,10 +33,12 @@ public class BusinessUserDaoImpl implements BusinessUserDao {
 	}
 	
 	@Override
-	public int overlapBusinessNumberCheck(Integer businessNumber) {
-	    Integer count = sqlSession.selectOne(NAME_SPACE + ".getBusinessNumber", businessNumber);
-
-	    return count != null && count > 0 ? 1 : 0;
+	public int overlapBusinessNumberCheck(long businessNumber) {
+		System.out.println("(dao)businessNumber : " + businessNumber);
+		int count = sqlSession.selectOne(NAME_SPACE + ".getBusinessNumber", businessNumber);
+		System.out.println("dao_count : " + count);
+	    return count;
+	    
 	}
 	
 	@Override

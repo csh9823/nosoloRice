@@ -114,6 +114,36 @@
         .menuCateNames:hover {
 			color: red;
 		}
+
+#modal3 {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+}
+.modal3-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  width: 600px;
+  height: 400px;
+}
+
+#menuimgupdate {
+  display: none;
+}
+#menuimgformupdate{
+    width: 200px;
+    height: 200px;
+}
+#menuInfo {
+        resize: none;
+}
 </style>
 </head>
 <body>
@@ -188,6 +218,10 @@
                     <div class="row">
                         <div class="col"> ${mapNoMenuList.menuPrice}원 </div>
                     </div>
+                    
+                    <div class="row">
+                    	<button type="button" class="btn btn-success openmodel" style="margin-top: 0px" value="${mapNoMenuList.menuNo}">메뉴수정</button>
+                    </div>
                  </div>
                  </c:forEach> 
                  </c:if>
@@ -221,6 +255,10 @@
 				
 				            <div class="row">
 				                <div class="col"> ${menu.menuPrice}원 </div>
+				            </div>
+				            
+				            <div class="row">
+				            <button type="button" class="btn btn-success openmodel" style="margin-top: 0px" value="${menu.menuNo}">메뉴수정</button>
 				            </div>
 				        </div>
 				    </c:forEach>
@@ -336,7 +374,7 @@
 
                 <div class="row" style="margin-top: 10px;">
                     <div class="col-4"><strong>설명</strong></div>
-                    <div class="col-8"><textarea name="menuInfo" id="menuInfo" cols="30" rows="10" style="width: 170px; height: 130px; font-size: 12px;"></textarea></div>
+                    <div class="col-8"><textarea name="menuInfo" id="menuInfomenuInfo" cols="30" rows="10" style="width: 170px; height: 130px; font-size: 12px;"></textarea></div>
                 </div>
 
                 <div class="row" style="margin-top: 10px;">
@@ -353,6 +391,87 @@
     </div>
 </div>
 </form>
+<form action="menuUpdate"  id="menuupdate">
+<div id="modal3">
+    <div class="modal3-content">    
+        <div class="row" style="margin-bottom: 10px; margin-top: 10px;">
+            <div class="col" style="border-right: solid 1px lightgray; height: 350px;">
+                <div class="row">
+                    <div class="col"><strong style="color: red;">메뉴등록</strong></div>
+                </div>
+
+                <div class="row">
+                    <div class="col">메뉴사진</div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p style="color: red; font-size: 10px; margin: 0px;">업로드를 하지 않을 경우</p>
+                        <p style="color: red; font-size: 10px; margin: 0px;">기본 이미지로 등록 됩니다.</p>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <img src="https://via.placeholder.com/200" alt="" id="menuimgformupdate">
+                    </div>
+                    <div class="col" style="margin-top: 35px;">
+                        <label for="menuimgupdate">
+                        <div class="btn-upload">사진 업로드</div>
+                        </label>
+                        <input type="file" name="menuPicture" id="menuimgupdate" accept="image/*">
+                    </div>
+                </div>
+            </div>   
+
+            <div class="col">
+                <div class="row">
+                    <div class="col"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4"><strong>카테고리</strong></div>
+                    <div class="col-8">
+	                    <select name="menuCategoryNo" id="menuCatenoupdate" style="width: 100%; height: 100%; font-size: 12px;">
+			                <c:forEach var="menucate" items="${menuCategory}" >
+								<option value="${menucate.menuCategoryNo}">${menucate.menuCategoryName}</option>		                
+			                </c:forEach>
+	                    </select>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-4"><strong>메뉴명</strong></div>
+                    <div class="col-8">
+                    	<input name="menuName" id="menuNameupdate" type="text" style="width: 100%; height: 100%; font-size: 12px;">
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-4"><strong>가격</strong></div>
+                    <div class="col-8"><input name="menuPrice" id="menuPriceupdate" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="width: 100%; height: 100%; font-size: 12px;"></div>
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-4"><strong>설명</strong></div>
+                    <div class="col-8"><textarea name="menuInfoupdate" id="menuInfoupdate" cols="30" rows="10" style="width: 170px; height: 130px; font-size: 12px;"></textarea></div>
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-4"><strong>원산지</strong></div>
+                    <div class="col-8"><input name="menuOrigin" id="menuOriginupdate" type="text" style="width: 100%; height: 100%; font-size: 12px;"></div>
+                    <input type="hidden" id="menuupdateNo" value="" name="menuNo">
+                </div>
+
+                <div class="row" style="margin-top: 35px;">
+                    <div class="col"><button type="button" class="btn btn-danger" id="close-modal3">취소하기</button></div>
+                    <div class="col" style="text-align: right"><button type="submit" class="btn btn-success">수정하기</button></div>
+                </div>           
+            </div>
+        </div>
+    </div>
+</div>
+</form>          
 <script>
 
 $("#menumdelete").dblclick(function(){
@@ -555,6 +674,135 @@ $('input[type="text"]').keydown(function() {
     event.preventDefault();
   };
 });
+
+// 수정하기
+    const modal3 = document.getElementById("modal3");
+    const openModalButtons = document.querySelectorAll(".openmodel");
+    const closeModal3Btn = document.getElementById("close-modal3");
+    
+    // 콘솔 값 찍기
+    $("#menuInfo").on("input", function() {
+        console.log($("textarea[name=menuInfo]").val().replace(/(?:\r\n|\r|\n)/g, '<br>')); 
+    });
+
+    // 모달 열기 
+    openModalButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+
+            modal3.style.display = "block"
+            document.body.style.overflow = "hidden"; // 스크롤바 제거
+
+        });
+    });
+    
+    // 버튼 콘솔 출력
+    openModalButtons.forEach((button) => {
+        button.addEventListener("click", (event) => {
+    		  	let buttonValue = event.target.value;
+  	          	console.log(buttonValue);
+  	        	// 아이디가 bookingNo인걸 선택
+  	        	let hiddenInput = document.getElementById('menuupdateNo');
+  				// value를 선택된 버튼의 value로 변환
+	        	hiddenInput.value = buttonValue;
+	    		let menuInfo = $("#menuInfoupdate");
+	    		let menuOrigin = $("#menuOriginupdate");
+	    		let menuPrice = $("#menuPriceupdate");
+	    		let menuName = $("#menuNameupdate");
+	    		let menuImg = document.getElementById("menuimgformupdate");
+	    		let menuCategoryDropdown = document.getElementById("menuCatenoupdate");
+    		  $.ajax({
+    		  		"url" : "getMenu.ajax",
+    				"data" : "menuNo="+buttonValue,
+    				"type" : "POST" ,
+    				"dataType" : "json",
+    				"success" : function(resData){
+    					console.log(resData.menuInfo);
+    					console.log(resData.menuOrigin);
+    					console.log(resData.menuPrice);
+    					console.log(resData.menuName);
+    					menuInfo.val(resData.menuInfo);
+    					menuOrigin.val(resData.menuOrigin);
+    					menuPrice.val(resData.menuPrice)
+    					menuName.val(resData.menuName)
+    					if(resData.menuPicture != null){
+    						menuImg.src = resData.menuPicture;	
+    					}
+    					menuCategoryDropdown.value = resData.menuCategoryNo;
+    				},
+    		          "error" : function(xhr,statusText,err){
+    		  			console.error("error...");
+    		  		}
+    		  })
+    	  });
+
+    	});
+
+    // 모달창 닫기
+    closeModal3Btn.addEventListener("click", () => {
+      modal3.style.display = "none";
+      document.body.style.overflow = "auto"; // 스크롤바 보이기
+    });
+    
+
+    $("#cateaddsubmit").submit( function(){
+        let cateadd = $("#cateadd").val();
+    
+        if(cateadd.length == 0){
+            alert("카테고리를 입력 해주세요");
+            return false;
+        }
+    })
+
+
+// 파일 폼의 값이 바뀔때 이벤트를 체크해줌
+$("#menuimgupdate").on("change", function(event) {
+
+// 현재 바뀐 이벤트의 파일명을 가져옴
+let file = event.target.files[0];
+
+let reader = new FileReader(); 
+reader.onload = function(e) {
+    $("#menuimgformupdate").attr("src", e.target.result);
+}
+reader.readAsDataURL(file);
+});
+
+$("#menuupdate").on("submit", function(){
+    let menuInfo = $("#menuInfo").val();
+    let menuOrigin = $("#menuOrigin").val();
+    let menuPrice = $("#menuPrice").val();
+    let menuName = $("#menuName").val();
+    
+    if ($("#menuimgupdate").get(0).files.length != 0) {
+        $("#menuupdate").attr("enctype", "multipart/form-data");
+    }else {
+    	$("#menuupdate").attr("action", "NofilemenuUpdate");
+    	$("#menuimgupdate").remove();
+    }
+    
+    $("textarea[name=menuInfo]").val().replace(/(?:\r\n|\r|\n)/g, '<br>');
+
+    if(menuInfo.length == 0){
+        alert("메뉴 설명을 입력해주세요");
+        return false;
+    }
+
+    if(menuOrigin.length == 0){
+        alert("원산지를 입력해주세요");
+        return false;
+    }
+
+    if(menuPrice.length == 0){
+        alert("메뉴 가격을 입력해주세요");
+        return false;
+    }
+
+    if(menuName.length == 0){
+        alert("메뉴 이름을 입력해주세요");
+        return false;
+    }
+
+})
 </script>
 </body>
 </html>

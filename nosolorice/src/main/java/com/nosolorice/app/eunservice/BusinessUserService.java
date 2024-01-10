@@ -8,7 +8,7 @@ public interface BusinessUserService {
 	
 	public void addBusinessUser(BusinessUser businesssUser);
 	
-	public int overlapBusinessNumberCheck(Integer businessNumber);
+	public int overlapBusinessNumberCheck(long businessNumber);
 	
 	public void businessPhoneCheck(String phone, String numStr);
 	

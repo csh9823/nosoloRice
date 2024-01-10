@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,9 @@ public class BusinessUserServiceImpl implements BusinessUserService {
 
 	@Autowired
     private BusinessUserDao businessUserDao;
-    private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public boolean overlapBusinessIdCheck(String businessId) {
@@ -30,7 +33,7 @@ public class BusinessUserServiceImpl implements BusinessUserService {
     }
     
     @Override
-    public int overlapBusinessNumberCheck(Integer businessNumber) {
+    public int overlapBusinessNumberCheck(long businessNumber) {
     	System.out.println("서비스 : " + businessNumber);
         return businessUserDao.overlapBusinessNumberCheck(businessNumber);
     }
@@ -39,10 +42,10 @@ public class BusinessUserServiceImpl implements BusinessUserService {
     public void addBusinessUser(BusinessUser businessUser) {
     	if (businessUser.getPass() != null) {
     		businessUser.setPass(passwordEncoder.encode(businessUser.getPass()));
-	    }
-
+		}
+	
     	businessUserDao.addBusinessUser(businessUser);
-    }
+	}
     
     @Override
 	public String certNum() {

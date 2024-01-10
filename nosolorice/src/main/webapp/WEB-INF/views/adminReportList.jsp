@@ -62,16 +62,16 @@
       <div class="row">
         <div class="col-md-3">
           <ul class="my-3 fs-5">
-                <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
-            <li class="my-5"><a href="userInquiryList" class="textColor">일반회원 문의</a></li>
-            <li class="my-5"><a href="businessInquiryList" class="textColor">사업자회원 문의</a></li>
-            <li class="my-5"><a href="adminReportList" class="textColor">신고내역</a></li>
+            <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
+            <li class="my-5"><a href="noticeList" class="textColor">공지관리</a></li>
+            <li class="my-5"><a href="adminNormalInquiryList" class="textColor">일반회원 문의</a></li>
+            <li class="my-5"><a href="adminBusinessInquiryList" class="textColor">사업자회원 문의</a></li>
+            <li class="my-5"><a href="adminReportList" class="textColor" style="color:#C93C3C">신고내역</a></li>
             <li class="my-5"><a href="joinApprove" class="textColor">가입승인</a></li>
-            <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제 요청</a></li>
+            <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제요청</a></li>
             <li class="my-5"><a href="businessDeleteList" class="textColor">업체삭제</a></li>
             <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
-            <li class="my-5"><a href="businessSales" class="textColor">매출현황</a></li>
-            <li class="my-5"><a href="noticeList" class="textColor">공지관리</a></li>
+            <li class="my-5"><a href="adminSales" class="textColor">매출현황</a></li>
           </ul>
         </div>     
            
