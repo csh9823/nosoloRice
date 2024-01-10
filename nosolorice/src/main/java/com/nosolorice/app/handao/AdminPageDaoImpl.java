@@ -222,7 +222,7 @@ public class AdminPageDaoImpl implements AdminPageDao {
 	@Override
 	public BusinessInquiry getBusinessInquiry(int businessInquiryNo) {
 		
-		return sqlSession.selectOne(Mapper + ".businessInquiryDetail");
+		return sqlSession.selectOne(Mapper + ".businessInquiryDetail",businessInquiryNo);
 	}
 
 	@Override

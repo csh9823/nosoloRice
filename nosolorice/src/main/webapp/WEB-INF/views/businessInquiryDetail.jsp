@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,13 +63,21 @@
         </div> 
          
         <div class="col p-5">
-        
+        	<div class="my-3 fs-2 fw-bold" style="color: #C93C3C">문의상세</div>
         	<div class="row py-4 fs-5 border-bottom">
         		<div class="col-1">
 					     제 목   
         		</div>
         		<div class="col">
         				${businessInquiry.businessTitle}
+        		</div>
+        		
+        		<div class="col-1">
+        			 번호
+        		</div>
+        		
+        		<div class="col">
+        			${businessInquiry.businessInquiryNo}
         		</div>
         	</div>
         	
@@ -87,7 +96,7 @@
         		</div>
 
         		<div class="col fs-5">
-        			${businessInquiry.businessInquiryRegDate}
+        			<fmt:formatDate value="${businessInquiry.businessInquiryRegDate}" pattern="yyyy-MM-dd" />
         		</div>
         			
         	</div>
