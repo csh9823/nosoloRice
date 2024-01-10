@@ -244,7 +244,7 @@ public class AdminPageController {
 	  @RequestMapping("/businessInquiryDetail")
 	  public String businessInquiryDetail(Model model,int businessInquiryNo,@RequestParam(value="pageNum", required=false, defaultValue="1") int pageNum) {
 		  
-		  BusinessInquiry businessInquiry = adminPageService.getBusinessInquiry(businessInquiryNo);
+		  BusinessInquiry businessInquiry = adminPageService.getBusinessInquiry(businessInquiryNo);	  
 		  
 		  model.addAttribute("businessInquiry",businessInquiry);
 		  model.addAttribute("pageNum",pageNum);
