@@ -117,7 +117,7 @@ public class SehwaController {
 		user.setAddress2(address2);
 		if(multi != null && !multi.isEmpty()) {
 			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
-			UUID uid = UUID.randomUUID();
+			UUID uid = UUID.randomUUID(); 
 			String saveName = uid.toString() + "_" + multi.getOriginalFilename();
 			File file = new File(filePath, saveName);
 			multi.transferTo(file);
