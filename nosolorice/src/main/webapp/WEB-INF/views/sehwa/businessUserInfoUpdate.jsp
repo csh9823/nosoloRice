@@ -17,7 +17,7 @@
 
 </head>
 <body>
-  <div class="container">
+  <div class="container"> 
   <div class="row">
   	<%@ include file="../../temple/header/businessMenubar.jsp" %>
   	<div class="col-md-9">
