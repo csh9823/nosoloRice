@@ -226,9 +226,10 @@ $(function(){
 	//가져온 room_id를 이용해 웹소켓채팅서버를 연다 - 완료
 	//학원꺼
 	//let url = "ws://192.168.0.14:8081/app/chating/" + roomId;
+	let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
 	
 	//집꺼
-	let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
+	//let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
 	
 	//현진이꺼
 	// let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
@@ -349,8 +350,9 @@ $(function(){
 			//사장님과 통신할 웹소켓서버에 연결
 			//학원꺼
 			//let url = "ws://192.168.0.14:8081/app/booking/" + businessId;
+			let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
 			//집꺼
-			let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
+			//let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
 			//현진이꺼		
 			//let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
 			
@@ -553,7 +555,7 @@ $(function(){
 		                    <div class="row mt-2 chatRow" data-id=` + chatId + ` data-type=` + chatType + ` + data-time=` + chatRegDate + `>
 		                        <div class="col"></div>
 		                        <div class="col-5">
-		                            <div class="row my-1 justify-content-end">
+		                            <div class="row my-1 d-flex justify-content-end">
 		                            	<div class="col-auto p-0 me-1 d-flex align-items-end">
 		                            		<span style="font-size: 12px;" class="regDate">
 		                                    ` + chatRegDate + `
@@ -776,6 +778,8 @@ $(function(){
 				`);
 			break;
 			case 'book' : 
+			
+				isBooking = true;
 			
 				let bookChatInfo = JSON.parse(chatMsg);
 				let businessId = bookChatInfo.businessId;
@@ -1177,8 +1181,10 @@ $(function(){
     });
     
     //채팅본문에 프로필이미지를 눌렀을 때
-    $(".chatProfileImg").on("click", function (e) {
+    $(document).on("click", ".chatProfileImg", function (e) {
         $("#userConfigBox").addClass("d-none");
+        
+        console.log($("#userConfigBox"));
 		
 		let userNickName = $(this).parent().next().children().eq(0).children().text().trim();
 		let userId = $(this).parent().parent().attr("data-id");
@@ -1214,6 +1220,8 @@ $(function(){
     
     //신고하기 모달열기
     $(".reportBtn").on("click", function(){
+    	$("#reportContent").val("");
+    	$("#reportImgFile").val("");
         $("#blockModal").addClass("d-none");
         $("#reportModal").removeClass("d-none");
         $("#userConfigBox").addClass("d-none");
@@ -1285,6 +1293,7 @@ $(function(){
         	}
         	
         });
+        $("#reportTargetName").text($("#reportTargetNick").text().trim());
         $("#reportModal").addClass("d-none");
         $("#reportCompleteModal").removeClass("d-none");
     });
@@ -1299,7 +1308,7 @@ $(function(){
     
 		let blockHistoryNo;
 		let blockDate;
-		let blockState = "1";
+		let blockState = "차단";
 		let blocker = loginId;
 		let blockAttacker = $("#blockTargetId").val();
 		let nick = $(".blockTargetNick:first").text().trim();
@@ -1345,7 +1354,7 @@ $(function(){
     $("#chatQuitSubmitBtn").on("click", function(){
         
         if(bookComplete){
-        	location.href="login";
+        	location.href="mainPage";
         } else {
         	
         	//chat_member 테이블에서 자기 자신 삭제
@@ -1373,7 +1382,7 @@ $(function(){
         	socket.send(jsonData);
         	//socket.disconnect 하고 main페이지로 이동
         	socket.close();
-        	location.replace("login");
+        	location.replace("mainPage");
         }
         
     });

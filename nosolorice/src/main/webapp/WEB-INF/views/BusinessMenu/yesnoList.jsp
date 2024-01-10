@@ -242,7 +242,10 @@
                     </form>
                 </div>
             </div>
-
+            
+            <!-- 알림음 -->
+			<audio id="alarm" src="resources/audio/alarm.mp3"></audio>
+			
         </div>
     </div>
 </div>
@@ -258,15 +261,16 @@
     
     //예약관리 페이지에 접속하면 웹소켓 서버에 연결한다. 서버 아이피 입력
 
-    let url = "ws://192.168.0.44:8090/app/booking/" + loginId;
-
+    //let url = "ws://192.168.0.44:8090/app/booking/" + loginId;
     
     //학원꺼
     //let url = "ws://192.168.0.14:8081/app/booking/" + loginId;
+    let url = "ws://192.168.0.16:8081/app/booking/" + loginId;
     
     //집꺼
     //let url = "ws://192.168.35.92:8081/app/booking/" + loginId;
 
+			let alarm = document.getElementById('alarm');
 			
 			bookingSocket = new WebSocket(url);
 			
@@ -287,15 +291,19 @@
 				
 				if(msgObj.type == 'request'){
 					//알림
-					alert("새로운 예약이 접수되었습니다");
-					location.reload();
+					alarm.play();
+			        alarm.addEventListener('ended', function() {
+			            location.reload();
+			        });
 				}
 				
 				if(msgObj.type == 'userCancel'){
 					let bookNo = msgObj.bookNo; 
 					//알림
-					alert(bookNo + "번 예약이 취소 되었습니다");
-					location.reload();
+					alarm.play();
+			        alarm.addEventListener('ended', function() {
+			            location.reload();
+			        });
 				}
 				
 				
@@ -378,6 +386,7 @@
 		const jsonData = JSON.stringify(rejectMsg);
     	bookingSocket.send(jsonData);
     });
+    
     
 </script>
 </body>

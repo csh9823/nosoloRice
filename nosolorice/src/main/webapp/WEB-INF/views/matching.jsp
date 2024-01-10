@@ -14,12 +14,9 @@
 
 </head>
 <body>
-
-	<input type="hidden" id="loginId" value="${sessionScope.NormalUser.normalId}">
-		
+	<input type="hidden" id="loginId" value="${sessionScope.NormalUser.normalId}">		
 	<div id="matchingModalBg"></div>
-	<div class="container">
-	  <div class="row" style="height: 100vh;">
+	  <div class="row mt-5">
 		<div class="col d-flex justify-content-center align-items-center">
 		
 
@@ -384,7 +381,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="resources/js/kakaomap.js"></script>
 </body>

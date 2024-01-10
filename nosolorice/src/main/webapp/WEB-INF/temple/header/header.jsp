@@ -70,7 +70,7 @@
     	
 		      <!-- nav_logo -->
 		
-		      <a class="logo" href="main.html"><img src="resources/img/logo/nosolorice_logo_s.png"></a>
+		      <a class="logo" href="mainPage"><img src="resources/img/logo/nosolorice_logo_s.png"></a>
 		    
 		      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		        <span class="navbar-toggler-icon"></span>
@@ -82,19 +82,19 @@
 		    
 		          <!-- nav_content -->
 		          <li class="nav-item">
-		            <a class="nav-link " aria-current="page" href="#">서비스 소개</a>
+		            <a class="nav-link " aria-current="page" href="mainPage?introduce=true">서비스 소개</a>
 		          </li>
 		
 		          <li class="nav-item">
-		            <a class="nav-link " aria-current="page" href="/matching">매칭하기</a>
+		            <a class="nav-link " aria-current="page" href="matching">매칭하기</a>
 		          </li>
 		    
 		          <li class="nav-item">
-		            <a class="nav-link " aria-current="page" href="#">마이페이지</a>
+		            <a class="nav-link " aria-current="page" href="normalUserInfoUpdate">마이페이지</a>
 		          </li>
 		
 		          <li class="nav-item">
-		            <a class="nav-link " aria-current="page" href="/question">고객센터</a>
+		            <a class="nav-link " aria-current="page" href="question">고객센터</a>
 		          </li>
 		    
 		        </ul>

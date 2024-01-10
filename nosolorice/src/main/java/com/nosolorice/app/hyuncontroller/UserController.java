@@ -45,7 +45,12 @@ public class UserController {
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
-	
+
+	@RequestMapping("mainPage")
+	public String mainPage(@RequestParam(value="introduce", required=false) boolean introduce, Model model) {
+		model.addAttribute("introduce", introduce);
+		return "mainPage";
+	}
 	
 	@RequestMapping("userInquiry")
 	public String userInquiry(Model model) {
@@ -230,6 +235,12 @@ public class UserController {
 		Map<String, Boolean> map = new HashMap<>();
 		map.put("result", true);
 		return map;
+	}
+	
+	@RequestMapping("getBlockList")
+	@ResponseBody
+	public List<BlockHistory> getBlockList(String blocker){
+		return userService.getBlockList(blocker);
 	}
 	
 	@RequestMapping("addBooking")

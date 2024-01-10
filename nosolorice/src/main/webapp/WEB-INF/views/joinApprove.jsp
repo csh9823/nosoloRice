@@ -11,8 +11,36 @@
 		cursor:pointer;
 		background-color: #f0f0f0;
 	}
+	
+	    ul {
+      list-style: none;
+    }
+    .textColor{
+      text-decoration: none;
+      color : #616161;
+    }
+    * {
+      font-family: 'SUITE Variable', sans-serif;
+    }
+     .pagination .page-item.active .page-link {
+    background-color: #FA9884;
+    border-color: #FA9884;
+    color: #fff; 
+   }
+
+   .pagination .page-link {
+    color: #C93C3C;
+   }
+
+   .pagination .page-link:hover {
+    color: #fff; 
+    background-color: #C93C3C;
+    border-color: #C93C3C;
+   }
+	
 </style>
 <link href="resources/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/variable/woff2/SUITE-Variable.css" rel="stylesheet">
 <script src="resources/js/jquery-3.2.1.min.js"></script>
 <script>
 $(function(){
@@ -72,6 +100,22 @@ $(function(){
 <body>
 	<div class="container">
 		<div class="row">
+		
+			<div class="col-md-3">
+	          <ul class="my-3 fs-5">
+	             <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
+	            <li class="my-5"><a href="noticeList" class="textColor">공지관리</a></li>
+	            <li class="my-5"><a href="adminNormalInquiryList" class="textColor">일반회원 문의</a></li>
+	            <li class="my-5"><a href="adminBusinessInquiryList" class="textColor">사업자회원 문의</a></li>
+	            <li class="my-5"><a href="adminReportList" class="textColor">신고내역</a></li>
+	            <li class="my-5"><a href="joinApprove" class="textColor" style="color:#C93C3C">가입승인</a></li>
+	            <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제 요청</a></li>
+	            <li class="my-5"><a href="businessDeleteList" class="textColor">업체삭제</a></li>
+	            <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
+	            <li class="my-5"><a href="adminSales" class="textColor">매출현황</a></li>
+	          </ul>
+	        </div>  
+		
 			<div class="col">
 				<!-- 여기서부터 작업 시작 -->
 				

@@ -204,5 +204,10 @@ public class UserServiceImpl implements UserService {
 	public List<NormalUser> getBookingUserList(int bookingNo) {
 		return userDao.getBookingUserList(bookingNo);
 	}
+
+	@Override
+	public List<BlockHistory> getBlockList(String blocker) {
+		return userDao.getBlockList(blocker);
+	}
 	
 }

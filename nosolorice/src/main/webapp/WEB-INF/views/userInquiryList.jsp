@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/variable/woff2/SUITE-Variable.css" rel="stylesheet">
 <link href="resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 <script src="resources/js/jquery-3.2.1.min.js"></script>
 <style>
@@ -16,6 +17,27 @@
 		cursor:pointer;
 		background-color: #f0f0f0;
 	}
+	
+	    ul {
+      list-style: none;
+    }
+    a{
+      text-decoration: none;
+      color : #616161;
+    }
+    a:active {
+      color: #C93C3C ;
+      
+    }
+    * {
+      font-family: 'SUITE Variable', sans-serif;
+    }
+
+  .answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
 </style>
 <script>
 	$(function(){
@@ -37,6 +59,19 @@
 				<!-- 여기서부터 작업 시작 -->
 				
 				<div class="row">
+			        <div class="col-md-3">
+			            <ul class="my-3">
+			                 <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">고객센터</li>
+			                <li class="my-5 fs-4"><a href="question">자주 묻는 질문</a></li>
+			                <li class="my-5 fs-4"><a href="userInquiry">1:1 문의</a></li>
+			                <li class="my-5 fs-4"><a href="userInquiryList">1:1 문의내역</a></li>
+			                <li class="my-5 fs-4"><a href="noticeNormal">공지사항</a></li>
+			            </ul>
+			        </div>
+			        <div class="col-md-1 d-none d-md-block my-5" style="margin-left: -50px;">
+			            <div style="border-left: 1px solid #ccc; height: 80vh;"></div>
+			        </div>
+				
 					<div class="col bg-white" style="min-height:100vh;">
 					
 						<div class="row mx-2 mt-5">

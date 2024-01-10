@@ -1,6 +1,27 @@
+let originXPoint = "";
+let originYPoint = "";
+
+//loginId에 해당하는 회원정보에서 주소정보를 가져온다.
+$.ajax({
+	url : "/app/getNormalUserInfo",
+	data : "normalId=" + $("#loginId").val(),
+	type : "post",
+	dataType : "json",
+	async : false,
+	success : function(resData){
+		console.log("시작하자마자 가져온 로그인데이터 : ", resData);
+		originXPoint = resData.xpoint;
+		originYPoint = resData.ypoint;
+		console.log(originXPoint);
+		console.log(originYPoint)
+	}, error : function(err){
+		console.log(err);
+	}
+});
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(originXPoint, originYPoint), // 지도의 중심좌표
         level: 5 // 지도의 확대 레벨
     };
 

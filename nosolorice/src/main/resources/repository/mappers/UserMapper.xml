@@ -41,7 +41,7 @@
 		from chat_history  
 		JOIN 
     	normal_user ON chat_history.normal_id = normal_user.normal_id 
-		where chat_name = #{roomId}
+		where chat_name = #{roomId} order by chat_regdate
 	</select>
 	
 	<select id="getChatRoomInfo" resultType="java.util.Map">
@@ -277,6 +277,18 @@
 		JOIN normal_user nu ON bu.normal_id = nu.normal_id
 		WHERE bu.booking_no = #{bookingNo}
 	</select>
+	
+	<select id="getBlockList" resultType="BlockHistory" resultMap="blockResultMap">
+		select * from block_history where blocker = #{blocker}		
+	</select>
+	
+	<resultMap id="blockResultMap" type="BlockHistory">
+		<id property="blockHistoryNo" column="block_history_no"/>
+		<result property="blockDate" column="block_date"/>
+		<result property="blockState" column="block_state"/>
+		<result property="blocker" column="blocker"/>
+		<result property="blockAttacker" column="block_attacker"/>
+	</resultMap>
 	
 	
 	<resultMap id="bookingMap" type="Booking">

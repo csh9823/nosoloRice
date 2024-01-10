@@ -53,4 +53,6 @@ public interface UserService {
 	public void deleteBookingUserList(String normalId);
 	public void payWithPoint(String normalId, int deposit);
 	public List<NormalUser> getBookingUserList(int bookingNo);
+	
+	public List<BlockHistory> getBlockList(String blocker);
 }

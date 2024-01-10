@@ -168,7 +168,7 @@ $(function(){
     });
 
     $("#step3_2NextBtn").on("click", function(){
-        const addressValue = $("#addressValue").text();
+        const addressValue = $("#addressValue").text().trim();
         if(addressValue.length <= 0){
             alert("주소를 입력해주세요");
             return;
@@ -385,15 +385,34 @@ $(function(){
             const age = $("#matchingAgeSelect").val();
             //세션로그인 이용자의 정보. 일단 임시로 지정해놓음
             const sessionGender = "male";
+            let blockList = new Array();
+            //ajax로 자신의 blockList를 가져온다.
+            $.ajax({
+            	url : "/app/getBlockList",
+            	data : "blocker=" + loginId,
+            	type : "post",
+            	dataType : "json",
+            	async : false,
+            	success : function(resData){
+            		console.log(resData);
+            		blockList = resData;
+            	}, error : function(err){
+            		console.log(err);
+            	}
+            });
+            
+            console.log("blockList : ", blockList);
             
 			const matchingData = {
+				loginId : loginId,
 		        memberCount : memberCount,
 		        locationMethod: locationMethod,
 		        locationInfo : locationInfo,
 		        category : category,
 		        gender : gender,
 		        age : age,
-		        sessionGender : sessionGender
+		        sessionGender : sessionGender,
+		        blockList : blockList
 		    };
 		    matchingServerConnect(matchingData);
             
@@ -405,9 +424,10 @@ $(function(){
     
     	//학원꺼
 	    //let url = "ws://192.168.0.14:8081/app/matching";
+	    let url = "ws://192.168.0.16:8081/app/matching";
 	    
 	    //집꺼
-	    let url = "ws://192.168.35.92:8081/app/matching";
+	    //let url = "ws://192.168.35.92:8081/app/matching";
 	    
 	    //현진이꺼
 		//let url = "ws://192.168.0.44:8090/app/matching";
@@ -559,7 +579,27 @@ $(function(){
     });
 	
     $("#mapMyAdressBtn").on("click", function(){
-        const myAddress = [33.44989314758255, 126.5770215978931];
+    	
+    	let xPoint = "";
+    	let yPoint = "";
+    	
+    	//loginId에 해당하는 회원정보에서 주소정보를 가져온다.
+    	$.ajax({
+    		url : "/app/getNormalUserInfo",
+    		data : "normalId=" + loginId,
+    		type : "post",
+    		dataType : "json",
+    		async : false,
+    		success : function(resData){
+    			console.log(resData);
+    			xPoint = resData.xpoint;
+    			yPoint = resData.ypoint;
+    		}, error : function(err){
+    			console.log(err);
+    		}
+    	});
+    
+        const myAddress = [xPoint, yPoint];
         $('#mapAddressSearchModal').css("opacity", "0");
         setTimeout(function(){
             $("#mapAddressSearchModal").css("display", "none");

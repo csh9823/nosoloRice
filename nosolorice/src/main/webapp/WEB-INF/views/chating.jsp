@@ -683,7 +683,7 @@
                          <!-- 신고완료 모달 시작 -->
                          <div id="reportCompleteModal" class="text-center h-100 d-flex align-items-center justify-content-center d-none">
                              <p class="fs-3">
-                                 <span class="text-dark fs-3" style="font-weight: 600;">홍길동</span>님에 대한<br>
+                                 <span class="text-dark fs-3" style="font-weight: 600;" id="reportTargetName">홍길동</span>님에 대한<br>
                              신고가 완료 되었습니다<br>
                              <input type="button" class="btn btn-dark btn-lg mt-3 reportCompleteModalCloseBtn" value="확인">
                              </p>
