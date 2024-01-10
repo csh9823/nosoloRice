@@ -47,7 +47,7 @@
 		         </div>
 		         <div class="col-6">
 		           <label>전화번호</label>
-		           <input type="text" class="form-control" value="${BusinessUser.mobile}" readonly>
+		           <input type="text" class="form-control" value="${BusinessUser.phone}" readonly>
 		         </div>
 		       </div>
 		       <div class="row">

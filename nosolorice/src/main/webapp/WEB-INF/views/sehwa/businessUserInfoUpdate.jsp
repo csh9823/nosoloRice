@@ -17,7 +17,7 @@
 
 </head>
 <body>
-  <div class="container">
+  <div class="container"> 
   <div class="row">
   	<%@ include file="../../temple/header/businessMenubar.jsp" %>
   	<div class="col-md-9">
@@ -326,6 +326,13 @@
 		squareContainer.style.height = width + 'px'; // 세로 크기를 가로 크기와 동일하게 설정
 	 });
 	window.dispatchEvent(new Event('resize'));
+	
+	// 엔터키 방지
+	$('input[type="text"]').keydown(function() {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+		};
+	});
 	
   </script>
   

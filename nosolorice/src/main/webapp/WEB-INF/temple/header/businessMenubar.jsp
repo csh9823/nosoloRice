@@ -51,7 +51,7 @@
               <span class="fs-4 fw-bold">예약관리</span>
             </div>
             <div class="menu row p-4" onclick="location.href=''">
-              <span class="fs-4 fw-bold">예약이력</span>
+              <span class="fs-4 fw-bold">매출내역</span>
             </div>
             <div class="menu row p-4" onclick="location.href=''">
               <span class="fs-4 fw-bold"><a class="busreview" href="Businessriview?businessId=${sessionScope.BusinessUser.businessId}">리뷰관리</a></span>
