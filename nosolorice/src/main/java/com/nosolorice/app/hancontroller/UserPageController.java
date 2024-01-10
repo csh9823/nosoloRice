@@ -12,11 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.nosolorice.app.domain.normalUser.BlockHistory;
-import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
-import com.nosolorice.app.domain.normalUser.ReportDetails;
 import com.nosolorice.app.hanservice.UserPageService;
 
 @Controller
@@ -54,8 +50,7 @@ public class UserPageController {
 		
 		String blocker = normal.getNormalId();
 		
-		System.out.println(blocker + "컨트롤러 유저");
-		
+
 		Map<String, Object> map = userPageService.blockList(blocker,pageNum);
 				
 		model.addAllAttributes(map);

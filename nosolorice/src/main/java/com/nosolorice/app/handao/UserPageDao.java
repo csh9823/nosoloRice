@@ -3,7 +3,6 @@ package com.nosolorice.app.handao;
 import java.util.List;
 
 import com.nosolorice.app.domain.normalUser.BlockHistory;
-import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
 
 public interface UserPageDao {
@@ -25,4 +24,3 @@ public interface UserPageDao {
 		
 
 	}
-

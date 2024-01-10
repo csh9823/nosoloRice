@@ -66,9 +66,10 @@
     </div>
     
      <div class="row text-center border-bottom border-top py-3">
-      <div class="col-2">번호</div>
-      <div class="col-7">제목</div>
+      <div class="col-1">번호</div>
+      <div class="col-6">제목</div>
       <div class="col-3">등록일</div>
+      <div class="col-2">작성자</div>
     </div>
 
   <c:if test="${empty bList}"> 
@@ -81,9 +82,10 @@
   <c:if test="${not empty bList}">
     <c:forEach var="b" items="${bList}">
     	<div class="row text-center py-3 noticeRow" style="cursor:pointer;">
-      			<div class="col-2">${b.businessNoticeNo}</div>
-      			<div class="col-7">${b.businessNoticeTitle}</div>
+      			<div class="col-1">${b.businessNoticeNo}</div>
+      			<div class="col-6">${b.businessNoticeTitle}</div>
       			<div class="col-3"><fmt:formatDate value="${b.businessNoticeRegDate}" pattern="yyyy-MM-dd" /></div>
+      			<div class="col-2">관리자</div>
     	</div>
     <div class="row p-5 border-bottom d-none noticeContentRow">
     	<div class="col">

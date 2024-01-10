@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.nosolorice.app.domain.Review.Review;
+import com.nosolorice.app.domain.businessUser.BusinessInquiry;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
@@ -32,7 +33,7 @@ public class AdminPageDaoImpl implements AdminPageDao {
 	@Override
 	public List<ReportDetails> reportList(int start,int num) {
 		
-Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 			map.put("start", start);
 			map.put("num", num);
@@ -49,13 +50,12 @@ Map<String, Object> map = new HashMap<String, Object>();
 	@Override
 	public List<Review> reviewList(int start,int num) {
 		
-Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 			map.put("start", start);
 			map.put("num", num);
 	
 			List<Review> rList = sqlSession.selectList(Mapper +".reviewList",map);
-			System.out.println(rList.size());
 			
 		return rList;
 	}
@@ -130,6 +130,7 @@ Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("start", start);
 		map.put("num", num);
+		
 		List<BusinessUser> list = sqlSession.selectList(Mapper + ".businessDeleteList",map);
 	
 			return list;
@@ -170,7 +171,7 @@ Map<String, Object> map = new HashMap<String, Object>();
 
 		sqlSession.delete(Mapper + ".businessDelete",id);
 	}
-
+	
 	@Override
 	public List<UserInquiry> adminNormalInquiryList(int start,int num) {
 		
@@ -200,6 +201,39 @@ Map<String, Object> map = new HashMap<String, Object>();
 		sqlSession.update(Mapper + ".answerInquiry",userInquiry);
 		
 	}
+
+	@Override
+	public List<BusinessInquiry> adminBusinessInquiryList(int start, int num) {
+		
+		Map<String,Object> map = new HashMap<>();
+		
+		map.put("start", start);
+		map.put("num", num);
+		
+		return sqlSession.selectList(Mapper + ".adminBusinessInquiryList",map);
+	}
+
+	@Override
+	public int getBusinessInquiryCount() {
+		
+		return sqlSession.selectOne(Mapper + ".getBusinessInquiryCount");
+	}
+
+	@Override
+	public BusinessInquiry getBusinessInquiry(int businessInquiryNo) {
+		
+		return sqlSession.selectOne(Mapper + ".businessInquiryDetail");
+	}
+
+	@Override
+	public void answerBusinessInquiry(BusinessInquiry businessInquiry) {
+		
+		sqlSession.update(Mapper + ".businessAnswerInquiry");
+		
+	}
+
+
+
 
 
 	

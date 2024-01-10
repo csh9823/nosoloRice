@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.nosolorice.app.handao.AdminPageDao;
 import com.nosolorice.app.domain.Review.Review;
+import com.nosolorice.app.domain.businessUser.BusinessInquiry;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
@@ -250,7 +251,7 @@ public class AdminPageServiceImpl implements AdminPageService {
 		adminPageDao.reviewDelete(reviewNo);
 
 	}
-
+	
 	@Override
 	public Map<String, Object> adminNormalInquiryList(int pageNum) {
 		
@@ -303,6 +304,61 @@ public class AdminPageServiceImpl implements AdminPageService {
 	public void answerInquiry(UserInquiry userInquiry) {
 		
 		adminPageDao.answerInquiry(userInquiry);
+		
+	}
+
+	@Override
+	public Map<String, Object> adminBusinessInquiryList(int pageNum) {
+		
+		int currentPage = pageNum;
+
+		int startRow = (currentPage - 1) * PS;
+		
+		int listCount = 0;
+
+		listCount = adminPageDao.getBusinessInquiryCount();
+
+		if (listCount > 0) {
+
+			List<BusinessInquiry> adminBusinessInquiryList = adminPageDao.adminBusinessInquiryList(startRow, PS);
+
+			int pageCount = listCount / PS + (listCount % PS == 0 ? 0 : 1);
+
+			int startPage = (currentPage / PG) * PG + 1 - (currentPage % PG == 0 ? PG : 0);
+
+			int endPage = startPage + PG - 1;
+
+			if (endPage > pageCount) {
+				endPage = pageCount;
+			}
+
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			map.put("adminBusinessInquiryList", adminBusinessInquiryList);
+			map.put("currentPage", currentPage);
+			map.put("pageCount", pageCount);
+			map.put("startPage", startPage);
+			map.put("endPage", endPage);
+			map.put("currentPage", currentPage);
+			map.put("listCount", listCount);
+			map.put("pageGroup", PG);
+
+			return map;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public BusinessInquiry getBusinessInquiry(int businessInquiryNo) {
+
+		return adminPageDao.getBusinessInquiry(businessInquiryNo);
+	}
+
+	@Override
+	public void answerBusinessInquiry(BusinessInquiry businessInquiry) {
+		
+		adminPageDao.answerBusinessInquiry(businessInquiry);
 		
 	}
 

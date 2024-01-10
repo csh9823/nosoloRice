@@ -3,6 +3,7 @@ package com.nosolorice.app.handao;
 import java.util.List;
 
 import com.nosolorice.app.domain.Review.Review;
+import com.nosolorice.app.domain.businessUser.BusinessInquiry;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
@@ -53,7 +54,16 @@ public interface AdminPageDao {
 	public abstract UserInquiry getInquiry(int userInquiryNo);
 	
 	public abstract void answerInquiry(UserInquiry userInquiry);
+	
+	public abstract List<BusinessInquiry> adminBusinessInquiryList(int start,int num);
+	
+	public abstract int getBusinessInquiryCount();
+	
+	public abstract BusinessInquiry getBusinessInquiry(int businessInquiryNo);
 
+	public abstract void answerBusinessInquiry(BusinessInquiry businessInquiry);
+	
+	
 	
 	
 	

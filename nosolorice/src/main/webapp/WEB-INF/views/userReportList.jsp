@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,9 +53,7 @@
 <body>
 
   <div class="container">
-    
-      
-  
+
       <div class="row">
         <div class="col-md-3">
             <ul class="my-3">
@@ -69,10 +67,7 @@
 
             </ul>
         </div>
-        
-        <div class="col-md-1 d-none d-md-block my-5" style="margin-left: -50px;">
-            <div style="border-left: 1px solid #616161; height: 80vh;"></div>
-        </div>
+
         <div class="col mt-5">
             <div class="mt-3 fs-2 fw-bold" style="color:#C93C3C">신고내역</div>
               <br>
@@ -91,10 +86,11 @@
                 <div class="col-2">${r.reportNo}</div>
                 <div class="col-2">${r.reportAttacker}</div>
                 <div class="col-3">${r.reportContent}</div>
-                <div class="col-3">${r.reportRegDate}</div>
+                <div class="col-3"><fmt:formatDate value="${r.reportRegDate}" pattern="yyyy-MM-dd" /></div>
                 <div class="col-2">${r.resultDate()}</div>
             </div>
              </c:forEach>
+
           
           
           <div class="row my-5">
@@ -121,8 +117,7 @@
 						    	</li>
 						    </c:if>					    
 					    </c:forEach>
-					    
-				
+
 						<c:if test="${ endPage < pageCount }">
 						    <li class="page-item">
 						      <a class="page-link" href="blockListt?pageNum=${ startPage + PG }">Next</a>
@@ -132,8 +127,6 @@
 					</nav>
 				</div>
 			</div> 
-			
-			     
        </div>
   </div>
 </div>

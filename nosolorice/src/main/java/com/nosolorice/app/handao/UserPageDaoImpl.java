@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.nosolorice.app.domain.normalUser.BlockHistory;
-import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
 @Repository
 public class UserPageDaoImpl implements UserPageDao {
