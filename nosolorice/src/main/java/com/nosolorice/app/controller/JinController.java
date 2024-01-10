@@ -131,6 +131,7 @@ public class JinController {
 		return "login/joinForm";
 	}
 	
+	//로그아웃
 	@RequestMapping("logout")
 	public String logout(HttpSession session) {
 		
@@ -175,7 +176,7 @@ public class JinController {
 			if(buser != null) {
 				System.out.println(buser.getBusinessId());
 				session.setAttribute("BusinessUser", buser);
-				return "redirect:Businessriview?businessId="+buser.getBusinessId();
+				return "redirect:businessUserStoreInfo?Id="+buser.getBusinessId();
 			}
 			
 			if(nuser != null) {
@@ -220,7 +221,7 @@ public class JinController {
 			model.addAttribute("menucatename",menucatename);
 		}
 		
-		return "BusinessMenu/businessMenus";
+		return "forward:/WEB-INF/views/BusinessMenu/businessMenus.jsp";
 	}
 	
 	// 카테고리 추가
@@ -294,7 +295,7 @@ public class JinController {
 		
 		model.addAttribute("booking",booking);
 		
-		return "BusinessMenu/yesnoList";
+		return "forward:/WEB-INF/views/BusinessMenu/yesnoList.jsp";
 	}
 	
 	@RequestMapping("bookingStateOk")
@@ -370,7 +371,7 @@ public class JinController {
 		
 		List<Map<String,Object>> map = jinReviewService.ReviewList(businessId);
 		model.addAttribute("review",map);
-		return "review/Businessriview";
+		return "forward:/WEB-INF/views/review/Businessriview.jsp";
 	}
 	
 	// 리뷰 블라인드 처리

@@ -12,6 +12,16 @@
     .text-red {
       color : #C93C3C !important;
     }
+    .busreview{
+	    text-decoration: none;
+	    color: white;
+    }
+    
+    .busmenu{
+	    text-decoration: none;
+	    color: white;
+    }
+    
   </style>
 <body>
 
@@ -44,10 +54,10 @@
               <span class="fs-4 fw-bold">예약이력</span>
             </div>
             <div class="menu row p-4" onclick="location.href=''">
-              <span class="fs-4 fw-bold"><a href="Businessriview?businessId=${sessionScope.BusinessUser.businessId}">리뷰관리</a></span>
+              <span class="fs-4 fw-bold"><a class="busreview" href="Businessriview?businessId=${sessionScope.BusinessUser.businessId}">리뷰관리</a></span>
             </div>
             <div class="menu row p-4" onclick="location.href=''">
-              <span class="fs-4 fw-bold"><a href="BusinessMenu?businessId=${sessionScope.BusinessUser.businessId}">메뉴관리</a></span>
+              <span class="fs-4 fw-bold"><a class="busmenu" href="businessMenu?businessId=${sessionScope.BusinessUser.businessId}">메뉴관리</a></span>
               </div>
             <div class="menu row p-4" onclick="location.href='businessUserSecession?id=${sessionScope.BusinessUser.businessId}'">
               <span class="fs-4 fw-bold">탈퇴</span>

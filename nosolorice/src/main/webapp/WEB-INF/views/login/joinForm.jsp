@@ -20,7 +20,7 @@
         </div>
         
         <div class="col-5 text-center" style="float: none; margin-top: 40px; font-size: 50px; background-color: rgb(250, 152, 132); border-radius: 10px; width: 400px; min-width: 400px;">
-            <a href="businessJoin" id="joinmembership"><p style="padding-top: 75px;">사업자<br> 회원가입</p></a>
+            <a href="businessjoin" id="joinmembership"><p style="padding-top: 75px;">사업자<br> 회원가입</p></a>
         </div>
         
     </div>
