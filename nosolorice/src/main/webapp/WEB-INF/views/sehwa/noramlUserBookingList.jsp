@@ -434,8 +434,8 @@
     	let year = date.getFullYear();
     	let month = date.getMonth() + 1;
     	let day = date.getDate();
-    	let hour = date.getHours();
-    	let minute = date.getMinutes();
+    	let hour = date.getHours().toString().padStart(2, '0');;
+    	let minute = date.getMinutes().toString().padStart(2, '0');;
     	let format = year + "/" + month + "/" + day + " " + hour + ":" + minute;
     	$(".reviewModalVisitantDate").text(format);
     	// 상호명 보이기
