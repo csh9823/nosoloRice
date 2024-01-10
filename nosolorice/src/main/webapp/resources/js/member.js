@@ -22,7 +22,7 @@ function validateForm() {
     let day = $("#day").val();
     let email = $("#emailId").val();
     let gender = $("input[name='gender']:radio:checked").length;
-    let zip = $("#zipcode").val();
+    let zip = $("#postNum").val();
     let add1 = $("#address1").val();
     let term =  $("input[name='termOK']:checked").length;
     
@@ -230,7 +230,7 @@ function normalFindZipcode(){
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                $("#zipcode").val(data.zonecode);
+                $("#postNum").val(data.zonecode);
                 $("#address1").val(addr);
                 // 커서를 상세주소 필드로 이동한다.
                 $("#address2").focus();
@@ -367,10 +367,10 @@ function normalFindZipcode(){
 	$("#nickName").on("keyup", function() {
 				
 		let nick = $(this).val();
-		let regExp = /^[a-zA-Z0-9]+$/gi;
+		let regExp = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$/gi;
 
 		if(! regExp.test(nick)) {
-			alert("닉네임은 숫자와 영문자 대소문자만 입력 가능합니다.");
+			alert("닉네임은 숫자와 영문자 대소문자, 한글만 입력 가능합니다.");
 			$(this).val($(this).val().replace(regExp, ""));
 		}
 		

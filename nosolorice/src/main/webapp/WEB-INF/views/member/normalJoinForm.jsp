@@ -214,7 +214,7 @@ input[type='number'] {
 
               <div class="col-3 p-1">
                 <div class="form-group">
-                  <input type="number" maxlength="5" class="form-control" name="zipcode" id="zipcode" readonly>
+                  <input type="number" maxlength="5" class="form-control" name="postNum" id="postNum" readonly>
                 </div>
               </div>
 
@@ -225,7 +225,7 @@ input[type='number'] {
 
               <div class="col-3 text-end p-1">
                 <div class="form-group">
-                  <input type="button" class="btn btn-success" id="btnZipcode" value="우편코드 찾기">
+                  <input type="button" class="btn btn-success" id="btnZipcode" value="주소검색">
                 </div>
               </div>
 

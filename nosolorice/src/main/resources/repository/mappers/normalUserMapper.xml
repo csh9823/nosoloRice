@@ -5,7 +5,7 @@
 <mapper namespace="com.nosolorice.mappers.normalUserMapper">
 	
 	<insert id="addNormalUser" parameterType="NormalUser">
-		INSERT INTO normal_user (normal_id, pass, name, birth, nickname, mobile, profile, postNum, address1, address2, xpoint, ypoint, gender, email, regdate, mypoint, root)
+		INSERT INTO normal_user (normal_id, pass, name, birth, nickname, mobile, profile, postnum, address1, address2, xpoint, ypoint, gender, email, regdate, mypoint, root)
     	VALUES (#{normalId}, #{pass}, #{name}, #{birth}, #{nickName}, #{mobile}, #{profile}, #{postNum}, #{address1}, #{address2}, #{xpoint}, #{ypoint}, #{gender}, #{email}, SYSDATE(), 0, 2)
 	</insert>
 	

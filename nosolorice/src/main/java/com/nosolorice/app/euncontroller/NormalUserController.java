@@ -49,14 +49,15 @@ public class NormalUserController {
             Model model, HttpServletRequest req, NormalUser normalUser, String pass, String mobile, String gender,
             @RequestPart("profileImageInput") MultipartFile profileImage,
             @RequestParam("year") String year, @RequestParam("month") String month, @RequestParam("day")String day,
-            @RequestParam("zipcode") int postNum, String address1, String address2, String xpoint, String ypoint, int mypoint, String emailId, String emailDomain) throws IOException {
+            @RequestParam("postNum") int postNum, String address1, String address2, String xpoint, String ypoint, int mypoint, String emailId, String emailDomain) throws IOException {
 
     	System.out.println(profileImage);
-    	System.out.println(mypoint);
+    	System.out.println("내 포인트 : " + mypoint);
     	System.out.println(postNum);
     	System.out.println("이메일 :" + emailDomain);
     	
         normalUser.setPass(pass);
+        normalUser.setPostNum(postNum);
       
         normalUser.setEmail(emailId + "@" +emailDomain);
         
