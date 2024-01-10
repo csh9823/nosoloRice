@@ -47,10 +47,21 @@ SET menu_name = #{menuName},
     menu_price = #{menuPrice},
     menu_info =  #{menuInfo},
     menu_origin = #{menuOrigin},
-    menu_picture = COALESCE(#{menuPicture},null),
+    menu_picture = #{menuPicture},
     menu_category_no = #{menuCategoryNo}
 WHERE menu_no = #{menuNo}
 </update>
+
+<update id="nofileMenuUpdate" parameterType="Menu">
+UPDATE menu
+SET menu_name = #{menuName},
+    menu_price = #{menuPrice},
+    menu_info =  #{menuInfo},
+    menu_origin = #{menuOrigin},
+    menu_category_no = #{menuCategoryNo}
+WHERE menu_no = #{menuNo}
+</update>
+
 </mapper>	
 
 

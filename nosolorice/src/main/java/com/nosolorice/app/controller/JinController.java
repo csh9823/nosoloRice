@@ -200,7 +200,7 @@ public class JinController {
 	    	return null;
 		}
 
-	@RequestMapping("businessMenu")
+	@RequestMapping("BusinessMenu")
 	public String BusinessMenu(String businessId,Model model, @RequestParam(name="menuCategoryNo",required = false) String menuCategoryNo) {
 		
 		System.out.println(menuCategoryNo);
@@ -221,7 +221,7 @@ public class JinController {
 			model.addAttribute("menucatename",menucatename);
 		}
 		
-		return "forward:/WEB-INF/views/BusinessMenu/businessMenus.jsp";
+		return "BusinessMenu/businessMenus";
 	}
 	
 	// 카테고리 추가
@@ -270,6 +270,7 @@ public class JinController {
 			multipartFile.transferTo(file);
 			menu.setMenuPicture(DEFAULT_PATH+"/"+saveName);
 		}
+		
 		jinMenuService.MenuAdd(menu);
 		return "redirect:BusinessMenu?businessId="+buser.getBusinessId()+"&"+"menuCategoryNo="+menu.getMenuCategoryNo();
 	}
@@ -295,7 +296,7 @@ public class JinController {
 		
 		model.addAttribute("booking",booking);
 		
-		return "forward:/WEB-INF/views/BusinessMenu/yesnoList.jsp";
+		return "BusinessMenu/yesnoList";
 	}
 	
 	@RequestMapping("bookingStateOk")
@@ -324,22 +325,14 @@ public class JinController {
 
 	// 파일이 있을때 메뉴 업데이트 하기
 	@RequestMapping("menuUpdate")
-	public String menuUpdate(HttpServletRequest request,Menu menu ,@RequestParam(value="menuimg") MultipartFile multipartFile, String menuInfoupdate) 
+	public String menuUpdate(HttpServletRequest request,Menu menu ,@RequestParam(value="menuimgupdate") MultipartFile multipartFile, String menuInfoupdate) 
 			throws IOException {
 		
 		// 세션 값 가져오기
 		BusinessUser buser = (BusinessUser) request.getSession().getAttribute("BusinessUser");
 		menu.setMenuInfo(menuInfoupdate);
 		
-		// 기존 파일 삭제하기
-		String getmenu = jinMenuService.getMenu(menu.getMenuNo());
-		
-		if(getmenu != null) {
-			String realPath = request.getServletContext().getRealPath(getmenu);
-			File file = new File(realPath);
-			file.delete();
-		}
-		
+
 		if(! multipartFile.isEmpty()) {
 			// 파일이 들어갈 위치
 			String realPath = request.getServletContext().getRealPath(DEFAULT_PATH);
@@ -348,6 +341,14 @@ public class JinController {
 			File file = new File(realPath,saveName);
 			multipartFile.transferTo(file);
 			menu.setMenuPicture(DEFAULT_PATH+"/"+saveName);
+			
+			// 기존 파일 삭제하기
+			String getmenu = jinMenuService.getMenu(menu.getMenuNo());
+			if(getmenu != null) {
+				String real = request.getServletContext().getRealPath(getmenu);
+				File file2 = new File(real);
+				file2.delete();
+			}
 		}
 		
 		jinMenuService.MenuUpdate(menu);
@@ -359,6 +360,9 @@ public class JinController {
 	public String Nofilemenuupdate(Menu menu,HttpServletRequest request,String menuInfoupdate) {
 		System.out.println("노파일 업데이트 옴");
 		menu.setMenuInfo(menuInfoupdate);
+		
+		System.out.println("노파일 업데이트"+menu.getMenuPicture());
+		
 		// 세견 값 가져오기
 		BusinessUser buser = (BusinessUser) request.getSession().getAttribute("BusinessUser");
 		jinMenuService.MenuUpdate(menu);
@@ -371,7 +375,7 @@ public class JinController {
 		
 		List<Map<String,Object>> map = jinReviewService.ReviewList(businessId);
 		model.addAttribute("review",map);
-		return "forward:/WEB-INF/views/review/Businessriview.jsp";
+		return "review/Businessriview";
 	}
 	
 	// 리뷰 블라인드 처리

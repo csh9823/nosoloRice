@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -214,9 +216,9 @@
                     <div class="row">
                         <div class="col"> ${mapNoMenuList.menuName}  </div>
                     </div>
-
+					
                     <div class="row">
-                        <div class="col"> ${mapNoMenuList.menuPrice}원 </div>
+                        <div class="col"> <fmt:formatNumber value="${mapNoMenuList.menuPrice}" pattern="#,###" />원 </div>
                     </div>
                     
                     <div class="row">
@@ -254,7 +256,7 @@
 				            </div>
 				
 				            <div class="row">
-				                <div class="col"> ${menu.menuPrice}원 </div>
+				                <div class="col"> <fmt:formatNumber value="${menu.menuPrice}" pattern="#,###" />원 </div>
 				            </div>
 				            
 				            <div class="row">
@@ -391,7 +393,7 @@
     </div>
 </div>
 </form>
-<form action="menuUpdate"  id="menuupdate">
+<form action="menuUpdate" id="menuupdate" method="post">
 <div id="modal3">
     <div class="modal3-content">    
         <div class="row" style="margin-bottom: 10px; margin-top: 10px;">
@@ -419,7 +421,7 @@
                         <label for="menuimgupdate">
                         <div class="btn-upload">사진 업로드</div>
                         </label>
-                        <input type="file" name="menuPicture" id="menuimgupdate" accept="image/*">
+                        <input type="file" name="menuimgupdate" id="menuimgupdate" accept="image/*">
                     </div>
                 </div>
             </div>   
@@ -772,7 +774,6 @@ $("#menuupdate").on("submit", function(){
     let menuOrigin = $("#menuOrigin").val();
     let menuPrice = $("#menuPrice").val();
     let menuName = $("#menuName").val();
-    
     if ($("#menuimgupdate").get(0).files.length != 0) {
         $("#menuupdate").attr("enctype", "multipart/form-data");
     }else {

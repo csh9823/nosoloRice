@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${not empty sessionScope.RootUser}">      
 <nav class="navbar navbar-expand-lg">
 
     <div class="container-fluid">
     
     <!-- 관리자헤더_아직 관리자회원 로그인 성공 시 세션저장 기능 없음 -->
-    <c:if test="${not empty sessionScope.BusinessUser}">
+    <c:if test="${not empty sessionScope.RootUser}">
       <!-- nav_logo -->
       <a class="logo" href="main.jsp"><img src="./logo/nosolorice_logo_s.png"></a>
       
@@ -131,3 +132,4 @@
          </c:if>
       </div>
      </nav>
+</c:if>

@@ -57,7 +57,7 @@
               <span class="fs-4 fw-bold"><a class="busreview" href="Businessriview?businessId=${sessionScope.BusinessUser.businessId}">리뷰관리</a></span>
             </div>
             <div class="menu row p-4" onclick="location.href=''">
-              <span class="fs-4 fw-bold"><a class="busmenu" href="businessMenu?businessId=${sessionScope.BusinessUser.businessId}">메뉴관리</a></span>
+              <span class="fs-4 fw-bold"><a class="busmenu" href="BusinessMenu?businessId=${sessionScope.BusinessUser.businessId}">메뉴관리</a></span>
               </div>
             <div class="menu row p-4" onclick="location.href='businessUserSecession?id=${sessionScope.BusinessUser.businessId}'">
               <span class="fs-4 fw-bold">탈퇴</span>

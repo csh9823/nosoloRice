@@ -13,6 +13,9 @@
     <script src="resources/js/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
+        .line-break {
+        white-space: pre-line; /* or pre-wrap */
+    }
     .revdelete{
     	background-color: rgb(201,60,60);
     	border-radius: 3px;
@@ -190,7 +193,9 @@
             
 			<c:if test="${rev.ownerComment != null}">
 	            <div class="row">
-	                <div class="col-11" style="background-color: #C93C3C; padding: 0px; margin-left: 11px;">${rev.ownerComment}</div>
+	                <div class="col-11" style="background-color: #C93C3C; padding: 0px; margin-left: 11px;">
+	                	<span class="line-break">${rev.ownerComment}</span>
+	                </div>
 	            </div>
 			</c:if>
             </c:if>
@@ -245,6 +250,12 @@
 </div>
   <script>
   // 수정 모달
+    // 콘솔 값 찍기
+    $("#reason2").on("input", function() {
+        console.log($("textarea[name=businessComment2]").val().replace(/(?:\r\n|\r|\n)/g, '<br>')); 
+    });
+  
+$("textarea[name=businessComment2]").val().replace(/(?:\r\n|\r|\n)/g, '<br>');
   const modal3 = document.getElementById("modal3");
   
   const openModal3Btns = document.querySelectorAll(".revupdate2");
@@ -272,8 +283,8 @@ let modal3 = document.getElementById("modal3");
 let modal3Content = document.querySelector(".modal3-content");
 
 modal3.addEventListener("click", function(e) {
-    if (!modal2Content.contains(e.target)) {
-        modal2.style.display = "none";
+    if (!modal3Content.contains(e.target)) {
+    	modal3.style.display = "none";
     }
 });
 });
@@ -294,6 +305,9 @@ openModal3Btns.forEach((openModal3Btn) => {
 	      	normalId.value = StringicPart;
 	  });
 	});
+	
+
+
   // 등록 모달
   const modal2 = document.getElementById("modal2");
   
@@ -358,7 +372,6 @@ openModal3Btns.forEach((openModal3Btn) => {
   	});
     
   $("textarea[name=businessComment]").val().replace(/(?:\r\n|\r|\n)/g, '<br>');
-  $("textarea[name=businessComment2]").val().replace(/(?:\r\n|\r|\n)/g, '<br>');
   </script>
 </body>
 </html>
