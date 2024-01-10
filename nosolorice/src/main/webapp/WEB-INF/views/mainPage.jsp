@@ -54,7 +54,7 @@
 					
 					<div class="row h-100">
 						<div class="col d-flex align-items-center justify-content-start p-5">
-								<button class="btn btn-danger" style="width: 300px;height: 120px;" id="matchingStartBtn">
+								<button class="btn btn-danger" style="width: 300px;height: 120px;" id="matchingStartBtn" onclick="location.href='matching'">
 									<div class="matchingTextAnimation">
 					                    <span style="font-size:1em;">지</span>
 					                    <span style="font-size:1em;">금</span>
