@@ -44,77 +44,6 @@
 </style>
 <body>
 <div class="row">
-<<<<<<< HEAD
-	<div class="col p-5">
-		<!-- 여기서부터 작업시작  -->
-			<input type="hidden" id="isIntro" value="${introduce}">
-			<!-- 매칭하기 버튼  -->
-			<div class="row my-5">
-				<div class="col text-center rounded" 
-				style="height : 500px; background-image: url('resources/image/mainBanner01.jpg'); background-size: cover;">
-					
-					<div class="row h-100">
-						<div class="col d-flex align-items-center justify-content-start p-5">
-								<button class="btn btn-danger" style="width: 300px;height: 120px;" id="matchingStartBtn" onclick="location.href='matching'">
-									<div class="matchingTextAnimation">
-					                    <span style="font-size:1em;">지</span>
-					                    <span style="font-size:1em;">금</span>
-					                    <span style="font-size:1em;">바</span>
-					                    <span style="font-size:1em;">로</span>
-					                </div>
-									<span class="fw-bold" style="font-size:3em;line-height: 1em;">매칭시작</span>
-								</button>
-						</div>
-					</div>
-					
-					
-					
-					
-				</div>
-			</div>
-			
-			<!-- 소개하기 제목  -->
-			<div class="row"  style="margin: 10vh 0;" id="introduceTitle">
-				<div class="col text-center" >
-						<p class="fw-bold" style="color:#C93C3C; font-size:2.3em;line-height: 3em">
-							혼자 밥먹기 싫을때?
-						</p>
-						<p class="fw-bold" style="color:#C93C3C; font-size:6em;line-height: 0em;">혼밥시러</p>
-						<p class="text-secondary" style="font-size:2em; margin-top: 2em;">더이상 혼자 식사하지마세요<br>혼밥시러가 도와드릴게요!</p>
-				</div>
-			</div>
-			
-			<!-- 소개하기 컨텐츠1 -->
-			<div class="row my-5 px-5">
-				<div class="col" style="padding: 0 5vw;">
-				
-					<div class="row" style="margin-bottom: 10vh;">
-						<div class="col-auto">
-							<img src="resources/image/mainImg1.jpg">
-						</div>
-						<div class="col d-flex flex-column align-items-start justify-content-center">
-							<div class="row">
-								<div class="col">
-									<p class="fs-3 fw-bold" style="color:#C93C3C">
-										위치기반 매칭기능으로<br>
-										간편하게 이웃과 식사가능!
-									</p>
-								</div>
-							</div>
-							<div class="row ">
-								<div class="col">
-									<p class="fs-4 text-dark fw-bold">이럴 때 이용해 보세요</p>
-									<p class="fs-5" style="color:#555;">
-										근처 맛집에 가고 싶은데 1인분 주문이 안될 때<br>
-										맛있는 걸 먹고 싶은데 혼자 먹기에 양이 너무 많을 때<br>
-										꼭 한번 맛보고 싶은 음식이 있는데 가격이 부담될 때<br>
-										타지에 혼자 여행왔는데 현지 사람과 같이 먹고 싶을 때
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-=======
    <div class="col p-5">
       <!-- 여기서부터 작업시작  -->
          <input type="hidden" id="isIntro" value="${introduce}">
@@ -184,7 +113,6 @@
                      </div>
                   </div>
                </div>
->>>>>>> refs/heads/main
 
                <!-- 소개하기 컨텐츠2 -->
                <div class="row" style="margin-bottom: 10vh;">

@@ -59,10 +59,12 @@
 	    		String nickName = (String)msg.get("nickName").toString();
 	    		System.out.println("유저가 처음에 등록한 NickName" + nickName);
 	    		session.getUserProperties().put("nickName", nickName);
+	    		
 	    		Set<String> nickNames = new HashSet<>();
 	    		Map<String, Object>dataMap = new HashMap<>();
+	    		
 	    		for(Session s : chatMember) {
-	    			nickNames.add(s.getUserProperties().get("nickName").toString());
+	    			if(s.getUserProperties().get("nickName") != null) nickNames.add(s.getUserProperties().get("nickName").toString());
 	    		}
 	    		for(Session s : chatMember) {
 	    			dataMap.put("chatType", "connect");

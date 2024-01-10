@@ -108,16 +108,16 @@ public class MatchingServer {
     			if(dataMap.get("locationMethod").toString().equals("map")) {
     				option = dataMap.get("locationMethod").toString().equals(s.getUserProperties().get("locationMethod").toString()) ? true : false;
     				if(option) {
-    			    	ArrayList<Object> list = (ArrayList<Object>) dataMap.get("locationInfo");
+    			    	ArrayList<Object> list = (ArrayList<Object>) dataMap.get("locationInfo");    			    	
     			    	double area = Integer.parseInt((String)list.get(2)) * 0.00898315;
-    			    	double maxX = (double) list.get(0) + area;
-    			    	double minX = (double) list.get(0) - area;
-    			    	double maxY = (double) list.get(1) + area;
-    			    	double minY = (double) list.get(1) - area;
+    			    	double maxX = Double.parseDouble(list.get(0).toString())+area;
+    			    	double minX = Double.parseDouble(list.get(0).toString()) - area;
+    			    	double maxY = Double.parseDouble(list.get(1).toString()) + area;
+    			    	double minY = Double.parseDouble(list.get(1).toString()) - area;
     			    	//s의 x y좌표가 내 4개 좌표 안에 속하기만 하면된다.
     			    	ArrayList<Object> sList = (ArrayList<Object>) s.getUserProperties().get("locationInfo");
-    			    	double sX = (double) sList.get(0);
-    			    	double sY = (double) sList.get(1);
+    			    	double sX = Double.parseDouble(sList.get(0).toString());
+    			    	double sY = Double.parseDouble(sList.get(1).toString());
     			    	option = (sX >= minX && sX <= maxX && sY >= minY && sY <= maxY) ? true : false;
     				}
     			}
@@ -174,8 +174,8 @@ public class MatchingServer {
     			
     			for(Session m : matchingMember) {
     				ArrayList<Object> list = (ArrayList<Object>) m.getUserProperties().get("locationInfo");
-			    	double x = (double) list.get(0);
-			    	double y = (double) list.get(1);
+			    	double x = Double.parseDouble(list.get(0).toString());
+			    	double y = Double.parseDouble(list.get(1).toString());
     				xList.add(x);
     				yList.add(y);
     			}

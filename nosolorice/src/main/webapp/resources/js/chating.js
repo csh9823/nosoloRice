@@ -152,13 +152,13 @@ $(function(){
 				console.log("통신오류", err)
 			}
 		});
+		$("#bookSuccessMemberList").text(nickNames);
 		
 		
 		$(".bookingBookNo").text(bookNo);
 		$(".bookModalProposeTime").text(bookingTime);
 		$(".bookModalBusinessName").text(businessName);
 		$("#showStoreAddress").attr("data-bs-title", businessAddress);
-		console.log("nickNames : ",nickNames);
 		$("#bookSuccessMemberList").text(nickNames);
 		$(".bookModalProposeMsg").text(bookingRequest);
 		
@@ -226,13 +226,13 @@ $(function(){
 	//가져온 room_id를 이용해 웹소켓채팅서버를 연다 - 완료
 	//학원꺼
 	//let url = "ws://192.168.0.14:8081/app/chating/" + roomId;
-	// let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
+	let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
 	
 	//집꺼
 	//let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
 	
 	//현진이꺼
-	let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
+	//let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
 	
     socket = new WebSocket(url);
     
@@ -350,11 +350,11 @@ $(function(){
 			//사장님과 통신할 웹소켓서버에 연결
 			//학원꺼
 			//let url = "ws://192.168.0.14:8081/app/booking/" + businessId;
-			//let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
+			let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
 			//집꺼
 			//let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
 			//현진이꺼		
-			let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
+			//let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
 			
 			bookingSocket = new WebSocket(url);
 			console.log("예약관리 서버 접속");
@@ -407,6 +407,25 @@ $(function(){
 							console.log("통신에러", err);
 						}
 					});
+					
+					let nickNames = "";
+					//ajax로 booking_userlist테이블에서 bookNo에 해당하는 닉네임을 다 가져온다.
+					$.ajax({
+						url: "/app/getBookingUserList",
+						data : "bookingNo=" + bookingNo,
+						type : "post",
+						dataType : "json",
+						async : false,
+						success : function(resData){
+							console.log(resData);
+							$(resData).each(function(i, v){
+								nickNames += (i==resData.length-1 ? v.nickName :  v.nickName + ", ");
+							});
+						}, error : function(err){
+							console.log("통신오류", err)
+						}
+					});
+					$("#bookSuccessMemberList").text(nickNames);
 				
 					bookComplete = true;
 					$("#bookWait").addClass("d-none");
