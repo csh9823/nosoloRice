@@ -18,17 +18,17 @@
       	<input type="hidden" id="storeId" value="${sessionScope.BusinessUser.businessId}">
         <div class="row">
           <div class="col">
-           	<c:if test="${sessionScope.BusinessUser.okNoOk eq 'n'}">
+           	<c:if test="${sessionScope.BusinessUser.okNoOk eq '0'}">
 	            <div class="row red p-4">
 		            <span class="fs-4 fw-bold">가입 승인 중</span>
 	            </div>
            	</c:if>
-           	<c:if test="${sessionScope.BusinessUser.okNoOk eq 'y' && sessionScope.BusinessUser.storeOnoff eq 'close'}">
+           	<c:if test="${sessionScope.BusinessUser.okNoOk eq '1' && sessionScope.BusinessUser.storeOnoff eq 'close'}">
 	            <div class="row red p-4" onclick="location.href='storeOpen?id=${sessionScope.BusinessUser.businessId}'">
 		            <span class="menu fs-4 fw-bold">영업시작</span>
 	            </div>
            	</c:if>
-           	<c:if test="${sessionScope.BusinessUser.okNoOk eq 'y' && sessionScope.BusinessUser.storeOnoff eq 'open' }">
+           	<c:if test="${sessionScope.BusinessUser.okNoOk eq '1' && sessionScope.BusinessUser.storeOnoff eq 'open' }">
 	            <div class="row red p-4" onclick="location.href='storeClose?id=${sessionScope.BusinessUser.businessId}'">
 		            <span class="menu fs-4 fw-bold">영업종료</span>
 	            </div>
@@ -36,8 +36,8 @@
             <div class="menu row p-4" onclick="location.href='businessUserStoreInfo?id=${sessionScope.BusinessUser.businessId}'">
               <span class="fs-4 fw-bold">업체정보</span>
             </div>
-            <div class="menu row p-4" onclick="location.href=''">
-              <span class="fs-4 fw-bold"><a href="yesnoList?businessId=${sessionScope.BusinessUser.businessId}">예약관리</a></span>
+            <div class="menu row p-4" onclick="location.href='yesnoList?businessId=${sessionScope.BusinessUser.businessId}'">
+              <span class="fs-4 fw-bold">예약관리</a></span>
             </div>
             <div class="menu row p-4" onclick="location.href=''">
               <span class="fs-4 fw-bold">예약이력</span>
@@ -55,7 +55,7 @@
               <span class="menu" onclick="location.href=''">공지사항</span><br>
               <span class="menu" onclick="location.href=''">1:1문의</span><br>
               <span class="menu" onclick="location.href='businessUserInfoUpdate?id=${sessionScope.BusinessUser.businessId}'">내 정보 수정</span><br>
-              <span class="menu text-red" onclick="location.href='businessUserLogOut'">로그아웃</span><br>
+              <span class="menu text-red" onclick="location.href='logout'">로그아웃</span><br>
             </div>
           </div>
         </div>

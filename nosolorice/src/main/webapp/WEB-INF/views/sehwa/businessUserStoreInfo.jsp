@@ -181,7 +181,7 @@
 		   <div class="row py-5">
 		     <div class="border-bottom"></div>
 		   </div>
-		   <div class="row gy-4">
+		   <div class="row gy-4 mb-5">
 		     <div class="col-12">
 		       <h2>가게소개</h2>
 		       <textarea class="summernote" name="editordata" id="editordata">${BusinessUser.introduction}</textarea>    
@@ -195,7 +195,9 @@
 	  </div>
 	 </div>
 	 
+	 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	<script>
+		// 체크박스 업종 최대 3개 선택
 		var maxChecked = 3;
 		var totalChecked = 0;
 		function checkSectors(field) {
@@ -209,13 +211,23 @@
 				totalChecked -= 1;
 			}
 		}
-		
+		// 웹 에디터 
 		  $('.summernote').summernote({
 			    height: 450,
 			    lang: "ko-KR"
 			});
+		  
+		  // 타임피커
+			  $('.timepicker').timepicker({
+			    timeFormat: 'HH:mm',
+			    interval: 30,
+			    startTime: '00:00',
+			    dynamic: false,
+			    dropdown: true,
+			    scrollbar: true
+			});
 	</script>
 	 
-	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+  
 </body>
 </html>

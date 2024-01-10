@@ -225,13 +225,11 @@ public class SehwaController {
 	@ResponseBody
 	public void storeSectorUpdateBtn(String id, int count, String sectors) {
 		String[] strArr = sectors.split(", ");
-		System.out.println(Arrays.toString(strArr));
 		int[] intArr = new int[strArr.length];
 		for(int i=0; i<= count-1; i++) {
 			intArr[i] = Integer.parseInt(strArr[i]);
 		}
 		service.storeSectorUpdate(id, count, intArr);
-		System.out.println("count : " + count);
 	}
 	
 	@RequestMapping(value= {"/noramlUserBookingList"}, method=RequestMethod.GET)
@@ -333,7 +331,7 @@ public class SehwaController {
 		return "sehwa/noramlUserPointList";
 	}
 
-	@RequestMapping("/businessUserLogOut")
+	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/login";

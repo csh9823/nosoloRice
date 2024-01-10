@@ -20,12 +20,14 @@
 	      <div class="col-3">
 	        <input type="file" name="fileInput" id="fileInput"  onchange="readImage(this)"  style="display:none;" accept="image/*">
 	        <button style="border : none; background-color: white;" class="w-100" id="clickImg">
-	          <c:if test="${NormalUser.profile eq 'defaultImg'}">
-		          <img src="resources/img/profile_img.png" class="preview w-100">      
-	          </c:if>
-	          <c:if test="${NormalUser.profile ne 'defaultImg'}">
-		          <img src="resources/upload/${NormalUser.profile}" class="preview w-100">
-	          </c:if>
+	          <div class="profile-box-200">
+		          <c:if test="${NormalUser.profile eq 'defaultImg'}">
+			          <img src="resources/img/profile_img.png" class="preview w-100 profile-img">      
+		          </c:if>
+		          <c:if test="${NormalUser.profile ne 'defaultImg'}">
+			          <img src="resources/upload/${NormalUser.profile}" class="preview w-100 profile-img">
+		          </c:if>
+		          </div>
 	        </button>
 	        <span id="changeDefaultImg" class="text-gray" style="text-decoration: none;">기본이미지로 변경</span>
 	      </div>

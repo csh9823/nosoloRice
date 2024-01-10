@@ -90,7 +90,7 @@
 		          </li>
 		    
 		          <li class="nav-item">
-		            <a class="nav-link " aria-current="page" href="#">마이페이지</a>
+		            <a class="nav-link " aria-current="page" href="normalUserInfoUpdate?id=${sessionScope.NormalUser.normalId}">마이페이지</a>
 		          </li>
 		
 		          <li class="nav-item">
@@ -109,7 +109,7 @@
 		          </form>
 		
 		          <!-- 유저_프로필 -->
-		          <a href="#"><img src="${sessionScope.NormalUser.profile}" class="rounded-circle me-2 "/></a>
+		          <a href="normalUserInfoUpdate?id=${sessionScope.NormalUser.normalId}"><img src="${sessionScope.NormalUser.profile}" class="rounded-circle me-2 "/></a>
 		
 		          <!-- 포인트 -->          
 		          <div class="d-flex flex-column mb-2 ">
@@ -119,7 +119,7 @@
 		          
 		
 		          <!-- 버튼들 -->
-		          <button type="button" class="btn btn-danger me-2">충전</button>
+		          <button type="button" class="btn btn-danger me-2" onclick="location.href='chargePoint'">충전</button>
 		          <a class="nav-link" class="btn btn-primary" href='${  not empty sessionScope.NormalUser  ? "logout" : "login" }'>
 						${ not empty sessionScope.NormalUser  ? "로그아웃" : "로그인" }
 				  </a>
