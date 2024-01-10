@@ -28,6 +28,6 @@
 	
 	<view-controller path="/normalJoin" view-name="member/normalJoinForm" />
 	<view-controller path="/normaljoinresult" view-name="member/normalJoinResult" />
-	<view-controller path="/question" view-name="question"/>	
+	<view-controller path="/question" view-name="question"/>
 	
 </beans:beans>

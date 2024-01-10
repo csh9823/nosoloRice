@@ -57,7 +57,7 @@
         </div>
         <div class="text-center mt-5">
             <p class="mb-1 footerLink">&copy; 2023 혼밥 매칭 프로젝트. All rights reserved.</p>
-            <p class="footerLink">카카오를 벤치마킹 했음</p>
+            <p class="footerLink"></p>
         </div>
     </div>
 </footer>

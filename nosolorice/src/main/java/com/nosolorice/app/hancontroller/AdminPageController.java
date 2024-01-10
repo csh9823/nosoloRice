@@ -1,6 +1,7 @@
 package com.nosolorice.app.hancontroller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nosolorice.app.domain.Review.Review;
+import com.nosolorice.app.domain.businessUser.BusinessInquiry;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.domain.normalUser.UserInquiry;
 import com.nosolorice.app.hanservice.AdminPageService;
 
 @Controller
@@ -188,6 +191,81 @@ public class AdminPageController {
 
 		  return mapReview;
 	  }
+	  
+	  @RequestMapping("/adminNormalInquiryList")
+	  public String adminNormalInquiryList(Model model,@RequestParam(value="pageNum", defaultValue="1")int pageNum){
+		  
+		  Map<String,Object> modelMap = adminPageService.adminNormalInquiryList(pageNum);
+		  
+		  model.addAllAttributes(modelMap);
+	
+		  return "/adminNormalInquiryList";
+	  }
+	  
+	  @RequestMapping("/normalInquiryDetail")
+	  public String normalInquiryDetail(Model model,int userInquiryNo,@RequestParam(value="pageNum", required=false, 
+				defaultValue="1") int pageNum) {
+		  
+		  UserInquiry userInquiry = adminPageService.getInquiry(userInquiryNo);
+		  
+		  model.addAttribute("userInquiry",userInquiry);
+		  model.addAttribute("pageNum",pageNum);
+		  
+		  return "/normalInquiryDetail";
+	  }
+	  
+	  @RequestMapping("/answerInquiryProcess")
+	  public String answerInquiry(String inquiryComment,int userInquiryNo) {
+		 
+		  UserInquiry userInquiry = new UserInquiry();
+		  
+		  userInquiry.setUserInquiryNo(userInquiryNo);
+		  userInquiry.setInquiryComment(inquiryComment);
+		  
+		  adminPageService.answerInquiry(userInquiry);
+		  
+		  return "redirect:/adminNormalInquiryList";
+		  
+	  }
+	  
+
+	  @RequestMapping("/adminBusinessInquiryList")
+	  public String adminBusinessInquiryList(Model model,@RequestParam(value="pageNum", defaultValue="1")int pageNum) {
+		  
+		  
+		  Map<String,Object> modelMap = adminPageService.adminBusinessInquiryList(pageNum);
+		  
+		  model.addAllAttributes(modelMap);
+	
+		  return "/adminBusinessInquiryList";
+		  
+	  }
+	  
+	  @RequestMapping("/businessInquiryDetail")
+	  public String businessInquiryDetail(Model model,int businessInquiryNo,@RequestParam(value="pageNum", required=false, defaultValue="1") int pageNum) {
+		  
+		  BusinessInquiry businessInquiry = adminPageService.getBusinessInquiry(businessInquiryNo);
+		  
+		  model.addAttribute("businessInquiry",businessInquiry);
+		  model.addAttribute("pageNum",pageNum);
+		  
+		  return "/businessInquiryDetail";
+	  }
+	  
+	  @RequestMapping("/businessAnswerInquiryProcess")
+	  public String businessAnswerInquiry(String businessComment,int businessInquiryNo) {
+		 
+		  BusinessInquiry businessInquiry = new BusinessInquiry();
+		  
+		  businessInquiry.setBusinessInquiryNo(businessInquiryNo);
+		  businessInquiry.setBusinessComment(businessComment);
+		  
+		  adminPageService.answerBusinessInquiry(businessInquiry);
+		  
+		  return "redirect:/adminBusinessInquiryList";
+		  
+	  }
+
 	
 	
 

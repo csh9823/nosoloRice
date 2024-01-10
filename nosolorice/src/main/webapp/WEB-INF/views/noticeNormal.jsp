@@ -12,8 +12,9 @@
   <link href="resources/bootstrap/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/variable/woff2/SUITE-Variable.css" rel="stylesheet">
   <style>
-      .btn {
+        .btn {
         background-color: #FA9884;
+        color:#fff;
       }
       body {font-family: 'SUITE Variable', sans-serif;}
       
@@ -21,7 +22,17 @@
       
        	background-color : #FFE5CA;
       }
-      
+         ul {
+      list-style: none;
+    }
+    .textColor{
+      text-decoration: none;
+      color : #616161;
+    }
+    * {
+      font-family: 'SUITE Variable', sans-serif;
+    }
+ 
      .pagination .page-item.active .page-link {
     background-color: #FA9884;
     border-color: #FA9884;
@@ -37,13 +48,29 @@
     background-color: #C93C3C;
     border-color: #C93C3C;
 	}
+
   </style>
 </head>
 <body>
 
   <div class="container">
-
     <div class="row">
+    
+      	<div class="col-md-3">
+            <ul class="my-3">
+                 <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">고객센터</li>
+                <li class="my-5 fs-4"><a href="question" class="textColor">자주 묻는 질문</a></li>
+                <li class="my-5 fs-4"><a href="userInquiry" class="textColor">1:1 문의</a></li>
+                <li class="my-5 fs-4"><a href="userInquiryList" class="textColor">1:1 문의내역</a></li>
+                <li class="my-5 fs-4"><a href="noticeNormal" class="textColor">공지사항</a></li>
+            </ul>
+        </div>
+        <div class="col-md-1 d-none d-md-block my-5" style="margin-left: -50px;">
+            <div style="border-left: 1px solid #CCC; height: 80vh;"></div>
+        </div>
+        
+        
+      	
       <div class="col">
         <div class="row">
           <div class="col d-flex align-items-center">
@@ -54,13 +81,13 @@
             </div>
           </div>
       </div>
-    </div>
-  </div>
+
 
     <div class="row text-center border-bottom border-top py-3">
-      <div class="col-2">번호</div>
-      <div class="col-4">제목</div>
-      <div class="col-4">등록일</div>
+      <div class="col-1">번호</div>
+      <div class="col-6">제목</div>
+      <div class="col-3">등록일</div>
+      <div class="col-2">작성자</div>
     </div>
 
   <c:if test="${empty nList}"> 
@@ -72,11 +99,10 @@
   <c:if test="${not empty nList}">
     <c:forEach var="n" items="${nList}">
     	<div class="row text-center py-3 noticeRow" style="cursor:pointer;">
-      			<div class="col-2">${n.noticeNo}</div>
-      			<div class="col-4">${n.noticeTitle}</div>
-      			<div class="col-4"><fmt:formatDate value="${n.noticeRegDate}" pattern="yyyy-MM-dd" /></div>
-      			<div class="col-2">
-    		</div>
+      			<div class="col-1">${n.noticeNo}</div>
+      			<div class="col-6">${n.noticeTitle}</div>
+      			<div class="col-3"><fmt:formatDate value="${n.noticeRegDate}" pattern="yyyy-MM-dd" /></div>
+      			<div class="col-2">관리자</div>
     	</div>
     <div class="row p-5 border-bottom d-none noticeContentRow">
     	<div class="col">
@@ -126,8 +152,9 @@
 				</div>
 			</div>
   		</c:if>
-      </div>
- 
+  	</div>
+  </div>		
+</div>
   
   
   

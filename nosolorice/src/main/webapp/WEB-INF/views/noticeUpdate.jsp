@@ -47,8 +47,8 @@
         <div class="col-md-3">
           <ul class="my-3">
             <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
-            <li class="my-5"><a href="userInquiryWrite">일반회원 문의</a></li>
-            <li class="my-5"><a href="#">사업자회원 문의</a></li>
+            <li class="my-5"><a href="adminNormalInquiryList">일반회원 문의</a></li>
+            <li class="my-5"><a href="adminBusinessInquiryList">사업자회원 문의</a></li>
             <li class="my-5"><a href="adminReportList">신고내역</a></li>
             <li class="my-5"><a href="#">가입승인</a></li>
             <li class="my-5"><a href="adminReviewList">리뷰삭제 요청</a></li>
@@ -64,20 +64,20 @@
       		<h2 class="fs-3 fw-bold my-5">공지수정</h2>
      	</div>
      	<div class="col-auto d-flex align-items-center">
-     	 <input type="button" value="목록보기" class="btn" onclick="location.href='noticeList?pageNum=${pageNum}'">
+     	 <input type="button" value="목록보기" class="btn" onclick="location.href='adminNormalInquiry?pageNum=${pageNum}'">
      	</div>
        </div>
   <div class="row align-items-center">
     <div class="col text-end">
-      <form action="noticeUpdateProcess" id="noticeUpdate" name="noticeUpdate" method="post" enctype="multipart/form-data">
+       <form action="noticeUpdateProcess" id="noticeUpdate" name="noticeUpdate" method="post" enctype="multipart/form-data">
       		<input type="hidden" name="noticeNo" value="${notice.noticeNo}">
 			<input type="hidden" name="pageNum" value="${pageNum}" />
         <div class="row my-5">
           <div class="col-md-12">
             <input type="radio" name="noticeType" id="normal" class="radio" value="normal" ${notice.noticeType == 'normal' ? 'checked' : ''}>
-            <label for="normal">일반 공지사항</label> &nbsp; &nbsp;
+            <label for="normal">일반 공지작성</label> &nbsp; &nbsp;
             <input type="radio" name="noticeType" id="business" class="radio" value="business" ${businessNotice.businessNoticeType == 'business' ? 'checked' : ''}>
-            <label for="business">업체 공지사항</label>
+            <label for="business">사업 공지작성</label>
           </div>
         </div>
         <div class="row my-3">
@@ -88,7 +88,7 @@
         <div class="row my-5">
           <div class="col">
           	<input type="hidden" name="noticeContent" id="noticeContent">
-            <textarea id="summernote" name="editordata">${notice.noticeContent}</textarea>
+          	<textarea id="summernote" name="editordata">${notice.noticeContent}</textarea>
           </div>  
         </div>
         <div class="row">

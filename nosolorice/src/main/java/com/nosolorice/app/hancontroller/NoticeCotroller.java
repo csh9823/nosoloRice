@@ -61,7 +61,7 @@ public class NoticeCotroller {
 			
 			model.addAllAttributes(noticeBusiness);
 			
-			return "/noticeBusiness";
+			return "forward:WEB-INF/views/noticeBusiness.jsp";
 		}
 	
 	@RequestMapping("/noticeWrite")
