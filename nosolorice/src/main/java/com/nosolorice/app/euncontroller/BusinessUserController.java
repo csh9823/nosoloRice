@@ -42,7 +42,7 @@ public class BusinessUserController {
 		this.businessUserService = businessUserService;
 	}
 	
-	@RequestMapping("/businessJoin")
+	@RequestMapping("/businessjoin")
     public String businessJoinForm(Model model) {
 
         return "member/businessJoinForm"; 

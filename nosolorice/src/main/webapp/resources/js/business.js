@@ -26,6 +26,8 @@ function validateBForm() {
     let zip = $("#zipcode").val();
     let add1 = $("#address1").val();
     let term = $("input[name='termOK']:checked").length;
+    let regImg = $("businessRegImg").val;
+    let checkNum = $("businessNumber").val;
 
     // hidden값 가져오기
     let idCheck = $("#isBidCheck").val();
@@ -33,23 +35,19 @@ function validateBForm() {
     let phoneCheck = $("#bPhoneCheck").val();
     let x = $("#xpoint1").val();
     let y = $("#ypoint1").val();
+    let bNo = $("#bNoCheck").val();
     let domain = $("#emailDomain").val();
 
 	if (bid.trim() === "") {
         alert("아이디는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
     }
-
-    if (bname.trim() === "") {
-        alert("이름은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
+    
+    if (idCheck === false) {
+        alert("아이디 중복확인은 필수입니다. \n진행 후 다시 시도해 주세요.");
         return false;
     }
-
-    if (bName.trim() === "") {
-        alert("상호명은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
-        return false;
-    }
-
+    
     if (bpass.trim() === "") {
         alert("비밀번호는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
@@ -64,44 +62,9 @@ function validateBForm() {
         alert("비밀번호와 비밀번호 확인이 일치하지 않습니다. \n입력 후 다시 시도해 주세요.");
         return false;
     }
-
+    
     if (phone.trim() === "") {
         alert("전화번호는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
-        return false;
-    }
-
-    if (chkNum.trim() === "") {
-        alert("인증번호를 입력해 주세요.");
-        return false;
-    }
-
-    if (email.trim() === "") {
-        alert("이메일은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
-        return false;
-    }
-
-    if (zip.trim() === "") {
-        alert("우편번호는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
-        return false;
-    }
-
-    if (add1.trim() === "") {
-        alert("주소는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
-        return false;
-    }
-
-    if (term <= 0) {
-        alert("이용약관 동의를 하지 않을 경우 회원가입이 불가합니다.");
-        return false;
-    }
-
-    if (idCheck === false) {
-        alert("아이디 중복확인은 필수입니다. \n진행 후 다시 시도해 주세요.");
-        return false;
-    }
-    
-    if (nickCheck === false) {
-        alert("닉네임 중복확인은 필수입니다. \n진행 후 다시 시도해 주세요.");
         return false;
     }
     
@@ -109,8 +72,68 @@ function validateBForm() {
         alert("휴대폰 중복확인은 필수입니다. \n진행 후 다시 시도해 주세요.");
         return false;
     }
+
+    if (chkNum.trim() === "") {
+        alert("인증번호를 입력해 주세요.");
+        return false;
+    }
     
-    if (x === null) {
+    if (email.trim() === "") {
+        alert("이메일은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
+        return false;
+    }
+    
+    if (domain === null) {
+        alert("이메일 도메인을 선택해 주세요.");
+        return false;
+    }
+    
+    if (bname.trim() === "") {
+        alert("이름은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
+        return false;
+    }
+    
+    if (bName.trim() === "") {
+        alert("상호명은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
+        return false;
+    }
+    
+    if (checkNum.trim() === "") {
+        alert("사업자번호는 공란으로 둘 수 없습니다. \n다시 시도해 주세요.");
+        return false;
+    }
+    
+    if (phoneCheck === false) {
+        alert("사업자번호 인증은 필수입니다. \n인증 후 다시 시도해 주세요.");
+        return false;
+    }
+    
+    if (regImg == "" && regImg == null) {
+        alert("사업자 확인을 위해 사업자등록증 사본 이미지를 반드시 업로드 해 주세요.");
+        return false;
+    }
+    
+    if (bankcode === "") {
+        alert("은행을 반드시 선택해 주세요.");
+        return false;
+    }
+
+  	if (accountNumber === "") {
+        alert("계좌번호는 공란으로 둘 수 없습니다. \n확인 후 다시 시도해 주세요.");
+        return false;
+    }
+    
+	if (zip.trim() === "") {
+        alert("우편번호는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
+        return false;
+    }
+    
+	if (add1.trim() === "") {
+        alert("주소는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
+        return false;
+    }
+	
+	if (x === null) {
         alert("올바른 주소를 입력해 주세요.");
         return false;
     }
@@ -119,9 +142,9 @@ function validateBForm() {
         alert("올바른 주소를 입력해 주세요.");
         return false;
     }
-    
-    if (domain === null) {
-        alert("이메일 도메인을 선택해 주세요.");
+
+    if (term <= 0) {
+        alert("이용약관 동의를 하지 않을 경우 회원가입이 불가합니다.");
         return false;
     }
 

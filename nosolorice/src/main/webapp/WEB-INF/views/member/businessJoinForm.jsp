@@ -104,7 +104,7 @@ input[type='number'] {
                   <input type="text" class="form-control" name="bPhone" id="bPhone" placeholder="01012345678" >
                 </div>
               </div>
-
+	
               <div class="col-2 text-end p-2">
                 <div class="form-group">
                   <input type="button" class="btn btn-success" id="getBPhoneCheck" value="인증번호 받기">
