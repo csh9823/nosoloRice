@@ -330,12 +330,6 @@ public class SehwaController {
 		model.addAllAttributes(service.usePointList(id, usePageNum));
 		return "sehwa/noramlUserPointList";
 	}
-
-	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:/login";
-	}
 	
 	@RequestMapping(value="/businessUserSecession")
 	public String businessUserSecession(Model model, String id) {

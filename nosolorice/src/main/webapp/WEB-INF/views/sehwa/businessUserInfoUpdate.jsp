@@ -327,6 +327,13 @@
 	 });
 	window.dispatchEvent(new Event('resize'));
 	
+	// 엔터키 방지
+	$('input[type="text"]').keydown(function() {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+		};
+	});
+	
   </script>
   
 </body>
