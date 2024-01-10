@@ -355,7 +355,7 @@ function normalFindZipcode(){
 	$("#normalId").on("keyup", function() {
 				
 		let id = $(this).val();
-		let regExp = /^[a-zA-Z0-9[\b]]+$/gi;
+		let regExp = /^[a-zA-Z0-9]+$/gi;
 
 		if(! regExp.test(id)) {
 			alert("아이디는 숫자 및 영문자만 입력 가능합니다.");
