@@ -9,7 +9,7 @@ public class BusinessUser {
 	private String pass;						// 비밀번호
 	private String name;					// 사장님 이름
 	private String phone;					// 사업장 가게번호
-	private int businessNumber;			// 사업자등록번호
+	private long businessNumber;			// 사업자등록번호
 	private String businessName;		// 상호명
 	private String businessPicture;		// 사업자등록증 사본파일
 	private String email;					// 이메일
@@ -107,11 +107,11 @@ public class BusinessUser {
 		this.phone = phone;
 	}
 
-	public int getBusinessNumber() {
+	public long getBusinessNumber() {
 		return businessNumber;
 	}
 
-	public void setBusinessNumber(int businessNumber) {
+	public void setBusinessNumber(long businessNumber) {
 		this.businessNumber = businessNumber;
 	}
 
@@ -203,10 +203,6 @@ public class BusinessUser {
 		this.bankName = bankName;
 	}
 
-
-	public void setBankNumber(int bankNumber) {
-		this.bankNumber = bankNumber;
-	}
 
 	public int getDeposit() {
 		return deposit;

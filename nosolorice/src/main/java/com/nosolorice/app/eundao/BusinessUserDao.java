@@ -9,7 +9,7 @@ public interface BusinessUserDao {
 
 	public void addBusinessUser(BusinessUser businessUser);
 	
-	public int overlapBusinessNumberCheck(Integer businessNumber);
+	public int overlapBusinessNumberCheck(long businessNumberInt);
 	
 	public List<String> getBusinessUser(String businessId);
 	

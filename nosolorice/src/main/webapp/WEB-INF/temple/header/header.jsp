@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<!-- 숫자 포맷팅용 -->
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>     
 <nav class="navbar navbar-expand-lg">
 
     <div class="container-fluid">
@@ -9,7 +11,6 @@
     <c:if test="${not empty sessionScope.BusinessUser}">
 		<!-- nav_logo -->
 		<a class="logo" href="main.jsp"><img src="./logo/nosolorice_logo_s.png"></a>
-      
 
 	      <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    
@@ -64,8 +65,7 @@
 	    
 	      </div>
     </c:if>
-        
-    
+
     <c:if test="${not empty sessionScope.NormalUser}">
     	
 		      <!-- nav_logo -->
@@ -97,7 +97,7 @@
 		
 		          <li class="nav-item">
 
-		            <a class="nav-link " aria-current="page" href="question">고객센터</a>
+		            <a class="nav-link " aria-current="page" href="/question">고객센터</a>
 
 		          </li>
 		    
@@ -114,11 +114,16 @@
 		
 		          <!-- 유저_프로필 -->
 		          <a href="normalUserInfoUpdate?id=${sessionScope.NormalUser.normalId}"><img src="${sessionScope.NormalUser.profile}" class="rounded-circle me-2 "/></a>
+
+		          <a href="#"><img src="${sessionScope.NormalUser.profile}" class="rounded-circle me-2 "/></a>
 		
 		          <!-- 포인트 -->          
 		          <div class="d-flex flex-column mb-2 ">
 		            <p class="me-2 mb-2 fs-6 align-items-end">보유 포인트</p>
 		            <p class="me-2 mb-2 align-items-start fw-bold">${ sessionScope.NormalUser.myPoint }</p>
+		            <p class="me-2 mb-2 align-items-start fw-bold">
+		            	<fmt:formatNumber value="${sessionScope.NormalUser.myPoint}" pattern="#,###,###,###" />
+		            </p>
 		          </div>  
 		          
 		
@@ -126,6 +131,11 @@
 		          <button type="button" class="btn btn-danger me-2" onclick="location.href='chargePoint'">충전</button>
 		          <a class="nav-link" class="btn btn-primary" href='${  not empty sessionScope.NormalUser  ? "logout" : "login" }'>
 						${ not empty sessionScope.NormalUser  ? "로그아웃" : "로그인" }
+
+		          <button type="button" class="btn btn-danger me-2">충전</button>
+		          <a class="nav-link" class="btn btn-primary" href='${not empty sessionScope.NormalUser ? "logout" : "#"}'>
+						로그아웃
+
 				  </a>
 
 		

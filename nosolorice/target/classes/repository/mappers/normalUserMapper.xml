@@ -5,7 +5,7 @@
 <mapper namespace="com.nosolorice.mappers.normalUserMapper">
 	
 	<insert id="addNormalUser" parameterType="NormalUser">
-		INSERT INTO normal_user (normal_id, pass, name, birth, nickname, mobile, profile, postNum, address1, address2, xpoint, ypoint, gender, email, regdate, mypoint, root)
+		INSERT INTO normal_user (normal_id, pass, name, birth, nickname, mobile, profile, postnum, address1, address2, xpoint, ypoint, gender, email, regdate, mypoint, root)
     	VALUES (#{normalId}, #{pass}, #{name}, #{birth}, #{nickName}, #{mobile}, #{profile}, #{postNum}, #{address1}, #{address2}, #{xpoint}, #{ypoint}, #{gender}, #{email}, SYSDATE(), 0, 2)
 	</insert>
 	
@@ -18,7 +18,11 @@
 	</select>
 	
 	<select id="getNickName" parameterType="String" resultType="Integer">
-		SELECT COUNT(*) FROM normal_user WHERE nickname = #{nickName}
+		SELECT COUNT(*) FROM normal_user WHERE nickname = #{nickName} OR normal_id = #{nickName}
+			UNION
+		SELECT COUNT(*) FROM business_user WHERE business_id = #{nickName} OR business_name = #{nickName}
+			UNION
+		SELECT COUNT(*) FROM root_user WHERE root_id = #{nickName} OR root_name = #{nickName}
 	</select>
 	
 </mapper>

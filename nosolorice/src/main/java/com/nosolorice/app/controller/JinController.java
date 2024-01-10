@@ -131,6 +131,14 @@ public class JinController {
 		return "login/joinForm";
 	}
 	
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		
+		return "redirect:login";
+	}
+	
 	//로그인 폼
 	@RequestMapping("login")
 	public String login(@CookieValue(name= "saveId",required = false) String id,Model model) {
@@ -143,56 +151,8 @@ public class JinController {
 	}
 
 
-	//로그인 하기
-	@RequestMapping("loginservice")
-	public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,
-			HttpServletResponse response,HttpSession session ,PrintWriter out) {
-		
-		// 쿠키에 값 저장하기
-		if(idsave != 0) {
-			Cookie cookie = new Cookie("saveId" ,id);
-			cookie.setMaxAge(60*60*24*30);
-			response.addCookie(cookie);
-		}else {
-			Cookie cookie = new Cookie("saveId" ,id);
-			cookie.setMaxAge(0);
-			response.addCookie(cookie);
-		}
-		
-		BusinessUser buser = jinloginService.loginBusinessUser(id, pass);
-		
-		NormalUser nuser = jinloginService.loginNormalUser(id, pass);
-		
-		RootUser ruser = jinloginService.loginRootUser(id, pass);
-		
-		if(buser != null) {
-			System.out.println(buser.getBusinessId());
-			session.setAttribute("BusinessUser", buser);
-			return "redirect:Businessriview?businessId="+buser.getBusinessId();
-		}
-		
-		if(nuser != null) {
-			System.out.println(nuser.getNormalId());
-			session.setAttribute("NormalUser", nuser);
-			return "redirect:mainPage";
-		}
-		
-		if(ruser != null) {
-			session.setAttribute("RootUser", ruser);
-			return "redirect:adminPage?RootId="+ruser.getRootId();
-		}
 
-		response.setContentType("text/html; charset=utf-8");
-		out.println("<script>");
-		out.println("	alert('회원 정보가 일치하지 않습니다.');");
-		out.println("	history.back();");
-		out.println("</script>");
-		
-    	return null;
-
-	}
-	
-	@RequestMapping("BusinessMenu")
+	@RequestMapping("businessMenu")
 	public String BusinessMenu(String businessId,Model model, @RequestParam(name="menuCategoryNo",required = false) String menuCategoryNo) {
 		
 		System.out.println(menuCategoryNo);
