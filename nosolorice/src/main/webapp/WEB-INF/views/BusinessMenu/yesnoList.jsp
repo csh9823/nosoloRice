@@ -355,9 +355,6 @@
     	  });
     	});
 
-    
-    
-    
     //승인 버튼 눌렀을 때
     $(document).on("click", ".yeslist", function(){
     	let roomId = $(this).attr("data-id");

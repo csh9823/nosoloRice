@@ -28,4 +28,16 @@ public class JinMenuService implements JinMenuInterface {
 	public String getMenu(int menuNo) {
 		return jinMenuDaoImpl.getMenu(menuNo);
 	}
+	
+	public Menu getMenuajax(int menuNo) {
+		
+		return jinMenuDaoImpl.getMenuajax(menuNo);
+		
+	}
+	
+	public void MenuUpdate(Menu menu) {
+		
+		jinMenuDaoImpl.MenuUpdate(menu);
+		
+	}
 }
