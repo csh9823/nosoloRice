@@ -166,12 +166,18 @@ public class JinController {
 		RootUser ruser = jinloginService.loginRootUser(id, pass);
 		
 		if(buser != null) {
+			System.out.println(buser.getBusinessId());
 			session.setAttribute("BusinessUser", buser);
-			return "redirect:businessUserStoreInfo?id="+buser.getBusinessId();
-		}else if(nuser != null) {
-			session.setAttribute("NormalUser", nuser);
 			return "redirect:Businessriview?businessId="+buser.getBusinessId();
-		}else if(ruser != null) {
+		}
+		
+		if(nuser != null) {
+			System.out.println(nuser.getNormalId());
+			session.setAttribute("NormalUser", nuser);
+			return "redirect:mainPage";
+		}
+		
+		if(ruser != null) {
 			session.setAttribute("RootUser", ruser);
 			return "redirect:adminPage?RootId="+ruser.getRootId();
 		}
