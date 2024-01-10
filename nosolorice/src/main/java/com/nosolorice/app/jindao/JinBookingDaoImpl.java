@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nosolorice.app.domain.booking.Booking;
 import com.nosolorice.app.domain.booking.BookingOk;
+import com.nosolorice.app.domain.booking.BookingUserList;
 
 @Repository
 public class JinBookingDaoImpl implements JinBookingInterfaceDao {
@@ -56,5 +57,23 @@ public class JinBookingDaoImpl implements JinBookingInterfaceDao {
 		map.put("bookingNo", bookingNo);
 		
 		sqlSession.delete(NAME_SPACE + ".bookinguserdelete",map);
+	}
+	
+	// 부킹 유저 리스트
+	public List<BookingUserList> bookingUserList(String businessId,int bookingNo){
+		Map<String, Object> map = new HashMap<>();
+		map.put("businessId", businessId);
+		map.put("bookingNo", bookingNo);
+		return sqlSession.selectList(NAME_SPACE + ".bookinguserdelete",map);
+	}
+	
+	// 방문완료 생성
+	public void visitantuseradd(String normalId, String businessId,int bookingokNo) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("businessId", businessId);
+		map.put("bookingokNo", bookingokNo);
+		map.put("businessId", businessId);
+		
+		sqlSession.insert(NAME_SPACE + ".visitantuseradd",map);
 	}
 }

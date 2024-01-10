@@ -408,25 +408,6 @@ $(function(){
 						}
 					});
 					
-					let nickNames = "";
-					//ajax로 booking_userlist테이블에서 bookNo에 해당하는 닉네임을 다 가져온다.
-					$.ajax({
-						url: "/app/getBookingUserList",
-						data : "bookingNo=" + bookingNo,
-						type : "post",
-						dataType : "json",
-						async : false,
-						success : function(resData){
-							console.log(resData);
-							$(resData).each(function(i, v){
-								nickNames += (i==resData.length-1 ? v.nickName :  v.nickName + ", ");
-							});
-						}, error : function(err){
-							console.log("통신오류", err)
-						}
-					});
-					$("#bookSuccessMemberList").text(nickNames);
-				
 					bookComplete = true;
 					$("#bookWait").addClass("d-none");
 					$("#bookFail").addClass("d-none");

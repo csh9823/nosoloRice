@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nosolorice.app.domain.booking.Booking;
 import com.nosolorice.app.domain.booking.BookingOk;
+import com.nosolorice.app.domain.booking.BookingUserList;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.businessUser.Menu;
 import com.nosolorice.app.domain.businessUser.MenuCategory;
@@ -293,33 +294,53 @@ public class JinController {
 		
 		// 부킹 no가 있는지 먼저 체크
 		List<Booking> booking = jinbookService.BookingList(businessId);
-		
 		model.addAttribute("booking",booking);
 		
 		return "BusinessMenu/yesnoList";
 	}
 	
+	
+	// 예약 수락
 	@RequestMapping("bookingStateOk")
-	public String bookingState(String businessId,int bookingNo ,String bookingState) {
-		
-		
-		jinbookService.bookingState(businessId, bookingNo, bookingState);
-		
+	public String bookingState(BookingOk bookingOk,String bookingState,String businessId) {
+
+		System.out.println(bookingOk.toString());
+		System.out.println(bookingState + businessId);
+		jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingState);
+		// 부킹  ok 승인
+		jinbookService.bookingOkinsert(bookingOk);
 		return "redirect:yesnoList?businessId="+businessId;
 	}
 	
+	//예약거절
 	@RequestMapping("bookingStateDelete")
 	public String bookingStateDelete(String businessId,int bookingNo) {
-		
-		jinbookService.bookinguserdelete(businessId, bookingNo);
 		jinbookService.bookingStateDelete(businessId, bookingNo);
 		return "redirect:yesnoList?businessId="+businessId;
 	}
 	
+	// 방문 완료
 	@RequestMapping("Bookingok")
-	public String Bookingok(BookingOk bookingOk,String bookingState) {
-		jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingState);
-		jinbookService.bookingOkinsert(bookingOk);
+	public String Bookingok(BookingOk bookingOk) {
+		
+		System.out.println(bookingOk.toString());
+		
+		// 업데이트 부킹 테이블 방문완료로 전환
+		//jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingOk.getBookingOkState());
+		
+		// 아이디를 가져와서 방문완료 반복 인설트
+		//List<BookingUserList> bookuser =  jinbookService.bookingUserList(bookingOk.getBusinessId(), bookingOk.getBookingNo());
+		
+		// 방문완료 생성
+		//for (BookingUserList bookingUser : bookuser) {
+			
+			//jinbookService.visitantuseradd(bookingUser.getNormalId(),bookingOk.getBusinessId(),bookingOk.getBookingOkNo());
+			
+		//}
+		
+		// 부킹 유저 리스트 삭제
+		//jinbookService.bookinguserdelete(bookingOk.getBusinessId(), bookingOk.getBookingNo());
+		
 		return "redirect:yesnoList?businessId="+bookingOk.getBusinessId();
 	}
 

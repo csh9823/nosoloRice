@@ -26,7 +26,8 @@
             color : #C93C3C !important;
         }
         .yeslist{
-            text-decoration: none;
+            border: none;
+            background-color: red;
         }
         .nolist{
             text-decoration: none;
@@ -133,9 +134,17 @@
 		                    </div>
 		                </div>
 		                <div class="col-2" style="background-color: cadetblue;">
-		                    <a href="bookingStateOk?businessId=${sessionScope.BusinessUser.businessId}&bookingNo=${booking.bookingNo}&bookingState=승인" class="yeslist" data-id="${booking.bookingChatName}">
-		                    	<p class="pyeslist">승인</p>
-		                    </a>
+		                <form action="bookingStateOk" method="get">
+		                	<input type="hidden" name="bookingState" value="승인">
+		                	<input type="hidden" name="bookingOkState" value="0">
+		                	<input type="hidden" name="bookingOkTime" value="${booking.bookingTime}">
+		                	<input type="hidden" name="bookingOkRequest" value="${booking.bookingRequest}">
+		                	<input type="hidden" name="bookingOkCount" value="${booking.bookingCount}">
+		                	<input type="hidden" name="bookingNo" value="${booking.bookingNo}">
+		                	<input type="hidden" name="deposit" value="${booking.deposit}">
+		                	<input type="hidden" name="businessId" value="${sessionScope.BusinessUser.businessId}">
+		                	<button type="submit" class="yeslist pyeslist" data-id="${booking.bookingChatName}">승인</button>
+		                </form>    	
 		                </div>
 		    
 		                <div class="col-2" style="background-color: red; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
@@ -175,7 +184,7 @@
                             </div>
                             
                             <div class="col-2">
-                                <p style="font-size: 20px; padding-top: 10px;">${booking.bookingBookNo}</p>
+                                <p style="font-size: 20px; padding-top: 10px;">${booking.bookingBookNo} 인원 :${booking.bookingCount} </p>
                             </div>
                         </div>
 
@@ -215,7 +224,7 @@
                         <input type="hidden" name="bookingNo" value="${booking.bookingNo}">
                         <input type="hidden" name="businessId" value="${sessionScope.BusinessUser.businessId}">
                         <input type="hidden" name="deposit" value="${booking.deposit}">
-                        <input type="hidden" name="bookingState" value="미방문">
+                        <input type="hidden" name="bookingOkNo" value="${booking.bookingOkNo}">
                      </form>
                     </div>
                 </div>
@@ -255,6 +264,52 @@
     const openModal2Btns = document.querySelectorAll(".pnolist");
     
     const closeModal2Btn = document.getElementById("close-modal2");
+  
+    // 모달창 열기
+	openModal2Btns.forEach((openModal2Btn) => {
+	  openModal2Btn.addEventListener("click", () => {
+	    if (modal2) {
+	      modal2.style.display = "block";
+	      document.body.style.overflow = "hidden"; // remove scrollbar
+	    }
+	  });
+	});
+    
+    // 모달창 닫기
+    closeModal2Btn.addEventListener("click", () => {
+      modal2.style.display = "none";
+      document.body.style.overflow = "auto"; // 스크롤바 보이기
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+    
+    let modal2 = document.getElementById("modal2");
+    let modal2Content = document.querySelector(".modal2-content");
+
+    modal2.addEventListener("click", function(e) {
+        if (!modal2Content.contains(e.target)) {
+            modal2.style.display = "none";
+        }
+    });
+});
+    
+    openModal2Btns.forEach((openModal2Btn) => {
+    	  openModal2Btn.addEventListener("click", (event) => {
+    		  let buttonValue = event.target.value;
+    		  let clickEl = event.target;
+    		  let roomId = $(clickEl).attr("data-id");
+    	        // 콘솔에 출력
+    	        console.log(buttonValue);
+    	        
+    	        // 아이디가 bookingNo인걸 선택
+    	        let hiddenInput = document.getElementById('bookingNo');
+    	        
+    	        // value를 선택된 버튼의 value로 변환
+    	        hiddenInput.value = buttonValue;
+    	        $("#roomId").val(roomId);
+    	  });
+    	});
+
     
     const loginId = $("#bId").val();
     console.log("사장님 loginId : ", loginId);
@@ -317,50 +372,6 @@
 			});
     
 
-    // 모달창 열기
-	openModal2Btns.forEach((openModal2Btn) => {
-	  openModal2Btn.addEventListener("click", () => {
-	    if (modal2) {
-	      modal2.style.display = "block";
-	      document.body.style.overflow = "hidden"; // remove scrollbar
-	    }
-	  });
-	});
-    
-    // 모달창 닫기
-    closeModal2Btn.addEventListener("click", () => {
-      modal2.style.display = "none";
-      document.body.style.overflow = "auto"; // 스크롤바 보이기
-    });
-
-    document.addEventListener("DOMContentLoaded", function() {
-    
-    let modal2 = document.getElementById("modal2");
-    let modal2Content = document.querySelector(".modal2-content");
-
-    modal2.addEventListener("click", function(e) {
-        if (!modal2Content.contains(e.target)) {
-            modal2.style.display = "none";
-        }
-    });
-});
-    
-    openModal2Btns.forEach((openModal2Btn) => {
-    	  openModal2Btn.addEventListener("click", (event) => {
-    		  let buttonValue = event.target.value;
-    		  let clickEl = event.target;
-    		  let roomId = $(clickEl).attr("data-id");
-    	        // 콘솔에 출력
-    	        console.log(buttonValue);
-    	        
-    	        // 아이디가 bookingNo인걸 선택
-    	        let hiddenInput = document.getElementById('bookingNo');
-    	        
-    	        // value를 선택된 버튼의 value로 변환
-    	        hiddenInput.value = buttonValue;
-    	        $("#roomId").val(roomId);
-    	  });
-    	});
 
     //승인 버튼 눌렀을 때
     $(document).on("click", ".yeslist", function(){
@@ -384,9 +395,7 @@
 		}
 		const jsonData = JSON.stringify(rejectMsg);
     	bookingSocket.send(jsonData);
-    });
-    
-    
+    });    
 </script>
 </body>
 </html>
