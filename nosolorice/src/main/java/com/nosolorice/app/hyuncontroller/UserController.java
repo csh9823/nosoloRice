@@ -45,15 +45,10 @@ public class UserController {
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
-	
-	@RequestMapping("test")
-	public String test() {
-		return "chating";		
-	} 
-	
-	
+
 	@RequestMapping("mainPage")
-	public String mainPage() {
+	public String mainPage(@RequestParam(value="introduce", required=false) boolean introduce, Model model) {
+		model.addAttribute("introduce", introduce);
 		return "mainPage";
 	}
 	

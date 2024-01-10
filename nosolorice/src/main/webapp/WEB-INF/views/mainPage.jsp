@@ -46,7 +46,7 @@
 <div class="row">
 	<div class="col p-5">
 		<!-- 여기서부터 작업시작  -->
-		
+			<input type="hidden" id="isIntro" value="${introduce}">
 			<!-- 매칭하기 버튼  -->
 			<div class="row my-5">
 				<div class="col text-center rounded" 
@@ -73,7 +73,7 @@
 			</div>
 			
 			<!-- 소개하기 제목  -->
-			<div class="row"  style="margin: 10vh 0;">
+			<div class="row"  style="margin: 10vh 0;" id="introduceTitle">
 				<div class="col text-center" >
 						<p class="fw-bold" style="color:#C93C3C; font-size:2.3em;line-height: 3em">
 							혼자 밥먹기 싫을때?
@@ -170,14 +170,15 @@
 
 				</div>
 			</div>
-		<audio id="alarm" src="resources/audio/alarm.mp3"></audio>
 	</div>
 </div>
 <script>
-	let alarm = document.getElementById('alarm');
-	$("#matchingStartBtn").on("click", function(){
-		
-		location.href="matching";
+	$(function(){
+	    let isIntro = $("#isIntro").val();
+	    if (isIntro == 'true') {
+	        let introTitle = $("#introduceTitle");
+	        $("html, body").scrollTop(introTitle.offset().top);
+	    }	
 	});
 </script>
 </body>

@@ -13,7 +13,7 @@
 	</select>
 	
 	<update id="updateJoinApprove">
-		update business_user set ok_nook = 'y' where business_number = #{businessNumber}
+		update business_user set ok_nook = 1 where business_number = #{businessNumber}
 	</update>
 	
 	<delete id="deleteJoinApprove">

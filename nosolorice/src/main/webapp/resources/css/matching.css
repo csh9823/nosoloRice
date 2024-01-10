@@ -237,3 +237,6 @@
     cursor: pointer;
     color : white;
   }
+  #step3_2PrevBtn, #step3_2NextBtn {
+  	z-index : 500;
+  }

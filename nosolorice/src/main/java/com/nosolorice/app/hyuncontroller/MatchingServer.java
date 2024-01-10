@@ -234,6 +234,8 @@ public class MatchingServer {
             	for(Session m : matchingMember) {
             		m.getBasicRemote().sendText(jsonData);
             	}            	
+            	matchingMember.clear();
+            	matchingBlockSet.clear();
             }
             
             System.out.println(session.getUserProperties().get("loginId") + "끝까지 실행완료(매칭완료)");

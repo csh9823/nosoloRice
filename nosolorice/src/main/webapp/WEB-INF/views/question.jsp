@@ -23,13 +23,6 @@
     * {
       font-family: 'SUITE Variable', sans-serif;
     }
-
-  .answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-  }
-
 </style>
 </head>
 <body>
@@ -43,13 +36,13 @@
             <ul class="my-3">
                  <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">고객센터</li>
                 <li class="my-5 fs-4"><a href="question">자주 묻는 질문</a></li>
-                <li class="my-5 fs-4"><a href="userInquiryWriteForm">1:1 문의</a></li>
+                <li class="my-5 fs-4"><a href="userInquiry">1:1 문의</a></li>
                 <li class="my-5 fs-4"><a href="userInquiryList">1:1 문의내역</a></li>
-                <li class="my-5 fs-4"><a href="noticeList">공지사항</a></li>
+                <li class="my-5 fs-4"><a href="noticeNormal">공지사항</a></li>
             </ul>
         </div>
         <div class="col-md-1 d-none d-md-block my-5" style="margin-left: -50px;">
-            <div style="border-left: 1px solid #616161; height: 80vh;"></div>
+            <div style="border-left: 1px solid #ccc; height: 80vh;"></div>
         </div>
         <div class="col mt-5">
             <div class="mt-3 fs-2 fw-bold" style="color:#C93C3C">자주 묻는 질문</div><br>
