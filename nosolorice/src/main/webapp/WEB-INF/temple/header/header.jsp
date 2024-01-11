@@ -50,7 +50,7 @@
 		          </form>
 		
 		          <!-- 유저_프로필 -->
-		          <a href="#"><img src="${sessionScope.NormalUser.profile}" class="rounded-circle me-2 "/></a>
+		          <img src="${sessionScope.NormalUser.profile}" class="rounded-circle me-2 "/>
 		
 		          <!-- 포인트 -->          
 		          <div class="d-flex flex-column mb-2 ">

@@ -22,8 +22,9 @@ public class BusinessUserServiceImpl implements BusinessUserService {
 	@Autowired
     private BusinessUserDao businessUserDao;
 	
-	@Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+	/*
+	 * @Autowired private BCryptPasswordEncoder passwordEncoder;
+	 */
 
     @Override
     public boolean overlapBusinessIdCheck(String businessId) {
@@ -41,7 +42,8 @@ public class BusinessUserServiceImpl implements BusinessUserService {
     @Override
     public void addBusinessUser(BusinessUser businessUser) {
     	if (businessUser.getPass() != null) {
-    		businessUser.setPass(passwordEncoder.encode(businessUser.getPass()));
+			/* businessUser.setPass(passwordEncoder.encode(businessUser.getPass())); */
+    		businessUser.setPass(businessUser.getPass());
 		}
 	
     	businessUserDao.addBusinessUser(businessUser);

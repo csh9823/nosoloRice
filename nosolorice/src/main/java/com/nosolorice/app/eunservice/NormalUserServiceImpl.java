@@ -25,26 +25,28 @@ public class NormalUserServiceImpl implements NormalUserService {
 
 	@Autowired
 	private normalUserDao normalUserDao;
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	/*
+	 * @Autowired private BCryptPasswordEncoder passwordEncoder;
+	 */
 
 	@Override
     public boolean overlapIdCheck(String normalId) {
         List<String> normalUser = normalUserDao.getNormalUser(normalId);
+
         return normalUser.size() > 0 ? true : false;
     }
 
 	@Override
 	public boolean overlapNickCheck(String nickName) {
-		return normalUserDao.getNickName(nickName);
-	    
+		return normalUserDao.getNickName(nickName); //false면 중복X, ture면 중복
 	}
 	
 	@Override
 	public void addNormalUser(NormalUser normalUser) {
 		
 	    if (normalUser.getPass() != null) {
-	        normalUser.setPass(passwordEncoder.encode(normalUser.getPass()));
+			/* normalUser.setPass(passwordEncoder.encode(normalUser.getPass())); */
+	    	normalUser.setPass(normalUser.getPass());
 	    }
 
 	    normalUserDao.addNormalUser(normalUser);

@@ -1,15 +1,7 @@
 // 유효성검사
 $(document).ready(function () {
-    $("#normalJoinForm").on("submit", function (event) {
-        if (!validateForm()) {
-            event.preventDefault();
-        }
-    });
-});
-
-function validateForm() {
-
-	// 입력값 가져오기
+    $("#normalJoinForm").on("submit", function () {
+// 입력값 가져오기
     let name = $("#name").val();
     let id = $("#normalId").val();
     let nickname = $("#nickName").val();
@@ -32,7 +24,6 @@ function validateForm() {
     let phoneCheck = $("#certCheck").val();
     let x = $("#xpoint").val();
     let y = $("#ypoint").val();
-    let domain = $("#emailDomain").val();
     
     if (name.trim() === "") {
         alert("이름은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
@@ -54,8 +45,18 @@ function validateForm() {
         return false;
     }
     
+    if (pass.length() < 8) {
+        alert("비밀번호는 8자 이하로 만둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
+        return false;
+    }
+    
     if (passCheck.trim() === "") {
         alert("비밀번호 확인은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
+        return false;
+    }
+    
+    if (passCheck.length() < 8) {
+        alert("비밀번호 확인은 8자 이하로 만둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
     }
     
@@ -65,7 +66,7 @@ function validateForm() {
     }
     
     if (phone.trim() === "") {
-        alert("전화번호는 \n입력 후 다시 시도해 주세요.");
+        alert("전화번호는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
     }
     
@@ -119,39 +120,35 @@ function validateForm() {
         return false;
     }
     
-    if (idCheck === false) {
+    if (idCheck == 'false') {
         alert("아이디 중복확인은 필수입니다. \n진행 후 다시 시도해 주세요.");
         return false;
     }
     
-    if (nickCheck === false) {
+    if (nickCheck == 'false') {
         alert("닉네임 중복확인은 필수입니다. \n진행 후 다시 시도해 주세요.");
         return false;
     }
     
-    if (phoneCheck === false) {
-        alert("휴대폰 중복확인은 필수입니다. \n진행 후 다시 시도해 주세요.");
+    if (phoneCheck == 'false') {
+        alert("휴대폰 인증은 필수입니다. \n진행 후 다시 시도해 주세요.");
         return false;
     }
     
-    if (x === null) {
+    if (x == 'null') {
         alert("올바른 주소를 입력해 주세요.");
         return false;
     }
     
-    if (y === null) {
+    if (y == 'null') {
         alert("올바른 주소를 입력해 주세요.");
         return false;
-    }
-    
-    if (domain === null) {
-        alert("이메일 도메인을 선택해 주세요.");
-        return false;
-    }
-    
+    }    
 
     return true;
-}
+    });
+});
+
 
 // 입력한 이미지를 미리보기
     function profileImage(input) {
@@ -262,21 +259,6 @@ function normalFindZipcode(){
         }).open();
 }
 
-
-	$(document).ready(function () {
-		$("#selectDomain").on("change", function() {
-			var str = $(this).val();
-			
-			if(str == "naver.com") {
-				$("#emailDomain").val("naver.com");
-			} else if(str == "gmail.com") {
-				$("#emailDomain").val("gmail.com");
-			}else if(str == "daum.net") {
-				$("#emailDomain").val("daum.net");
-			}
-		});
-	});	
-
 	// 회원 아이디 중복 확인 버튼이 클릭되면
 	$("#overlapCheck").on("click", function() {	
 		var id = $("#normalId").val();
@@ -333,7 +315,6 @@ function normalFindZipcode(){
 	    var normalIdElement = $(window.opener.document).find("#normalId");
 	    var bIdElement = $(window.opener.document).find("#businessId");
 	    var idCheck = $(window.opener.document).find("#isIdCheck").val(true);
-	    let bIdCheck = $(window.opener.document).find("#isBusinessIdCheck").val(true);
 	    
 		normalIdElement.val(id);
 		bIdElement.val(id);
@@ -353,57 +334,47 @@ function normalFindZipcode(){
 	});
 	
 	$("#normalId").on("keyup", function() {
-				
-		let id = $(this).val();
-		let regExp = /^[a-zA-Z0-9]+$/gi;
-
-		if(! regExp.test(id)) {
-			alert("아이디는 숫자 및 영문자만 입력 가능합니다.");
-			$(this).val($(this).val().replace(regExp, ""));
-		}
-		
+	    let Id = $(this).val();
+	    let regExp = /[^A-Za-z0-9_-]/g;
+	    console.log(Id);
+	
+	    if (regExp.test(Id)) {
+	        alert("아이디는 숫자 및 영문자, -와 _만 입력 가능합니다.");
+	        $(this).val("");
+	    }
 	});
+
 	
 	$("#nickName").on("keyup", function() {
 				
 		let nick = $(this).val();
-		let regExp = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$/gi;
+		let regExp = /^[ㄱ-ㅎ가-힣a-zA-Z0-9_-]+$/;
 
 		if(! regExp.test(nick)) {
-			alert("닉네임은 숫자와 영문자 대소문자, 한글만 입력 가능합니다.");
-			$(this).val($(this).val().replace(regExp, ""));
+			alert("닉네임은 숫자와 영문자 대소문자와 -, _, 한글만 입력 가능합니다.");
+			$(this).val("");
 		}
 		
 	});
 	
-	// 비번에 들어가는거 정규표현식
-	$("#pass").on("keyup", function() {
-		let reg = /^[a-zA-Z0-9!^&*()/_-]+$/;
+	$("#pass").on("input", function() {
+	    var reg = /^(?=.*[0-9])(?=.*[a-z])(?=.*[$@!%*#?&])[a-zA-Z0-9$@!%*#?&]$/;
 	    let pass = $(this).val();
 	
-	    if (! reg.test(pass)) {
-	        alert("비밀번호는 하나 이상의 대소문자, 숫자, 특수문자가 입력되어야 합니다.");
-	        $(this).val($(this).val().replace(reg, ""));
+	    if (reg.test(pass)) {
+	        alert("비밀번호는 대소문자와 숫자, 특수문자가 각 1개씩 포함되어야 하며, 총 8자리 이상이어야 합니다. \n확인 후 다시 시도해 주세요.");
+	        $(this).val("");
 	    }
-	})
+	});
+
 	
 	// 비번_확인에 들어가는거 정규표현식
 	$("#checkPass").on("keyup", function() {
-		let reg = /^[a-zA-Z0-9!^&*()/_-]+$/;
+		var reg = /^(?=.*[0-9])(?=.*[a-z])(?=.*[$@!%*#?&])[a-zA-Z0-9$@!%*#?&]$/;
 	    let checkPass = $(this).val();
 	
-	    if (! reg.test(checkPass)) {
-	        alert("비밀번호는 하나 이상의 대소문자, 숫자, 특수문자가 입력되어야 합니다.");
-	        $(this).val($(this).val().replace(reg, ""))
-	    }
-	})
-	
-	$("#emailId").on("keyup", function() {
-		let reg = /^[a-zA-z0-9._%+-]+/;
-		let email = $(this).val();
-		
-		if (! reg.test(email)) {
-	        alert("@이전의 이메일 아이디만 입력해 주세요.");
-	        $(this).val($(this).val().replace(reg, ""))
-	    }
+	    if (reg.test(checkPass) || $(this).length < 0) {
+	        alert("비밀번호는 대소문자와 숫자, 특수문자가 각 1개씩 8자리 이상이여야 합니다. \n확인 후 다시 시도해 주세요.");
+	        $(this).val("");
+		}
 	});

@@ -1,16 +1,8 @@
-// 유효성검사 - 수정해야함
+// 유효성검사
 $(document).ready(function () {
-    $("#businessJoinForm").on("submit", function (event) {
-        if (!validateBForm()) {
-        	console.log("이벤트 작동함");
-            event.preventDefault();
-        }
-    });
-});
-
-function validateBForm() {
-
-    // 입력값 가져오기
+    $("#businessJoinForm").on("submit", function () {
+    	
+    	// 입력값 가져오기
     let bname = $("#businessUserName").val();
     let bid = $("#businessId").val();
     let bName = $("#bName").val();
@@ -20,31 +12,24 @@ function validateBForm() {
     let chkNum = $("#checkNum").val();
     let email = $("#bEmail").val(); 
     let bNum = $("#businessNumber").val();
-    let bankcode = $("#bankcode").val();
+    let bankcode = $("select[name=bankcode]").val();
     let accountNumber = $("#accountNumber").val();
     let callPhone = $("#callPhone").val();
     let zip = $("#zipcode").val();
     let add1 = $("#address1").val();
-    let term = $("input[name='termOK']:checked").length;
-    let regImg = $("businessRegImg").val;
-    let checkNum = $("businessNumber").val;
-
+    let term =  $("input[name='termOK']:checked").length;
+    let regImg = $("#businessRegImg").val();
+    let checkNum = $("#bNoCheck").val;
+    
     // hidden값 가져오기
-    let idCheck = $("#isBidCheck").val();
-    let nickCheck = $("#isBusinessIdCheck").val();
-    let phoneCheck = $("#bPhoneCheck").val();
-    let x = $("#xpoint1").val();
-    let y = $("#ypoint1").val();
+    let idCheck = $("#isIdCheck").val(); // 아이디
+    let phoneCheck = $("#bPhoneCheck").val(); // 전화번호인증
+    let x = $("#xpoint").val();
+    let y = $("#ypoint").val();
     let bNo = $("#bNoCheck").val();
-    let domain = $("#emailDomain").val();
 
 	if (bid.trim() === "") {
         alert("아이디는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
-        return false;
-    }
-    
-    if (idCheck === false) {
-        alert("아이디 중복확인은 필수입니다. \n진행 후 다시 시도해 주세요.");
         return false;
     }
     
@@ -58,57 +43,42 @@ function validateBForm() {
         return false;
     }
 
-    if (pass !== passCheck) {
+    if (bpass != passCheck) {
         alert("비밀번호와 비밀번호 확인이 일치하지 않습니다. \n입력 후 다시 시도해 주세요.");
         return false;
-    }
+    } // 안먹음
     
     if (phone.trim() === "") {
         alert("전화번호는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
     }
-    
-    if (phoneCheck === false) {
-        alert("휴대폰 중복확인은 필수입니다. \n진행 후 다시 시도해 주세요.");
-        return false;
-    }
 
-    if (chkNum.trim() === "") {
+    if (chkNum === "") {
         alert("인증번호를 입력해 주세요.");
         return false;
     }
     
-    if (email.trim() === "") {
+    if (email === "") {
         alert("이메일은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
     }
     
-    if (domain === null) {
-        alert("이메일 도메인을 선택해 주세요.");
-        return false;
-    }
-    
-    if (bname.trim() === "") {
+    if (bname === "") {
         alert("이름은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
     }
     
-    if (bName.trim() === "") {
+    if (bName === "") {
         alert("상호명은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
     }
     
-    if (checkNum.trim() === "") {
+    if (bNum === "") {
         alert("사업자번호는 공란으로 둘 수 없습니다. \n다시 시도해 주세요.");
         return false;
     }
     
-    if (phoneCheck === false) {
-        alert("사업자번호 인증은 필수입니다. \n인증 후 다시 시도해 주세요.");
-        return false;
-    }
-    
-    if (regImg == "" && regImg == null) {
+    if (regImg === "" || regImg === null) {
         alert("사업자 확인을 위해 사업자등록증 사본 이미지를 반드시 업로드 해 주세요.");
         return false;
     }
@@ -123,83 +93,91 @@ function validateBForm() {
         return false;
     }
     
-	if (zip.trim() === "") {
+    if (callPhone === "") {
+    	alert("대표번호는 공란으로 둘 수 없습니다. \n확인 후 다시 시도해 주세요.");
+    	return false;
+    }
+    
+	if (zip === "") {
         alert("우편번호는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
     }
     
-	if (add1.trim() === "") {
+	if (add1 === "") {
         alert("주소는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
     }
+    
+	if (term <= 0) {
+        alert("이용약관 동의를 하지 않을 경우 회원가입이 불가합니다.");
+        return false;
+    }
 	
-	if (x === null) {
+	if (idCheck == 'false') {
+        alert("아이디 중복확인은 필수입니다. \n진행 후 다시 시도해 주세요.");
+        return false;
+    }
+    
+    if (phoneCheck == 'false') {
+        alert("휴대폰 인증은 필수입니다. \n진행 후 다시 시도해 주세요.");
+        return false;
+    } 
+        
+    if (bNo == 'false') {
+        alert("사업자번호 인증은 필수입니다. \n인증 후 다시 시도해 주세요.");
+        return false;
+    }    
+    	
+	if (x == 'null') {
         alert("올바른 주소를 입력해 주세요.");
         return false;
     }
     
-    if (y === null) {
+    if (y == 'null') {
         alert("올바른 주소를 입력해 주세요.");
         return false;
     }
-
-    if (term <= 0) {
-        alert("이용약관 동의를 하지 않을 경우 회원가입이 불가합니다.");
-        return false;
-    }
-
+    
     return true;
-}
+    });
+});
 
-
-// 정규표현식 모음
+		// 정규표현식 모음
 		$("#businessId").on("keyup", function() {
 			let bId = $(this).val();
-			let regExp = /^[a-zA-Z0-9]+$/gi;
+			 let regExp = /[^A-Za-z0-9_-]/g;
 			console.log(bId);
 	
-			if(! regExp.test(bId)) {
-				alert("아이디는 숫자 및 영문자만 입력 가능합니다.");
-				$(this).val($(this).val().replace(regExp, ""));
+			if(regExp.test(bId)) {
+				alert("아이디는 숫자 및 영문자, -와 _만 입력 가능합니다.");
+		        $(this).val("");
 			}
-			
 		});
 	
 		// 비번에 들어가는거 정규표현식
 		$("#bPass").on("keyup", function() {
 		    let bPass = $(this).val();
-			let reg = /^[a-zA-Z0-9!^&*()/_-]+$/
-		    console.log(bPass);
+			var reg = /^(?=.*[0-9])(?=.*[a-z])(?=.*[$@!%*#?&])[a-zA-Z0-9$@!%*#?&]$/;
 		
-		    if (! reg.test(bPass)) {
-		        alert("비밀번호는 영문 대소문자와 숫자 및 !^&*()/_-만 사용 가능합니다. \n다시 시도해 주세요.");
-		        $(this).val($(this).val().replace(reg, ""));
+		    if (reg.test(bPass) || $(this).length < 0) {
+		        alert("비밀번호는 대소문자와 숫자, 특수문자가 각 1개씩 포함되어야 하며, 총 8자리 이상이어야 합니다. \n확인 후 다시 시도해 주세요.");
+		        $(this).val("");
 		    }
 		});
 		
 		// 비번_확인에 들어가는거 정규표현식
 		$("#checkBPass").on("keyup", function() {
 		    let checkBPass = $(this).val();
-		    let reg = /^[a-zA-Z0-9!^&*()/_-]+$/
+		    var reg = /^(?=.*[0-9])(?=.*[a-z])(?=.*[$@!%*#?&])[a-zA-Z0-9$@!%*#?&]$/;
 		    console.log(checkBPass);
 		
-		    if (! reg.test(checkBPass)) {
-		        alert("비밀번호는 영문 대소문자와 숫자 및 !^&*()/_-만 사용 가능합니다. \n다시 시도해 주세요.");
-		        $(this).val($(this).val().replace(reg, ""))
+		    if (reg.test(checkBPass) || $(this).length < 0) {
+		        alert("비밀번호 확인은 대소문자와 숫자, 특수문자가 각 1개씩 포함되어야 하며, 총 8자리 이상이어야 합니다. \n확인 후 다시 시도해 주세요.");
+		        $(this).val("");
 		    }
 		})
-		
-		$("#bEmail").on("keyup", function() {
-			let bEmail = $(this).val();
-			let reg = /^[a-zA-z0-9._%+-]+/;
-			
-			if (! reg.test(bEmail)) {
-		        alert("@이전의 이메일 아이디만 입력해 주세요.");
-		        $(this).val($(this).val().replace(reg, ""))
-		    }
-		});
 
-// 입력한 이미지를 미리보기
+	// 입력한 이미지를 미리보기
     function profileImage(input) {
 	    var preview = document.getElementById('profileImageInput');
 	    var file = input.files[0];
@@ -308,23 +286,6 @@ function findZipcode(){
         }).open();
 }
 
-	
-
-
-	$(document).ready(function () {
-		$("#selectDomain").on("change", function() {
-			var str = $(this).val();
-			
-			if(str == "naver.com") {
-				$("#emailDomain").val("naver.com");
-			} else if(str == "gmail.com") {
-				$("#emailDomain").val("gmail.com");
-			}else if(str == "daum.net") {
-				$("#emailDomain").val("daum.net");
-			}
-		});
-	});
-
 	// 사업자 아이디 중복 확인 버튼이 클릭되면
 	$("#businessOverlapCheck").on("click", function() {	
 		var businessId = $("#businessId").val();
@@ -354,7 +315,7 @@ function findZipcode(){
        var id = $(this).attr("data-id-value");
        console.log(id);
        var bIdElement = $(window.opener.document).find("#businessId");
-       var bidCheck = $(window.opener.document).find("#isBusinessIdCheck").val(true);
+       var bidCheck = $(window.opener.document).find("#isIdCheck").val(true);
        
       bIdElement.val(id);
 

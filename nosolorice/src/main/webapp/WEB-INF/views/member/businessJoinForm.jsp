@@ -4,7 +4,8 @@
 
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="resources/js/jquery-3.2.1.min.js"></script>
-<link href="resources/bootstrap/main.css" rel="stylesheet">
+<!-- <link href="resources/bootstrap/main.css" rel="stylesheet"> -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
 <!-- favicon 404 에러 방지용(파비폰은 resources/image 안에 있습니다.) -->
 <link rel="icon" href="data:,">
@@ -30,19 +31,11 @@ input[type='number'] {
 <div class="container justify-content-center">
 	
 	<form class="form form-center" id="businessJoinForm" action="businessJoinResult" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="isBidCheck" id="isBidCheck" value="false" />
+		<input type="hidden" name="isIdCheck" id="isIdCheck" value="false" />
 		<input type="hidden" name="bPhoneCheck" id="bPhoneCheck" value="false" />
-		<input type="hidden" name="isBusinessIdCheck" id="isBusinessIdCheck" value="false" />
 		<input type="hidden" name="bNoCheck" id="bNoCheck" value="false" />
 		<input type="hidden" name="xpoint" id="xpoint" />
 		<input type="hidden" name="ypoint" id="ypoint" />
-		<input type="hidden" name="emailDomain" id="emailDomain" />
-		<input type="hidden" name="deposit" id="" value="0" />
-		<input type="hidden" name="openTime" id="" value="0" />
-		<input type="hidden" name="closeTime" id="" value="0" />
-		<input type="hidden" name="breakTime" id="" value="0" />
-		<input type="hidden" name="dayOff" id="" value="0" />
-		<input type="hidden" name="storeOnoff" id="" value="0" />
 		<input type="hidden" name="okNoOk" id="okNook" value="0" />	
 		<input type="hidden" name="root" id="root" value="1" />		
 	
@@ -74,10 +67,16 @@ input[type='number'] {
 
            <div class="col-md-8">
             <div class="row">
+               
+              <div class="col-7 p-2">
+                <div class="form-group">
+                  <p>*표시는 필수사항입니다.</p>
+                </div>
+              </div>
             
               <div class="col-7 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" id="businessId" name="businessId" placeholder="ID" >
+                  <input type="text" class="form-control" id="businessId" name="businessId" placeholder="* ID" >
                 </div>
               </div>
 
@@ -89,56 +88,45 @@ input[type='number'] {
               
               <div class="col-10 p-2">
                 <div class="form-group">
-                  <input type="password" class="form-control" id="bPass" name="bPass" placeholder="비밀번호" >
+                  <input type="password" class="form-control" id="bPass" name="bPass" placeholder="* 비밀번호" >
                 </div>
               </div>
 
               <div class="col-10 p-2">
                 <div class="form-group">
-                  <input type="password" class="form-control" id="checkBPass" name="checkBPass" placeholder="비밀번호확인" >
+                  <input type="password" class="form-control" id="checkBPass" name="checkBPass" placeholder="* 비밀번호확인" >
                 </div>
               </div>
 
 			  <div class="col-8 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="bPhone" id="bPhone" placeholder="01012345678" >
+                  <input type="text" class="form-control" name="bPhone" id="bPhone" placeholder="* 01012345678" >
                 </div>
               </div>
 	
               <div class="col-2 text-end p-2">
                 <div class="form-group">
-                  <input type="button" class="btn btn-success" id="getBPhoneCheck" value="인증번호 받기">
+                  <input type="button" class="btn btn-success" id="getBPhoneCheck" name="getBPhoneCheck" value="인증번호 받기" >
                 </div>
               </div>
               
               <div class="col-8 p-2">
                 <div class="form-group">
-                  <input type="number" class="form-control" name="checkNum" id="checkNum" placeholder="인증번호를 입력해 주세요" >
+                  <input type="number" class="form-control" name="checkNum" id="checkNum" placeholder="* 인증번호를 입력해 주세요" >
                 </div>
               </div>
               
               <div class="col-2 p-2 text-end">
                 <div class="form-group">
-                  <input type="button" class="btn btn-success" id="businessPhoneCheck" value="인증하기">
+                  <input type="button" class="btn btn-success" id="businessPhoneCheck" name="businessPhoneCheck" value="인증하기">
                 </div>
               </div>
               
-              <div class="col-6 p-2">
+              <div class="col-10 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="bEmail" id="bEmail" placeholder="이메일을 입력해 주세요" >
+                  <input type="email" class="form-control" name="bEmail" id="bEmail" placeholder="* 이메일을 입력해 주세요" >
                 </div>
-              </div>
-              
-              <!-- option으로 수정 -->
-              <div class="col-4 p-2">
-                <select class="form-select" id="selectDomain">
-                  <option selected>--- 선택해 주세요 ---</option>
-                  <option value="naver.com">@naver.com</option>
-                  <option value="gmail.com">@gmail.com</option>
-                  <option value="daum.net">@daum.net</option>
-                </select>
-              </div>
-              
+              </div>           
               
               <div class="col-10 m-2">  
              	<div class="row">
@@ -148,20 +136,20 @@ input[type='number'] {
               
               <div class="col-4 p-2">
               	<div class="form-group">
-              		<input type="text" class="form-control" id="businessUserName" name="businessUserName" placeholder="대표자명">
+              		<input type="text" class="form-control" id="businessUserName" name="businessUserName" placeholder="* 대표자명" >
               	</div>
               </div>
               	
 
               <div class="col-6 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="bName" id="bName" placeholder="상호명" >
+                  <input type="text" class="form-control" name="bName" id="bName" placeholder="* 상호명" >
                 </div>
               </div>
 
 			  <div class="col-7 p-2">
 			  	<div class="form-group">
-			  		<input type="text" class="form-control" id="businessNumber" name="businessNumber" placeholder="-를 제외한 사업자번호를 입력해주세요" maxlength="10" oninput="bNoLength(this);">
+			  		<input type="number" class="form-control" id="businessNumber" name="businessNumber" placeholder="* -를 제외한 사업자번호를 입력해주세요" maxlength="10" oninput="bNoLength(this);" >
 			  	</div>
 			  </div>
 			  
@@ -173,14 +161,14 @@ input[type='number'] {
               
               <div class="col-10 p-2">
 			  	<div class="form-group">
-			  		<input type="file" accept="image/*" class="form-control" id="businessRegImg" name="businessRegImg">
+			  		<input type="file" accept="image/*" class="form-control" id="businessRegImg" name="businessRegImg" >
 			  	</div>
 			  </div>
               
               <!-- option으로 수정 -->
               <div class="col-3 p-2">
-                <select class="form-select" id="bankcode" name="bankcode">
-                  <option selected>--- 선택해 주세요 ---</option>
+                <select class="form-select" id="bankcode" name="bankcode" >
+                  <option>*  --- 선택해 주세요 ---</option>
                   <option value="국민은행">국민은행</option>
                   <option value="농협중앙회">농협중앙회</option>
                   <option value="단위농협">단위농협</option>
@@ -223,13 +211,13 @@ input[type='number'] {
               
               <div class="col-7 p-2">
 			  	<div class="form-group">
-			  		<input type="number" class="form-control" id="accountNumber" name="accountNumber" placeholder="-를 제외한 계좌번호를 입력해 주세요" />
+			  		<input type="number" class="form-control" id="accountNumber" name="accountNumber" placeholder="* -를 제외한 계좌번호를 입력해 주세요" >
 			  	</div>
 			  </div>
               
               <div class="col-10 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="callPhone" id="callPhone" placeholder="대표번호" >
+                  <input type="tel" class="form-control" name="callPhone" id="callPhone" placeholder="* 대표번호" >
                 </div>
               </div>
               
@@ -240,7 +228,7 @@ input[type='number'] {
               
               <div class="col-3 p-1">
                 <div class="form-group">
-                  <input type="number" maxlength="5" class="form-control" name="zipcode" id="zipcode" readonly>
+                  <input type="number" maxlength="5" class="form-control" name="zipcode" id="zipcode" placeholder="* 우편번호" readonly >
                 </div>
               </div>
 
@@ -251,19 +239,19 @@ input[type='number'] {
 
               <div class="col-3 text-end p-1">
                 <div class="form-group">
-                  <input type="button" class="btn btn-success" id="btnZipcode" value="주소찾기">
+                  <input type="button" class="btn btn-success" id="btnZipcode" name="btnZipcode" value="주소찾기">
                 </div>
               </div>
 
               <div class="col-10 p-1">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="address1" id="address1" readonly>
+                  <input type="text" class="form-control" name="address1" id="address1" placeholder="* 주소"readonly >
                 </div>
               </div>
 
               <div class="col-10 p-1">
                 <div class="form-group">
-                  <input type="text" class="form-control" id="address2" name="address2">
+                  <input type="text" class="form-control" id="address2" name="address2" placeholder="상세주소">
                 </div>
               </div>
              
@@ -304,8 +292,8 @@ input[type='number'] {
 
               <div class="col-10 p-2">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="termOK" >
-                  <label class="form-check-label" for="termOK"> 위 이용약관에 동의합니다. (필수)</label>
+                  <input class="form-check-input" type="checkbox" name="termOK" id="termOK" >
+                  <label class="form-check-label" for="termOK">* 위 이용약관에 동의합니다. (필수)</label>
                 </div>
               </div>
 
@@ -326,9 +314,6 @@ input[type='number'] {
       
   </form>  
 </div>
-<script src="resources/js/businessUserPhoneCheck.js"></script>
-<script src="resources/js/business.js"></script>
-
 <script type="text/javascript">
 	
 	/* 사업자번호 maxlength_적용 */
@@ -338,4 +323,14 @@ input[type='number'] {
 	    }    
 	}
 	
+	/* 엔터 이벤트 방지 */
+	document.addEventListener('keydown', function(event) {
+		  if (event.keyCode === 13) {
+		    event.preventDefault();
+		  };
+		}, true);
+	
 </script>
+<script src="resources/js/businessUserPhoneCheck.js"></script>
+<script src="resources/js/business.js"></script>
+

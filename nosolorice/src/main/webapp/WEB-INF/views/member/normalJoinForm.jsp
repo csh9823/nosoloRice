@@ -72,13 +72,13 @@ input[type='number'] {
               
               <div class="col-sm-10 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" id="name" name="name" placeholder="이름" >
+                  <input type="text" class="form-control" id="name" name="name" placeholder="* 이름" >
                 </div>
               </div>
 
               <div class="col-7 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" id="normalId" name="normalId" placeholder="ID" >
+                  <input type="text" class="form-control" id="normalId" name="normalId" placeholder="* ID" >
                 </div>
               </div>
 
@@ -90,7 +90,7 @@ input[type='number'] {
 
               <div class="col-7 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="nickName" id="nickName" placeholder="닉네임" >
+                  <input type="text" class="form-control" name="nickName" id="nickName" placeholder="* 닉네임" >
                 </div>
               </div>
 
@@ -102,13 +102,13 @@ input[type='number'] {
 
               <div class="col-10 p-2">
                 <div class="form-group">
-                  <input type="password" class="form-control" id="pass" name="pass" placeholder="비밀번호" >
+                  <input type="password" class="form-control" id="pass" name="pass" placeholder="* 비밀번호" >
                 </div>
               </div>
 
               <div class="col-10 p-2">
                 <div class="form-group">
-                  <input type="password" class="form-control" id="checkPass" name="checkPass" placeholder="비밀번호확인" >
+                  <input type="password" class="form-control" id="checkPass" name="checkPass" placeholder="* 비밀번호확인" >
                 </div>
               </div>
 
@@ -125,7 +125,7 @@ input[type='number'] {
 
               <div class="col-2 text-end p-2">
                 <div class="form-group">
-                  <input type="button" class="btn btn-success" id="getNormalPhoneCheck" name="getNormalPhoneCheck" value="인증번호 받기">
+                  <input type="button" class="btn btn-success" id="getNormalPhoneCheck" name="getNormalPhoneCheck" value="* 인증번호 받기">
                 </div>
               </div>
 
@@ -136,13 +136,13 @@ input[type='number'] {
               
               <div class="col-8 p-2">
                 <div class="form-group">
-                  <input type="number" class="form-control" name="chkNum" id="chkNum" placeholder="인증번호를 입력해 주세요" >
+                  <input type="number" class="form-control" name="chkNum" id="chkNum" placeholder="* 인증번호를 입력해 주세요" >
                 </div>
               </div>
 
               <div class="col-2 p-2 text-end">
                 <div class="form-group">
-                  <input type="button" class="btn btn-success" id="normalPhoneCheck" value="인증하기">
+                  <input type="button" class="btn btn-success" name="normalPhoneCheck" id="normalPhoneCheck" value="* 인증하기">
                 </div>
               </div>
               
@@ -153,19 +153,19 @@ input[type='number'] {
 
               <div class="col-4 text-start p-2">
                 <div class="form-group">
-                  <input type="number" class="form-control" name="year" id="year" placeholder="년" maxlength="4" oninput="yearMaxLength(this);" />
+                  <input type="number" class="form-control" name="year" id="year" placeholder="* 년" maxlength="4" oninput="yearMaxLength(this);" />
                 </div>
               </div>
 
               <div class="col-3 text-center p-2">
                 <div class="form-group">
-                  <input type="number" class="form-control" name="month" id="month" maxlength=2 placeholder="월" oninput="monthDay(this);" />
+                  <input type="number" class="form-control" name="month" id="month" maxlength=2 placeholder="* 월" oninput="monthDay(this);" />
                 </div>
               </div>
 
               <div class="col-3 text-end p-2">
                 <div class="form-group">
-                  <input type="number" class="form-control" name="day" id="day" maxlength=2 placeholder="일" oninput="monthDay(this);" />
+                  <input type="number" class="form-control" name="day" id="day" maxlength=2 placeholder="* 일" oninput="monthDay(this);" />
                 </div>
               </div>
 
@@ -175,7 +175,7 @@ input[type='number'] {
               </div>
 
               <div class="col-4 p-2">
-				  <p>성별을 선택해 주세요</p>
+				  <p>* 성별을 선택해 주세요</p>
 				  <div class="form-check form-check-inline">
 				    <input class="form-check-input" type="radio" name="gender" id="man" value="남성">
 				    <label class="form-check-label" for="man">남성</label>
@@ -191,20 +191,10 @@ input[type='number'] {
                 </div>
               </div>
 
-              <div class="col-6 p-2">
+              <div class="col-10 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="emailId" id="emailId" placeholder="이메일을 입력해 주세요" >
+                  <input type="email" class="form-control" name="emailId" id="emailId" placeholder="* 이메일을 입력해 주세요" >
                 </div>
-              </div>
-              
-              <!-- option으로 수정 -->
-              <div class="col-4 p-2">
-                <select class="form-select" id="selectDomain" name="selectDomain">
-                  <option selected>--- 선택해 주세요 ---</option>
-                  <option value="naver.com">@naver.com</option>
-                  <option value="gmail.com">@gmail.com</option>
-                  <option value="daum.net">@daum.net</option>
-                </select>
               </div>
 
               <div class="col-12">
@@ -214,7 +204,7 @@ input[type='number'] {
 
               <div class="col-3 p-1">
                 <div class="form-group">
-                  <input type="number" maxlength="5" class="form-control" name="postNum" id="postNum" readonly>
+                  <input type="number" maxlength="5" class="form-control" name="postNum" id="postNum" placeholder="* 우편번호" readonly>
                 </div>
               </div>
 
@@ -225,19 +215,19 @@ input[type='number'] {
 
               <div class="col-3 text-end p-1">
                 <div class="form-group">
-                  <input type="button" class="btn btn-success" id="btnZipcode" value="주소검색">
+                  <input type="button" class="btn btn-success" id="btnZipcode" name="btnZipcode" value="주소검색">
                 </div>
               </div>
 
               <div class="col-10 p-1">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="address1" id="address1" readonly>
+                  <input type="text" class="form-control" name="address1" id="address1" placeholder="* 일반주소" readonly>
                 </div>
               </div>
 
               <div class="col-10 p-1">
                 <div class="form-group">
-                  <input type="text" class="form-control" id="address2" name="address2">
+                  <input type="text" class="form-control" id="address2" name="address2" placeholder="* 상세주소">
                 </div>
               </div>
 
@@ -279,7 +269,7 @@ input[type='number'] {
               <div class="col-10 p-2">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" name="termOK" id="termOK" >
-                  <label class="form-check-label" for="termOK"> 위 이용약관에 동의합니다. (필수)</label>
+                  <label class="form-check-label" for="termOK"> * 위 이용약관에 동의합니다. (필수)</label>
                 </div>
               </div>
 
@@ -316,7 +306,15 @@ input[type='number'] {
 	      object.value = object.value.slice(0, object.maxLength);
 	    }    
 	}
+	
+	/* 엔터 이벤트 방지  */
+	document.addEventListener('keydown', function(event) {
+	  if (event.keyCode === 13) {
+	    event.preventDefault();
+	  };
+	}, true);
 	  
+	
 	</script>
 	
 

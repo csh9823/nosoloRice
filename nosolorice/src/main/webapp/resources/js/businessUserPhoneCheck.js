@@ -32,7 +32,7 @@ $('#getBPhoneCheck').click(function() {
 
 
 $("#businessPhoneCheck").click(function() {
-    if($("#checkNum").val() == code) {
+    if($("#checkNum").val() === code) {
     	alert("인증이 완료되었습니다.");
         $("#bPhoneCheck").val(true); 
     } else {
