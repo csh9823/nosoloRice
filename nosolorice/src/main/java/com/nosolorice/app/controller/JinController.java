@@ -50,8 +50,6 @@ public class JinController {
 	@Autowired
 	private JinloginService jinloginService;
 	
-	
-	
 	// 메뉴 카테고리 관련 서비스
 	@Autowired
 	private JinMenuCateService jinMenuCateService;

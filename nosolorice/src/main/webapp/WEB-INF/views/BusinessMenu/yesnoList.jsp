@@ -27,7 +27,7 @@
         }
         .yeslist{
             border: none;
-            background-color: rgb(95,158,160);
+            background-color: rgb(61,183,139);
         }
         .nolist{
             text-decoration: none;
@@ -79,7 +79,7 @@
             height: 400px;
         }
         .yeslistbtn{
-        background-color: cadetblue;
+        background-color: rgb(61,183,139);
         border: none;
         }
         .nolisttbtn{
@@ -133,7 +133,7 @@
 		                        </div>
 		                    </div>
 		                </div>
-		                <div class="col-2" style="background-color: cadetblue;">
+		                <div class="col-2" style="background-color: rgb(61,183,139);">
 		                <form action="bookingStateOk" method="get">
 		                	<input type="hidden" name="bookingState" value="승인">
 		                	<input type="hidden" name="bookingOkState" value="0">
@@ -200,7 +200,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-2" style="background-color: cadetblue;">
+                    <div class="col-2" style="background-color: rgb(61,183,139); ">
                     <form action="Bookingok" method="get">
                         <button type="submit" class="yeslist yeslistbtn"><p class="pyeslist">방문완료</p></button>
                         <input type="hidden" name="bookingOkCount" value="${booking.bookingCount}">
