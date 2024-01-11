@@ -91,7 +91,7 @@ public class SehwaController {
 					@RequestParam(value="fileInput", required = false) MultipartFile multi,
 					String businessId, String oldPass, @RequestParam(required = false) String pass,
 					String mobile1, String mobile2, String mobile3, String mail, String domain, 
-					String name, String businessName, String bankName, int bankNumber,
+					String name, String businessName, String bankName, long bankNumber,
 					String phone1, String phone2, String phone3, int postNum, String address1, 
 					@RequestParam(required = false, defaultValue = "") String address2,
 					HttpServletRequest request) throws IOException {
