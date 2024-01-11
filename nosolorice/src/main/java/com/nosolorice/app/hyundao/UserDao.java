@@ -61,4 +61,5 @@ public interface UserDao {
 	public void payWithPoint(String normalId, int deposit);
 	
 	public List<NormalUser> getBookingUserList(int bookingNo);
+	public List<BlockHistory> getBlockList(String blocker);
 }

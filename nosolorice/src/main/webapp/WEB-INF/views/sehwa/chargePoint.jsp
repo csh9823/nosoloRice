@@ -178,7 +178,7 @@
           		"dataType" : "text", 
           		"success" : function(resData) {
           			console.log("ajax : success", resData);
-          			
+          			location.href='chargePoint';
           		},
           		"error" : function(xhr, status, error) {
           			console.log("ajax : error", xhr, "-", error);

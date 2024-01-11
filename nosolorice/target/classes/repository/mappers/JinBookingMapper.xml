@@ -12,6 +12,7 @@ SELECT
     booking_state AS bookingState,
     booking_count * deposit AS deposit,
 	booking_book_no AS bookingBookNo,
+	deposit,
 	booking_chatname AS bookingChatName 
 FROM booking
 where business_id = #{businessId}
@@ -36,7 +37,6 @@ and business_id = #{businessId}
 <delete id="bookinguserdelete" parameterType="Map">
 DELETE FROM booking_userlist
 where booking_no = #{bookingNo}
-and business_id = #{businessId}
 </delete>
 
 <insert id="bookingOkinsert" parameterType="BookingOk">
@@ -52,7 +52,27 @@ VALUES (
 );
 </insert>
 
-</mapper>	
+<select id="bookingUserList" parameterType="Map" resultType="BookingUserList">
+SELECT
+    bu.normal_id normalId
+FROM
+    booking_userlist bu
+JOIN
+    booking b ON bu.booking_no = b.booking_no
+WHERE
+    bu.business_id = #{businessId}
+    AND b.booking_no = #{bookingNo}
+</select>
 
+<insert id="visitantuseradd">
+INSERT INTO visitant_userlist (normal_id, business_id, bookingok_no)
+VALUES (#{normalId}, #{businessId}, #{bookingokNo})
+</insert>
 
-
+<select id="getbookingOknumber" resultType="int" parameterType="int">
+select
+booking_no
+from bookingok
+where booking_no = #{bookingNo}
+</select>
+</mapper>

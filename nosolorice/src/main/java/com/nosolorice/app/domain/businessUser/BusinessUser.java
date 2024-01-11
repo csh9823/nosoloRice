@@ -9,7 +9,7 @@ public class BusinessUser {
 	private String pass;						// 비밀번호
 	private String name;					// 사장님 이름
 	private String phone;					// 사업장 가게번호
-	private int businessNumber;			// 사업자등록번호
+	private long businessNumber;			// 사업자등록번호
 	private String businessName;		// 상호명
 	private String businessPicture;		// 사업자등록증 사본파일
 	private String email;					// 이메일
@@ -21,7 +21,7 @@ public class BusinessUser {
 	private String ypoint;					// 경도
 	private String businessProfile;		// 프로필사진파일
 	private String bankName;				// 계좌은행
-	private int bankNumber;				// 계좌번호
+	private long bankNumber;				// 계좌번호
 	private int deposit;					// 가게 예약금
 	private String openTime;				// 오픈시간
 	private String closeTime;				// 마감시간
@@ -44,7 +44,7 @@ public class BusinessUser {
 	
 	public BusinessUser(String businessId, String pass, String name, String phone, int businessNumber,
 			String businessName, String businessPicture, String email, String mobile, int postNum, String address1,
-			String address2, String xpoint, String ypoint, String businessProfile, String bankName, int bankNumber,
+			String address2, String xpoint, String ypoint, String businessProfile, String bankName, long bankNumber,
 			int deposit, String openTime, String closeTime, String breakTime, String dayOff, String introduction,
 			Timestamp regDate, String storeOnoff, String okNoOk) {
 		this.businessId = businessId;
@@ -107,11 +107,11 @@ public class BusinessUser {
 		this.phone = phone;
 	}
 
-	public int getBusinessNumber() {
+	public long getBusinessNumber() {
 		return businessNumber;
 	}
 
-	public void setBusinessNumber(int businessNumber) {
+	public void setBusinessNumber(long businessNumber) {
 		this.businessNumber = businessNumber;
 	}
 
@@ -203,13 +203,6 @@ public class BusinessUser {
 		this.bankName = bankName;
 	}
 
-	public int getBankNumber() {
-		return bankNumber;
-	}
-
-	public void setBankNumber(int bankNumber) {
-		this.bankNumber = bankNumber;
-	}
 
 	public int getDeposit() {
 		return deposit;
@@ -313,6 +306,14 @@ public class BusinessUser {
 
 	public void setTotalReviewCount(int totalReviewCount) {
 		this.totalReviewCount = totalReviewCount;
+	}
+
+	public long getBankNumber() {
+		return bankNumber;
+	}
+
+	public void setBankNumber(long bankNumber) {
+		this.bankNumber = bankNumber;
 	}
 
 	@Override

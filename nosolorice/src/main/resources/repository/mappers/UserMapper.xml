@@ -41,7 +41,7 @@
 		from chat_history  
 		JOIN 
     	normal_user ON chat_history.normal_id = normal_user.normal_id 
-		where chat_name = #{roomId}
+		where chat_name = #{roomId} order by chat_regdate
 	</select>
 	
 	<select id="getChatRoomInfo" resultType="java.util.Map">
@@ -76,6 +76,8 @@
 	FROM business_user b 
 	LEFT JOIN 
     review r ON b.business_id = r.business_id 
+    WHERE 
+    b.store_onoff = 'open' 
 	GROUP BY 
 	b.business_id, 
     b.business_name 
@@ -99,7 +101,7 @@
 	LEFT JOIN
     review r ON b.business_id = r.business_id 
     WHERE 
-    b.address1 = #{address} 
+    b.address1 = #{address} and b.store_onoff = 'open' 
 	GROUP BY 
 	b.business_id, 
     b.business_name 
@@ -172,7 +174,9 @@
 		            AVG(review_score) AS totalScore,
 		            COUNT(business_id) AS totalReviewCount
 		        FROM
-		            review
+		            review 
+				WHERE 
+					b.store_onoff = 'open' 
 		        GROUP BY
 		            business_id
 		    ) review_data ON b.business_id = review_data.business_id
@@ -206,7 +210,9 @@
 		            AVG(review_score) AS totalScore,
 		            COUNT(business_id) AS totalReviewCount
 		        FROM
-		            review
+		            review 
+				WHERE 
+					b.store_onoff = 'open' 
 		        GROUP BY
 		            business_id
 		    ) review_data ON b.business_id = review_data.business_id
@@ -277,6 +283,18 @@
 		JOIN normal_user nu ON bu.normal_id = nu.normal_id
 		WHERE bu.booking_no = #{bookingNo}
 	</select>
+	
+	<select id="getBlockList" resultType="BlockHistory" resultMap="blockResultMap">
+		select * from block_history where blocker = #{blocker}		
+	</select>
+	
+	<resultMap id="blockResultMap" type="BlockHistory">
+		<id property="blockHistoryNo" column="block_history_no"/>
+		<result property="blockDate" column="block_date"/>
+		<result property="blockState" column="block_state"/>
+		<result property="blocker" column="blocker"/>
+		<result property="blockAttacker" column="block_attacker"/>
+	</resultMap>
 	
 	
 	<resultMap id="bookingMap" type="Booking">

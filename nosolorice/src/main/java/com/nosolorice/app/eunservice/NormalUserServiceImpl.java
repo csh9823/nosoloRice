@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,25 +25,28 @@ public class NormalUserServiceImpl implements NormalUserService {
 
 	@Autowired
 	private normalUserDao normalUserDao;
-	private PasswordEncoder passwordEncoder;
+	/*
+	 * @Autowired private BCryptPasswordEncoder passwordEncoder;
+	 */
 
 	@Override
     public boolean overlapIdCheck(String normalId) {
         List<String> normalUser = normalUserDao.getNormalUser(normalId);
+
         return normalUser.size() > 0 ? true : false;
     }
 
 	@Override
 	public boolean overlapNickCheck(String nickName) {
-		return normalUserDao.getNickName(nickName);
-	    
+		return normalUserDao.getNickName(nickName); //false면 중복X, ture면 중복
 	}
 	
 	@Override
 	public void addNormalUser(NormalUser normalUser) {
 		
 	    if (normalUser.getPass() != null) {
-	        normalUser.setPass(passwordEncoder.encode(normalUser.getPass()));
+			/* normalUser.setPass(passwordEncoder.encode(normalUser.getPass())); */
+	    	normalUser.setPass(normalUser.getPass());
 	    }
 
 	    normalUserDao.addNormalUser(normalUser);

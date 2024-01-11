@@ -45,11 +45,16 @@ public class UserController {
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
-	
+
+	@RequestMapping(value={"mainPage", "/"})
+	public String mainPage(@RequestParam(value="introduce", required=false) boolean introduce, Model model) {
+		model.addAttribute("introduce", introduce);
+		return "mainPage";
+	}
 	
 	@RequestMapping("userInquiry")
 	public String userInquiry(Model model) {
-		return "userInquiry";
+		return "forward:/WEB-INF/views/userInquiry.jsp";
 	}
 	
 	@RequestMapping("userInquiryList")
@@ -64,7 +69,7 @@ public class UserController {
 		
 		model.addAllAttributes(userService.getUserInquiryList(pageNum, normalId));
 		
-		return "userInquiryList";
+		return "forward:/WEB-INF/views/userInquiryList.jsp";
 	}
 	
 	@RequestMapping("writeUserInquiry")
@@ -230,6 +235,12 @@ public class UserController {
 		Map<String, Boolean> map = new HashMap<>();
 		map.put("result", true);
 		return map;
+	}
+	
+	@RequestMapping("getBlockList")
+	@ResponseBody
+	public List<BlockHistory> getBlockList(String blocker){
+		return userService.getBlockList(blocker);
 	}
 	
 	@RequestMapping("addBooking")

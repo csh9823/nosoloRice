@@ -6,7 +6,7 @@
 	
 	<insert id="addBusinessUser" parameterType="BusinessUser">
 		INSERT INTO business_user (business_id, pass, name, phone, business_number, business_name, business_picture, email, mobile, postnum, address1, address2, xpoint, ypoint, business_profile, bank_name, bank_number, deposit, open_time, close_time, break_time, day_off, introduction, regdate, store_onoff, ok_nook, root)
-    	VALUES (#{businessId}, #{bPass}, #{businessUserName}, #{callPhone}, #{businessReg}, #{bName}, #{businessProfileImage}, #{email}, #{bPhone}, #{postNum}, #{address1}, #{address2}, #{xpoint}, #{ypoint}, null, #{bankcode}, #{accountNumber}, 0, 0, 0, 0, 0, 0, SYSDATE(), 0, 0, 1)
+    	VALUES (#{businessId}, #{pass}, #{name}, #{phone}, #{businessNumber}, #{businessName}, #{businessPicture}, #{email}, #{mobile}, #{postNum}, #{address1}, #{address2}, #{xpoint}, #{ypoint}, #{businessProfile}, #{bankName}, #{bankNumber}, 1000, "", "", "", "", null, SYSDATE(), "close", 0, 1)
 	</insert>
 	
 	<select id="getBusinessUser" resultType="String">
@@ -17,7 +17,7 @@
 		select root_id from root_user WHERE root_id = #{businessId}
 	</select>
 	
-	<select id="getBusinessNumber" parameterType="Integer" resultType="Integer">
+	<select id="getBusinessNumber" parameterType="long" resultType="Integer">
 		SELECT COUNT(*) FROM business_user WHERE business_number = #{businessReg}
 	</select>
 	

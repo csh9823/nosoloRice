@@ -509,7 +509,7 @@
                                      <!-- 홈 버튼 컨텐트 시작 -->
                                      <div id="storeDeatilHomeContent" class="h-100">
                                          <!-- 가게 소개가 없을 때 -->
-                                         <div class="text-center h-100 d-flex justify-content-center align-items-center" id="storeIntroduction">
+                                         <div class="h-100 py-3" id="storeIntroduction">
                                              
                                          </div>
                                          <!-- 가게 소개가 있을 때 -->
@@ -683,7 +683,7 @@
                          <!-- 신고완료 모달 시작 -->
                          <div id="reportCompleteModal" class="text-center h-100 d-flex align-items-center justify-content-center d-none">
                              <p class="fs-3">
-                                 <span class="text-dark fs-3" style="font-weight: 600;">홍길동</span>님에 대한<br>
+                                 <span class="text-dark fs-3" style="font-weight: 600;" id="reportTargetName">홍길동</span>님에 대한<br>
                              신고가 완료 되었습니다<br>
                              <input type="button" class="btn btn-dark btn-lg mt-3 reportCompleteModalCloseBtn" value="확인">
                              </p>

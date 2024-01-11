@@ -22,6 +22,9 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="resources/summernote/summernote-lite.js"></script>
 <script src="resources/summernote/lang/summernote-ko-KR.js"></script>
+
+<!-- favicon 404 에러 방지용 -->
+<link rel="icon" href="data:,">
 </head>
 <body>
 

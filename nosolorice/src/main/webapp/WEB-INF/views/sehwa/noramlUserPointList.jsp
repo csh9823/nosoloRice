@@ -134,7 +134,7 @@
                  <c:if test="${not empty usePointList }">
                 	<c:forEach var="uList" items="${usePointList }">
 		                <tr>
-		                  <td>0</td>
+		                  <td>${uList.pointHistoryNo}</td>
 		                  <td>${uList.businessId }</td>
 		                  <td>
 		                  	<fmt:formatDate value="${uList.historyDate }" pattern="yyyy-MM-dd HH:mm"/>

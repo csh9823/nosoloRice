@@ -24,18 +24,18 @@ public class AdminController {
 	@RequestMapping("joinApprove")
 	public String joinApprove(Model model, @RequestParam(required=false, defaultValue="1") int pageNum) {	
 		model.addAllAttributes(adminService.getJoinApproveList(pageNum));
-		return "joinApprove";
+		return "forward:/WEB-INF/views/joinApprove.jsp";
 	}
 	
 	@RequestMapping("adminSales")
 	public String adminSales(Model model, @RequestParam(required=false, defaultValue="1") int pageNum) {
 		model.addAllAttributes(adminService.getDailySalesList(pageNum));
-		return "adminSales";
+		return "forward:/WEB-INF/views/adminSales.jsp";
 	}
 	@RequestMapping("adminSalesMonth")
 	public String adminSalesMonth(Model model, @RequestParam(required=false, defaultValue="1") int pageNum) {
 		model.addAllAttributes(adminService.getMonthlySalesList(pageNum));
-		return "adminSalesMonth";
+		return "forward:/WEB-INF/views/adminSalesMonth.jsp";
 	}
 	
 	@RequestMapping("joinApproveProcess.ajax")

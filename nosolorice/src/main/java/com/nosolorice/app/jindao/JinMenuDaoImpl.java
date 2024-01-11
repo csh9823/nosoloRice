@@ -32,4 +32,19 @@ public class JinMenuDaoImpl implements JinMenuInterfaceDao {
 	public String getMenu(int menuNo) {
 		return sqlSession.selectOne(NAME_SPACE + ".getMenu", menuNo);
 	}
+	
+	public Menu getMenuajax(int menuNo) {
+		return sqlSession.selectOne(NAME_SPACE + ".getMenuajax", menuNo);
+	}
+	
+	public void MenuUpdate(Menu menu) {
+		System.out.println("다오 왓음" + menu.getMenuPicture());
+		
+		if(menu.getMenuPicture() == null) {
+			sqlSession.update(NAME_SPACE+".nofileMenuUpdate",menu);
+		}else{
+			sqlSession.update(NAME_SPACE+".MenuUpdate",menu);
+			}
+		
+	}
 }

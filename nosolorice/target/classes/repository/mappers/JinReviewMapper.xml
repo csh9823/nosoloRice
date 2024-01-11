@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nosolorice.app.mapper.JinReviewMapper" >
+<select id="ReviewList" parameterType="String" resultType="hashmap">
+SELECT normal_user.profile normalProfile,
+       normal_user.nickname normalNickname,
+       normal_user.normal_id normalId,
+       review.review_picture reviewPicture,
+       review.review_no revireNo,
+       review.review_content reviewContent,
+       review.review_score reviewScore,
+       review.review_blind reviewBlind,
+       review.regdate reviewRegdate,
+       review.review_delete revieWdelet,
+       owner_comment.business_comment ownerComment,
+       total_reviews.total_count totalCount
+FROM normal_user
+LEFT JOIN review ON normal_user.normal_id = review.normal_id
+LEFT JOIN owner_comment ON review.review_no = owner_comment.review_no
+LEFT JOIN (
+    SELECT normal_id, COUNT(review_no) AS total_count
+    FROM review
+    WHERE business_id = #{businessId}
+    GROUP BY normal_id
+) AS total_reviews ON normal_user.normal_id = total_reviews.normal_id
+WHERE review.business_id = #{businessId}
+</select>
+
+<update id="Businessriviewblind">
+UPDATE review
+SET
+review_blind = '1'
+WHERE review_no = #{revireNo}
+</update>
+
+<update id="Businessriviewdelete">
+UPDATE review
+SET
+review_delete = '1'
+WHERE review_no = #{revireNo} 
+</update>
+
+<insert id="Businessreviewadd" parameterType="Map">
+INSERT INTO owner_comment (business_comment, regdate, review_no, normal_id, business_id)
+VALUES (#{businessComment}, CURRENT_TIMESTAMP, #{reviewNo}, #{normalId}, #{businessId})
+</insert>
+
+<update id="OwnerCommentupdate" parameterType="Map">
+UPDATE owner_comment
+SET
+business_comment = #{businessComment2}
+WHERE review_no = #{reviewNo} 
+</update>
+
+<delete id="OwnerCommentdelete" parameterType="int">
+DELETE FROM owner_comment
+Where review_no = ${reviewNo} 
+</delete>
+
+</mapper>	
+
+
+

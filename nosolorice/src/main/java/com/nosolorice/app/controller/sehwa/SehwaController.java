@@ -51,7 +51,7 @@ public class SehwaController {
 		}
 		
 		if (pass.equals(inputPass)) isPass = true;
-		
+		 
 		return isPass;
 	}
 	
@@ -115,9 +115,10 @@ public class SehwaController {
 		user.setPostNum(postNum);
 		user.setAddress1(address1);
 		user.setAddress2(address2);
+		
 		if(multi != null && !multi.isEmpty()) {
 			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
-			UUID uid = UUID.randomUUID();
+			UUID uid = UUID.randomUUID(); 
 			String saveName = uid.toString() + "_" + multi.getOriginalFilename();
 			File file = new File(filePath, saveName);
 			multi.transferTo(file);
@@ -143,7 +144,7 @@ public class SehwaController {
 							String mobile1, String mobile2, String mobile3, String mail, String domain,
 							int postNum, String address1, @RequestParam(required = false) String address2, 
 							@RequestParam(value="fileInput", required=false) MultipartFile multi,
-							HttpServletRequest request) throws IOException {
+							HttpServletRequest request, HttpSession session) throws IOException {
 
 		String nPass = oldPass;
 		if(pass != null && !pass.isEmpty()) nPass = pass;
@@ -170,11 +171,11 @@ public class SehwaController {
 			File file = new File(filePath, saveName);
 			multi.transferTo(file);
 			user.setProfile(saveName);
-		} else {
-			user.setProfile("defaultImg");
-		}
+		} 
 		
 		service.normalUserInfoUpdate(user);
+		
+		session.setAttribute("NormalUser", service.getNormalUserInfo(normalId));
 		
 		return "redirect:/normalUserInfoUpdate?id=" + normalId;
 	}
@@ -223,13 +224,11 @@ public class SehwaController {
 	@ResponseBody
 	public void storeSectorUpdateBtn(String id, int count, String sectors) {
 		String[] strArr = sectors.split(", ");
-		System.out.println(Arrays.toString(strArr));
 		int[] intArr = new int[strArr.length];
 		for(int i=0; i<= count-1; i++) {
 			intArr[i] = Integer.parseInt(strArr[i]);
 		}
 		service.storeSectorUpdate(id, count, intArr);
-		System.out.println("count : " + count);
 	}
 	
 	@RequestMapping(value= {"/noramlUserBookingList"}, method=RequestMethod.GET)
@@ -330,12 +329,6 @@ public class SehwaController {
 		model.addAllAttributes(service.usePointList(id, usePageNum));
 		return "sehwa/noramlUserPointList";
 	}
-
-	@RequestMapping("/businessUserLogOut")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:/login";
-	}
 	
 	@RequestMapping(value="/businessUserSecession")
 	public String businessUserSecession(Model model, String id) {
@@ -360,6 +353,26 @@ public class SehwaController {
 	public void normalUserSecession(String id) {
 		service.deleteNormalUser(id);
 	}
+	
+	@RequestMapping("/storeOpen")
+	public String storeOpen(String id, HttpSession session) {
+		BusinessUser user = service.getBusinessUserInfo(id);
+		user.setStoreOnoff("open");
+		
+		session.setAttribute("BusinessUser", user);
+		return "redirect:/businessUserStoreInfo?id=testBusinessId";
+	}
+	
+	@RequestMapping("/storeClose")
+	public String storeClose(String id, HttpSession session) {
+		BusinessUser user = service.getBusinessUserInfo(id);
+		user.setStoreOnoff("close");
+		
+		session.setAttribute("BusinessUser", user);
+		return "redirect:/businessUserStoreInfo?id=testBusinessId";
+	}
+	
+	
 	
 	
 	

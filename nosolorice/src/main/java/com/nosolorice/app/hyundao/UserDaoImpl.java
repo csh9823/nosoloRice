@@ -238,4 +238,9 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
+	@Override
+	public List<BlockHistory> getBlockList(String blocker) {
+		return sqlSession.selectList(NAME_SPACE + ".getBlockList", blocker);
+	}
+
 }

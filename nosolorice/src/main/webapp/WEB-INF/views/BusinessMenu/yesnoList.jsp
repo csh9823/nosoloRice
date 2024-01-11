@@ -26,7 +26,8 @@
             color : #C93C3C !important;
         }
         .yeslist{
-            text-decoration: none;
+            border: none;
+            background-color: rgb(95,158,160);
         }
         .nolist{
             text-decoration: none;
@@ -133,9 +134,17 @@
 		                    </div>
 		                </div>
 		                <div class="col-2" style="background-color: cadetblue;">
-		                    <a href="bookingStateOk?businessId=${sessionScope.BusinessUser.businessId}&bookingNo=${booking.bookingNo}&bookingState=승인" class="yeslist" data-id="${booking.bookingChatName}">
-		                    	<p class="pyeslist">승인</p>
-		                    </a>
+		                <form action="bookingStateOk" method="get">
+		                	<input type="hidden" name="bookingState" value="승인">
+		                	<input type="hidden" name="bookingOkState" value="0">
+		                	<input type="hidden" name="bookingOkTime" value="${booking.bookingTime}">
+		                	<input type="hidden" name="bookingOkRequest" value="${booking.bookingRequest}">
+		                	<input type="hidden" name="bookingOkCount" value="${booking.bookingCount}">
+		                	<input type="hidden" name="bookingNo" value="${booking.bookingNo}">
+		                	<input type="hidden" name="deposit" value="${booking.deposit}">
+		                	<input type="hidden" name="businessId" value="${sessionScope.BusinessUser.businessId}">
+		                	<button type="submit" class="yeslist pyeslist" data-id="${booking.bookingChatName}">승인</button>
+		                </form>    	
 		                </div>
 		    
 		                <div class="col-2" style="background-color: red; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
@@ -215,7 +224,7 @@
                         <input type="hidden" name="bookingNo" value="${booking.bookingNo}">
                         <input type="hidden" name="businessId" value="${sessionScope.BusinessUser.businessId}">
                         <input type="hidden" name="deposit" value="${booking.deposit}">
-                        <input type="hidden" name="bookingState" value="미방문">
+                        <input type="hidden" name="bookingOkNo" value="${booking.bookingOkNo}">
                      </form>
                     </div>
                 </div>
@@ -246,70 +255,15 @@
         </div>
     </div>
 </div>
+
+
 <script>
     const modal2 = document.getElementById("modal2");
     
     const openModal2Btns = document.querySelectorAll(".pnolist");
     
     const closeModal2Btn = document.getElementById("close-modal2");
-    
-    const loginId = $("#bId").val();
-    console.log("사장님 loginId : ", loginId);
-    
-    //예약관리 페이지에 접속하면 웹소켓 서버에 연결한다. 서버 아이피 입력
-
-    let url = "ws://192.168.0.44:8090/app/booking/" + loginId;
-
-    
-    //학원꺼
-    //let url = "ws://192.168.0.14:8081/app/booking/" + loginId;
-    
-    //집꺼
-    //let url = "ws://192.168.35.92:8081/app/booking/" + loginId;
-
-			
-			bookingSocket = new WebSocket(url);
-			
-			$(bookingSocket).on("open", function(event) {
-				//모든 사용자는 서버에 접속 하면 메시지를 보낸다. { loginId : loginId, roomId : roomId} (사장의 경우 roomId : 자기 아이디)
-				let conncectMsg = {
-					type : 'connect',
-					loginId : loginId,
-					roomId : loginId
-				}
-				const jsonData = JSON.stringify(conncectMsg);
-				bookingSocket.send(jsonData);
-			});
-			
-			bookingSocket.addEventListener('message', function(e){
-				//서버로부터 받은 json문자열 메시지를 자바스크립트로 객체로 변환.
-				let msgObj = JSON.parse(e.data);
-				
-				if(msgObj.type == 'request'){
-					//알림
-					alert("새로운 예약이 접수되었습니다");
-					location.reload();
-				}
-				
-				if(msgObj.type == 'userCancel'){
-					let bookNo = msgObj.bookNo; 
-					//알림
-					alert(bookNo + "번 예약이 취소 되었습니다");
-					location.reload();
-				}
-				
-				
-			});
-			
-			$(bookingSocket).on('close', function(event) {		
-			    console.log('WebSocket 연결이 닫혔습니다.');
-			});
-		
-			$(bookingSocket).on('error', function(event) {
-			    console.error('WebSocket 오류:', event);
-			});
-    
-
+  
     // 모달창 열기
 	openModal2Btns.forEach((openModal2Btn) => {
 	  openModal2Btn.addEventListener("click", () => {
@@ -356,8 +310,58 @@
     	});
 
     
+    const loginId = $("#bId").val();
+    console.log("사장님 loginId : ", loginId);
     
+    //예약관리 페이지에 접속하면 웹소켓 서버에 연결한다. 서버 아이피 입력
+    let url = "ws://192.168.0.44:8090/app/booking/" + loginId;
     
+    //학원꺼
+    //let url = "ws://192.168.0.14:8081/app/booking/" + loginId;
+    //let url = "ws://192.168.0.16:8081/app/booking/" + loginId;
+    
+    //집꺼
+    //let url = "ws://192.168.35.92:8081/app/booking/" + loginId;
+
+			
+			bookingSocket = new WebSocket(url);
+			
+			$(bookingSocket).on("open", function(event) {
+				//모든 사용자는 서버에 접속 하면 메시지를 보낸다. { loginId : loginId, roomId : roomId} (사장의 경우 roomId : 자기 아이디)
+				let conncectMsg = {
+					type : 'connect',
+					loginId : loginId,
+					roomId : loginId
+				}
+				const jsonData = JSON.stringify(conncectMsg);
+				bookingSocket.send(jsonData);
+			});
+			
+			bookingSocket.addEventListener('message', function(e){
+				//서버로부터 받은 json문자열 메시지를 자바스크립트로 객체로 변환.
+				let msgObj = JSON.parse(e.data);
+				
+				if(msgObj.type == 'request'){
+			        location.reload();
+				}
+				
+				if(msgObj.type == 'userCancel'){
+					location.reload();
+				}
+				
+				
+			});
+			
+			$(bookingSocket).on('close', function(event) {		
+			    console.log('WebSocket 연결이 닫혔습니다.');
+			});
+		
+			$(bookingSocket).on('error', function(event) {
+			    console.error('WebSocket 오류:', event);
+			});
+    
+
+
     //승인 버튼 눌렀을 때
     $(document).on("click", ".yeslist", function(){
     	let roomId = $(this).attr("data-id");
@@ -380,8 +384,7 @@
 		}
 		const jsonData = JSON.stringify(rejectMsg);
     	bookingSocket.send(jsonData);
-    });
-    
+    });    
 </script>
 </body>
 </html>

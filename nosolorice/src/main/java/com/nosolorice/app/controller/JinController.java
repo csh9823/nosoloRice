@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nosolorice.app.domain.booking.Booking;
 import com.nosolorice.app.domain.booking.BookingOk;
+import com.nosolorice.app.domain.booking.BookingUserList;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.businessUser.Menu;
 import com.nosolorice.app.domain.businessUser.MenuCategory;
@@ -30,6 +31,7 @@ import com.nosolorice.app.domain.rootUser.RootUser;
 import com.nosolorice.app.jinservice.JinFindService;
 import com.nosolorice.app.jinservice.JinMenuCateService;
 import com.nosolorice.app.jinservice.JinMenuService;
+import com.nosolorice.app.jinservice.JinReviewService;
 import com.nosolorice.app.jinservice.JinbookService;
 import com.nosolorice.app.jinservice.JinloginService;
 
@@ -57,12 +59,16 @@ public class JinController {
 	// 메뉴 관련 서비스
 	@Autowired
 	private JinMenuService jinMenuService;
-	
+
+	// 예약 관련 서비스
 
 	@Autowired
 	private JinbookService jinbookService;
 
 	
+	// 리뷰 관련 서비스
+	@Autowired
+	private JinReviewService jinReviewService; 
 	// 아이디 비밀번호 찾기 폼
 	@RequestMapping("findForm")
 	public String findForm() {
@@ -126,6 +132,15 @@ public class JinController {
 		return "login/joinForm";
 	}
 	
+	//로그아웃
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		
+		return "redirect:login";
+	}
+	
 	//로그인 폼
 	@RequestMapping("login")
 	public String login(@CookieValue(name= "saveId",required = false) String id,Model model) {
@@ -137,54 +152,55 @@ public class JinController {
 		return "login/login";
 	}
 
-	
 	//로그인 하기
-	@RequestMapping("loginservice")
-	public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,
-			HttpServletResponse response,HttpSession session ,PrintWriter out) {
-		
-		// 쿠키에 값 저장하기
-		if(idsave != 0) {
-			Cookie cookie = new Cookie("saveId" ,id);
-			cookie.setMaxAge(60*60*24*30);
-			response.addCookie(cookie);
-		}else {
-			Cookie cookie = new Cookie("saveId" ,id);
-			cookie.setMaxAge(0);
-			response.addCookie(cookie);
-		}
-		
-		BusinessUser buser = jinloginService.loginBusinessUser(id, pass);
-		
-		NormalUser nuser = jinloginService.loginNormalUser(id, pass);
-		
-		RootUser ruser = jinloginService.loginRootUser(id, pass);
-		
-		if(buser != null) {
+		@RequestMapping("loginservice")
+		public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,
+				HttpServletResponse response,HttpSession session ,PrintWriter out,HttpServletRequest request) {
 			
-			System.out.println(buser.getBusinessId());
+			// 쿠키에 값 저장하기
+			if(idsave != 0) {
+				Cookie cookie = new Cookie("saveId" ,id);
+				cookie.setMaxAge(60*60*24*30);
+				response.addCookie(cookie);
+			}else {
+				Cookie cookie = new Cookie("saveId" ,id);
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+			}
 			
-			session.setAttribute("BusinessUser", buser);
-			return "redirect:businessUserStoreInfo?id="+buser.getBusinessId();
-		}else if(nuser != null) {
-			System.out.println(nuser.getNormalId());
-			session.setAttribute("NormalUser", nuser);
-			return "redirect:mainPage";
-		}else if(ruser != null) {
-			System.out.println(id);
-			System.out.println(ruser.getRootId());
-			session.setAttribute("RootUser", ruser);
-			return "redirect:adminPage?RootId="+ruser.getRootId();
-		}
-		response.setContentType("text/html; charset=utf-8");
-		out.println("<script>");
-		out.println("	alert('회원 정보가 일치하지 않습니다.');");
-		out.println("	history.back();");
-		out.println("</script>");
-    	return null;
+			BusinessUser buser = jinloginService.loginBusinessUser(id, pass);
+			
+			NormalUser nuser = jinloginService.loginNormalUser(id, pass);
+			
+			RootUser ruser = jinloginService.loginRootUser(id, pass);
 
-	}
-	
+			if(buser != null) {
+				System.out.println(buser.getBusinessId());
+				session.setAttribute("BusinessUser", buser);
+				return "redirect:businessUserStoreInfo?Id="+buser.getBusinessId();
+			}
+			
+			if(nuser != null) {
+				System.out.println(nuser.getNormalId());
+				session.setAttribute("NormalUser", nuser);
+				return "redirect:mainPage";
+			}
+			
+			if(ruser != null) {
+				session.setAttribute("RootUser", ruser);
+				return "redirect:adminPage?RootId="+ruser.getRootId();
+			}
+			
+			
+			response.setContentType("text/html; charset=utf-8");
+			out.println("<script>");
+			out.println("	alert('회원 정보가 일치하지 않습니다.');");
+			out.println("	history.back();");
+			out.println("</script>");
+			
+	    	return null;
+		}
+
 	@RequestMapping("BusinessMenu")
 	public String BusinessMenu(String businessId,Model model, @RequestParam(name="menuCategoryNo",required = false) String menuCategoryNo) {
 		
@@ -255,6 +271,7 @@ public class JinController {
 			multipartFile.transferTo(file);
 			menu.setMenuPicture(DEFAULT_PATH+"/"+saveName);
 		}
+		
 		jinMenuService.MenuAdd(menu);
 		return "redirect:BusinessMenu?businessId="+buser.getBusinessId()+"&"+"menuCategoryNo="+menu.getMenuCategoryNo();
 	}
@@ -277,33 +294,171 @@ public class JinController {
 		
 		// 부킹 no가 있는지 먼저 체크
 		List<Booking> booking = jinbookService.BookingList(businessId);
-		
 		model.addAttribute("booking",booking);
 		
 		return "BusinessMenu/yesnoList";
 	}
 	
+	
+	// 예약 수락
 	@RequestMapping("bookingStateOk")
-	public String bookingState(String businessId,int bookingNo ,String bookingState) {
-		
-		
-		jinbookService.bookingState(businessId, bookingNo, bookingState);
-		
+	public String bookingState(BookingOk bookingOk,String bookingState,String businessId) {
+
+		System.out.println(bookingOk.toString());
+		System.out.println(bookingState + businessId);
+		jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingState);
+		// 부킹  ok 승인
+		jinbookService.bookingOkinsert(bookingOk);
 		return "redirect:yesnoList?businessId="+businessId;
 	}
 	
+	//예약거절
 	@RequestMapping("bookingStateDelete")
 	public String bookingStateDelete(String businessId,int bookingNo) {
-		
-		jinbookService.bookinguserdelete(businessId, bookingNo);
 		jinbookService.bookingStateDelete(businessId, bookingNo);
 		return "redirect:yesnoList?businessId="+businessId;
 	}
 	
+	// 방문 완료
 	@RequestMapping("Bookingok")
-	public String Bookingok(BookingOk bookingOk,String bookingState) {
-		jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingState);
-		jinbookService.bookingOkinsert(bookingOk);
+	public String Bookingok(BookingOk bookingOk) {
+		
+		System.out.println(bookingOk.toString());
+		jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingOk.getBookingOkState());
+		// 부킹 ok no 가져오기
+		int bookingOkno = jinbookService.getbookingOknumber(bookingOk.getBookingNo());
+		// 부킹된 유저 리스트 가져오기
+		List<BookingUserList> bookuser =  jinbookService.bookingUserList(bookingOk.getBusinessId(), bookingOk.getBookingNo());
+		
+		// 부킹 된 유저 리스트의 아이디를 반복문으로 여러번 넣어줌
+		for (BookingUserList bookingUser : bookuser) {
+			System.out.println(bookingUser.getNormalId());
+			jinbookService.visitantuseradd(bookingUser.getNormalId(),bookingOk.getBusinessId(),bookingOkno);
+		}
+		
+		// 반복이 완료 되면 부킹 유저 리스트 삭제 해줌
+		jinbookService.bookinguserdelete(bookingOk.getBusinessId(), bookingOk.getBookingNo());
 		return "redirect:yesnoList?businessId="+bookingOk.getBusinessId();
+	}
+
+	// 파일이 있을때 메뉴 업데이트 하기
+	@RequestMapping("menuUpdate")
+	public String menuUpdate(HttpServletRequest request,Menu menu ,@RequestParam(value="menuimgupdate") MultipartFile multipartFile, String menuInfoupdate) 
+			throws IOException {
+		
+		// 세션 값 가져오기
+		BusinessUser buser = (BusinessUser) request.getSession().getAttribute("BusinessUser");
+		menu.setMenuInfo(menuInfoupdate);
+		
+
+		if(! multipartFile.isEmpty()) {
+			// 파일이 들어갈 위치
+			String realPath = request.getServletContext().getRealPath(DEFAULT_PATH);
+			UUID uid = UUID.randomUUID();
+			String saveName = uid.toString() + "_" + multipartFile.getOriginalFilename();
+			File file = new File(realPath,saveName);
+			multipartFile.transferTo(file);
+			menu.setMenuPicture(DEFAULT_PATH+"/"+saveName);
+			
+			// 기존 파일 삭제하기
+			String getmenu = jinMenuService.getMenu(menu.getMenuNo());
+			if(getmenu != null) {
+				String real = request.getServletContext().getRealPath(getmenu);
+				File file2 = new File(real);
+				file2.delete();
+			}
+		}
+		
+		jinMenuService.MenuUpdate(menu);
+		return "redirect:BusinessMenu?businessId="+buser.getBusinessId()+"&"+"menuCategoryNo="+menu.getMenuCategoryNo();
+	}
+	
+	// 파일이 없을때 메뉴 업데이트 하기
+	@RequestMapping("NofilemenuUpdate")
+	public String Nofilemenuupdate(Menu menu,HttpServletRequest request,String menuInfoupdate) {
+		System.out.println("노파일 업데이트 옴");
+		menu.setMenuInfo(menuInfoupdate);
+		
+		System.out.println("노파일 업데이트"+menu.getMenuPicture());
+		
+		// 세견 값 가져오기
+		BusinessUser buser = (BusinessUser) request.getSession().getAttribute("BusinessUser");
+		jinMenuService.MenuUpdate(menu);
+		return "redirect:BusinessMenu?businessId="+buser.getBusinessId()+"&"+"menuCategoryNo="+menu.getMenuCategoryNo();
+	}
+	
+	//리뷰 페이지 Businessriview.jsp
+	@RequestMapping("Businessriview")
+	public String Businessriview(String businessId,Model model) {
+		
+		List<Map<String,Object>> map = jinReviewService.ReviewList(businessId);
+		model.addAttribute("review",map);
+		return "review/Businessriview";
+	}
+	
+	// 리뷰 블라인드 처리
+	@RequestMapping("Businessriviewblind")
+	public void Businessriviewblind(int revireNo,HttpServletRequest request,PrintWriter out,
+			HttpServletResponse response) {
+		BusinessUser buser = (BusinessUser) request.getSession().getAttribute("BusinessUser");
+		jinReviewService.Businessriviewblind(revireNo);
+		response.setContentType("text/html; charset=utf-8");
+		out.println("<script>");
+		out.println("	alert('블라인드 처리가 완료 되었습니다.');");
+		out.println(" window.location.href = 'Businessriview?businessId="+buser.getBusinessId() + "';");
+		out.println("</script>");
+	}
+	
+	// 리뷰 삭제 요청
+	@RequestMapping("Businessriviewdelete")
+	public void Businessriviewdelete(int revireNo,HttpServletRequest request,PrintWriter out,
+			HttpServletResponse response) {
+		jinReviewService.Businessriviewdelete(revireNo);
+		response.setContentType("text/html; charset=utf-8");
+		out.println("<script>");
+		out.println("	alert('삭제 요청이 완료 되었습니다.');");
+		out.println("	history.back();");
+		out.println("</script>");
+	}
+	
+	//답글 달기
+	@RequestMapping("Businessreviewadd")
+	public void Businessreviewadd (int reviewNo, String normalId, String businessId,String businessComment,HttpServletRequest request,PrintWriter out,
+			HttpServletResponse response) {
+		
+		jinReviewService.Businessreviewadd(reviewNo, normalId, businessId, businessComment);
+		
+		response.setContentType("text/html; charset=utf-8");
+		out.println("<script>");
+		out.println(" alert('답글 등록이 완료되었습니다.');");
+		out.println(" window.location.href = 'Businessriview?businessId="+businessId + "';");
+		out.println("</script>");
+	}
+	
+	// 답글 수정
+	@RequestMapping("OwnerCommentupdate")
+	public void OwnerCommentupdate (String businessComment2, int reviewNo,HttpServletRequest request,HttpServletResponse response,PrintWriter out) {
+		BusinessUser buser = (BusinessUser) request.getSession().getAttribute("BusinessUser");
+		
+		jinReviewService.OwnerCommentupdate(businessComment2, reviewNo);
+		
+		response.setContentType("text/html; charset=utf-8");
+		out.println("<script>");
+		out.println("	alert('답글 수정이 완료 되었습니다.');");
+		out.println(" window.location.href = 'Businessriview?businessId="+buser.getBusinessId() + "';");
+		out.println("</script>");
+	}
+	
+	//답글 삭제
+	@RequestMapping("OwnerCommentdelete")
+	public void OwnerCommentdelete(int reviewNo,HttpServletRequest request,HttpServletResponse response,PrintWriter out) {
+		BusinessUser buser = (BusinessUser) request.getSession().getAttribute("BusinessUser");
+		jinReviewService.OwnerCommentdelete(reviewNo);
+		response.setContentType("text/html; charset=utf-8");
+		
+		out.println("<script>");
+		out.println("	alert('답글 삭제가 완료 되었습니다.');");
+		out.println(" window.location.href = 'Businessriview?businessId="+buser.getBusinessId() + "';");
+		out.println("</script>");
 	}
 }

@@ -80,6 +80,7 @@ public class BookingServer {
     		System.out.println("사장님이 보낸 승인메시지 msg : " + msg);
     		//사장이 보내준 roomId를 가진 유저에게 답장 { type : 'approve'}
     		String roomId = (String)msg.get("roomId");
+    		    		
     		for(Session s : sessions) {
     			if(s.getUserProperties().get("roomId").equals(roomId)) {
     				Map<String, Object>dataMap = new HashMap<>();
@@ -114,8 +115,8 @@ public class BookingServer {
     	
     	//메시지 type이 userCancel이면 
     	if(msg.get("type").equals("userCancel")) {
-    		System.out.println("사장님이 보낸 날것 그대로의 거부메시지 : " + message);
-    		System.out.println("사장님이 보낸 거부메시지 msg : " + msg);
+    		System.out.println("유저들이 보낸 메시지 : " + message);
+    		System.out.println("유저들이 보낸 메시지 msg : " + msg);
     		//사장에게 취소된 예약번호를 알림
     		String businessId = (String)msg.get("businessId");
     		String bookNo = (String)msg.get("bookNo");
@@ -126,7 +127,7 @@ public class BookingServer {
     				dataMap.put("bookNo", bookNo);
     				String jsonData = om.writeValueAsString(dataMap);
     				s.getBasicRemote().sendText(jsonData);
-    				System.out.println("유저들에게 사장님 예약이 취소됬다고 메시지 발송 완료");
+    				System.out.println("사장님에게 예약취소됬다고 메시지 발송 완료");
     			}
     		}    
     		return;
