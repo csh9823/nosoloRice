@@ -188,7 +188,7 @@ public class JinController {
 			
 			if(ruser != null) {
 				session.setAttribute("RootUser", ruser);
-				return "redirect:adminPage?RootId="+ruser.getRootId();
+				return "redirect:noticeList";
 			}
 			
 			
