@@ -127,7 +127,7 @@ public class SehwaController {
 		
 		service.businessUserInfoUpdate(user);
 		
-		return "redirect:/businessUserStoreInfo?id=testBusinessId";
+		return "redirect:/businessUserStoreInfo?id=" + businessId;
 	}	
 
 	@RequestMapping(value="/normalUserInfoUpdate", method = RequestMethod.GET)
