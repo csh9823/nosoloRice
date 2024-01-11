@@ -14,4 +14,6 @@ public interface BusinessUserService {
 	
 	public String certNum();
 
+	public void addJoinApprove(String businessId);
+
 }

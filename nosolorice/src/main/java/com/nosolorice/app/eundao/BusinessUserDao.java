@@ -14,4 +14,6 @@ public interface BusinessUserDao {
 	public List<String> getBusinessUser(String businessId);
 	
 	public BusinessUser getBusinessId(String businessId);
+	
+	public void joinApprove(String businessId);
 }

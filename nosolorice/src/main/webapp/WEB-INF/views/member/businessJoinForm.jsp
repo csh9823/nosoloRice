@@ -26,6 +26,12 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+
+/* input file 커스텀 */
+.businessProfile {
+   display: none;
+}
 </style>
 
 <div class="container justify-content-center">
@@ -56,7 +62,10 @@ input[type='number'] {
          <div class="col-md-4">
           <div class="col-sm-2">
             <img src="resources/upload/business_upload/profile_img.png" id="profileImageInput" style="width: 400px; height: 400px; border-radius: 4px;">
-            <input type="file" accept="image/*" onchange="profileImage(this)" id="businessProfile" name="businessProfile">
+            <label for="businessProfile" style="width: 200px; padding-top: 10px; color:#515151;">상호 이미지 업로드하기</label>
+            <input type="file" accept="image/*" onchange="profileImage(this)" id="businessProfile" name="businessProfile" style="display:none;">
+            <pre style="width: 300px; padding-top: 10px; color:#C93C3C; ">* 이미지를 업로드 하지 않을 경우
+  기본 이미지가 등록됩니다.</pre>
           </div> 
          </div> 
 
@@ -217,7 +226,7 @@ input[type='number'] {
               
               <div class="col-10 p-2">
                 <div class="form-group">
-                  <input type="tel" class="form-control" name="callPhone" id="callPhone" placeholder="* 대표번호" >
+                  <input type="text" class="form-control" name="callPhone" id="callPhone" placeholder="* 대표번호" >
                 </div>
               </div>
               
@@ -329,6 +338,7 @@ input[type='number'] {
 		    event.preventDefault();
 		  };
 		}, true);
+	
 	
 </script>
 <script src="resources/js/businessUserPhoneCheck.js"></script>
