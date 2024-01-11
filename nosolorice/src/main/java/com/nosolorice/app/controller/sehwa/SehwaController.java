@@ -51,7 +51,7 @@ public class SehwaController {
 		}
 		
 		if (pass.equals(inputPass)) isPass = true;
-		
+		 
 		return isPass;
 	}
 	
@@ -115,6 +115,7 @@ public class SehwaController {
 		user.setPostNum(postNum);
 		user.setAddress1(address1);
 		user.setAddress2(address2);
+		
 		if(multi != null && !multi.isEmpty()) {
 			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
 			UUID uid = UUID.randomUUID(); 
@@ -170,9 +171,7 @@ public class SehwaController {
 			File file = new File(filePath, saveName);
 			multi.transferTo(file);
 			user.setProfile(saveName);
-		} else {
-			user.setProfile("defaultImg");
-		}
+		} 
 		
 		service.normalUserInfoUpdate(user);
 		
