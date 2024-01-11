@@ -41,7 +41,7 @@ public class AdminPageController {
 		
 		model.addAllAttributes(modelMap);
 		
-		return "/adminReportList";
+		return "forward:/WEB-INF/views/adminReportList.jsp";
 	}
 	
 	//리뷰 리스트
@@ -49,9 +49,10 @@ public class AdminPageController {
 	public String reviewList(Model model,@RequestParam(value="pageNum",required=false, defaultValue="1")int pageNum) {
 		
 		Map<String,Object> modelMap = adminPageService.reviewList(pageNum);
+		
 		model.addAllAttributes(modelMap);
 		
-		return "/adminReviewList";
+		return "forward:/WEB-INF/views/adminReviewList.jsp";
 	}
 	
 	//회원정지 리스트
@@ -63,7 +64,7 @@ public class AdminPageController {
 		
 		model.addAllAttributes(modelMap);
 		
-		return "/deniedList";
+		return "forward:/WEB-INF/views/deniedList.jsp";
 	}
 	
 	@RequestMapping("/searchId")
@@ -118,7 +119,7 @@ public class AdminPageController {
 		  
 		  model.addAllAttributes(bList);
 		  
-		  return "/businessDeleteList";
+		  return "forward:/WEB-INF/views/businessDeleteList.jsp";
 	  }
 	  //업체 삭제
 	  @RequestMapping("/businessDelete")
@@ -199,7 +200,7 @@ public class AdminPageController {
 		  
 		  model.addAllAttributes(modelMap);
 	
-		  return "/adminNormalInquiryList";
+		  return "forward:/WEB-INF/views/adminNormalInquiryList.jsp";
 	  }
 	  
 	  @RequestMapping("/normalInquiryDetail")
@@ -211,7 +212,7 @@ public class AdminPageController {
 		  model.addAttribute("userInquiry",userInquiry);
 		  model.addAttribute("pageNum",pageNum);
 		  
-		  return "/normalInquiryDetail";
+		  return "forward:/WEB-INF/views/normalInquiryDetail.jsp";
 	  }
 	  
 	  @RequestMapping("/answerInquiryProcess")
@@ -237,7 +238,7 @@ public class AdminPageController {
 		  
 		  model.addAllAttributes(modelMap);
 	
-		  return "/adminBusinessInquiryList";
+		  return "forward:/WEB-INF/views/adminBusinessInquiryList.jsp";
 		  
 	  }
 	  
@@ -249,7 +250,7 @@ public class AdminPageController {
 		  model.addAttribute("businessInquiry",businessInquiry);
 		  model.addAttribute("pageNum",pageNum);
 		  
-		  return "/businessInquiryDetail";
+		  return "forward:/WEB-INF/views/businessInquiryDetail.jsp";
 	  }
 	  
 	  @RequestMapping("/businessAnswerInquiryProcess")

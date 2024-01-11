@@ -9,7 +9,7 @@
 	
 	<select id="reportList" resultType="ReportDetails" parameterType="hashmap" resultMap="reportResultMap">
 	
-	SELECT * FROM report_details ORDER BY report_no LIMIT #{start}, #{num}
+	SELECT * FROM report_details ORDER BY report_no  DESC LIMIT #{start}, #{num}
 	
 	</select>
 	
@@ -158,7 +158,7 @@
 
 	<select id="adminInquiryList" resultType="UserInquiry" parameterType="hashmap" resultMap="userInquiryMap">
 	
-		SELECT * FROM user_inquiry WHERE inquiry_comment IS NULL ORDER BY user_inquiry_no LIMIT #{start}, #{num}
+		SELECT * FROM user_inquiry WHERE inquiry_comment IS NULL ORDER BY user_inquiry_no DESC LIMIT #{start}, #{num}
 	
 	</select>
 	

@@ -30,12 +30,15 @@ public class UserPageController {
 	@RequestMapping("/userReportList")
 	public String userReportList(HttpSession session,Model model,@RequestParam(value="pageNum",required=false, defaultValue="1")int pageNum) {
 		
+	
 		
 		NormalUser normal = (NormalUser) session.getAttribute("NormalUser");
 		
 		String reporter = normal.getNormalId();
 		
 		Map<String, Object> userReportList = userPageService.userReportList(reporter,pageNum);
+		
+		System.out.println("신고 리스트 :" + userReportList );
 		
 		model.addAllAttributes(userReportList);
 		

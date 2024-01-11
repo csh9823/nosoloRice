@@ -82,8 +82,7 @@ ul {
 				<div class="col mt-5">
 					<div class="mt-3 fs-2 fw-bold" style="color: #C93C3C">리뷰삭제 요청</div>
 					<br>
-					<div
-						class="row text-center align-items-center border-top border-bottom py-3 reviewRow">
+					<div class="row text-center align-items-center border-top border-bottom py-3">
 						<div class="col-2">번호</div>
 						<div class="col-2">업체명</div>
 						<div class="col-3">사업자 아이디</div>
@@ -173,8 +172,6 @@ ul {
 							</div>
 						</div>
 					</div>
-
-
 
 					<c:if test="${not empty adminReviewList  }">
 						<div class="row my-5">
@@ -337,7 +334,7 @@ ul {
     		  
     		  $("#reviewPicture").empty().append(`<img src= 'resources/upload/` + reviewPicture + `' style="max-width: 100%;">`);
 
-    		  $("#profile").empty().append(`<img src='resources/upload/` + profile + `' class="rounded-circle">`);
+    		  $("#profile").empty().append(`<img src='resources/upload/` + profile + `' class="rounded-circle" style="width:100px;">`);
     		  
     		  $("#nickName").text(nickName);
     			
