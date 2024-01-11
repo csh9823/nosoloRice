@@ -17,15 +17,15 @@
 				pass = #{user.pass},
 				mobile = #{user.mobile},
 				email = #{user.email},
+				name = #{name},
+				business_name = #{businessName},
 				bank_name = #{user.bankName},
 				bank_number = #{user.bankNumber},
 				phone = #{user.phone},
 				postNum = #{user.postNum},
 				address1 = #{user.address1},
-				address2 = #{user.address2}
-			<if test="user.businessProfile != null">
-				,business_profile = #{user.businessProfile}
-			</if>
+				address2 = #{user.address2},
+				business_profile = #{user.businessProfile}
 			WHERE 
 				business_id = #{id}
 	</update>
@@ -206,10 +206,8 @@
 				email = #{email},
 				postnum = #{postNum},
 				address1 = #{address1},
-				address2 = #{address2}
-			<if test="profile != null">
-				,profile = #{profile}
-			</if>
+				address2 = #{address2},
+				profile = #{profile}
 			WHERE	
 				normal_id = #{normalId}
 	</update>
@@ -271,20 +269,19 @@
 	
 	<select id="chargePointListPage" parameterType="hashMap" resultType="PointRecharge">
 		SELECT 
-			ROW_NUMBER() OVER (ORDER BY point_recharge_no) AS pointRechargeNo,
+			point_recharge_no AS pointRechargeNo,
 			normal_id AS normalId,
 			payment_method AS paymentMethod,
 			charge_amount AS chargeAmount,
 			charge_point AS chargePoint,
 			charge_date AS chargeDate
-		FROM 
-			point_recharge
-		WHERE 
-			normal_id = #{id}
-		ORDER BY
-			point_recharge_no DESC
-		LIMIT
-			#{start}, #{PAGE_SIZE}
+		FROM point_recharge
+			WHERE 
+				normal_id = #{id}
+			ORDER BY
+				point_recharge_no DESC
+			LIMIT
+				#{start}, #{PAGE_SIZE}
 	</select>
 	
 	<select id="usePointList" resultType="PointHistory">
@@ -301,20 +298,16 @@
 	
 	<select id="usePointListPage" parameterType="hashMap" resultType="PointHistory">
 		SELECT 
-			ROW_NUMBER() OVER (ORDER BY p.point_history_no) AS pointHistoryNo,
 			p.history_date AS historyDate, 
 			p.history_point AS historyPoint,
 			bu.business_name AS businessId, 
 			p.normal_id AS normalId
-		FROM
-			point_history p, business_user bu
-		WHERE 
-			p.business_id = bu.business_id
-   			AND p.normal_id = #{id}
-   		ORDER BY
-   			p.point_history_no DESC
-   		LIMIT
-			#{start}, #{PAGE_SIZE}
+		FROM point_history p, business_user bu
+			WHERE 
+				p.business_id = bu.business_id
+    			AND p.normal_id = #{id}
+    		LIMIT
+				#{start}, #{PAGE_SIZE}
 	</select>
 
 	<select id="checkNormalNickName" resultType="NormalUser" resultMap="NormalUserResultMap">
