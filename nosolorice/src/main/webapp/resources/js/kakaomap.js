@@ -9,11 +9,8 @@ $.ajax({
 	dataType : "json",
 	async : false,
 	success : function(resData){
-		console.log("시작하자마자 가져온 로그인데이터 : ", resData);
 		originXPoint = resData.xpoint;
 		originYPoint = resData.ypoint;
-		console.log(originXPoint);
-		console.log(originYPoint)
 	}, error : function(err){
 		console.log(err);
 	}
