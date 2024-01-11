@@ -13,6 +13,7 @@
 <link
 	href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/variable/woff2/SUITE-Variable.css"
 	rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <script src="resources/js/summernote-lite.js"></script>
 <script src="resources/js/summernote-ko-KR.js"></script>
 <script src="resources//js/summerNote.js"></script>
@@ -146,7 +147,7 @@ ul {
 											</div>
 											<div class="row">
 												<div class="col">
-													<span id="reviewRegDate">날짜</span>
+													<span id="reviewRegDate" style="font-size:12px;">날짜</span>
 
 												</div>
 												<div class="col text-end">
