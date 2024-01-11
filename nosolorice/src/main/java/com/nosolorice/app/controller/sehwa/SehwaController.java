@@ -51,7 +51,7 @@ public class SehwaController {
 		}
 		
 		if (pass.equals(inputPass)) isPass = true;
-		
+		 
 		return isPass;
 	}
 	
