@@ -33,9 +33,12 @@ public class normalUserDaoImpl implements normalUserDao {
 
 	@Override
 	public boolean getNickName(String nickName) {
-	    Integer count = sqlSession.selectOne(NAME_SPACE + ".getNickName", nickName);
-
-	    return count != null && count > 0;
+		int count = sqlSession.selectOne(NAME_SPACE + ".getNickName", nickName);
+		boolean result = false;
+		if(count > 0) {
+			result = true;
+		}
+	    return result;
 	}
 	
 	 @Override 

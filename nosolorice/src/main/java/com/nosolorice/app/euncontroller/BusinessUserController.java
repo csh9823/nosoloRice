@@ -42,7 +42,7 @@ public class BusinessUserController {
 		this.businessUserService = businessUserService;
 	}
 	
-	@RequestMapping("/businessjoin")
+	@RequestMapping("/businessJoin")
     public String businessJoinForm(Model model) {
 
         return "member/businessJoinForm"; 
@@ -59,7 +59,6 @@ public class BusinessUserController {
 			@RequestParam("bName")String businessName, 
 			@RequestParam("businessProfile")MultipartFile businessProfile, 
 			@RequestParam("bEmail")String email, 
-			String emailDomain, 
 			@RequestParam("bPhone")String mobile,
 			@RequestParam("zipcode") int postNum, 
 			@RequestParam("address1")String address1, 
@@ -87,7 +86,7 @@ public class BusinessUserController {
         businessUser.setXpoint(xpoint);
         businessUser.setYpoint(ypoint);
 
-        businessUser.setEmail(email + "@" +emailDomain);
+        businessUser.setEmail(email);
         businessUser.setBusinessNumber(businessNumber);
         
         businessUser.setBankName(bankName);

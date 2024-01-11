@@ -18,11 +18,7 @@
 	</select>
 	
 	<select id="getNickName" parameterType="String" resultType="Integer">
-		SELECT COUNT(*) FROM normal_user WHERE nickname = #{nickName} OR normal_id = #{nickName}
-			UNION
-		SELECT COUNT(*) FROM business_user WHERE business_id = #{nickName} OR business_name = #{nickName}
-			UNION
-		SELECT COUNT(*) FROM root_user WHERE root_id = #{nickName} OR root_name = #{nickName}
+		SELECT COUNT(*) FROM normal_user WHERE nickname = #{nickName}
 	</select>
 	
 </mapper>

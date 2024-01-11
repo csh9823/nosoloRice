@@ -1,3 +1,9 @@
+const autoHyphen = (target) => {
+	 target.value = target.value
+	   .replace(/[^0-9]/g, '')
+	   .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+}
+
 let code = "";
 
 $('#getBPhoneCheck').click(function() {
@@ -32,7 +38,7 @@ $('#getBPhoneCheck').click(function() {
 
 
 $("#businessPhoneCheck").click(function() {
-    if($("#checkNum").val() == code) {
+    if($("#checkNum").val() === code) {
     	alert("인증이 완료되었습니다.");
         $("#bPhoneCheck").val(true); 
     } else {

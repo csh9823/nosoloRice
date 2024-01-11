@@ -1,9 +1,13 @@
+const autoHyphen = (target) => {
+	 target.value = target.value
+	   .replace(/[^0-9]/g, '')
+	   .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+}
+
 let code = "";
 
 $('#getNormalPhoneCheck').click(function() {
 	const mobile = $('#mobile').val();
-	
-	console.log(mobile)
 	
 	if(mobile.trim() === '') {
 		alert("휴대폰번호를 입력해 주세요.");
@@ -32,9 +36,14 @@ $('#getNormalPhoneCheck').click(function() {
 
 
 $("#normalPhoneCheck").click(function() {
-    if($("#chkNum").val() == code) {
+	let chkNum = $("#chkNum").val();
+    if(chkNum.length <= 0) {
+    	alert("인증번호를 입력해 주세요");
+    	
+    } else if(chkNum == code) {
     	alert("인증이 완료되었습니다.");
         $("#certCheck").val(true); 
+        
     } else {
     	alert("인증번호가 맞지 않습니다. \n다시 시도해 주세요.");
 		$("#certCheck").val(false); 
