@@ -137,7 +137,9 @@
 		       </div>
 		       <div class="row">
 		          <div class="col-6">
-		           <label>오픈시간</label>
+		           <label>오픈시간&nbsp;&nbsp;
+		           	<input type="checkbox" name="hours24" id="hours24" class="fw-bold"> 24시 운영
+		           </label>
 		          </div>
 		          <div class="col-6">
 		           <label>휴무일</label>
@@ -211,30 +213,42 @@
 				totalChecked -= 1;
 			}
 		}
-		// 웹 에디터 
-		  $('.summernote').summernote({
-			    height: 450,
-			    lang: "ko-KR"
-			});
-		  
-		  // 타임피커
-			  $('.timepicker').timepicker({
-			    timeFormat: 'HH:mm',
-			    interval: 30,
-			    startTime: '00:00',
-			    dynamic: false,
-			    dropdown: true,
-			    scrollbar: true
-			});
-		  
-			// 프로필이미지 크기변경
-				window.addEventListener('resize', function() {
-					var squareContainer = document.querySelector('.square-container');
-					var width = squareContainer.clientWidth; // 현재 가로 크기 가져오기
-					squareContainer.style.height = width + 'px'; // 세로 크기를 가로 크기와 동일하게 설정
-				 });
-				window.dispatchEvent(new Event('resize'));
-				
+	// 웹 에디터 
+	  $('.summernote').summernote({
+		    height: 450,
+		    lang: "ko-KR"
+		});
+	  
+	  // 타임피커
+		  $('.timepicker').timepicker({
+		    timeFormat: 'HH:mm',
+		    interval: 30,
+		    startTime: '00:00',
+		    dynamic: false,
+		    dropdown: true,
+		    scrollbar: true
+		});
+	  
+	// 프로필이미지 크기변경
+		window.addEventListener('resize', function() {
+			var squareContainer = document.querySelector('.square-container');
+			var width = squareContainer.clientWidth; // 현재 가로 크기 가져오기
+			squareContainer.style.height = width + 'px'; // 세로 크기를 가로 크기와 동일하게 설정
+		 });
+		window.dispatchEvent(new Event('resize'));
+	
+	// 24시 체크박스
+	$(document).on("change", "#hours24", function() {
+		if ($(this).is(":checked")) {
+			$("#openTime").attr("disabled", true);
+			$("#closeTime").attr("disabled", true);
+			
+		} else {
+			$("#openTime").attr("disabled", false);
+			$("#closeTime").attr("disabled", false);
+		}
+	});
+	
 		  
 	</script>
 	 
