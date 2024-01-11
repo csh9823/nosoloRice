@@ -225,10 +225,10 @@ $(function(){
 	//가져온 room_id를 이용해 웹소켓채팅서버를 연다 - 완료
 	//학원꺼
 	//let url = "ws://192.168.0.14:8081/app/chating/" + roomId;
-	//let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
+	let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
 	
 	//집꺼
-	let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
+	//let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
 	
 	//현진이꺼
 	//let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
@@ -349,9 +349,9 @@ $(function(){
 			//사장님과 통신할 웹소켓서버에 연결
 			//학원꺼
 			//let url = "ws://192.168.0.14:8081/app/booking/" + businessId;
-			//let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
+			let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
 			//집꺼
-			let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
+			//let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
 			//현진이꺼		
 			//let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
 			
@@ -648,7 +648,7 @@ $(function(){
 	                            </div>
 	                            <div class="row my-1">
 	                                <div class="col-auto p-0 ms-4">
-	                                    <div class="receiveChat text-center px-3 py-2">
+	                                    <div class="receiveChat px-3 py-2">
 	                                    ` + chatMsg + `
 	                                    </div>
 	                                </div>
@@ -670,7 +670,7 @@ $(function(){
 	                        <div class="col-5">
 	                            <div class="row">
 	                                <div class="col-auto p-0 ms-4">
-	                                    <div class="receiveChat2 text-center px-3 py-2">
+	                                    <div class="receiveChat2 px-3 py-2">
 	                                    ` + chatMsg + `
 	                                    </div>
 	                                </div>

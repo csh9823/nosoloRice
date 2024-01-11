@@ -21,7 +21,7 @@
 	</delete>
 	
 	<select id="getDailySalesList" resultType="BookingOk">
-		SELECT bo.bookingok_no AS bookingOkNo, bo.booking_no AS bookingNo, DATE(bo.bookingok_time) AS bookingOkTime, bu.business_name businessName, ROUND(bo.deposit/10) AS deposit FROM bookingok bo JOIN business_user bu ON bo.business_id = bu.business_id ORDER BY bo.bookingok_time DESC LIMIT #{start}, #{pageSize}
+		SELECT bo.bookingok_no AS bookingOkNo, bo.booking_no AS bookingNo, DATE(bo.bookingok_time) AS bookingOkTime, bu.business_name businessName, ROUND(bo.deposit/10) AS deposit FROM bookingok bo JOIN business_user bu ON bo.business_id = bu.business_id ORDER BY bo.bookingok_no DESC LIMIT #{start}, #{pageSize}
 	</select>
 	
 	<select id="getMonthlySalesList" resultType="BookingOkMonth">
@@ -29,7 +29,7 @@
 	</select>
 	
 	<select id="getDailySalesListCount" resultType="int">
-		select count(bookingok_no) from bookingok order by bookingok_time desc;
+		select count(bookingok_no) from bookingok order by bookingok_no desc;
 	</select>
 	
 	<select id="getMonthlySalesListCount" resultType="int">

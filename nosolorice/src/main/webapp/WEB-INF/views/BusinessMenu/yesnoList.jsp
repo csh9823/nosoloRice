@@ -263,10 +263,10 @@
     
     //학원꺼
     //let url = "ws://192.168.0.14:8081/app/booking/" + loginId;
-    //let url = "ws://192.168.0.16:8081/app/booking/" + loginId;
+    let url = "ws://192.168.0.16:8081/app/booking/" + loginId;
     
     //집꺼
-    let url = "ws://192.168.35.92:8081/app/booking/" + loginId;
+    //let url = "ws://192.168.35.92:8081/app/booking/" + loginId;
 
 			
 			bookingSocket = new WebSocket(url);
