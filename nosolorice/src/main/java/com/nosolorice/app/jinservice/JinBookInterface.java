@@ -18,4 +18,6 @@ public interface JinBookInterface {
 	abstract public List<BookingUserList> bookingUserList(String businessId,int bookingNo);
 	// 방문완료 생성
 	abstract public void visitantuseradd(String normalId, String businessId,int bookingokNo);
+	//부킹ok 번호 가져오기
+	abstract public int getbookingOknumber(int bookingNo);
 }

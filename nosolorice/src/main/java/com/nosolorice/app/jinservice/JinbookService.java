@@ -45,4 +45,8 @@ public class JinbookService implements JinBookInterface {
 	public void visitantuseradd(String normalId, String businessId,int bookingokNo) {
 		jinBookingDaoImpl.visitantuseradd(normalId, businessId, bookingokNo);
 	}
+	//부킹ok 번호 가져오기
+	public int getbookingOknumber(int bookingNo) {
+		return jinBookingDaoImpl.getbookingOknumber(bookingNo);
+	}
 }

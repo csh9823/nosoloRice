@@ -325,21 +325,21 @@ public class JinController {
 		
 		System.out.println(bookingOk.toString());
 		
-		// 업데이트 부킹 테이블 방문완료로 전환
-		//jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingOk.getBookingOkState());
 		
-		// 아이디를 가져와서 방문완료 반복 인설트
-		//List<BookingUserList> bookuser =  jinbookService.bookingUserList(bookingOk.getBusinessId(), bookingOk.getBookingNo());
+		jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingOk.getBookingOkState());
 		
-		// 방문완료 생성
-		//for (BookingUserList bookingUser : bookuser) {
+		
+		List<BookingUserList> bookuser =  jinbookService.bookingUserList(bookingOk.getBusinessId(), bookingOk.getBookingNo());
+		int bookingOkno = jinbookService.getbookingOknumber(bookingOk.getBookingNo());
+		
+		for (BookingUserList bookingUser : bookuser) {
 			
-			//jinbookService.visitantuseradd(bookingUser.getNormalId(),bookingOk.getBusinessId(),bookingOk.getBookingOkNo());
+			jinbookService.visitantuseradd(bookingUser.getNormalId(),bookingOk.getBusinessId(),bookingOkno);
 			
-		//}
+		}
 		
-		// 부킹 유저 리스트 삭제
-		//jinbookService.bookinguserdelete(bookingOk.getBusinessId(), bookingOk.getBookingNo());
+		 
+		jinbookService.bookinguserdelete(bookingOk.getBusinessId(), bookingOk.getBookingNo());
 		
 		return "redirect:yesnoList?businessId="+bookingOk.getBusinessId();
 	}

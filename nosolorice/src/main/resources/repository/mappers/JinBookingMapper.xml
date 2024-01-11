@@ -5,22 +5,17 @@
 
 <select id="BookingList" parameterType="String" resultType="Booking">
 SELECT
-    b.booking_no AS bookingNo,
-    b.booking_count AS bookingCount,
-    b.booking_request AS bookingRequest,
-    b.booking_time AS bookingTime,
-    b.booking_state AS bookingState,
-    b.booking_count * b.deposit AS deposit,
-    b.booking_book_no AS bookingBookNo,
-    b.deposit deposit2,
-    b.booking_chatname AS bookingChatName,
-    bo.bookingok_no AS bookingOkNo  
-FROM
-    booking b
-JOIN
-    bookingok bo ON b.booking_no = bo.booking_no
-WHERE
-    b.business_id = #{businessId}
+    booking_no AS bookingNo,
+    booking_count AS bookingCount,
+    booking_request AS bookingRequest,
+    booking_time AS bookingTime,
+    booking_state AS bookingState,
+    booking_count * deposit AS deposit,
+	booking_book_no AS bookingBookNo,
+	deposit,
+	booking_chatname AS bookingChatName 
+FROM booking
+where business_id = #{businessId}
 </select>
 
 
@@ -73,4 +68,11 @@ WHERE
 INSERT INTO visitant_userlist (normal_id, business_id, bookingok_no)
 VALUES (#{normalId}, #{businessId}, #{bookingokNo})
 </insert>
+
+<select id="getbookingOknumber" parameterType="int">
+select
+booking_no
+from bookingok
+where booking_no = #{bookingNo}
+</select>
 </mapper>
