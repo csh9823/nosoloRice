@@ -324,23 +324,16 @@ public class JinController {
 	public String Bookingok(BookingOk bookingOk) {
 		
 		System.out.println(bookingOk.toString());
-		
-		
 		jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingOk.getBookingOkState());
-		
-		
-		List<BookingUserList> bookuser =  jinbookService.bookingUserList(bookingOk.getBusinessId(), bookingOk.getBookingNo());
 		int bookingOkno = jinbookService.getbookingOknumber(bookingOk.getBookingNo());
+		List<BookingUserList> bookuser =  jinbookService.bookingUserList(bookingOk.getBusinessId(), bookingOk.getBookingNo());
 		
 		for (BookingUserList bookingUser : bookuser) {
-			
+			System.out.println(bookingUser.getNormalId());
 			jinbookService.visitantuseradd(bookingUser.getNormalId(),bookingOk.getBusinessId(),bookingOkno);
-			
 		}
 		
-		 
 		jinbookService.bookinguserdelete(bookingOk.getBusinessId(), bookingOk.getBookingNo());
-		
 		return "redirect:yesnoList?businessId="+bookingOk.getBusinessId();
 	}
 

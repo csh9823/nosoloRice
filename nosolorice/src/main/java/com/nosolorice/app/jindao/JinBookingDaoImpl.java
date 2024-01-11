@@ -79,7 +79,6 @@ public class JinBookingDaoImpl implements JinBookingInterfaceDao {
 	
 	//부킹ok 번호 가져오기
 	public int getbookingOknumber(int bookingNo) {
-		
 		return sqlSession.selectOne(NAME_SPACE+".getbookingOknumber", bookingNo);
 	}
 }

@@ -184,7 +184,7 @@
                             </div>
                             
                             <div class="col-2">
-                                <p style="font-size: 20px; padding-top: 10px;">${booking.bookingBookNo} 인원 :${booking.bookingCount} </p>
+                                <p style="font-size: 20px; padding-top: 10px;">${booking.bookingBookNo}</p>
                             </div>
                         </div>
 
