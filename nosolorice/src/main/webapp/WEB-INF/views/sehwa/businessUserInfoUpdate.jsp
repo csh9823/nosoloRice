@@ -86,7 +86,7 @@
 	            			value="${BusinessUser.mobile.split('-')[1]}">
 	          </div>
 	          <div class="col">
-	            <input type="text" name="mobile3" id="mobile3" class="form-control" maxlength="4" 
+	            <input type="text" name="mobile3" id="mobile3" class="form-control" maxlength="4"
 	            			value="${BusinessUser.mobile.split('-')[2]}">
 	          </div>
 	          <div class="col">
@@ -237,6 +237,22 @@
   </div>
   
   <script>
+
+  function inputNumber(input) {
+
+  	let minLength = 4;
+  	let inputValue = input.value;
+  	
+  	let replaceText = inputValue.replace(/[^0-9]/g, '');
+  	
+  	if(replaceText.length < minLength) {
+  		alert("4자리 숫자를 입력해주세요.");
+  	}
+
+  	input.value = replaceText;
+  	
+  }
+  
 	//비밀번호일치확인(실시간 출력)
 	$("#oldPass").on("keyup", function() {
 		let id = $("#businessId").val();
@@ -333,6 +349,8 @@
 			event.preventDefault();
 		};
 	});
+	
+	$("#mobile1").on("blur", inputNumber(this));
 	
   </script>
   

@@ -256,6 +256,7 @@ public class SehwaController {
 		review.setBookingOkNo(reviewBookingNo);
 		review.setReviewScore(starPoint);
 		review.setReviewContent(reviewContent);
+		System.out.println("Review : BookingNo : " + reviewBookingNo);
 
 		if(multi != null && !multi.isEmpty()) {
 			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);

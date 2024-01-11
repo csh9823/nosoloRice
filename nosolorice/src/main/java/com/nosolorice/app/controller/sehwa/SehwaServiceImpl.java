@@ -164,7 +164,8 @@ public class SehwaServiceImpl implements SehwaService {
 				Review review = dao.getReview(id, no);
 				
 				testNo --;
-				bMember.setNo(testNo);
+				bMember.setListNo(testNo);
+				bMember.setNo(no);
 				bMember.setMembers(memberId);
 				bMember.setNormalUser(normalUser);
 				bMember.setBusinessUser(dao.getBusinessUserInfo(businessId));
