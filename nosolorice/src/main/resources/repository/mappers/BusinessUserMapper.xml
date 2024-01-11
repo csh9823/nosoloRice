@@ -21,4 +21,9 @@
 		SELECT COUNT(*) FROM business_user WHERE business_number = #{businessReg}
 	</select>
 	
+	<insert id="joinApprove" parameterType="BusinessUser">
+		INSERT INTO join_approve (business_id)
+    	VALUES (#{businessId})
+	</insert>
+	
 </mapper>

@@ -127,6 +127,7 @@ public class BusinessUserController {
         }        
 
         businessUserService.addBusinessUser(businessUser);
+        businessUserService.addJoinApprove(businessId);
 
         // 사업자도 회원가입 후 무조건 로그인이여야 하는가
         return "redirect:login";

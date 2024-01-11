@@ -45,5 +45,10 @@ public class BusinessUserDaoImpl implements BusinessUserDao {
 	public BusinessUser getBusinessId(String businessId) {
 		return sqlSession.selectOne(NAME_SPACE + ".getBusinessId", businessId);
 	}
+	
+	@Override
+	public void joinApprove(String businessId) {
+		sqlSession.insert(NAME_SPACE + ".joinApprove", businessId);
+	}
 
 }
