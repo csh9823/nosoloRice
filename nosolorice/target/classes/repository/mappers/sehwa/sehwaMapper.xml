@@ -24,7 +24,9 @@
 				phone = #{user.phone},
 				postNum = #{user.postNum},
 				address1 = #{user.address1},
-				address2 = #{user.address2}
+				address2 = #{user.address2},
+				xpoint = #{user.xpoint},
+				ypoint = #{user.ypoint}
 				<if test="user.businessProfile != null">
 				,business_profile = #{user.businessProfile}
 				</if>
@@ -35,7 +37,7 @@
 	<update id="changeBuserDefaultImg">
 		UPDATE business_user
 			SET 
-				business_profile = NULL
+				business_profile = "profile_img.png"
 			WHERE 
 				business_id = #{id}
 	</update>
@@ -43,7 +45,7 @@
 	<update id="changeNuserDefaultImg">
 		UPDATE normal_user
 			SET 
-				profile = "defaultImg"
+				profile = "profile_img.png"
 			WHERE 
 				normal_id = #{id}
 	</update>
@@ -208,7 +210,9 @@
 				email = #{email},
 				postnum = #{postNum},
 				address1 = #{address1},
-				address2 = #{address2}
+				address2 = #{address2},
+				xpoint = #{xpoint},
+				ypoint = #{ypoint}
 			<if test="profile != null">
 				,profile = #{profile}
 			</if>
