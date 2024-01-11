@@ -20,8 +20,6 @@
     .btn {
       background-color: #FA9884;
     }
-
-
     ul {
       list-style: none;
     }
@@ -62,16 +60,16 @@
       <div class="row">
         <div class="col-md-3">
           <ul class="my-3 fs-5">
-                <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
-            <li class="my-5"><a href="userInquiryList" class="textColor">일반회원 문의</a></li>
-            <li class="my-5"><a href="businessInquiryList" class="textColor">사업자회원 문의</a></li>
-            <li class="my-5"><a href="adminReportList" class="textColor">신고내역</a></li>
+            <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
+            <li class="my-5"><a href="noticeList" class="textColor">공지관리</a></li>
+            <li class="my-5"><a href="adminNormalInquiryList" class="textColor">일반회원 문의</a></li>
+            <li class="my-5"><a href="adminBusinessInquiryList" class="textColor">사업자회원 문의</a></li>
+            <li class="my-5"><a href="adminReportList" class="textColor" style="color:#C93C3C">신고내역</a></li>
             <li class="my-5"><a href="joinApprove" class="textColor">가입승인</a></li>
-            <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제 요청</a></li>
+            <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제요청</a></li>
             <li class="my-5"><a href="businessDeleteList" class="textColor">업체삭제</a></li>
             <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
-            <li class="my-5"><a href="businessSales" class="textColor">매출현황</a></li>
-            <li class="my-5"><a href="noticeList" class="textColor">공지관리</a></li>
+            <li class="my-5"><a href="adminSales" class="textColor">매출현황</a></li>
           </ul>
         </div>     
            
@@ -108,27 +106,12 @@
 				        	<div class="col-3">
 				        	<fmt:formatDate value="${r.reportRegDate}" pattern="yyyy-MM-dd" />
 				        	</div>
-				        <div class="col-1"><input type="button" value="보기" class="viewBtn" data-toggle="modal" data-target="#ReportModal_${r.reportNo}"></div>
-				        <!-- 모달 템플릿 -->
-				        <div class="modal" id="ReportModal_${r.reportNo}">
-				            <div class="modal-dialog">
-				                <div class="modal-content">
-				                    <!-- 모달 헤더 -->
-				                    <div class="modal-header">
-				                        <h5 class="modal-title">증거 사진</h5>
-				                        <button type="button" class="close btn" data-dismiss="modal">&times;</button>
-				                    </div>
-				                    <!-- 모달 바디 - 이미지 표시 -->
-				                    <div class="modal-body">
-				                        <img src="resources/upload/${r.reportPicture}" class="img-fluid" id="modalImage_${r.reportNo}" alt="첨부 사진"/>
-				                        <!-- 이미지가 없을 경우 대체 내용 -->
-				                        <p class="noImageText" style="display: none;">이미지가 없습니다.</p>
-				                    </div>
-				                </div>
-				            </div>
+				        <div class="col-1">
+				        	<c:if test="${not empty r.reportPicture}">
+				        	<input type="button" value="보기" class="viewBtn" data-toggle="modal" data-target="#ReportModal" data-id="${r.reportPicture}">
+				        	</c:if>
 				        </div>
 				    </div>
-				    
 				    <div class="row border-bottom reportContentRow d-none">
 				    	<div class="col p-5">
 				    		${r.reportContent}
@@ -136,6 +119,25 @@
 				    </div>
 				</c:forEach>
 			</c:if>	
+			
+			   <!-- 모달 템플릿 -->
+				        <div class="modal fade" id="ReportModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				            <div class="modal-dialog modal-lg">
+				                <div class="modal-content">
+				                    <!-- 모달 헤더 -->
+				                    <div class="modal-header">
+				                        <h5 class="modal-title">첨부 사진</h5>
+				                        <button type="button" class="close btn" data-dismiss="modal">&times;</button>
+				                    </div>
+				                    <!-- 모달 바디 - 이미지 표시 -->
+				                    <div class="modal-body">
+				                        <img  class="img-fluid" id="modalImage" alt="첨부 사진" style="width:100%;"/>
+				                        <!-- 이미지가 없을 경우 대체 내용 -->
+				                        <p class="noImageText" style="display: none;">이미지가 없습니다.</p>
+				                    </div>
+				                </div>
+				            </div>
+				        </div>
 			
 			<c:if test="${not empty adminReportList }">
 			 <div class="row my-5">
@@ -191,59 +193,38 @@
     
     <script>
    
-    	//라디오 버튼 
-    	$("#noticeWrite").on("submit",function(e){
+    	
+    		//content 글자 수
+   	        $('.truncate-text').each(function() {
+   	            const maxLength = $(this).data('maxlength');
+   	            const text = $(this).text();
 
-    		let content = $(".note-editable").html();
-    		console.log(content);
-    		$("#noticeContent").val(content);
-    		
-    		console.log($("#noticeContent").val());
-    		
-    		if(!$("input[name=noticeType]").is(":checked")){
-    			
-    			alert("버튼 선택해주세요");
-    			return false;
-    			
-    		}
-    	});
+   	            if (text.length > maxLength) {
+   	                const truncatedText = text.substring(0, maxLength) + '...';
+   	                $(this).text(truncatedText);
+   	            }
+   	        });
     	
-    	$(document).ready(function(){
-    	    // 버튼 클릭 시 모달 열기
-    	    $("#viewBtn").click(function(){
-    	        $('#ReportModal').modal('show');
-    	    });
-    	    
-    	    // 모달 닫기 버튼 클릭 시
-    	    $(".close").click(function(){
-    	        $('#ReportModal').modal('hide');
-    	    });
-    	});
-    	
-    	//content 글자 수
-    	 $(document).ready(function() {
-    	        $('.truncate-text').each(function() {
-    	            const maxLength = $(this).data('maxlength');
-    	            const text = $(this).text();
+    		$(".reportRow").on("click",function(e){
+    			
+    			if(e.target.classList.contains("viewBtn")){
+	    			console.log("dfsdf");
+	    			
+	    			let img = $(this).find(".viewBtn").attr("data-id");
+	    			
+	    			$("#modalImage").attr("src","resources/upload/"+img);
+	    			
+    				return;
+    			}
+	    			console.log("asdfffff");
+    			
+   				if($(this).next().is(":visible")){
+    	  			$(this).next().addClass("d-none");
+	    	  	} else {
+	    	  		$(".reportContentRow").addClass("d-none");
+	    	  		$(this).next().removeClass("d-none");
+	    	  	}
 
-    	            if (text.length > maxLength) {
-    	                const truncatedText = text.substring(0, maxLength) + '...';
-    	                $(this).text(truncatedText);
-    	            }
-    	        });
-    	    });
-    	
-    		$(document).on("click",".reportRow",function(){
-    	  		
-    	 		
-    	  		if($(this).next().is(":visible")){
-    	  			
-    	  		$(this).next().addClass("d-none");
-    	  	} else {
-    	  		$(".reportContentRow").addClass("d-none");
-    	  		$(this).next().removeClass("d-none");
-    	  		
-    	  	}
     	  	});
 
     

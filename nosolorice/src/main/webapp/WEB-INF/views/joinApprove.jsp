@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +12,36 @@
 		cursor:pointer;
 		background-color: #f0f0f0;
 	}
+	
+	    ul {
+      list-style: none;
+    }
+    .textColor{
+      text-decoration: none;
+      color : #616161;
+    }
+    * {
+      font-family: 'SUITE Variable', sans-serif;
+    }
+     .pagination .page-item.active .page-link {
+    background-color: #FA9884;
+    border-color: #FA9884;
+    color: #fff; 
+   }
+
+   .pagination .page-link {
+    color: #C93C3C;
+   }
+
+   .pagination .page-link:hover {
+    color: #fff; 
+    background-color: #C93C3C;
+    border-color: #C93C3C;
+   }
+	
 </style>
 <link href="resources/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/variable/woff2/SUITE-Variable.css" rel="stylesheet">
 <script src="resources/js/jquery-3.2.1.min.js"></script>
 <script>
 $(function(){
@@ -72,20 +101,36 @@ $(function(){
 <body>
 	<div class="container">
 		<div class="row">
+		
+			<div class="col-md-3">
+	          <ul class="my-3 fs-5">
+	             <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
+	            <li class="my-5"><a href="noticeList" class="textColor">공지관리</a></li>
+	            <li class="my-5"><a href="adminNormalInquiryList" class="textColor">일반회원 문의</a></li>
+	            <li class="my-5"><a href="adminBusinessInquiryList" class="textColor">사업자회원 문의</a></li>
+	            <li class="my-5"><a href="adminReportList" class="textColor">신고내역</a></li>
+	            <li class="my-5"><a href="joinApprove" class="textColor" style="color:#C93C3C">가입승인</a></li>
+	            <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제 요청</a></li>
+	            <li class="my-5"><a href="businessDeleteList" class="textColor">업체삭제</a></li>
+	            <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
+	            <li class="my-5"><a href="adminSales" class="textColor">매출현황</a></li>
+	          </ul>
+	        </div>  
+		
 			<div class="col">
 				<!-- 여기서부터 작업 시작 -->
 				
 				<div class="row">
 					<div class="col bg-white" style="min-height:100vh;">
 					
-						<div class="row mx-2 mt-5">
+						<div class="row mt-5">
 							<div class="col">
-								<span class="fw-bold fs-3 text-danger">가입승인</span>
+								<span class="fw-bold fs-2 text-danger">가입승인</span>
 							</div>
 						</div>
 						
-						<div class="row mx-2 mt-3 text-center border-top border-bottom border-dark py-3">
-							<div class="col">
+						<div class="row mt-3 text-center border-top border-bottom border-secondary py-3">
+							<div class="col-2">
 								<span class="fs-5">번호</span>
 							</div>
 							<div class="col">
@@ -103,8 +148,8 @@ $(function(){
 						<c:if test="${not empty jList}">
 						<!-- 반복문 시작 -->
 						<c:forEach var="j" items="${jList}">
-						<div class="row mx-2 text-center joinApproveRow border-bottom py-3">
-							<div class="col">
+						<div class="row text-center joinApproveRow border-bottom py-3">
+							<div class="col-2">
 								<span class="fs-5">${j.getJoinApproveNo()}</span>
 							</div>
 							<div class="col">
@@ -115,7 +160,9 @@ $(function(){
 								<span class="fs-5">${j.getBusinessName()}</span>
 							</div>
 							<div class="col">
-								<span class="fs-5">${j.getRegDate()}</span>
+								<span class="fs-5">
+									<fmt:formatDate value="${j.getRegDate()}" pattern="yyyy-MM-dd" />								
+								</span>
 							</div>
 						</div>
 						
@@ -147,8 +194,7 @@ $(function(){
 							</div>
 							<div class="col-auto text-center">
 								<p>사업자등록증 사본</p>
-								<%-- <img src="${j.getBusinessPicture()}" style="width : 200px; height : 265px;"> --%>
-								<img src="https://via.placeholder.com/200x265" style="width : 200px; height : 265px;">
+								<img src="resources/upload/${j.getBusinessPicture()}" style="width : 200px; height : 265px;">
 							</div>
 							<div class="row pb-5">
 							<div class="col text-center">

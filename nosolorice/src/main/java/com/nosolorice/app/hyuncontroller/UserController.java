@@ -2,6 +2,12 @@ package com.nosolorice.app.hyuncontroller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,10 +26,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nosolorice.app.domain.Review.Review;
+import com.nosolorice.app.domain.booking.Booking;
+import com.nosolorice.app.domain.booking.BookingUserList;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.businessUser.Menu;
+import com.nosolorice.app.domain.normalUser.BlockHistory;
 import com.nosolorice.app.domain.normalUser.ChatHistory;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.domain.normalUser.ReportDetails;
 import com.nosolorice.app.domain.normalUser.UserInquiry;
 import com.nosolorice.app.hyunservice.UserService;
 
@@ -35,11 +45,16 @@ public class UserController {
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
-	
+
+	@RequestMapping(value={"mainPage", "/"})
+	public String mainPage(@RequestParam(value="introduce", required=false) boolean introduce, Model model) {
+		model.addAttribute("introduce", introduce);
+		return "mainPage";
+	}
 	
 	@RequestMapping("userInquiry")
 	public String userInquiry(Model model) {
-		return "userInquiry";
+		return "forward:/WEB-INF/views/userInquiry.jsp";
 	}
 	
 	@RequestMapping("userInquiryList")
@@ -54,7 +69,7 @@ public class UserController {
 		
 		model.addAllAttributes(userService.getUserInquiryList(pageNum, normalId));
 		
-		return "userInquiryList";
+		return "forward:/WEB-INF/views/userInquiryList.jsp";
 	}
 	
 	@RequestMapping("writeUserInquiry")
@@ -93,7 +108,6 @@ public class UserController {
 	@RequestMapping("matchingComplete")
 	@ResponseBody
 	public Map<String, Boolean> matchingComplete(@RequestBody Map<String, Object> requestMap, HttpSession session){
-		
 		NormalUser userInfo = (NormalUser)session.getAttribute("NormalUser");		
 		requestMap.put("id", userInfo.getNormalId());
 		userService.addChatRoom(requestMap);
@@ -148,14 +162,30 @@ public class UserController {
 	
 	@RequestMapping("getStoreListByMap")
 	@ResponseBody
-	public List<BusinessUser> getStoreListByMap(double lat, double lng){
-		return userService.getStoreListByMap(lat, lng);
+	public List<BusinessUser> getStoreListByMap(double lat, double lng, 
+			@RequestParam(value="sortType", required=false, defaultValue="distance") String sortType){
+		return userService.getStoreListByMap(lat, lng, sortType);
 	}
 	
 	@RequestMapping("getStoreListByAddress")
 	@ResponseBody
-	public List<BusinessUser> getStoreListByAddress(String address){
-		return userService.getStoreListByAddress(address);
+	public List<BusinessUser> getStoreListByAddress(String address, 
+			@RequestParam(value="sortType", required=false, defaultValue="regdate") String sortType){
+		return userService.getStoreListByAddress(address, sortType);
+	}
+	
+	@RequestMapping("searchStoreListByMap")
+	@ResponseBody
+	public List<BusinessUser> searchStoreListByMap(double lat, double lng, String keyword, 
+			@RequestParam(value="sortType", required=false, defaultValue="distance") String sortType){
+		return userService.searchStoreListByMap(lat, lng, keyword, sortType);
+	}
+	
+	@RequestMapping("searchStoreListByAddress")
+	@ResponseBody
+	public List<BusinessUser> searchStoreListByAddress(String address, String keyword, 
+			@RequestParam(value="sortType", required=false, defaultValue="regdate") String sortType){
+		return userService.searchStoreListByAddress(address, keyword, sortType);
 	}
 	
 	@RequestMapping("getChatStoreReviewList")
@@ -167,8 +197,160 @@ public class UserController {
 	@RequestMapping("getChatStoreMenuList")
 	@ResponseBody
 	public List<Menu> getMenuList(String businessId){
-		System.out.println("컨트롤러에서 businessId : " + businessId);
 		return userService.getMenuList(businessId);
+	}
+	
+	@RequestMapping("getReviewWriterInfo")
+	@ResponseBody
+	public NormalUser getReviewWriterInfo(String normalId) {
+		return userService.getReviewWriterInfo(normalId);
+	}
+	
+	@RequestMapping("getBusinessUserInfo")
+	@ResponseBody
+	public BusinessUser getBusinessUserInfo(String businessId) {
+		return userService.getBusinessUserInfo(businessId);
+	}
+	
+	@RequestMapping("getNormalUserInfo")
+	@ResponseBody
+	public NormalUser getNormalUserInfo(String normalId) {
+		return userService.getNormalUserInfo(normalId);
+	}
+	
+	
+	@RequestMapping("addChatMemberReport")
+	@ResponseBody
+	public Map<String, Boolean> addChatMemberReport(ReportDetails report) {
+		userService.addChatMemberReport(report);
+		Map<String, Boolean> map = new HashMap<>();
+		map.put("result", true);
+		return map;
+	}
+	
+	@RequestMapping("addChatMemberBlock")
+	@ResponseBody
+	public Map<String, Boolean> addChatMemberBlock(BlockHistory block) {
+		userService.addChatMemberBlock(block);
+		Map<String, Boolean> map = new HashMap<>();
+		map.put("result", true);
+		return map;
+	}
+	
+	@RequestMapping("getBlockList")
+	@ResponseBody
+	public List<BlockHistory> getBlockList(String blocker){
+		return userService.getBlockList(blocker);
+	}
+	
+	@RequestMapping("addBooking")
+	@ResponseBody
+	public Map<String, Integer> addBooking(
+			@RequestParam("bookingCount") int bookingCount, 
+			@RequestParam("bookingRequest") String bookingRequest, 
+			@RequestParam("bookingTime") String bookingTime, 
+			@RequestParam("bookingState") String bookingState, 
+			@RequestParam("businessId") String businessId, 
+			@RequestParam("deposit") int deposit, 
+			@RequestParam("bookingChatName") String bookingChatName) throws ParseException{
+		
+		System.out.println("여기부터 booking객체 출력 시작");
+		System.out.println(bookingCount);
+		System.out.println(bookingRequest);
+		System.out.println(bookingTime);
+		System.out.println(bookingState);
+		System.out.println(deposit);
+		System.out.println(businessId);
+		System.out.println(bookingChatName);
+		System.out.println("여기부터 booking객체 출력 끝");
+
+
+        // SimpleDateFormat을 이용하여 시간 형식을 해석
+        SimpleDateFormat format = new SimpleDateFormat("a hh시mm분");
+        Date parsedDate;
+
+            parsedDate = format.parse(bookingTime);
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            currentDateTime = currentDateTime.withHour(parsedDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalTime().getHour())
+                                             .withMinute(parsedDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalTime().getMinute())
+                                             .withSecond(0)
+                                             .withNano(0);
+            Timestamp timestamp = Timestamp.valueOf(currentDateTime);
+            System.out.println("변환된 Timestamp: " + timestamp);
+
+		Booking booking = new Booking();
+		booking.setBookingCount(bookingCount);
+		booking.setBookingRequest(bookingRequest);
+		booking.setBookingTime(timestamp);
+		booking.setBookingState(bookingState);
+		booking.setDeposit(deposit);
+		booking.setBusinessId(businessId);
+		booking.setBookingChatName(bookingChatName);
+		int bookNo = userService.addBooking(booking);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("bookNo", bookNo);
+		System.out.println("반환된 bookNo : " + bookNo);
+		return map;
+	} 
+	
+	@RequestMapping("deleteBooking")
+	@ResponseBody
+	public Map<String, Boolean> deleteBooking(String businessId, int bookingBookNo){
+		System.out.println("컨트롤러에서 deleteBooking businessId : " + businessId);
+		System.out.println("컨트롤러에서 deleteBooking bookingBookNo : " + bookingBookNo);
+		userService.deleteBooking(businessId, bookingBookNo);
+		Map<String, Boolean> map = new HashMap<>();
+		map.put("result", true);
+		return map;
+	}
+	
+	@RequestMapping("deleteChatMember")
+	@ResponseBody
+	public Map<String, Boolean> deleteChatMember(String normalId){
+		System.out.println("컨트롤러에서 normalId : " + normalId);
+		userService.deleteChatMember(normalId);
+		Map<String, Boolean> map = new HashMap<>();
+		map.put("result", true);
+		return map;
+	}
+	
+	@RequestMapping("addBookingUserList")
+	@ResponseBody
+	public Map<String, Boolean> addBookingUserList(String businessId, String normalId, @RequestParam("bookNo") int bookNo){
+		BookingUserList bul = new BookingUserList();
+		bul.setBusinessId(businessId);
+		bul.setNormalId(normalId);
+		System.out.println("컨트롤러에서 bul : " + bul);
+		System.out.println("컨트롤러에서 bookNo : " + bookNo);
+		userService.addBookingUserList(bul, bookNo);
+		Map<String, Boolean> map = new HashMap<>();
+		map.put("result", true);
+		return map;
+	}
+	
+	@RequestMapping("deleteBookingUserList")
+	@ResponseBody
+	public Map<String, Boolean> deleteBookingUserList(String normalId){
+		userService.deleteBookingUserList(normalId);
+		Map<String, Boolean> map = new HashMap<>();
+		map.put("result", true);
+		return map;
+	}
+	
+	@RequestMapping("payWithPoint")
+	@ResponseBody
+	public Map<String, Boolean> payWithPoint(String normalId, int deposit){
+		userService.payWithPoint(normalId, deposit);
+		Map<String, Boolean> map = new HashMap<>();
+		map.put("result", true);
+		return map;
+	}
+	
+	@RequestMapping("getBookingUserList")
+	@ResponseBody
+	public List<NormalUser> getBookingUserList(int bookingNo){
+		List<NormalUser> nickNames = userService.getBookingUserList(bookingNo);
+		return nickNames;
 	}
 	
 }

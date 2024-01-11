@@ -9,6 +9,9 @@ public class ReportDetails {
 	private String reportReporter;	// 신고자
 	private String reportAttacker;	// 신고당한사람
 	private Timestamp reportRegDate; // 신고일
+	//한선 추가 
+	private Timestamp deniedUnlock; //해제일
+	private Timestamp deniedRegDate;
 
 	
 	public ReportDetails() {
@@ -18,13 +21,15 @@ public class ReportDetails {
 
 
 	public ReportDetails(int reportNo, String reportContent, String reportPicture, String reportReporter,
-			String reportAttacker, Timestamp reportRegDate) {
+			String reportAttacker, Timestamp reportRegDate,Timestamp deniedUnlock,Timestamp deniedRegDate) {
 		this.reportNo = reportNo;
 		this.reportContent = reportContent;
 		this.reportPicture = reportPicture;
 		this.reportReporter = reportReporter;
 		this.reportAttacker = reportAttacker;
 		this.reportRegDate = reportRegDate;
+		this.deniedUnlock = deniedUnlock;
+		this.deniedRegDate = deniedRegDate;
 	}
 
 
@@ -78,6 +83,28 @@ public class ReportDetails {
 		this.reportRegDate = reportRegDate;
 
 	}
+	
+	public Timestamp getDeniedUnlock() {
+		return deniedUnlock;
+	}
+
+
+
+	public void setDeniedUnlock(Timestamp deniedUnlock) {
+		this.deniedUnlock = deniedUnlock;
+	}
+
+
+
+	public Timestamp getDeniedRegDate() {
+		return deniedRegDate;
+	}
+
+
+
+	public void setDeniedRegDate(Timestamp deniedRegDate) {
+		this.deniedRegDate = deniedRegDate;
+	}
 
 
 
@@ -89,5 +116,17 @@ public class ReportDetails {
 				+ ", ReportRegdate=" + reportRegDate + "]";
 	}	
 
+public String resultDate() {
+		
+		long millisecondsDiff = this.deniedUnlock.getTime() - this.deniedRegDate.getTime();
+		
+		long daysDiff = millisecondsDiff / (24 * 60 * 60 * 1000);
+		
+		if(daysDiff > 100) {
+			
+			return "영구 정지";
+		} 
+		return daysDiff + "일 정지" ;
+	}
 	
 }

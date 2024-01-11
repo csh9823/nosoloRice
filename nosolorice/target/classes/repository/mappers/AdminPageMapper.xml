@@ -9,7 +9,7 @@
 	
 	<select id="reportList" resultType="ReportDetails" parameterType="hashmap" resultMap="reportResultMap">
 	
-	SELECT * FROM report_details ORDER BY report_no LIMIT #{start}, #{num}
+	SELECT * FROM report_details ORDER BY report_no  DESC LIMIT #{start}, #{num}
 	
 	</select>
 	
@@ -22,7 +22,7 @@
 
 	<select id="reviewList" resultType="Review" parameterType="hashmap" resultMap="reviewResultMap">
 	
-	select a.*,b.business_name as businessName from review a join business_user b on a.business_id = b.business_id ORDER BY review_no DESC LIMIT #{start}, #{num}
+	select a.*,b.business_name as businessName from review a join business_user b on a.business_id = b.business_id WHERE a.review_delete = '1' ORDER BY review_no DESC LIMIT #{start}, #{num}
 	
 	</select>
 	
@@ -145,7 +145,7 @@
 		ok_nook as okNoOk,
 		root
 		from  business_user
-		where business_id = #{id} || business_name = #{id}
+		where business_id like #{id}
 
 	</select>
 
@@ -153,9 +153,59 @@
 	<delete id="reviewDelete">
 	
 		DELETE FROM review WHERE review_no = #{reviewNo}
-	
+		
 	</delete>
 
+	<select id="adminInquiryList" resultType="UserInquiry" parameterType="hashmap" resultMap="userInquiryMap">
+	
+		SELECT * FROM user_inquiry WHERE inquiry_comment IS NULL ORDER BY user_inquiry_no DESC LIMIT #{start}, #{num}
+	
+	</select>
+	
+	<select id="getInquiryCount" resultType="int">
+	
+		SELECT COUNT(user_inquiry_no) FROM user_inquiry
+		
+	</select>
+	
+	<select id="normalInquiryDetail" resultType="UserInquiry" resultMap="userInquiryMap">
+	
+		SELECT * FROM user_inquiry WHERE user_inquiry_no = #{userInquiryNo}
+	
+	</select>
+	
+
+	<update id="answerInquiry" parameterType="UserInquiry">
+		
+		UPDATE user_inquiry SET inquiry_comment = #{inquiryComment},  inquiry_comment_regdate = SYSDATE() WHERE user_inquiry_no = #{userInquiryNo}
+			
+	</update>
+	
+	<select id="adminBusinessInquiryList" resultType="BusinessInquiry" parameterType="hashmap" resultMap="businessInquiryMap">
+	
+		SELECT * FROM business_inquiry WHERE business_comment IS NULL ORDER BY business_inquiry_no LIMIT #{start}, #{num}
+	
+	</select>
+	
+	<select id="getBusinessInquiryCount" resultType="int">
+	
+		SELECT COUNT(business_inquiry_no) FROM business_inquiry
+		
+	</select>
+	
+	<select id="businessInquiryDetail" resultType="BusinessInquiry" resultMap="businessInquiryMap">
+	
+		SELECT * FROM business_inquiry WHERE business_inquiry_no = #{businessInquiryNo}
+	
+	</select>
+	
+
+	<update id="businessAnswerInquiry" parameterType="BusinessInquiry">
+		
+		UPDATE business_inquiry SET business_comment = #{businessComment},  business_comment_regdate = SYSDATE() WHERE business_inquiry_no = #{businessInquiryNo}
+			
+	</update>
+	
 
 		<!-- 신고 리스트 -->
 	<resultMap id="reportResultMap" type="ReportDetails">
@@ -191,6 +241,30 @@
 			<result property="deniedUnlock" column="denied_unlock"/>
 		</resultMap>
 		
+		<resultMap id="userInquiryMap" type="UserInquiry">
+		<id property="userInquiryNo" column="user_inquiry_no" />
+		<result property="inquiryDivision" column="inquiry_division" />
+		<result property="inquiryTitle" column="inquiry_title" />
+		<result property="inquiryPicture" column="inquiry_picture" />
+		<result property="inquiryRegDate" column="inquiry_regdate" />
+		<result property="inquiryContent" column="inquiry_content" />
+		<result property="inquiryComment" column="inquiry_comment" />
+		<result property="inquiryCommentRegDate" column="inquiry_comment_regdate" />
+		<result property="normalId" column="normal_id" />
+
+	</resultMap>
+		
+		<resultMap type="BusinessInquiry" id="businessInquiryMap">
+		<id property="businessInquiryNo" column="business_inquiry_no" />
+		<result property="businessDivision" column="business_division" />
+		<result property="businessTitle" column="business_title" />
+		<result property="businessPicture" column="business_picture" />
+		<result property="businessInquiryRegDate" column="business_inquiry_regdate" />
+		<result property="businessContent" column="business_content" />
+		<result property="businessComment" column="business_comment" />
+		<result property="businessCommentRegDate" column="business_comment_regdate" />
+		<result property="businessId" column="business_id" />
+		</resultMap>
 
 </mapper>
 

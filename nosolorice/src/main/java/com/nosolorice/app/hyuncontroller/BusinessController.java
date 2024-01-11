@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nosolorice.app.domain.businessUser.BusinessInquiry;
+import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.hyunservice.BusinessService;
 
 @Controller
@@ -30,7 +31,7 @@ public class BusinessController {
 
 	@RequestMapping("businessInquiry")
 	public String businessInquiry(Model model) {
-		return "businessInquiry";
+		return "forward:/WEB-INF/views/businessInquiry.jsp";
 	}
 	
 	@RequestMapping("writeBusinessInquiry")
@@ -51,42 +52,32 @@ public class BusinessController {
 	@RequestMapping("businessInquiryList")
 	public String businessInquiryList(Model model, @RequestParam(required=false, defaultValue="1") int pageNum, HttpSession session) {
 		
-		/*
-		 * BusinessUser bUser = (BusinessUser)session.getAttribute("businessUser");
-		 * String businessId = bUser.getBusinessId();
-		 */
-		
-		String businessId = "testBusinessId";
+		BusinessUser bUser = (BusinessUser)session.getAttribute("BusinessUser");
+		String businessId = bUser.getBusinessId();
 		
 		model.addAllAttributes(businessService.getBusinessInquiryList(pageNum, businessId));
 		
-		return "businessInquiryList";
+		return "forward:/WEB-INF/views/businessInquiryList.jsp";
 	}
 	
 	@RequestMapping("businessSales")
 	public String businessSales(Model model,@RequestParam(required=false, defaultValue="1") int pageNum, HttpSession session) {
-		/*
-		 * BusinessUser bUser = (BusinessUser)session.getAttribute("businessUser");
-		 * String businessId = bUser.getBusinessId();
-		 */
-		
-		String businessId = "testBusinessId";
+
+		BusinessUser bUser = (BusinessUser)session.getAttribute("BusinessUser");
+		String businessId = bUser.getBusinessId();
 		
 		model.addAllAttributes(businessService.getDailySalesList(pageNum, businessId));
-		return "businessSales";
+		return "forward:/WEB-INF/views/businessSales.jsp";
 	}
 	
 	@RequestMapping("businessSalesMonth")
 	public String businessSalesMonth(Model model,@RequestParam(required=false, defaultValue="1") int pageNum, HttpSession session) {
-		/*
-		 * BusinessUser bUser = (BusinessUser)session.getAttribute("businessUser");
-		 * String businessId = bUser.getBusinessId();
-		 */
 		
-		String businessId = "testBusinessId";
-		
+		BusinessUser bUser = (BusinessUser)session.getAttribute("BusinessUser");
+		String businessId = bUser.getBusinessId();
+
 		model.addAllAttributes(businessService.getMonthlySalesList(pageNum, businessId));
-		return "businessSalesMonth";
+		return "forward:/WEB-INF/views/businessSalesMonth.jsp";
 	}
 	
 }

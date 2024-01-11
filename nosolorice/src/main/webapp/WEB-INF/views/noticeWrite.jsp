@@ -48,8 +48,8 @@
         <div class="col-md-3">
           <ul class="my-3 fs-5">
             <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
-            <li class="my-5"><a href="userInquiryList" class="textColor">일반회원 문의</a></li>
-            <li class="my-5"><a href="#" class="textColor">사업자회원 문의</a></li>
+            <li class="my-5"><a href="adminNormalInquiryList" class="textColor" style="color:#C93C3C">일반회원 문의</a></li>
+            <li class="my-5"><a href="adminBusinessInquiryList" class="textColor">사업자회원 문의</a></li>
             <li class="my-5"><a href="adminReportList" class="textColor">신고내역</a></li>
             <li class="my-5"><a href="#" class="textColor">가입승인</a></li>
             <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제 요청</a></li>
@@ -116,18 +116,18 @@
         //console.log($("#noticeContent").val());
         
         if (!$("input[name=noticeType]").is(":checked")) {
-            alert("버튼을 선택해주세요");
+            alert("공지 버튼을 선택해주세요.");
             return false;        
         }
         
         if ($("#noticeTitle").val().length <= 0) {
-            alert("작성 제목을 입력해주세요");
+            alert("작성 제목을 입력해주세요.");
             $("#noticeTitle").focus();
             return false;
         }
         
         if ($("#summernote").val().length <= 0) {
-            alert("작성 내용을 입력해주세요");
+            alert("작성 내용을 입력해주세요.");
             $("#noticeContent").focus();
             return false;
         }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +10,55 @@
 <link href="resources/bootstrap/bootstrap.min.css" rel="stylesheet">
 <script src="resources/js/jquery-3.2.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/variable/woff2/SUITE-Variable.css" rel="stylesheet">
+<style>
+
+    ul {
+      list-style: none;
+    }
+    .textColor{
+      text-decoration: none;
+      color : #616161;
+    }
+    * {
+      font-family: 'SUITE Variable', sans-serif;
+    }
+     .pagination .page-item.active .page-link {
+    background-color: #FA9884;
+    border-color: #FA9884;
+    color: #fff; 
+   }
+
+   .pagination .page-link {
+    color: #C93C3C;
+   }
+
+   .pagination .page-link:hover {
+    color: #fff; 
+    background-color: #C93C3C;
+    border-color: #C93C3C;
+   }
+</style>
 </head>
 <body>
 	<div class="container">
 		<div class="row">
+
+			<div class="col-md-3">
+	          <ul class="my-3 fs-5">
+	             <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
+	            <li class="my-5"><a href="noticeList" class="textColor">공지관리</a></li>
+	            <li class="my-5"><a href="adminNormalInquiryList" class="textColor">일반회원 문의</a></li>
+	            <li class="my-5"><a href="adminBusinessInquiryList" class="textColor">사업자회원 문의</a></li>
+	            <li class="my-5"><a href="adminReportList" class="textColor">신고내역</a></li>
+	            <li class="my-5"><a href="joinApprove" class="textColor">가입승인</a></li>
+	            <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제 요청</a></li>
+	            <li class="my-5"><a href="businessDeleteList" class="textColor">업체삭제</a></li>
+	            <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
+	            <li class="my-5"><a href="adminSales" class="textColor"  style="color:#C93C3C">매출현황</a></li>
+	          </ul>
+	        </div>  
+		
 			<div class="col">
 				<!-- 여기서부터 작업 시작 -->
 				
@@ -36,10 +82,10 @@
 						</div>
 						
 						<div class="row mx-2 mt-3 text-center border-top border-bottom border-dark py-3">
-							<div class="col">
+							<div class="col-2">
 								<span class="fs-5">번호</span>
 							</div>
-							<div class="col">
+							<div class="col-2">
 								<span class="fs-5">예약번호</span>
 								
 							</div>
@@ -49,7 +95,7 @@
 							<div class="col">
 								<span class="fs-5">업체명</span>
 							</div>
-							<div class="col">
+							<div class="col-2">
 								<span class="fs-5">업체수수료</span>
 							</div>
 						</div>
@@ -58,20 +104,22 @@
 						<!-- 반복문 시작 -->
 						<c:forEach var="s" items="${salesList}">
 						<div class="row mx-2 text-center border-bottom py-3">
-							<div class="col">
+							<div class="col-2">
 								<span class="fs-5">${s.bookingOkNo}</span>
 							</div>
-							<div class="col">
+							<div class="col-2">
 								<span class="fs-5">${s.bookingNo}</span>
 								
 							</div>
 							<div class="col">
-								<span class="fs-5 salesLabel">${s.bookingOkTime}</span>
+								<span class="fs-5 salesLabel">
+									<fmt:formatDate value="${s.bookingOkTime}" pattern="yy/MM/dd HH시mm분" />
+								</span>
 							</div>
 							<div class="col">
 								<span class="fs-5">${s.businessName}</span>
 							</div>
-							<div class="col">
+							<div class="col-2">
 								<span class="fs-5 salesValue">${s.deposit}</span>
 							</div>
 						</div>

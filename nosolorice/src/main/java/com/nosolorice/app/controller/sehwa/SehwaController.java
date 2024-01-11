@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,7 +51,7 @@ public class SehwaController {
 		}
 		
 		if (pass.equals(inputPass)) isPass = true;
-		
+		 
 		return isPass;
 	}
 	
@@ -69,6 +71,14 @@ public class SehwaController {
 		return isMobile;
 	}
 	
+	@RequestMapping(value="/checkNormalNickName.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean checkNormalNickName(String nickName) {
+		boolean result = service.checkNormalNickName(nickName);
+		
+		return result;
+	}
+	
 	@RequestMapping(value={"/businessUserInfoUpdate"}, method=RequestMethod.GET)
 	public String businessUserInfoUpdate(Model model, String id) {
 		model.addAttribute("BusinessUser", service.getBusinessUserInfo(id));
@@ -81,7 +91,7 @@ public class SehwaController {
 					@RequestParam(value="fileInput", required = false) MultipartFile multi,
 					String businessId, String oldPass, @RequestParam(required = false) String pass,
 					String mobile1, String mobile2, String mobile3, String mail, String domain, 
-					String name, String businessName, String bankName, int bankNumber,
+					String name, String businessName, String bankName, long bankNumber,
 					String phone1, String phone2, String phone3, int postNum, String address1, 
 					@RequestParam(required = false, defaultValue = "") String address2,
 					HttpServletRequest request) throws IOException {
@@ -105,9 +115,10 @@ public class SehwaController {
 		user.setPostNum(postNum);
 		user.setAddress1(address1);
 		user.setAddress2(address2);
+		
 		if(multi != null && !multi.isEmpty()) {
 			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
-			UUID uid = UUID.randomUUID();
+			UUID uid = UUID.randomUUID(); 
 			String saveName = uid.toString() + "_" + multi.getOriginalFilename();
 			File file = new File(filePath, saveName);
 			multi.transferTo(file);
@@ -116,7 +127,7 @@ public class SehwaController {
 		
 		service.businessUserInfoUpdate(user);
 		
-		return "redirect:/businessUserStoreInfo?id=testBusinessId";
+		return "redirect:/businessUserStoreInfo?id=" + businessId;
 	}	
 
 	@RequestMapping(value="/normalUserInfoUpdate", method = RequestMethod.GET)
@@ -129,11 +140,11 @@ public class SehwaController {
 	@RequestMapping(value="/normalUserInfoUpdate", method = RequestMethod.POST)
 	public String normalUserInfoUpdate(String normalId, String name, String nickName, 
 							String oldPass, @RequestParam(required = false) String pass,
-							int birth1, int birth2, int birth3, String gender,
+							int birth1, int birth2, int birth3, 
 							String mobile1, String mobile2, String mobile3, String mail, String domain,
 							int postNum, String address1, @RequestParam(required = false) String address2, 
-							@RequestParam(value="fileInput", required=false, defaultValue = "defaultImg") MultipartFile multi,
-							HttpServletRequest request) throws IOException {
+							@RequestParam(value="fileInput", required=false) MultipartFile multi,
+							HttpServletRequest request, HttpSession session) throws IOException {
 
 		String nPass = oldPass;
 		if(pass != null && !pass.isEmpty()) nPass = pass;
@@ -147,22 +158,24 @@ public class SehwaController {
 		user.setNickName(nickName);
 		user.setPass(nPass);
 		user.setBirth(birth);
-		user.setGender(gender);
 		user.setMobile(mobile);
 		user.setEmail(email);
 		user.setPostNum(postNum);
 		user.setAddress1(address1);
 		user.setAddress2(address2);
-		if(!multi.getOriginalFilename().equals("defaultImg")) {
+		
+		if(multi != null && !multi.isEmpty()) {
 			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
 			UUID uid = UUID.randomUUID();
 			String saveName = uid.toString() + "_" + multi.getOriginalFilename();
 			File file = new File(filePath, saveName);
 			multi.transferTo(file);
 			user.setProfile(saveName);
-		}
+		} 
 		
 		service.normalUserInfoUpdate(user);
+		
+		session.setAttribute("NormalUser", service.getNormalUserInfo(normalId));
 		
 		return "redirect:/normalUserInfoUpdate?id=" + normalId;
 	}
@@ -211,13 +224,11 @@ public class SehwaController {
 	@ResponseBody
 	public void storeSectorUpdateBtn(String id, int count, String sectors) {
 		String[] strArr = sectors.split(", ");
-		System.out.println(Arrays.toString(strArr));
 		int[] intArr = new int[strArr.length];
 		for(int i=0; i<= count-1; i++) {
 			intArr[i] = Integer.parseInt(strArr[i]);
 		}
 		service.storeSectorUpdate(id, count, intArr);
-		System.out.println("count : " + count);
 	}
 	
 	@RequestMapping(value= {"/noramlUserBookingList"}, method=RequestMethod.GET)
@@ -302,8 +313,10 @@ public class SehwaController {
 	
 	@RequestMapping(value="/rechargePoint.ajax", method = RequestMethod.POST)
 	@ResponseBody
-	public void rechargePoint(String id, String payment, int amount, int point) {
+	public void rechargePoint(String id, String payment, int amount, int point,HttpSession session) {
 		service.rechargePoint(id, payment, amount, point);
+		// 세션업데이트
+		session.setAttribute("NormalUser", service.getNormalUserInfo(id));
 	}
 	
 	@RequestMapping("/pointList")
@@ -316,6 +329,51 @@ public class SehwaController {
 		model.addAllAttributes(service.usePointList(id, usePageNum));
 		return "sehwa/noramlUserPointList";
 	}
-
+	
+	@RequestMapping(value="/businessUserSecession")
+	public String businessUserSecession(Model model, String id) {
+		model.addAttribute("id", id);
+		return "forward:/WEB-INF/views/sehwa/businessUserSecession.jsp";
+	}
+	
+	@RequestMapping(value="/businessUserSecession.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public void businessUserSecession(String id) {
+		service.deleteBusinessUser(id);
+	}
+	
+	@RequestMapping(value="/normalUsesrSecession")
+	public String normalUserSecession(Model model, String id) {
+		model.addAttribute("id", id);
+		return "sehwa/normalUserSecession";
+	}
+	
+	@RequestMapping(value="/normalUsesrSecession.ajax", method=RequestMethod.POST)
+	@ResponseBody
+	public void normalUserSecession(String id) {
+		service.deleteNormalUser(id);
+	}
+	
+	@RequestMapping("/storeOpen")
+	public String storeOpen(String id, HttpSession session) {
+		BusinessUser user = service.getBusinessUserInfo(id);
+		user.setStoreOnoff("open");
+		
+		session.setAttribute("BusinessUser", user);
+		return "redirect:/businessUserStoreInfo?id=testBusinessId";
+	}
+	
+	@RequestMapping("/storeClose")
+	public String storeClose(String id, HttpSession session) {
+		BusinessUser user = service.getBusinessUserInfo(id);
+		user.setStoreOnoff("close");
+		
+		session.setAttribute("BusinessUser", user);
+		return "redirect:/businessUserStoreInfo?id=testBusinessId";
+	}
+	
+	
+	
+	
 	
 }

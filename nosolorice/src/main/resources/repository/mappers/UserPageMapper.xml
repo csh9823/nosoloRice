@@ -2,33 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-	<mapper namespace="com.solorice.app.mapper.UserPageMapper">
+	<mapper namespace="com.nosolorice.app.mapper.UserPageMapper">
 	 	<!-- 한선  -->
+	 	
 	 	<!-- 신고 내역 리스트 -->
-		<select id="userReportList" resultType="ReportDetails" resultMap="reportResultMap">
+		<select id="userReportList" resultType="ReportDetails" parameterType="hashmap" resultMap="reportResultMap">
 		
-		SELECT * FROM report_details ORDER BY report_no
+		SELECT r.*, CASE WHEN d.normal_id IS NOT NULL THEN d.denied_unlock ELSE NULL END AS deniedUnlock,
 		
+        CASE WHEN d.normal_id IS NOT NULL THEN d.denied_regdate ELSE NULL END AS deniedRegDate
+       
+		FROM report_details r LEFT JOIN denied_user d ON r.report_attacker = d.normal_id AND r.report_reporter = #{reporter} ORDER BY report_no DESC LIMIT #{start}, #{num}
+
 		</select>
 		
-		<select id="getReportCount" resultType="int" resultMap="reportResultMap">
+		<select id="getReportCount" resultType="int">
 	
-		SELECT COUNT(report_no) FROM report_details WHERE report_reporter = #{reportReporter}
+		
+		SELECT COUNT(report_no) FROM report_details
 		
 		</select>
 		
 			<!-- 차단 목록 리스트 -->
-		<select id="blockList" resultType="BlockHistory" resultMap="blockResultMap">
+		<select id="blockList" resultType="BlockHistory"  parameterType="hashmap" resultMap="blockResultMap">
 			
-		SELECT * FROM block_history ORDER BY block_history_no
+		SELECT * FROM block_history WHERE blocker = #{blocker} ORDER BY block_history_no  DESC LIMIT #{start}, #{num}
 		
 		</select>
 		
-		<select id="getBlockCount" resultType="int" resultMap="blockResultMap">
-	
-		SELECT COUNT(block_history_no) FROM block_history WHERE blocker = #{blocker}
+		<select id="getBlockCount" resultType="int">
+
+		 
+		 SELECT COUNT(block_history_no) FROM block_history
+		 
 		
 		</select>
+		
+		<delete id="blockUnlock" parameterType="int">
+		
+		DELETE FROM block_history WHERE block_history_no = #{blockHistoryNo}
+		
+		</delete>
 		
 		
 		<!-- 신고 내역 -->

@@ -52,9 +52,6 @@
 <body>
 
   <div class="container">
-    
-      
-  
       <div class="row">
         <div class="col-md-3">
             <ul class="my-3 fs-5">
@@ -74,27 +71,27 @@
               <br>
               
               <div class="row text-center align-items-center border-top border-bottom py-3">
-                <div class="col-3">번호</div>
-                <div class="col-3">차단대상</div>
-                <div class="col-3">차단일</div>
-                <div class="col-3">차단해제</div>
+                <div class="col-2">번호</div>
+                <div class="col-4">차단대상</div>
+                <div class="col-4">차단일</div>
+                <div class="col-2">차단해제</div>
             </div>
            <c:if test="${not empty blockList}"> 
           <c:forEach var="b" items="${blockList}">
             <div class="row align-items-center text-center">
-                <div class="col-3">${b.blockHistoryNo}</div>
-                <div class="col-3">${b.blockAttacker}</div>
-                <div class="col-3">${b.blockDate}</div>
-                <div class="col-3 py-3">
-                  <input type="button" value="해제하기" style="color:#C93C3C" id="blockUnlockBtn">
+                <div class="col-2">${b.blockHistoryNo}</div>
+                <div class="col-4">${b.blockAttacker}</div>
+                <div class="col-4">${b.blockDate}</div>
+                <%-- <div class="col-2">${b.blockState}</div> --%>
+                <div class="col-2 py-3">
+                  <input type="hidden" name="blockHistoryNo" value="${b.blockHistoryNo}">
+                  <input type="button" value="해제하기"  class="blockUnlockBtn btn" data-no="${b.blockHistoryNo}">
                 </div>    
             </div>
             </c:forEach>
            </c:if>
-       </div>
-
-	
-	<div class="row my-5">
+           
+           <div class="row my-5">
 				<div class="col">
 					<nav aria-label="Page navigation">
 					  <ul class="pagination justify-content-center">
@@ -104,9 +101,7 @@
 						      <a class="page-link" href="blockList?pageNum=${ startPage - PG }">Pre</a>
 						    </li>
 					    </c:if>
-				
-							
-							
+					    
 					    <c:forEach var="i" begin="${startPage}" end="${endPage}">
 			   			 
 					    	<c:if test="${i == currentPage }">
@@ -131,9 +126,58 @@
 					</nav>
 				</div>
 			</div>
-  
+           
+           
+       </div>
+
+			<input type="hidden" value="${currentPage}" id="currentPage">
+
   </div>
+  
+  	   	
+  
 </div>
+
+
+<script>
+
+
+$(".blockUnlockBtn").on('click',function(){
+	
+	let blockHistoryNo =$(this).attr("data-no");
+	
+	let pageNum = $("#currentPage").val();
+	
+	console.log(blockHistoryNo);
+	
+	
+	if(confirm("해제하시겠습니까?")){
+		
+		$.ajax({
+			
+			url: "/app/blockUnlockProcess",
+			data : "blockHistoryNo=" + blockHistoryNo,
+			type : "post",
+			dataType : "json",
+			success : function(resData){
+				
+				if(resData.unlock){
+					
+					window.location.href='blockList?pageNum=' + pageNum
+					
+				}
+					
+			}, error : function(err){
+				
+				console.log(err);
+			}	
+		});
+	
+	}
+
+});
+
+</script>
        
  
 

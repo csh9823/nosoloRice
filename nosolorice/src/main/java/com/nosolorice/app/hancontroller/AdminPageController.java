@@ -1,6 +1,7 @@
 package com.nosolorice.app.hancontroller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nosolorice.app.domain.Review.Review;
+import com.nosolorice.app.domain.businessUser.BusinessInquiry;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
+import com.nosolorice.app.domain.normalUser.UserInquiry;
 import com.nosolorice.app.hanservice.AdminPageService;
 
 @Controller
@@ -38,7 +41,7 @@ public class AdminPageController {
 		
 		model.addAllAttributes(modelMap);
 		
-		return "/adminReportList";
+		return "forward:/WEB-INF/views/adminReportList.jsp";
 	}
 	
 	//리뷰 리스트
@@ -46,9 +49,10 @@ public class AdminPageController {
 	public String reviewList(Model model,@RequestParam(value="pageNum",required=false, defaultValue="1")int pageNum) {
 		
 		Map<String,Object> modelMap = adminPageService.reviewList(pageNum);
+		
 		model.addAllAttributes(modelMap);
 		
-		return "/adminReviewList";
+		return "forward:/WEB-INF/views/adminReviewList.jsp";
 	}
 	
 	//회원정지 리스트
@@ -60,7 +64,7 @@ public class AdminPageController {
 		
 		model.addAllAttributes(modelMap);
 		
-		return "/deniedList";
+		return "forward:/WEB-INF/views/deniedList.jsp";
 	}
 	
 	@RequestMapping("/searchId")
@@ -115,7 +119,7 @@ public class AdminPageController {
 		  
 		  model.addAllAttributes(bList);
 		  
-		  return "/businessDeleteList";
+		  return "forward:/WEB-INF/views/businessDeleteList.jsp";
 	  }
 	  //업체 삭제
 	  @RequestMapping("/businessDelete")
@@ -136,6 +140,8 @@ public class AdminPageController {
 	  @RequestMapping("/searchBusinessId")
 	  @ResponseBody
 	  public Map<String,Object> searchBusinessId(@RequestBody String id) throws IOException{
+		  
+		  System.out.println("컨트롤러에서 아이디 : " + id);
 		  
 		  ObjectMapper om = new ObjectMapper();	
 		  
@@ -186,6 +192,81 @@ public class AdminPageController {
 
 		  return mapReview;
 	  }
+	  
+	  @RequestMapping("/adminNormalInquiryList")
+	  public String adminNormalInquiryList(Model model,@RequestParam(value="pageNum", defaultValue="1")int pageNum){
+		  
+		  Map<String,Object> modelMap = adminPageService.adminNormalInquiryList(pageNum);
+		  
+		  model.addAllAttributes(modelMap);
+	
+		  return "forward:/WEB-INF/views/adminNormalInquiryList.jsp";
+	  }
+	  
+	  @RequestMapping("/normalInquiryDetail")
+	  public String normalInquiryDetail(Model model,int userInquiryNo,@RequestParam(value="pageNum", required=false, 
+				defaultValue="1") int pageNum) {
+		  
+		  UserInquiry userInquiry = adminPageService.getInquiry(userInquiryNo);
+		  
+		  model.addAttribute("userInquiry",userInquiry);
+		  model.addAttribute("pageNum",pageNum);
+		  
+		  return "forward:/WEB-INF/views/normalInquiryDetail.jsp";
+	  }
+	  
+	  @RequestMapping("/answerInquiryProcess")
+	  public String answerInquiry(String inquiryComment,int userInquiryNo) {
+		 
+		  UserInquiry userInquiry = new UserInquiry();
+		  
+		  userInquiry.setUserInquiryNo(userInquiryNo);
+		  userInquiry.setInquiryComment(inquiryComment);
+		  
+		  adminPageService.answerInquiry(userInquiry);
+		  
+		  return "redirect:/adminNormalInquiryList";
+		  
+	  }
+	  
+
+	  @RequestMapping("/adminBusinessInquiryList")
+	  public String adminBusinessInquiryList(Model model,@RequestParam(value="pageNum", defaultValue="1")int pageNum) {
+		  
+		  
+		  Map<String,Object> modelMap = adminPageService.adminBusinessInquiryList(pageNum);
+		  
+		  model.addAllAttributes(modelMap);
+	
+		  return "forward:/WEB-INF/views/adminBusinessInquiryList.jsp";
+		  
+	  }
+	  
+	  @RequestMapping("/businessInquiryDetail")
+	  public String businessInquiryDetail(Model model,int businessInquiryNo,@RequestParam(value="pageNum", required=false, defaultValue="1") int pageNum) {
+		  
+		  BusinessInquiry businessInquiry = adminPageService.getBusinessInquiry(businessInquiryNo);	  
+		  
+		  model.addAttribute("businessInquiry",businessInquiry);
+		  model.addAttribute("pageNum",pageNum);
+		  
+		  return "forward:/WEB-INF/views/businessInquiryDetail.jsp";
+	  }
+	  
+	  @RequestMapping("/businessAnswerInquiryProcess")
+	  public String businessAnswerInquiry(String businessComment,int businessInquiryNo) {
+		 
+		  BusinessInquiry businessInquiry = new BusinessInquiry();
+		  
+		  businessInquiry.setBusinessInquiryNo(businessInquiryNo);
+		  businessInquiry.setBusinessComment(businessComment);
+		  
+		  adminPageService.answerBusinessInquiry(businessInquiry);
+		  
+		  return "redirect:/adminBusinessInquiryList";
+		  
+	  }
+
 	
 	
 

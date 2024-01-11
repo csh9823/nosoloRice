@@ -14,6 +14,7 @@ public class Booking {
 	private int deposit;
 	private String businessId;			// 사장님 아이디
 	private String bookingChatName;	// 채팅방 이름
+	private int bookingOkNo;
 	
 	public Booking() {
 	
@@ -29,6 +30,16 @@ public class Booking {
 		this.deposit = deposit;
 		this.businessId = businessId;
 		this.bookingChatName = bookingChatName;
+	}
+	
+	
+	
+	public int getBookingOkNo() {
+		return bookingOkNo;
+	}
+
+	public void setBookingOkNo(int bookingOkNo) {
+		this.bookingOkNo = bookingOkNo;
 	}
 
 	public int getBookingNo() {

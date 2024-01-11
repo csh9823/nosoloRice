@@ -43,13 +43,13 @@
             <ul class="my-3">
                  <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">고객센터</li>
                 <li class="my-5 fs-4"><a href="question">자주 묻는 질문</a></li>
-                <li class="my-5 fs-4"><a href="userInquiryWriteForm">1:1 문의</a></li>
+                <li class="my-5 fs-4"><a href="userInquiry">1:1 문의</a></li>
                 <li class="my-5 fs-4"><a href="userInquiryList">1:1 문의내역</a></li>
-                <li class="my-5 fs-4"><a href="noticeList">공지사항</a></li>
+                <li class="my-5 fs-4"><a href="noticeNormal">공지사항</a></li>
             </ul>
         </div>
         <div class="col-md-1 d-none d-md-block my-5" style="margin-left: -50px;">
-            <div style="border-left: 1px solid #616161; height: 80vh;"></div>
+            <div style="border-left: 1px solid #CCC; height: 80vh;"></div>
         </div>
         <div class="col mt-5">
             <div class="mt-3 fs-2 fw-bold" style="color:#C93C3C">자주 묻는 질문</div><br>
@@ -92,7 +92,7 @@
             <div class="answer fs-5">
               <hr>
               Q. 본인인증은, 본인명의의 휴대폰 정보로만 받을 수 있습니다. <br>
-              	 다른 사람 명의로 된 휴대폰 번호를 사용하고 있다면 통신사에 실사용자 등록을 해주셔야 합니다. <br>
+                  다른 사람 명의로 된 휴대폰 번호를 사용하고 있다면 통신사에 실사용자 등록을 해주셔야 합니다. <br>
         
             </div>
             <br><br>
@@ -104,18 +104,18 @@
             <div class="answer fs-5">
               <hr>
               A. 고객님께서 충전하신 금액은 환불이 불가능합니다. <br>
-              	이는 우리 서비스에 정책에 따른 것으로, 충전 후에는 해당 금액에 대한 환불이 불가능하오니 이점 양해 부탁드립니다.
+                 이는 우리 서비스에 정책에 따른 것으로, 충전 후에는 해당 금액에 대한 환불이 불가능하오니 이점 양해 부탁드립니다.
             </div>
             <br><br>
             <div class="my-3 fs-5 question" style="cursor: pointer; display: flex; justify-content: space-between;">
-           		Q. 개인정보 수정은 어디서 해야하나요?
-			<img src="https://cdn.icon-icons.com/icons2/788/PNG/512/down-arrow_icon-icons.com_64915.png" alt="아래화살표" style="width: 20px; height: 20px;">
+                 Q. 개인정보 수정은 어디서 해야하나요?
+         <img src="https://cdn.icon-icons.com/icons2/788/PNG/512/down-arrow_icon-icons.com_64915.png" alt="아래화살표" style="width: 20px; height: 20px;">
             </div>
 
-			<div class="answer fs-5">
+         <div class="answer fs-5">
               <hr>
               A. 로그인 후 마이페이지 메뉴로 이동 후 개인정보 수정 또는 유사한 항목을 클릭하여 수정하고자 하는 정보를 선택합니다.
-              	 비밀번호 , 이메일주소 , 주소 등의 개인정보를 수정하실 수 있습니다. 
+                  비밀번호 , 이메일주소 , 주소 등의 개인정보를 수정하실 수 있습니다. 
             </div>
             <br><br>
            

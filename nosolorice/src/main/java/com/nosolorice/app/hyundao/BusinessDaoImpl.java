@@ -24,6 +24,7 @@ public class BusinessDaoImpl implements BusinessDao {
 	}
 	@Override
 	public void writeBusinessInquiry(BusinessInquiry businessInquiry) {
+		System.out.println("다오에서 writeBusinessInquiry에서 : " + businessInquiry);
 		sqlSession.insert(NAME_SPACE + ".writeBusinessInquiry", businessInquiry);
 	}
 	@Override

@@ -44,7 +44,7 @@ public class BusinessUser {
 	
 	public BusinessUser(String businessId, String pass, String name, String phone, int businessNumber,
 			String businessName, String businessPicture, String email, String mobile, int postNum, String address1,
-			String address2, String xpoint, String ypoint, String businessProfile, String bankName, int bankNumber,
+			String address2, String xpoint, String ypoint, String businessProfile, String bankName, long bankNumber,
 			int deposit, String openTime, String closeTime, String breakTime, String dayOff, String introduction,
 			Timestamp regDate, String storeOnoff, String okNoOk) {
 		this.businessId = businessId;
@@ -203,13 +203,6 @@ public class BusinessUser {
 		this.bankName = bankName;
 	}
 
-	public long getBankNumber() {
-		return bankNumber;
-	}
-
-	public void setBankNumber(long bankNumber) {
-		this.bankNumber = bankNumber;
-	}
 
 	public int getDeposit() {
 		return deposit;
@@ -313,6 +306,14 @@ public class BusinessUser {
 
 	public void setTotalReviewCount(int totalReviewCount) {
 		this.totalReviewCount = totalReviewCount;
+	}
+
+	public long getBankNumber() {
+		return bankNumber;
+	}
+
+	public void setBankNumber(long bankNumber) {
+		this.bankNumber = bankNumber;
 	}
 
 	@Override

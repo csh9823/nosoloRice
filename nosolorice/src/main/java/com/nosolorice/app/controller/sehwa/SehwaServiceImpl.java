@@ -144,6 +144,8 @@ public class SehwaServiceImpl implements SehwaService {
 		
 		if(nos.size() != 0) {
 			
+			int testNo = nos.size() + 1;
+			
 			for(int i=0; i<nos.size(); i++) {
 				// 예약 정보 (가게, 멤버 등)
 				BookingMember bMember = new BookingMember();
@@ -161,7 +163,8 @@ public class SehwaServiceImpl implements SehwaService {
 				String businessId = bookingDetail.getBusinessId();
 				Review review = dao.getReview(id, no);
 				
-				bMember.setNo(no);
+				testNo --;
+				bMember.setNo(testNo);
 				bMember.setMembers(memberId);
 				bMember.setNormalUser(normalUser);
 				bMember.setBusinessUser(dao.getBusinessUserInfo(businessId));
@@ -292,6 +295,25 @@ public class SehwaServiceImpl implements SehwaService {
 		resultMap.put("usePageCount", pageCount);
 		return resultMap;
 		
+	}
+
+	@Override
+	public boolean checkNormalNickName(String nickName) {
+		boolean result = false;
+		NormalUser user = dao.checkNormalNickName(nickName);
+		if(user != null) result = true;
+		
+		return result;
+	}
+
+	@Override
+	public void deleteBusinessUser(String id) {
+		dao.deleteBusinessUser(id);
+	}
+
+	@Override
+	public void deleteNormalUser(String id) {
+		dao.deleteNormalUser(id);
 	}
 	
 	

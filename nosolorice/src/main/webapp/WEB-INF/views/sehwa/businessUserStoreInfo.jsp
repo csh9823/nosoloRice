@@ -26,12 +26,12 @@
   		<div class="col-md-9">
 			<input type="hidden" id="businessId" value="${BusinessUser.businessId}">
 		   <div class="row">
-		     <div class="col-4">
+		     <div class="square-container col-4">
 		       <c:if test="${empty BusinessUser.businessProfile}">
-		          <img src="resources/img/profile_img.png" class="preview w-100">      
+		          <img src="resources/img/profile_img.png" class="preview w-100 profile-img">      
 	          </c:if>
 	          <c:if test="${not empty BusinessUser.businessProfile}">
-		          <img src="resources/upload/${BusinessUser.businessProfile}" class="preview w-100">
+		          <img src="resources/upload/${BusinessUser.businessProfile}" class="preview w-100 profile-img">
 	          </c:if>
 		     </div>
 		     <div class="col-8">
@@ -47,7 +47,7 @@
 		         </div>
 		         <div class="col-6">
 		           <label>전화번호</label>
-		           <input type="text" class="form-control" value="${BusinessUser.mobile}" readonly>
+		           <input type="text" class="form-control" value="${BusinessUser.phone}" readonly>
 		         </div>
 		       </div>
 		       <div class="row">
@@ -181,7 +181,7 @@
 		   <div class="row py-5">
 		     <div class="border-bottom"></div>
 		   </div>
-		   <div class="row gy-4">
+		   <div class="row gy-4 mb-5">
 		     <div class="col-12">
 		       <h2>가게소개</h2>
 		       <textarea class="summernote" name="editordata" id="editordata">${BusinessUser.introduction}</textarea>    
@@ -195,7 +195,9 @@
 	  </div>
 	 </div>
 	 
+	 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	<script>
+		// 체크박스 업종 최대 3개 선택
 		var maxChecked = 3;
 		var totalChecked = 0;
 		function checkSectors(field) {
@@ -209,13 +211,33 @@
 				totalChecked -= 1;
 			}
 		}
-		
+		// 웹 에디터 
 		  $('.summernote').summernote({
 			    height: 450,
 			    lang: "ko-KR"
 			});
+		  
+		  // 타임피커
+			  $('.timepicker').timepicker({
+			    timeFormat: 'HH:mm',
+			    interval: 30,
+			    startTime: '00:00',
+			    dynamic: false,
+			    dropdown: true,
+			    scrollbar: true
+			});
+		  
+			// 프로필이미지 크기변경
+				window.addEventListener('resize', function() {
+					var squareContainer = document.querySelector('.square-container');
+					var width = squareContainer.clientWidth; // 현재 가로 크기 가져오기
+					squareContainer.style.height = width + 'px'; // 세로 크기를 가로 크기와 동일하게 설정
+				 });
+				window.dispatchEvent(new Event('resize'));
+				
+		  
 	</script>
 	 
-	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+  
 </body>
 </html>

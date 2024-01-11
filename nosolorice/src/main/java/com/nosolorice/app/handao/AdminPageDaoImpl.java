@@ -4,15 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.nosolorice.app.domain.Review.Review;
+import com.nosolorice.app.domain.businessUser.BusinessInquiry;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.DeniedUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
 import com.nosolorice.app.domain.normalUser.ReportDetails;
+import com.nosolorice.app.domain.normalUser.UserInquiry;
 @Repository
 public class AdminPageDaoImpl implements AdminPageDao {
 	
@@ -30,7 +33,7 @@ public class AdminPageDaoImpl implements AdminPageDao {
 	@Override
 	public List<ReportDetails> reportList(int start,int num) {
 		
-Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 			map.put("start", start);
 			map.put("num", num);
@@ -47,12 +50,14 @@ Map<String, Object> map = new HashMap<String, Object>();
 	@Override
 	public List<Review> reviewList(int start,int num) {
 		
-Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 			map.put("start", start);
 			map.put("num", num);
 	
-		return sqlSession.selectList(Mapper +".reviewList",map);
+			List<Review> rList = sqlSession.selectList(Mapper +".reviewList",map);
+			
+		return rList;
 	}
 
 	@Override
@@ -64,7 +69,7 @@ Map<String, Object> map = new HashMap<String, Object>();
 	@Override
 	public List<DeniedUser> deniedList(int start, int num) {
 		
-Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 			map.put("start", start);
 			map.put("num", num);
@@ -92,7 +97,6 @@ Map<String, Object> map = new HashMap<String, Object>();
 
 	@Override
 	public void addDenied(String id, String reason, int day) {
-		
 		Map <String,Object> map = new HashMap<String,Object>();
 		
 		map.put("id", id);
@@ -126,6 +130,7 @@ Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("start", start);
 		map.put("num", num);
+		
 		List<BusinessUser> list = sqlSession.selectList(Mapper + ".businessDeleteList",map);
 	
 			return list;
@@ -166,6 +171,70 @@ Map<String, Object> map = new HashMap<String, Object>();
 
 		sqlSession.delete(Mapper + ".businessDelete",id);
 	}
+	
+	@Override
+	public List<UserInquiry> adminNormalInquiryList(int start,int num) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("start", start);
+		map.put("num", num);
+
+		return sqlSession.selectList(Mapper + ".adminInquiryList",map);
+	}
+
+	@Override
+	public UserInquiry getInquiry(int userInquiryNo) {
+		
+		return sqlSession.selectOne(Mapper + ".normalInquiryDetail",userInquiryNo);
+	}
+
+	@Override
+	public int getInquiryCount() {
+		
+		return sqlSession.selectOne(Mapper + ".getInquiryCount");
+	}
+	
+	@Override
+	public void answerInquiry(UserInquiry userInquiry) {
+
+		sqlSession.update(Mapper + ".answerInquiry",userInquiry);
+		
+	}
+
+	@Override
+	public List<BusinessInquiry> adminBusinessInquiryList(int start, int num) {
+		
+		Map<String,Object> map = new HashMap<>();
+		
+		map.put("start", start);
+		map.put("num", num);
+		
+		return sqlSession.selectList(Mapper + ".adminBusinessInquiryList",map);
+	}
+
+	@Override
+	public int getBusinessInquiryCount() {
+		
+		return sqlSession.selectOne(Mapper + ".getBusinessInquiryCount");
+	}
+
+	@Override
+	public BusinessInquiry getBusinessInquiry(int businessInquiryNo) {
+		
+		return sqlSession.selectOne(Mapper + ".businessInquiryDetail",businessInquiryNo);
+	}
+
+	@Override
+	public void answerBusinessInquiry(BusinessInquiry businessInquiry) {
+		
+		sqlSession.update(Mapper + ".businessAnswerInquiry");
+		
+	}
+
+
+
+
 
 	
 	

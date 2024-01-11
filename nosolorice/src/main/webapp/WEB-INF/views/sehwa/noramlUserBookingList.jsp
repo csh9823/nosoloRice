@@ -56,7 +56,8 @@
   <div class="container">
   <input type="hidden" id="loginId" value="${sessionScope.NormalUser.normalId}">
     <div class="row">
-      <div class="col">
+	   <%@ include file="../../temple/header/mypageMenubar.jsp" %>
+	    <div class="col-md-9">
         <div class="row mb-3">
           <div class="col">
             <h3 class="text-red">진행중인 예약</h3>
@@ -186,7 +187,7 @@
 		                            </div>
 		                          </div>
 		                          <div class="col-auto">
-		                           <span class="fw-bold">아이디</span><br>
+		                           <span class="fw-bold">${sessionScope.NormalUser.nickName }</span><br>
 		                           <span class="text-gray">
 		                           	<fmt:formatDate value="${bookingList.review.regDate}" pattern="yyyy/MM/dd HH:mm:ss" />
 		                           </span>
@@ -268,7 +269,7 @@
         <div class="modal-header pt-5" style="border: none;">
           <span class="fw-bold fs-3">신고하기</span><span class="reportId fs-5"></span>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+        </div> 
         <div class="modal-body">
           <form name="reportModalForm" id="reportModalForm" enctype="multipart/form-data">
           	<input type="hidden" name="reporter" id="reporter" value="${sessionScope.NormalUser.normalId}">
@@ -433,8 +434,8 @@
     	let year = date.getFullYear();
     	let month = date.getMonth() + 1;
     	let day = date.getDate();
-    	let hour = date.getHours();
-    	let minute = date.getMinutes();
+    	let hour = date.getHours().toString().padStart(2, '0');;
+    	let minute = date.getMinutes().toString().padStart(2, '0');;
     	let format = year + "/" + month + "/" + day + " " + hour + ":" + minute;
     	$(".reviewModalVisitantDate").text(format);
     	// 상호명 보이기

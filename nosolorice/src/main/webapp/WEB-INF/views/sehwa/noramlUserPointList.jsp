@@ -30,6 +30,7 @@
   <div class="container">
   	<input type="hidden" value="${sessionScope.NormalUser.normalId}">
     <div class="row">
+    <%@ include file="../../temple/header/mypageMenubar.jsp" %>
       <div class="col">
         <div class="row mb-3">
           <div class="col">
@@ -133,7 +134,7 @@
                  <c:if test="${not empty usePointList }">
                 	<c:forEach var="uList" items="${usePointList }">
 		                <tr>
-		                  <td>0</td>
+		                  <td>${uList.pointHistoryNo}</td>
 		                  <td>${uList.businessId }</td>
 		                  <td>
 		                  	<fmt:formatDate value="${uList.historyDate }" pattern="yyyy-MM-dd HH:mm"/>
