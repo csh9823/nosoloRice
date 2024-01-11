@@ -46,7 +46,7 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@RequestMapping("mainPage")
+	@RequestMapping(value={"mainPage", "/"})
 	public String mainPage(@RequestParam(value="introduce", required=false) boolean introduce, Model model) {
 		model.addAttribute("introduce", introduce);
 		return "mainPage";
@@ -54,7 +54,7 @@ public class UserController {
 	
 	@RequestMapping("userInquiry")
 	public String userInquiry(Model model) {
-		return "userInquiry";
+		return "forward:/WEB-INF/views/userInquiry.jsp";
 	}
 	
 	@RequestMapping("userInquiryList")
@@ -69,7 +69,7 @@ public class UserController {
 		
 		model.addAllAttributes(userService.getUserInquiryList(pageNum, normalId));
 		
-		return "userInquiryList";
+		return "forward:/WEB-INF/views/userInquiryList.jsp";
 	}
 	
 	@RequestMapping("writeUserInquiry")

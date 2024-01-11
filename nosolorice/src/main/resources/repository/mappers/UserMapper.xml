@@ -76,6 +76,8 @@
 	FROM business_user b 
 	LEFT JOIN 
     review r ON b.business_id = r.business_id 
+    WHERE 
+    b.store_onoff = 'open' 
 	GROUP BY 
 	b.business_id, 
     b.business_name 
@@ -99,7 +101,7 @@
 	LEFT JOIN
     review r ON b.business_id = r.business_id 
     WHERE 
-    b.address1 = #{address} 
+    b.address1 = #{address} and b.store_onoff = 'open' 
 	GROUP BY 
 	b.business_id, 
     b.business_name 
@@ -172,7 +174,9 @@
 		            AVG(review_score) AS totalScore,
 		            COUNT(business_id) AS totalReviewCount
 		        FROM
-		            review
+		            review 
+				WHERE 
+					b.store_onoff = 'open' 
 		        GROUP BY
 		            business_id
 		    ) review_data ON b.business_id = review_data.business_id
@@ -206,7 +210,9 @@
 		            AVG(review_score) AS totalScore,
 		            COUNT(business_id) AS totalReviewCount
 		        FROM
-		            review
+		            review 
+				WHERE 
+					b.store_onoff = 'open' 
 		        GROUP BY
 		            business_id
 		    ) review_data ON b.business_id = review_data.business_id

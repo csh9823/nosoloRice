@@ -155,7 +155,7 @@ public class JinController {
 	//로그인 하기
 		@RequestMapping("loginservice")
 		public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,
-				HttpServletResponse response,HttpSession session ,PrintWriter out) {
+				HttpServletResponse response,HttpSession session ,PrintWriter out,HttpServletRequest request) {
 			
 			// 쿠키에 값 저장하기
 			if(idsave != 0) {
@@ -173,7 +173,7 @@ public class JinController {
 			NormalUser nuser = jinloginService.loginNormalUser(id, pass);
 			
 			RootUser ruser = jinloginService.loginRootUser(id, pass);
-			
+
 			if(buser != null) {
 				System.out.println(buser.getBusinessId());
 				session.setAttribute("BusinessUser", buser);

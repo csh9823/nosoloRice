@@ -251,13 +251,12 @@
                     </form>
                 </div>
             </div>
-            
-            <!-- 알림음 -->
-			<audio id="alarm" src="resources/audio/alarm.mp3"></audio>
-			
+
         </div>
     </div>
 </div>
+
+
 <script>
     const modal2 = document.getElementById("modal2");
     
@@ -324,7 +323,6 @@
     //집꺼
     //let url = "ws://192.168.35.92:8081/app/booking/" + loginId;
 
-			let alarm = document.getElementById('alarm');
 			
 			bookingSocket = new WebSocket(url);
 			
@@ -344,20 +342,11 @@
 				let msgObj = JSON.parse(e.data);
 				
 				if(msgObj.type == 'request'){
-					//알림
-					alarm.play();
-			        alarm.addEventListener('ended', function() {
-			            location.reload();
-			        });
+			        location.reload();
 				}
 				
 				if(msgObj.type == 'userCancel'){
-					let bookNo = msgObj.bookNo; 
-					//알림
-					alarm.play();
-			        alarm.addEventListener('ended', function() {
-			            location.reload();
-			        });
+					location.reload();
 				}
 				
 				

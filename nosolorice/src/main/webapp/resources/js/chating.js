@@ -162,7 +162,6 @@ $(function(){
 		$("#bookSuccessMemberList").text(nickNames);
 		$(".bookModalProposeMsg").text(bookingRequest);
 		
-		
 		bookComplete = true;
 		$("#storeDetailModal").addClass("d-none");
 		$("#bookPropose").addClass("d-none");
@@ -226,13 +225,13 @@ $(function(){
 	//가져온 room_id를 이용해 웹소켓채팅서버를 연다 - 완료
 	//학원꺼
 	//let url = "ws://192.168.0.14:8081/app/chating/" + roomId;
-	//let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
+	let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
 	
 	//집꺼
 	//let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
 	
 	//현진이꺼
-	let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
+	//let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
 	
     socket = new WebSocket(url);
     
@@ -350,11 +349,11 @@ $(function(){
 			//사장님과 통신할 웹소켓서버에 연결
 			//학원꺼
 			//let url = "ws://192.168.0.14:8081/app/booking/" + businessId;
-			//let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
+			let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
 			//집꺼
 			//let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
 			//현진이꺼		
-			let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
+			//let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
 			
 			bookingSocket = new WebSocket(url);
 			console.log("예약관리 서버 접속");
@@ -381,7 +380,10 @@ $(function(){
 						roomId : roomId
 					}
 					const jsonData = JSON.stringify(msg);
-	        		bookingSocket.send(jsonData);
+					
+					setTimeout(function(){
+		        		bookingSocket.send(jsonData);					
+					}, 1000);
 	        		console.log("예약관리 서버접속 후 제안자만 방정보 발송");
 				}
 				
@@ -408,6 +410,39 @@ $(function(){
 						}
 					});
 					
+					let bookingNo = 0;
+					$.ajax({
+						url: "/app/chatMemberCheck",
+						data : "id=" + loginId,
+						type : "get",
+						dataType : "json",
+						async : false,
+						success : function(resData){
+							bookingNo = resData.bookingInfo.bookingNo;
+						}, error : function(err) {
+							console.log("통신오류", err);
+						}
+					});
+					
+					let nickNames = "";
+					//ajax로 booking_userlist테이블에서 bookNo에 해당하는 닉네임을 다 가져온다.
+					$.ajax({
+						url: "/app/getBookingUserList",
+						data : "bookingNo=" + bookingNo,
+						type : "post",
+						dataType : "json",
+						async : false,
+						success : function(resData){
+							console.log(resData);
+							$(resData).each(function(i, v){
+								nickNames += (i==resData.length-1 ? v.nickName :  v.nickName + ", ");
+							});
+						}, error : function(err){
+							console.log("통신오류", err)
+						}
+					});
+					$("#bookSuccessMemberList").text(nickNames);		
+				
 					bookComplete = true;
 					$("#bookWait").addClass("d-none");
 					$("#bookFail").addClass("d-none");
@@ -505,23 +540,24 @@ $(function(){
     		});
 		
 			if(loginNickName == $("#bookModalName").text()){
-			
-	    		//Booking 테이블에서 business_id가 businessId 이고 booking_book_no가 bookingBookNo인 행을 찾아 삭제
-	    		let businessId = $("#storeDetailModalBusinessId").val();
-	    		let bookingBookNo = $(".bookingBookNo:first").text().trim();
-
-	    		$.ajax({
-	    			url : "/app/deleteBooking",
-	    			data : "businessId=" + businessId + "&bookingBookNo=" + bookingBookNo,
-	    			type : "post",
-	    			dataType : "json",
-	    			async : false,
-	    			success : function(resData) {
-	    				console.log(resData);
-	    			}, error : function(err){
-	    				console.log(err);
-	    			}
-	    		});
+				setTimeout(function(){
+		    		//Booking 테이블에서 business_id가 businessId 이고 booking_book_no가 bookingBookNo인 행을 찾아 삭제
+		    		let businessId = $("#storeDetailModalBusinessId").val();
+		    		let bookingBookNo = $(".bookingBookNo:first").text().trim();
+	
+		    		$.ajax({
+		    			url : "/app/deleteBooking",
+		    			data : "businessId=" + businessId + "&bookingBookNo=" + bookingBookNo,
+		    			type : "post",
+		    			dataType : "json",
+		    			async : false,
+		    			success : function(resData) {
+		    				console.log(resData);
+		    			}, error : function(err){
+		    				console.log(err);
+		    			}
+		    		});
+				}, 1500);
 			}
 						
 			//예약 실패 화면으로 이동
@@ -612,7 +648,7 @@ $(function(){
 	                            </div>
 	                            <div class="row my-1">
 	                                <div class="col-auto p-0 ms-4">
-	                                    <div class="receiveChat text-center px-3 py-2">
+	                                    <div class="receiveChat px-3 py-2">
 	                                    ` + chatMsg + `
 	                                    </div>
 	                                </div>
@@ -634,7 +670,7 @@ $(function(){
 	                        <div class="col-5">
 	                            <div class="row">
 	                                <div class="col-auto p-0 ms-4">
-	                                    <div class="receiveChat2 text-center px-3 py-2">
+	                                    <div class="receiveChat2 px-3 py-2">
 	                                    ` + chatMsg + `
 	                                    </div>
 	                                </div>
@@ -1430,10 +1466,13 @@ $(function(){
     	let storeBreakTime = $(this).find(".storeBreakTime").val();
     	$("#storeInfoBreakTime").text(storeBreakTime);
     	
-    	let storeIntroduction =$(this).find(".storeIntroduction").val();
+    	let storeIntroduction =$(this).find(".storeIntroduction").html();
     	$("#storeIntroduction").empty();
     	if(storeIntroduction == 'null') $("#storeIntroduction").append(`<span>등록된 가게 소개가 없습니다</span>`);    	
-		else $("#storeIntroduction").append(`<pre>`+ storeIntroduction +`</pre>`);
+		else $("#storeIntroduction").append(storeIntroduction);
+		$("#storeIntroduction").find("img").each(function(i,v){
+			$(this).css("max-width", "100%");
+		});
 		
     	let storeDeposit = $(this).find(".storeDeposit").val();
     	$("#storeDeposit").text(storeDeposit + " 포인트");
@@ -1540,7 +1579,7 @@ $(function(){
 				  	$("[data-category="+ cat +"]").append(`
 				  		<div class="row my-3" style="height:125px; overflow-y: hidden;">
 							<div class="col-3 p-0">
-							        <img src="resources/upload/`+ v.menuPicture +`" class="rounded" style="width:125px; height:125px;">
+							        <img src="`+ v.menuPicture +`" class="rounded" style="width:125px; height:125px;">
 							    </div>
 							    <div class="col-9">
 							        <div class="row">
@@ -1851,7 +1890,7 @@ $(function(){
         
 			<div class="col-auto p-2">
 				<input type="hidden" class="storeChatDivBusinessId" value="`+ storeBusinessId +`">
-			    <img src="resources/upload/`+ storeProfileImg +`" style="width: 110px; height: 110px;" class="rounded">
+			    <img src="`+ storeProfileImg +`" style="width: 110px; height: 110px;" class="rounded">
 			</div>
 			<div class="col text-white p-2">
 				<p class="m-0 p-0 fs-4 fw-bold">`+ storeName +`</p>
@@ -2391,7 +2430,7 @@ const storeListAppend = (storeList) => {
             <input type="hidden" class="storeOpenTime" value="`+ v.openTime +`">
             <input type="hidden" class="storeCloseTime" value="`+ v.closeTime +`">
             <input type="hidden" class="storeBreakTime" value="`+ v.breakTime+`">
-            <input type="hidden" class="storeIntroduction" value="`+ v.introduction +`">
+            <span class="storeIntroduction d-none">` + v.introduction + `</span>
             <input type="hidden" class="storeDeposit" value="`+ v.deposit +`">
             <input type="hidden" class="xPoint" value="`+ v.xpoint +`">
             <input type="hidden" class="yPoint" value="`+ v.ypoint +`">

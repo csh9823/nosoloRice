@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -122,14 +123,14 @@ $(function(){
 				<div class="row">
 					<div class="col bg-white" style="min-height:100vh;">
 					
-						<div class="row mx-2 mt-5">
+						<div class="row mt-5">
 							<div class="col">
-								<span class="fw-bold fs-3 text-danger">가입승인</span>
+								<span class="fw-bold fs-2 text-danger">가입승인</span>
 							</div>
 						</div>
 						
-						<div class="row mx-2 mt-3 text-center border-top border-bottom border-dark py-3">
-							<div class="col">
+						<div class="row mt-3 text-center border-top border-bottom border-secondary py-3">
+							<div class="col-2">
 								<span class="fs-5">번호</span>
 							</div>
 							<div class="col">
@@ -147,8 +148,8 @@ $(function(){
 						<c:if test="${not empty jList}">
 						<!-- 반복문 시작 -->
 						<c:forEach var="j" items="${jList}">
-						<div class="row mx-2 text-center joinApproveRow border-bottom py-3">
-							<div class="col">
+						<div class="row text-center joinApproveRow border-bottom py-3">
+							<div class="col-2">
 								<span class="fs-5">${j.getJoinApproveNo()}</span>
 							</div>
 							<div class="col">
@@ -159,7 +160,9 @@ $(function(){
 								<span class="fs-5">${j.getBusinessName()}</span>
 							</div>
 							<div class="col">
-								<span class="fs-5">${j.getRegDate()}</span>
+								<span class="fs-5">
+									<fmt:formatDate value="${j.getRegDate()}" pattern="yyyy-MM-dd" />								
+								</span>
 							</div>
 						</div>
 						
@@ -191,8 +194,7 @@ $(function(){
 							</div>
 							<div class="col-auto text-center">
 								<p>사업자등록증 사본</p>
-								<%-- <img src="${j.getBusinessPicture()}" style="width : 200px; height : 265px;"> --%>
-								<img src="https://via.placeholder.com/200x265" style="width : 200px; height : 265px;">
+								<img src="resources/upload/${j.getBusinessPicture()}" style="width : 200px; height : 265px;">
 							</div>
 							<div class="row pb-5">
 							<div class="col text-center">

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,35 +19,72 @@
 		background-color: #f0f0f0;
 	}
 	
-	    ul {
-      list-style: none;
-    }
     a{
       text-decoration: none;
       color : #616161;
     }
     a:active {
       color: #C93C3C ;
-      
     }
     * {
       font-family: 'SUITE Variable', sans-serif;
     }
+    
+        .btn {
+      background-color: #3DB78B;
+   		color : white;
+    }
 
-  .answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-  }
+    ul {
+      list-style: none;
+    }
+    .textColor{
+      text-decoration: none;
+      color : #616161;
+    }
+    * {
+      font-family: 'SUITE Variable', sans-serif;
+    }
+     .pagination .page-item.active .page-link {
+    background-color: #FA9884;
+    border-color: #FA9884;
+    color: #fff; 
+	}
+
+	.pagination .page-link {
+    color: #C93C3C;
+	}
+
+	.pagination .page-link:hover {
+    color: #fff; 
+    background-color: #C93C3C;
+    border-color: #C93C3C;
+	}
+
 </style>
 <script>
 	$(function(){
 		$(".userInquiryRow").on("click", function(){
 			if($(this).next().is(":visible")){
 				$(this).next().addClass("d-none");
+				$(this).next().find(".inquiryContentRow").addClass("d-none");
+				$(this).next().find(".inquiryCommentRow").addClass("d-none");				
 			} else {
-				$(".userInquiryContent").addClass("d-none");
-				$(this).next().removeClass("d-none");	
+				$(this).next().removeClass("d-none");
+				$(this).next().find(".inquiryContentRow").removeClass("d-none");
+				$(this).next().find(".inquiryCommentRow").addClass("d-none");
+			}
+		});
+		
+		$(".showInquiryCommentBtn").on("click", function(){
+			if($(this).val() == '답변보기'){
+				$(this).val("문의보기");
+				$(this).parent().parent().prev().prev().addClass("d-none");//문의글
+				$(this).parent().parent().prev().removeClass("d-none");//답글
+			} else {
+				$(this).val("답변보기");
+				$(this).parent().parent().prev().prev().removeClass("d-none");//문의글
+				$(this).parent().parent().prev().addClass("d-none");//답글
 			}
 		});
 	});
@@ -111,10 +149,11 @@
 								
 							</div>
 							<div class="col">
-								<span class="fs-5">${i.getInquiryTitle()}</span>
+								<span class="fs-5" style="overflow: hidden; white-space: nowrap; text-overflow:ellipsis;">${i.getInquiryTitle()}</span>
 							</div>
 							<div class="col-2">
-								<span style="font-size:16px;">${i.getInquiryRegDate()}</span>
+								<span style="font-size:16px;"><fmt:formatDate value="${i.getInquiryRegDate()}" pattern="yyyy-MM-dd" /></span>
+								
 							</div>
 							<div class="col-2">
 								<span class="fs-5">${empty i.getInquiryComment() ? "답변대기" : "답변완료"}</span>
@@ -122,11 +161,34 @@
 						</div>
 						<!-- 본문내용출력 시작 -->
 						<div class="row mx-2 py-3 d-none userInquiryContent border-bottom">
-							<div class="col p-5" style="min-height : 20vh;">
-								<pre>${i.getInquiryContent()}</pre>
-								<c:if test="${not empty i.getInquiryPicture()}">
-									<img src="resources/upload/${i.getInquiryPicture()}">
-								</c:if> 
+							<div class="col">
+
+								<div class="row inquiryContentRow">
+									<div class="col p-5" style="min-height : 20vh;">
+										<pre>${i.getInquiryContent()}</pre>
+										<c:if test="${not empty i.getInquiryPicture()}">
+											<img src="resources/upload/${i.getInquiryPicture()}">
+										</c:if> 
+									</div>								
+								</div>
+								
+								<div class="row d-none inquiryCommentRow">
+									<div class="col p-5 fs-5" style="min-height : 20vh;">
+										<p>답변시간 : <span><fmt:formatDate value="${i.inquiryCommentRegDate}" pattern="yyyy년 MM월 dd일  HH시 mm분" /></span></p>
+										<p>답변내용</p>
+										<pre>${i.inquiryComment}</pre>
+										<br>
+									</div>								
+								</div>
+								
+								<c:if test="${not empty i.inquiryComment}">
+								<div class="row">
+									<div class="col text-end">
+										<input type="button" value="답변보기" class="btn btn-lg showInquiryCommentBtn w-100">
+									</div>
+								</div>
+								</c:if>
+								
 							</div>
 						</div>
 						<!-- 본문내용출력 끝 -->

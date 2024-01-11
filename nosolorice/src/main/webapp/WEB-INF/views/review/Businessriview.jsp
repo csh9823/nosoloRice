@@ -128,7 +128,7 @@
             <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
                 <div class="col-4">
                     <div class="row">
-                        <div class="col-2"><img src="${rev.normalProfile}" style="width: 30px; height: 30px; border-radius: 30px;"></div>
+                        <div class="col-2"><img src="resources/upload/${rev.normalProfile}" style="width: 30px; height: 30px; border-radius: 30px;"></div>
                         <div class="col-6">${rev.normalNickname}</div>
                     </div>
                     <div class="col-6" style="margin-left: 54px;">
@@ -167,16 +167,11 @@
             
             <div class="row">
                     <div class="col-6">
-                    
-                    <c:if test="${rev.reviewPicture == null}">
-                        <img src="https://via.placeholder.com/300">
-                    </c:if>
-                    
-                    <c:if test="${rev.reviewPicture != null}">
-                    	<img src="https://via.placeholder.com/250" style="width: 300px; height: 300px;">
-                    </c:if>
+	        			<c:if test="${rev.reviewPicture != null}">
+	                    	<img src="resources/upload/${rev.reviewPicture}" style="width: 300px; height: 300px;">
+	                    </c:if>
                     </div>
-                    
+
                     <c:if test="${rev.ownerComment != null}">
                     <div class="col-6"  style="">
                         <button class="revupdate2" value="${rev.revireNo}.${rev.ownerComment}">답글수정</button>
