@@ -112,7 +112,7 @@ public class BusinessUserController {
         	businessUser.setBusinessProfile(profileNewName);
         } else if(businessProfile.isEmpty() && !businessPicture.isEmpty()) {
         	// 기본프로필이미지 등록
-        	String defaultImagePath = "/resources/upload/business_upload/profile_img.png";
+        	String defaultImagePath = "profile_img.png";
         	System.out.println("사업자_기본프로필 등록완료! : " + defaultImagePath);
         	businessUser.setBusinessProfile(defaultImagePath);
         	
