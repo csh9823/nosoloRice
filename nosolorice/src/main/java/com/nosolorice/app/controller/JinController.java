@@ -327,13 +327,16 @@ public class JinController {
 		jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingOk.getBookingOkState());
 		// 부킹 ok no 가져오기
 		int bookingOkno = jinbookService.getbookingOknumber(bookingOk.getBookingNo());
+		// 부킹된 유저 리스트 가져오기
 		List<BookingUserList> bookuser =  jinbookService.bookingUserList(bookingOk.getBusinessId(), bookingOk.getBookingNo());
 		
+		// 부킹 된 유저 리스트의 아이디를 반복문으로 여러번 넣어줌
 		for (BookingUserList bookingUser : bookuser) {
 			System.out.println(bookingUser.getNormalId());
 			jinbookService.visitantuseradd(bookingUser.getNormalId(),bookingOk.getBusinessId(),bookingOkno);
 		}
 		
+		// 반복이 완료 되면 부킹 유저 리스트 삭제 해줌
 		jinbookService.bookinguserdelete(bookingOk.getBusinessId(), bookingOk.getBookingNo());
 		return "redirect:yesnoList?businessId="+bookingOk.getBusinessId();
 	}
