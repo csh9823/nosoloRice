@@ -44,19 +44,9 @@ $(document).ready(function () {
         alert("비밀번호는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
     }
-    
-    if (pass.length() < 8) {
-        alert("비밀번호는 8자 이하로 만둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
-        return false;
-    }
-    
+
     if (passCheck.trim() === "") {
         alert("비밀번호 확인은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
-        return false;
-    }
-    
-    if (passCheck.length() < 8) {
-        alert("비밀번호 확인은 8자 이하로 만둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
     }
     
@@ -74,6 +64,11 @@ $(document).ready(function () {
         alert("인증번호를 입력해 주세요.");
         return false;
     }
+        
+    if (year <= 1900 || year >= 2025) {
+    	alert("입력가능한 연도는 1900년부터 2024년까지 입니다. \n확인 후 다시 입력해 주세요.");
+    	return false;
+    }
     
     if (month < 1 || month > 12) {
     	alert("입력가능한 월은 1월부터 12월까지 입니다. \n확인 후 다시 입력해 주세요.");
@@ -84,27 +79,22 @@ $(document).ready(function () {
     	alert("입력가능한 일은 1일부터 31일까지 입니다. \n확인 후 다시 입력해 주세요.");
     	return false;
     }
-    
-    if (email.trim() === "") {
-        alert("이메일은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
-        return false;
-    }
-    
+           
     if (year.trim() === "" || month.trim() === "" || day.trim() === "") {
         alert("생년월일은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
     }
-    
-    if (year <= 1900 || year >= 2025) {
-    	alert("입력가능한 연도는 1900년부터 2024년까지 입니다. \n확인 후 다시 입력해 주세요.");
-    	return false;
-    }
-    
+     
 	if (gender <= 0) {
         alert("성별을 선택해 주세요.");
         return false;
     }
     
+    if (email.trim() === "") {
+        alert("이메일은 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
+        return false;
+    }
+
 	if (zip.trim() === "") {
         alert("우편번호는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;

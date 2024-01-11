@@ -6,7 +6,7 @@
 	
 	<insert id="addBusinessUser" parameterType="BusinessUser">
 		INSERT INTO business_user (business_id, pass, name, phone, business_number, business_name, business_picture, email, mobile, postnum, address1, address2, xpoint, ypoint, business_profile, bank_name, bank_number, deposit, open_time, close_time, break_time, day_off, introduction, regdate, store_onoff, ok_nook, root)
-    	VALUES (#{businessId}, #{pass}, #{name}, #{phone}, #{businessNumber}, #{businessName}, #{businessPicture}, #{email}, #{mobile}, #{postNum}, #{address1}, #{address2}, #{xpoint}, #{ypoint}, #{businessProfile}, #{bankName}, #{bankNumber}, 0, 0, 0, 0, 0, null, SYSDATE(), 0, 0, 1)
+    	VALUES (#{businessId}, #{pass}, #{name}, #{phone}, #{businessNumber}, #{businessName}, #{businessPicture}, #{email}, #{mobile}, #{postNum}, #{address1}, #{address2}, #{xpoint}, #{ypoint}, #{businessProfile}, #{bankName}, #{bankNumber}, 1000, "", "", "", "", null, SYSDATE(), "close", 0, 1)
 	</insert>
 	
 	<select id="getBusinessUser" resultType="String">

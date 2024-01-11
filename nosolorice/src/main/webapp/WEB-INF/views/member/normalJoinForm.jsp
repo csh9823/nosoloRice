@@ -69,6 +69,12 @@ input[type='number'] {
 
            <div class="col-md-8">
             <div class="row">
+            
+            <div class="col-7 p-2">
+                <div class="form-group">
+                  <p>*표시는 필수사항입니다.</p>
+                </div>
+              </div>
               
               <div class="col-sm-10 p-2">
                 <div class="form-group">
@@ -119,13 +125,13 @@ input[type='number'] {
               
               <div class="col-8 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="mobile" id="mobile" placeholder="전화번호를 입력해 주세요." maxlength="11" />
+                  <input type="text" class="form-control" name="mobile" id="mobile" placeholder="* 전화번호를 입력해 주세요." maxlength="13" oninput="autoHyphen(this)" />
                 </div>
               </div>
 
               <div class="col-2 text-end p-2">
                 <div class="form-group">
-                  <input type="button" class="btn btn-success" id="getNormalPhoneCheck" name="getNormalPhoneCheck" value="* 인증번호 받기">
+                  <input type="button" class="btn btn-success" id="getNormalPhoneCheck" name="getNormalPhoneCheck" value="인증번호 받기">
                 </div>
               </div>
 
@@ -142,7 +148,7 @@ input[type='number'] {
 
               <div class="col-2 p-2 text-end">
                 <div class="form-group">
-                  <input type="button" class="btn btn-success" name="normalPhoneCheck" id="normalPhoneCheck" value="* 인증하기">
+                  <input type="button" class="btn btn-success" name="normalPhoneCheck" id="normalPhoneCheck" value="인증하기">
                 </div>
               </div>
               
@@ -191,7 +197,7 @@ input[type='number'] {
                 </div>
               </div>
 
-              <div class="col-10 p-2">
+              <div class="col-8 p-2">
                 <div class="form-group">
                   <input type="email" class="form-control" name="emailId" id="emailId" placeholder="* 이메일을 입력해 주세요" >
                 </div>
@@ -227,7 +233,7 @@ input[type='number'] {
 
               <div class="col-10 p-1">
                 <div class="form-group">
-                  <input type="text" class="form-control" id="address2" name="address2" placeholder="* 상세주소">
+                  <input type="text" class="form-control" id="address2" name="address2" placeholder="상세주소">
                 </div>
               </div>
 

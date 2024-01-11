@@ -91,7 +91,7 @@ input[type='number'] {
                   <input type="password" class="form-control" id="bPass" name="bPass" placeholder="* 비밀번호" >
                 </div>
               </div>
-
+              
               <div class="col-10 p-2">
                 <div class="form-group">
                   <input type="password" class="form-control" id="checkBPass" name="checkBPass" placeholder="* 비밀번호확인" >
@@ -100,7 +100,7 @@ input[type='number'] {
 
 			  <div class="col-8 p-2">
                 <div class="form-group">
-                  <input type="text" class="form-control" name="bPhone" id="bPhone" placeholder="* 01012345678" >
+                  <input type="text" class="form-control" name="bPhone" id="bPhone" placeholder="* 01012345678" maxlength="13" oninput="autoHyphen(this)">
                 </div>
               </div>
 	
