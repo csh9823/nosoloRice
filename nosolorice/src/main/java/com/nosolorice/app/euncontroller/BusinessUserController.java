@@ -34,8 +34,7 @@ public class BusinessUserController {
 	@Autowired
 	private BusinessUserServiceImpl businessUserServiceImpl;
 	
-	private static final String REG_DEFAULT_PATH = "/resources/upload/business_upload";
-	private static final String DEFAULT_PATH = "/resources/upload/business_profile";
+	private static final String DEFAULT_PATH = "/resources/upload";
 	
 	@Autowired
 	public void setBusinessService(BusinessUserService businessUserService) {
@@ -94,7 +93,7 @@ public class BusinessUserController {
 
         // 이미지들
         if(!businessProfile.isEmpty() && !businessPicture.isEmpty()) {
-        	String regfilePath = req.getServletContext().getRealPath(REG_DEFAULT_PATH);
+        	String regfilePath = req.getServletContext().getRealPath(DEFAULT_PATH);
         	String profilePath = req.getServletContext().getRealPath(DEFAULT_PATH);
         	
         	UUID regUid = UUID.randomUUID();
@@ -118,7 +117,7 @@ public class BusinessUserController {
         	businessUser.setBusinessProfile(defaultImagePath);
         	
         	// 사업자등록증이미지 등록
-        	String regfilePath = req.getServletContext().getRealPath(REG_DEFAULT_PATH);
+        	String regfilePath = req.getServletContext().getRealPath(DEFAULT_PATH);
         	UUID regUid = UUID.randomUUID();
         	String regNewName = regUid.toString() + "_" + businessPicture.getOriginalFilename();
         	File regFile = new File(regfilePath, regNewName);
