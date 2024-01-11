@@ -27,7 +27,7 @@
         }
         .yeslist{
             border: none;
-            background-color: red;
+            background-color: rgb(95,158,160);
         }
         .nolist{
             text-decoration: none;

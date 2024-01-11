@@ -325,6 +325,7 @@ public class JinController {
 		
 		System.out.println(bookingOk.toString());
 		jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingOk.getBookingOkState());
+		// 부킹 ok no 가져오기
 		int bookingOkno = jinbookService.getbookingOknumber(bookingOk.getBookingNo());
 		List<BookingUserList> bookuser =  jinbookService.bookingUserList(bookingOk.getBusinessId(), bookingOk.getBookingNo());
 		
