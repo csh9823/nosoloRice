@@ -15,8 +15,7 @@ $(function() {
 			"dataType" : "json",
 			"success" : function(resData) {
 				console.log(resData);
-				let num = resData.deposit
-				$("#deposit").val(num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				location.href='businessUserStoreInfo?id=' + id;
 			},
 			"error" : function(xhr, status, err) {
 				console.log("error : ", status, "-", err);
@@ -64,9 +63,12 @@ $(function() {
 				introduction : introduction
 			},
 			"type" : "post", 
-			"dataType" : "json",
+			"dataType" : "text",
 			"success" : function(resData) {
 				console.log(resData);
+				 window.scrollTo({
+			        top: 0
+			     });
 			},
 			"error" : function(xhr, status, err) {
 				console.log(err);
