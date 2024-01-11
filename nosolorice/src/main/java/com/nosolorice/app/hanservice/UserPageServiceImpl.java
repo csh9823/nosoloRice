@@ -17,9 +17,9 @@ public class UserPageServiceImpl implements UserPageService {
 
 	private UserPageDao userPageDao;
 	
-	private static final int PS = 5;
+	private static final int PS = 10;
 
-	private static final int PG = 5;
+	private static final int PG = 10;
 
 	@Autowired
 	public UserPageServiceImpl(UserPageDao userPageDao) {

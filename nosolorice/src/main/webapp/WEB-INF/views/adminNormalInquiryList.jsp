@@ -120,7 +120,7 @@ ul {
 
 										<c:if test="${ startPage > PG }">
 											<li class="page-item"><a class="page-link"
-												href="adminReviewList?pageNum=${ startPage - PG }">Pre</a></li>
+												href="adminNormalInquiryList?pageNum=${ startPage - PG }">Pre</a></li>
 										</c:if>
 
 										<c:forEach var="i" begin="${startPage}" end="${endPage}">
@@ -131,13 +131,13 @@ ul {
 											</c:if>
 											<c:if test="${i != currentPage }">
 												<li class="page-item"><a class="page-link"
-													href="adminReviewList?pageNum=${i}">${i}</a></li>
+													href="adminNormalInquiryList?pageNum=${i}">${i}</a></li>
 											</c:if>
 										</c:forEach>
 
 										<c:if test="${ endPage < pageCount }">
 											<li class="page-item"><a class="page-link"
-												href="adminReviewList?pageNum=${ startPage + PG }">Next</a>
+												href="adminNormalInquiryList?pageNum=${ startPage + PG }">Next</a>
 											</li>
 										</c:if>
 									</ul>

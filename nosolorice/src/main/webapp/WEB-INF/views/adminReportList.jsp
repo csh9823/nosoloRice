@@ -122,7 +122,7 @@
 			
 			   <!-- 모달 템플릿 -->
 				        <div class="modal fade" id="ReportModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-				            <div class="modal-dialog">
+				            <div class="modal-dialog modal-lg">
 				                <div class="modal-content">
 				                    <!-- 모달 헤더 -->
 				                    <div class="modal-header">
@@ -131,7 +131,7 @@
 				                    </div>
 				                    <!-- 모달 바디 - 이미지 표시 -->
 				                    <div class="modal-body">
-				                        <img  class="img-fluid" id="modalImage" alt="첨부 사진" style="max-width:100%;"/>
+				                        <img  class="img-fluid" id="modalImage" alt="첨부 사진" style="width:100%;"/>
 				                        <!-- 이미지가 없을 경우 대체 내용 -->
 				                        <p class="noImageText" style="display: none;">이미지가 없습니다.</p>
 				                    </div>
@@ -194,7 +194,7 @@
     <script>
    
     	
-    	//content 글자 수
+    		//content 글자 수
    	        $('.truncate-text').each(function() {
    	            const maxLength = $(this).data('maxlength');
    	            const text = $(this).text();

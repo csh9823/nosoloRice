@@ -126,6 +126,7 @@
 				        <div class="fs-4">${b.businessId}(${b.name})</div>
 				        <div class="fs-4">${b.phone}</div>
 				        <div class="fs-4">${b.address1} ${b.address2}</div>
+				        <div class="py-3"></div>
 				    </div>
 				    <div class="col-md-auto text-md-end align-self-center">
 				        <input type="button" value="삭제" class="btn btn-lg deleteBtn" style="background-color:#C93C3C; color:white;">

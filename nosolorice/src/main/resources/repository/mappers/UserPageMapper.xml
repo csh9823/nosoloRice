@@ -8,8 +8,12 @@
 	 	<!-- 신고 내역 리스트 -->
 		<select id="userReportList" resultType="ReportDetails" parameterType="hashmap" resultMap="reportResultMap">
 		
-		 SELECT r.*,d.denied_unlock as deniedUnlock,d.denied_regdate as deniedRegDate FROM report_details r join denied_user d on r.report_attacker = d.normal_id WHERE r.report_reporter = #{reporter} LIMIT #{start}, #{num}
+		SELECT r.*, CASE WHEN d.normal_id IS NOT NULL THEN d.denied_unlock ELSE NULL END AS deniedUnlock,
 		
+        CASE WHEN d.normal_id IS NOT NULL THEN d.denied_regdate ELSE NULL END AS deniedRegDate
+       
+		FROM report_details r LEFT JOIN denied_user d ON r.report_attacker = d.normal_id AND r.report_reporter = #{reporter} ORDER BY report_no DESC LIMIT #{start}, #{num}
+
 		</select>
 		
 		<select id="getReportCount" resultType="int">
@@ -22,7 +26,7 @@
 			<!-- 차단 목록 리스트 -->
 		<select id="blockList" resultType="BlockHistory"  parameterType="hashmap" resultMap="blockResultMap">
 			
-		SELECT * FROM block_history WHERE blocker = #{blocker} ORDER BY block_history_no LIMIT #{start}, #{num}
+		SELECT * FROM block_history WHERE blocker = #{blocker} ORDER BY block_history_no  DESC LIMIT #{start}, #{num}
 		
 		</select>
 		

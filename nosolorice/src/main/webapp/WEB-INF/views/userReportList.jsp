@@ -87,7 +87,13 @@
                 <div class="col-2">${r.reportAttacker}</div>
                 <div class="col-3">${r.reportContent}</div>
                 <div class="col-3"><fmt:formatDate value="${r.reportRegDate}" pattern="yyyy-MM-dd" /></div>
+                <c:if test="${not empty r.deniedUnlock}">
                 <div class="col-2">${r.resultDate()}</div>
+                </c:if>
+                
+                <c:if test="${empty r.deniedUnlock}">
+                <div class="col-2">미처리</div>
+                </c:if>
             </div>
              </c:forEach>
 
