@@ -315,6 +315,16 @@ public class SehwaServiceImpl implements SehwaService {
 	public void deleteNormalUser(String id) {
 		dao.deleteNormalUser(id);
 	}
+
+	@Override
+	public void storeClose(String id) {
+		dao.storeClose(id);
+	}
+
+	@Override
+	public void storeOpen(String id) {
+		dao.storeOpen(id);
+	}
 	
 	
 }

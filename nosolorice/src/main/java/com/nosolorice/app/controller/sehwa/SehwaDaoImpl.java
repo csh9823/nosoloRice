@@ -270,6 +270,16 @@ public class SehwaDaoImpl implements SehwaDao {
 		sqlSession.delete(NAME_SPACE + ".deleteNormalUser", id);
 	}
 
+	@Override
+	public void storeClose(String id) {
+		sqlSession.update(NAME_SPACE + ".storeClose", id);
+	}
+
+	@Override
+	public void storeOpen(String id) {
+		sqlSession.update(NAME_SPACE + ".storeOpen", id);
+	}
+
 
 	
 	

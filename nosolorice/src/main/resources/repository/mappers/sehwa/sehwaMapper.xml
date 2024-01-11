@@ -335,8 +335,23 @@
 				normal_id = #{id}
 	</delete>
 	
+	<update id="storeClose">
+		UPDATE
+			business_user
+		SET
+			store_onoff = 'close'
+		WHERE 
+			business_id = #{id}
+	</update>
 	
-	
+	<update id="storeOpen">
+		UPDATE
+			business_user
+		SET
+			store_onoff = 'open'
+		WHERE 
+			business_id = #{id}
+	</update>
 	
 	
 	

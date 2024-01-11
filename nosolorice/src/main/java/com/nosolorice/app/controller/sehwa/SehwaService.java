@@ -60,4 +60,8 @@ public interface SehwaService {
 	
 	public void deleteNormalUser(String id);
 	
+	public void storeClose(String id);
+	
+	public void storeOpen(String id);
+	
 }
