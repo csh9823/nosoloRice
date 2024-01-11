@@ -54,22 +54,18 @@ public class UserController {
 	
 	@RequestMapping("userInquiry")
 	public String userInquiry(Model model) {
-		return "forward:/WEB-INF/views/userInquiry.jsp";
+		return "forward:userInquiry";
 	}
 	
 	@RequestMapping("userInquiryList")
 	public String userInquiryList(Model model, @RequestParam(required=false, defaultValue="1") int pageNum, HttpSession session) {
 		
-		/*
-		 * BusinessUser bUser = (BusinessUser)session.getAttribute("businessUser");
-		 * String businessId = bUser.getBusinessId();
-		 */
-		
-		String normalId = "testNormalId";
+		NormalUser nUser = (NormalUser)session.getAttribute("NormalUser");
+		String normalId = nUser.getNormalId();
 		
 		model.addAllAttributes(userService.getUserInquiryList(pageNum, normalId));
 		
-		return "forward:/WEB-INF/views/userInquiryList.jsp";
+		return "forward:userInquiryList";
 	}
 	
 	@RequestMapping("writeUserInquiry")

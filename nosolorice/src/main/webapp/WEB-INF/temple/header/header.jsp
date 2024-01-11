@@ -109,7 +109,7 @@
                 </form>
       
                 <!-- 유저_프로필 -->
-                <a href="#"><img src="${sessionScope.NormalUser.profile}" class="rounded-circle me-2 "/></a>
+                <a href="#"><img src="resources/upload/${sessionScope.NormalUser.profile}" class="rounded-circle me-2 "style="width:100px; width:100px;"/></a>
       
                 <!-- 포인트 -->          
                 <div class="d-flex flex-column mb-2 ">

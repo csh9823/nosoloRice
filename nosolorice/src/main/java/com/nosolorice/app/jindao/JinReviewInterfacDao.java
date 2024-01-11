@@ -10,4 +10,5 @@ public interface JinReviewInterfacDao {
 	abstract public void Businessreviewadd(int reviewNo, String normalId, String businessId, String businessComment);
 	abstract public void OwnerCommentupdate(String businessComment2, int reviewNo);
 	abstract public void OwnerCommentdelete(int reviewNo);
+	abstract public String getreviewcoung(String businessId);
 }

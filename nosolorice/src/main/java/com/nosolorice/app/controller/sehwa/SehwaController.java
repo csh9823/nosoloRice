@@ -364,7 +364,7 @@ public class SehwaController {
 		
 		BusinessUser user = service.getBusinessUserInfo(id);
 		session.setAttribute("BusinessUser", user);
-		return "redirect:/businessUserStoreInfo?id=testBusinessId";
+		return "redirect:/businessUserStoreInfo?id=" + id;
 	}
 	
 	@RequestMapping("/storeClose")
@@ -373,7 +373,7 @@ public class SehwaController {
 		
 		BusinessUser user = service.getBusinessUserInfo(id);
 		session.setAttribute("BusinessUser", user);
-		return "redirect:/businessUserStoreInfo?id=testBusinessId";
+		return "redirect:/businessUserStoreInfo?id=" + id;
 	}
 	
 	

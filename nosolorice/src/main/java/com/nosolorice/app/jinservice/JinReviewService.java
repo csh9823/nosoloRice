@@ -37,4 +37,8 @@ public class JinReviewService implements JinReviewInterface {
 	public void OwnerCommentdelete(int reviewNo) {
 		jinReviewDaoImpl.OwnerCommentdelete(reviewNo);
 	}
+	
+	public String getreviewcoung(String businessId) {
+		return jinReviewDaoImpl.getreviewcoung(businessId);
+	}
 }

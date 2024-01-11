@@ -9,13 +9,14 @@ public class JoinApprove {
 	private String businessName;
 	private String businessPicture;
 	private Timestamp regDate;
-	private int businessNumber;
+	private long businessNumber;
 	private String address1;
 	private String address2;
 	private String mobile;
 	private String phone;
 	private String email;
 	private String businessId;
+	
 	public JoinApprove() {
 		
 	}
@@ -44,9 +45,19 @@ public class JoinApprove {
 	public void setRegDate(Timestamp regDate) {
 		this.regDate = regDate;
 	}
-	public int getBusinessNumber() {
+
+	public long getBusinessNumber() {
 		return businessNumber;
 	}
+
+	public void setBusinessNumber(long businessNumber) {
+		this.businessNumber = businessNumber;
+	}
+
+	public String getBusinessId() {
+		return businessId;
+	}
+
 	public void setBusinessNumber(int businessNumber) {
 		this.businessNumber = businessNumber;
 	}
