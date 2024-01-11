@@ -35,7 +35,7 @@ public class NormalUserController {
 	@Autowired
 	private NormalUserServiceImpl normalUserServiceImpl;
 	
-	private static final String DEFAULT_PATH = "/resources/upload/normal_upload";
+	private static final String DEFAULT_PATH = "/resources/upload";
 	
 	@Autowired
 	public void setMemberService(NormalUserService normalUserService) {
@@ -82,7 +82,7 @@ public class NormalUserController {
         	
         	normalUser.setProfile(newName);
         } else {
-        	String defaultImagePath = "/resources/upload/normal_upload/profile_img.png";
+        	String defaultImagePath = "/resources/upload/profile_img.png";
         	System.out.println("이용자_기본프로필 등록완료! : " + defaultImagePath);
         	normalUser.setProfile(defaultImagePath);
         }
