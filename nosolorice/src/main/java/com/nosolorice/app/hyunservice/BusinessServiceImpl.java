@@ -22,12 +22,13 @@ public class BusinessServiceImpl implements BusinessService {
 	}
 	@Override
 	public void writeBusinessInquiry(BusinessInquiry businessInquiry) {
+		System.out.println("서비스 writeBusinessInquiry에서 : " + businessInquiry);
 		businessDao.writeBusinessInquiry(businessInquiry);
 	}
 
 	@Override
 	public Map<String, Object> getBusinessInquiryList(int pageNum, String businessId) {
-		
+		System.out.println("서비스에서 businessId : " + businessId);
 		int pageSize = 10;
 		int pageGroup = 10;
 		int currentPage = pageNum;

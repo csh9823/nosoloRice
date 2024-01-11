@@ -62,12 +62,9 @@ public class BusinessController {
 	
 	@RequestMapping("businessSales")
 	public String businessSales(Model model,@RequestParam(required=false, defaultValue="1") int pageNum, HttpSession session) {
-		/*
-		 * BusinessUser bUser = (BusinessUser)session.getAttribute("businessUser");
-		 * String businessId = bUser.getBusinessId();
-		 */
-		
-		String businessId = "testBusinessId";
+
+		BusinessUser bUser = (BusinessUser)session.getAttribute("BusinessUser");
+		String businessId = bUser.getBusinessId();
 		
 		model.addAllAttributes(businessService.getDailySalesList(pageNum, businessId));
 		return "forward:/WEB-INF/views/businessSales.jsp";
@@ -75,13 +72,10 @@ public class BusinessController {
 	
 	@RequestMapping("businessSalesMonth")
 	public String businessSalesMonth(Model model,@RequestParam(required=false, defaultValue="1") int pageNum, HttpSession session) {
-		/*
-		 * BusinessUser bUser = (BusinessUser)session.getAttribute("businessUser");
-		 * String businessId = bUser.getBusinessId();
-		 */
 		
-		String businessId = "testBusinessId";
-		
+		BusinessUser bUser = (BusinessUser)session.getAttribute("BusinessUser");
+		String businessId = bUser.getBusinessId();
+
 		model.addAllAttributes(businessService.getMonthlySalesList(pageNum, businessId));
 		return "forward:/WEB-INF/views/businessSalesMonth.jsp";
 	}

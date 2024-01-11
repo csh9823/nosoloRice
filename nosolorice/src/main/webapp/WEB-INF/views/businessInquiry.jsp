@@ -40,7 +40,7 @@
 								
 								<div class="row my-3">
 									<div class="col">
-										<input type="hidden" name="businessId" value="testBusinessId">
+										<input type="hidden" name="businessId" value="${sessionScope.BusinessUser.businessId}">
 										<span class="fw-bold me-3">문의구분</span>
 										<input type="radio" name=businessDivision id="businessDivision1" value="불편신고">
 										<label for="businessDivision1" class="text-secondary me-3">불편신고</label>
