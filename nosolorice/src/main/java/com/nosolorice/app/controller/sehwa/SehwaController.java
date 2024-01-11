@@ -94,7 +94,7 @@ public class SehwaController {
 					String name, String businessName, String bankName, long bankNumber,
 					String phone1, String phone2, String phone3, int postNum, String address1, 
 					@RequestParam(required = false, defaultValue = "") String address2,
-					HttpServletRequest request) throws IOException {
+					HttpServletRequest request, HttpSession session) throws IOException {
 		
 		String nPass = oldPass;
 		if(pass != null && !pass.isEmpty()) nPass = pass;
@@ -126,6 +126,9 @@ public class SehwaController {
 		}
 		
 		service.businessUserInfoUpdate(user);
+		
+		BusinessUser bUser = service.getBusinessUserInfo(businessId);
+		session.setAttribute("BusinessUser", bUser);
 		
 		return "redirect:/businessUserStoreInfo?id=" + businessId;
 	}	
@@ -253,6 +256,7 @@ public class SehwaController {
 		review.setBookingOkNo(reviewBookingNo);
 		review.setReviewScore(starPoint);
 		review.setReviewContent(reviewContent);
+		System.out.println("Review : BookingNo : " + reviewBookingNo);
 
 		if(multi != null && !multi.isEmpty()) {
 			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
@@ -356,18 +360,18 @@ public class SehwaController {
 	
 	@RequestMapping("/storeOpen")
 	public String storeOpen(String id, HttpSession session) {
-		BusinessUser user = service.getBusinessUserInfo(id);
-		user.setStoreOnoff("open");
+		service.storeOpen(id);
 		
+		BusinessUser user = service.getBusinessUserInfo(id);
 		session.setAttribute("BusinessUser", user);
 		return "redirect:/businessUserStoreInfo?id=testBusinessId";
 	}
 	
 	@RequestMapping("/storeClose")
 	public String storeClose(String id, HttpSession session) {
-		BusinessUser user = service.getBusinessUserInfo(id);
-		user.setStoreOnoff("close");
+		service.storeClose(id);
 		
+		BusinessUser user = service.getBusinessUserInfo(id);
 		session.setAttribute("BusinessUser", user);
 		return "redirect:/businessUserStoreInfo?id=testBusinessId";
 	}

@@ -130,7 +130,7 @@
                 <c:if test="${not empty bookingList}">
 	                <c:forEach var="bookingList" items="${bookingList}" begin="0" end="${size}">
 		                <tr class="border-bottom">
-		                  <td class="visitantBookingOkNo">${bookingList.no}</td>
+		                  <td class="visitantBookingOkNo">${bookingList.listNo}</td>
 		                  <td class="visitantBusinessName">${bookingList.businessUser.businessName}</td>
 		                  <td>
 		                  	<input type="hidden" class="businessId" value="${bookingList.businessUser.businessId}">
@@ -446,7 +446,7 @@
     	let businessId = $(this).parents().find(".businessId").val();
     	$(".reviewBusinessUser").val(businessId);
     	// 방문관리번호 연결하기
-    	let bookingOkNo = $(this).closest('tr').find(".visitantBookingOkNo").text();
+    	let bookingOkNo = $(this).data('no');
     	$(".reviewBookingNo").val(bookingOkNo);
     });
     

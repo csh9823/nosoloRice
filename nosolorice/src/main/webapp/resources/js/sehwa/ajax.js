@@ -32,6 +32,11 @@ $(function() {
 		let break02 = $("#breakTime02").val();
 		let breakTime = break01 + "~" + break02;
 		
+		if ($("#hours24").is(":checked")) {
+			openTime = '24:00';
+			closeTime = '24:00';
+		}
+	
 		$.ajax({
 			"url" : "storeTimeUpdate.ajax",
 			"data" : {
@@ -42,7 +47,7 @@ $(function() {
 				breakTime : breakTime
 			},
 			"type" : "post",
-			"dataType" : "json",
+			"dataType" : "text",
 			"success" : function(resData) {
 				console.log(resData);
 			},
@@ -50,6 +55,7 @@ $(function() {
 				console.log("error : ", status, "-", err);
 			}		
 		});
+
 	}); 
 
 	$(document).on("click", "#storeIntroductionUpdateBtn", function() {

@@ -24,8 +24,10 @@
 				phone = #{user.phone},
 				postNum = #{user.postNum},
 				address1 = #{user.address1},
-				address2 = #{user.address2},
-				business_profile = #{user.businessProfile}
+				address2 = #{user.address2}
+				<if test="user.businessProfile != null">
+				,business_profile = #{user.businessProfile}
+				</if>
 			WHERE 
 				business_id = #{id}
 	</update>
@@ -206,8 +208,10 @@
 				email = #{email},
 				postnum = #{postNum},
 				address1 = #{address1},
-				address2 = #{address2},
-				profile = #{profile}
+				address2 = #{address2}
+			<if test="profile != null">
+				,profile = #{profile}
+			</if>
 			WHERE	
 				normal_id = #{normalId}
 	</update>
@@ -331,8 +335,23 @@
 				normal_id = #{id}
 	</delete>
 	
+	<update id="storeClose">
+		UPDATE
+			business_user
+		SET
+			store_onoff = 'close'
+		WHERE 
+			business_id = #{id}
+	</update>
 	
-	
+	<update id="storeOpen">
+		UPDATE
+			business_user
+		SET
+			store_onoff = 'open'
+		WHERE 
+			business_id = #{id}
+	</update>
 	
 	
 	

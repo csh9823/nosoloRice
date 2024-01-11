@@ -119,7 +119,7 @@
                 
       
                 <!-- 버튼들 -->
-                <button type="button" class="btn btn-danger me-2">충전</button>
+                <button type="button" class="btn btn-danger me-2" onclick="location.href='chargePoint'">충전</button>
                 <a class="nav-link" class="btn btn-primary" href='${  not empty sessionScope.NormalUser  ? "logout" : "login" }'>
                   ${ not empty sessionScope.NormalUser  ? "로그아웃" : "로그인" }
               </a>
