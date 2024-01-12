@@ -182,11 +182,11 @@ public class AdminPageController {
 	  //리뷰 삭제 번호 가져오기
 	  @RequestMapping("/reviewDeleteProcess")
 	  @ResponseBody
-	  public Map<String,Object>reviewDeleteProcess(int reviewNo,int pageNum){
+	  public Map<String,Object>reviewDeleteProcess(int reviewNo,int pageNum, String businessId){
 		  
 		  Map<String,Object> mapReview = new HashMap<>();
 		  
-		  adminPageService.reviewDelete(reviewNo);
+		  adminPageService.reviewDelete(reviewNo, businessId);
 		  
 		  mapReview.put("result", true);
 

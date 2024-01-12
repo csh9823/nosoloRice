@@ -102,14 +102,10 @@
               <!-- login -->
               <div class="d-flex justify-content-evenly align-items-center">
       
-                <!-- search_bar -->
-                <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="search" placeholder="가게명/음식메뉴" aria-label="Search">
-                  <button class="btn me-2" type="submit"><i class="bi bi-search"></i></button>
-                </form>
+          
       
                 <!-- 유저_프로필 -->
-                <a href="#"><img src="resources/upload/${sessionScope.NormalUser.profile}" class="rounded-circle me-2 "style="width:100px; width:100px;"/></a>
+                <a href="#"><img src="resources/upload/${sessionScope.NormalUser.profile}" class="rounded-circle "style="width:100px; width:100px;"/></a>
       
                 <!-- 포인트 -->          
                 <div class="d-flex flex-column mb-2 ">

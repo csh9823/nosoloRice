@@ -41,7 +41,7 @@ public interface AdminPageService {
 	
 	public abstract NormalUser normalUser(String id);
 
-	public abstract void reviewDelete(int reviewNo);
+	public abstract void reviewDelete(int reviewNo, String businessId);
 	
 	public abstract Map<String,Object> adminNormalInquiryList(int pageNum);
 	
