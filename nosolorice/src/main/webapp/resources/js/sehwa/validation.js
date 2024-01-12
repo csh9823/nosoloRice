@@ -25,7 +25,7 @@ $(function() {
 	 	$.ajax({
 	 		url : "verifyNumSMS.ajax", 
 	 		data : {
-	 			mobile : "01081313703"
+	 			mobile : mobile
 	 		},
 	 		type : "post",
 	 		"dataType" : "json",
