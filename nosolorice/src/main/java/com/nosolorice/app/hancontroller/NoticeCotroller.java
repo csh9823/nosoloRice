@@ -37,7 +37,7 @@ public class NoticeCotroller {
 
 		model.addAllAttributes(bList);
 		
-		return "/forward:WEB-INF/views/noticeList.jsp";
+		return "forward:WEB-INF/views/noticeList.jsp";
 		
 	}
 	
@@ -49,7 +49,7 @@ public class NoticeCotroller {
 			
 			model.addAllAttributes(noticeNormal);
 			
-			return "/forward:WEB-INF/views/noticeNormal.jsp";
+			return "/noticeNormal";
 			
 		}
 		
@@ -67,7 +67,7 @@ public class NoticeCotroller {
 	@RequestMapping("/noticeWrite")
 	public String noticeWrite() {
 		
-		return"/noticeWrite";
+		return"forward:WEB-INF/views/noticeWrite.jsp";
 	}
 
 	
@@ -99,7 +99,7 @@ public class NoticeCotroller {
 	
 		model.addAttribute("notice",notice);
 		
-		return "/forward:WEB-INF/views/noticeUpdate.jsp";
+		return "forward:WEB-INF/views/noticeUpdate.jsp";
 	}
 	
 	
@@ -123,7 +123,7 @@ public class NoticeCotroller {
 		  	  
 		  model.addAttribute("businessNotice",businessNotice);	
 		  
-		  return "/forward:WEB-INF/views/businessNoticeUpdate.jsp";
+		  return "forward:WEB-INF/views/businessNoticeUpdate.jsp";
 		  
 	  }
 	  
