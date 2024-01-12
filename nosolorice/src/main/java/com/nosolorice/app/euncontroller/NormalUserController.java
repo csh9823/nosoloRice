@@ -83,6 +83,7 @@ public class NormalUserController {
         	normalUser.setProfile(newName);
         } else {
         	String defaultImagePath = DEFAULT_PATH+"/profile_img.png";
+        	// String defaultImagePath = "defaultImage.png";
         	System.out.println("이용자_기본프로필 등록완료! : " + defaultImagePath);
         	normalUser.setProfile(defaultImagePath);
         }
