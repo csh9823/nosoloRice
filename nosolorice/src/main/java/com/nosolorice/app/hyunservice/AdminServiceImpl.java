@@ -54,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public void updateJoinApprove(int businessNumber) {
+	public void updateJoinApprove(long businessNumber) {
 		System.out.println("ajax서비스까지는 도착");
 		adminDao.updateJoinApprove(businessNumber);
 	}

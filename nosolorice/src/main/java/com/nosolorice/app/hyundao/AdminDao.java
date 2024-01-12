@@ -12,7 +12,7 @@ import com.nosolorice.app.domain.businessUser.JoinApprove;
 public interface AdminDao {
 	public abstract List<JoinApprove> getJoinApproveList(int start, int pageSize);
 	public abstract int getJoinApproveListCount();
-	public abstract void updateJoinApprove(int businessNumber);
+	public abstract void updateJoinApprove(long businessNumber);
 	public abstract void deleteJoinApprove(int no);
 	
 	public abstract List<BookingOk> getDailySalesList(int start, int pageSize);

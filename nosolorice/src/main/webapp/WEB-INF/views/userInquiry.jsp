@@ -60,7 +60,7 @@
 							
 								<div class="row my-3">
 									<div class="col">
-									<input type="hidden" name="normalId" value="testNormalId">
+									<input type="hidden" name="normalId" value="${sessionScope.NormalUser.normalId}">
 										<span class="fw-bold me-3">문의구분</span>
 										<input type="radio" name="inquiryDivision" id="inquiryDivision1" value="불편신고">
 										<label for="inquiryDivision1" class="text-secondary me-3">불편신고</label>

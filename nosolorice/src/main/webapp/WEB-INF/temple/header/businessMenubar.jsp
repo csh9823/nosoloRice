@@ -50,7 +50,7 @@
             <div class="menu row p-4" onclick="location.href='yesnoList?businessId=${sessionScope.BusinessUser.businessId}'">
               <span class="fs-4 fw-bold">예약관리</span>
             </div>
-            <div class="menu row p-4" onclick="location.href=''">
+            <div class="menu row p-4" onclick="location.href='businessSales'">
               <span class="fs-4 fw-bold">매출내역</span>
             </div>
             <div class="menu row p-4" onclick="location.href=''">

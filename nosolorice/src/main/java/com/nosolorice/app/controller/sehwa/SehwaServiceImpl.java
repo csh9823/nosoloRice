@@ -164,7 +164,8 @@ public class SehwaServiceImpl implements SehwaService {
 				Review review = dao.getReview(id, no);
 				
 				testNo --;
-				bMember.setNo(testNo);
+				bMember.setListNo(testNo);
+				bMember.setNo(no);
 				bMember.setMembers(memberId);
 				bMember.setNormalUser(normalUser);
 				bMember.setBusinessUser(dao.getBusinessUserInfo(businessId));
@@ -314,6 +315,16 @@ public class SehwaServiceImpl implements SehwaService {
 	@Override
 	public void deleteNormalUser(String id) {
 		dao.deleteNormalUser(id);
+	}
+
+	@Override
+	public void storeClose(String id) {
+		dao.storeClose(id);
+	}
+
+	@Override
+	public void storeOpen(String id) {
+		dao.storeOpen(id);
 	}
 	
 	

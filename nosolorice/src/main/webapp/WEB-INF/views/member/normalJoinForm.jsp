@@ -26,6 +26,12 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+/* input file 커스텀 */
+form input::file-selector-button {
+   display: none;
+}
+
 </style>
 
 <div class="container justify-content-center">
@@ -57,8 +63,9 @@ input[type='number'] {
           <!-- profile_img -->
          <div class="col-lg-4">
           <div class="col-sm-2">
-            <img src="resources/upload/normal_upload/profile_img.png" id="profilePreview" style="width: 400px; height: 400px;" class="rounded-circle">
-            <input type="file" accept="image/*" onchange="profileImage(this)" id="profileImageInput" name="profileImageInput">
+            <img src="resources/upload/profile_img.png" id="profilePreview" style="width: 400px; height: 400px;" class="rounded-circle">
+            <label for="profileImageInput" style="width: 200px; padding-top: 10px; color:#515151;">프로필 이미지 업로드하기</label>
+            <input type="file" accept="image/*" onchange="profileImage(this)" id="profileImageInput" name="profileImageInput" style="display:none;">
           </div> 
          </div> 
 

@@ -64,13 +64,13 @@ public class JinBookingDaoImpl implements JinBookingInterfaceDao {
 		Map<String, Object> map = new HashMap<>();
 		map.put("businessId", businessId);
 		map.put("bookingNo", bookingNo);
-		return sqlSession.selectList(NAME_SPACE + ".bookinguserdelete",map);
+		return sqlSession.selectList(NAME_SPACE + ".bookingUserList",map);
 	}
 	
 	// 방문완료 생성
 	public void visitantuseradd(String normalId, String businessId,int bookingokNo) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("businessId", businessId);
+		map.put("normalId", normalId);
 		map.put("bookingokNo", bookingokNo);
 		map.put("businessId", businessId);
 		

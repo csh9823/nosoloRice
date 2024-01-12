@@ -123,7 +123,7 @@
                                          </div>
                                      </div>
 
-                                     <div class="row m-2 rounded" id="bookModalShowStoreDetailBtn" style="cursor:pointer;">
+                                     <div class="row m-2 rounded" id="proposeStoreInfo" style="cursor:pointer;">
                                              <div class="col-auto p-0">
                                                  <img class="rounded bookModalBusinessProfile" style="width:120px; height:120px;">
                                              </div>
@@ -516,7 +516,6 @@
                                      </div>
                                      <!-- 홈 버튼 컨텐트 끝 -->
 
-
                                      <!-- 메뉴 버튼 컨텐트 시작 -->
                                      <div id="storeDeatilMenuContent" class="h-100 d-none">
                                          <div id="storeMenuDiv" class="h-100">
@@ -527,7 +526,6 @@
                                      </div>
                                      <!-- 메뉴 버튼 컨텐트 끝 -->
 
-
                                      <!-- 리뷰 버튼 컨텐트 시작 -->
                                      <div id="storeDeatilReviewContent" class="h-100 d-none">
                                          <!-- 리뷰가 없을 때 -->
@@ -535,7 +533,6 @@
                                          <!-- 메뉴가 있을 때 -->
                                      </div>
                                      <!-- 리뷰 버튼 컨텐트 끝 -->
-
 
                                      <!-- 예약하기 버튼 컨텐트 시작 -->
                                      <div id="storeDeatilBookContent" class="d-none">

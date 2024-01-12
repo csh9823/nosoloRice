@@ -206,6 +206,10 @@
 			
 	</update>
 	
+	<delete id="deleteOwnerComment" parameterType="hashmap">
+		delete from owner_comment where review_no = #{reviewNo} and business_id = #{businessId}
+	</delete>
+	
 
 		<!-- 신고 리스트 -->
 	<resultMap id="reportResultMap" type="ReportDetails">

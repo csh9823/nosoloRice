@@ -30,4 +30,8 @@ public class JinloginService implements JinloginInterface {
 		
 		return jinLoginDaoImpl.loginRootUser(id, pass);
 	}
+	
+	public String deniedUser(String id) {
+		return jinLoginDaoImpl.deniedUser(id);
+	}
 }

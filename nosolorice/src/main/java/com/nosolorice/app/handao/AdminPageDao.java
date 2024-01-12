@@ -63,7 +63,7 @@ public interface AdminPageDao {
 
 	public abstract void answerBusinessInquiry(BusinessInquiry businessInquiry);
 	
-	
+	public abstract void deleteOwnerComment(int reviewNo, String businessId);
 	
 	
 	

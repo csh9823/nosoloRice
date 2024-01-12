@@ -161,10 +161,10 @@ public class AdminPageDaoImpl implements AdminPageDao {
 
 	@Override
 	public void reviewDelete(int reviewNo) {
-			
 		sqlSession.delete(Mapper+".reviewDelete",reviewNo);
-	
 	}
+	
+	
 
 	@Override
 	public void businessDelete(String id) {
@@ -230,6 +230,15 @@ public class AdminPageDaoImpl implements AdminPageDao {
 		
 		sqlSession.update(Mapper + ".businessAnswerInquiry");
 		
+	}
+
+	@Override
+	public void deleteOwnerComment(int reviewNo, String businessId) {
+		Map<String,Object> map = new HashMap<>();
+		
+		map.put("reviewNo", reviewNo);
+		map.put("businessId", businessId);
+		sqlSession.delete(Mapper + ".deleteOwnerComment", map);		
 	}
 
 

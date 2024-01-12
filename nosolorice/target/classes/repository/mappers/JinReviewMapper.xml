@@ -13,8 +13,7 @@ SELECT normal_user.profile normalProfile,
        review.review_blind reviewBlind,
        review.regdate reviewRegdate,
        review.review_delete revieWdelet,
-       owner_comment.business_comment ownerComment,
-       total_reviews.total_count totalCount
+       owner_comment.business_comment ownerComment
 FROM normal_user
 LEFT JOIN review ON normal_user.normal_id = review.normal_id
 LEFT JOIN owner_comment ON review.review_no = owner_comment.review_no
@@ -37,7 +36,8 @@ WHERE review_no = #{revireNo}
 <update id="Businessriviewdelete">
 UPDATE review
 SET
-review_delete = '1'
+review_delete = '1',
+review_request_regdate = SYSDATE()
 WHERE review_no = #{revireNo} 
 </update>
 
@@ -57,6 +57,12 @@ WHERE review_no = #{reviewNo}
 DELETE FROM owner_comment
 Where review_no = ${reviewNo} 
 </delete>
+
+<select id="getreviewcoung" resultType="String" parameterType="String">
+SELECT COUNT(*) AS reviewCount
+FROM review
+WHERE business_id = #{businessId}
+</select>
 
 </mapper>	
 

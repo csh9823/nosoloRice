@@ -34,8 +34,7 @@ public class BusinessUserController {
 	@Autowired
 	private BusinessUserServiceImpl businessUserServiceImpl;
 	
-	private static final String REG_DEFAULT_PATH = "/resources/upload/business_upload";
-	private static final String DEFAULT_PATH = "/resources/upload/business_profile";
+	private static final String DEFAULT_PATH = "/resources/upload";
 	
 	@Autowired
 	public void setBusinessService(BusinessUserService businessUserService) {
@@ -94,7 +93,7 @@ public class BusinessUserController {
 
         // 이미지들
         if(!businessProfile.isEmpty() && !businessPicture.isEmpty()) {
-        	String regfilePath = req.getServletContext().getRealPath(REG_DEFAULT_PATH);
+        	String regfilePath = req.getServletContext().getRealPath(DEFAULT_PATH);
         	String profilePath = req.getServletContext().getRealPath(DEFAULT_PATH);
         	
         	UUID regUid = UUID.randomUUID();
@@ -113,12 +112,12 @@ public class BusinessUserController {
         	businessUser.setBusinessProfile(profileNewName);
         } else if(businessProfile.isEmpty() && !businessPicture.isEmpty()) {
         	// 기본프로필이미지 등록
-        	String defaultImagePath = "/resources/upload/business_upload/profile_img.png";
+        	String defaultImagePath = "profile_img.png";
         	System.out.println("사업자_기본프로필 등록완료! : " + defaultImagePath);
         	businessUser.setBusinessProfile(defaultImagePath);
         	
         	// 사업자등록증이미지 등록
-        	String regfilePath = req.getServletContext().getRealPath(REG_DEFAULT_PATH);
+        	String regfilePath = req.getServletContext().getRealPath(DEFAULT_PATH);
         	UUID regUid = UUID.randomUUID();
         	String regNewName = regUid.toString() + "_" + businessPicture.getOriginalFilename();
         	File regFile = new File(regfilePath, regNewName);
@@ -128,6 +127,7 @@ public class BusinessUserController {
         }        
 
         businessUserService.addBusinessUser(businessUser);
+        businessUserService.addJoinApprove(businessId);
 
         // 사업자도 회원가입 후 무조건 로그인이여야 하는가
         return "redirect:login";

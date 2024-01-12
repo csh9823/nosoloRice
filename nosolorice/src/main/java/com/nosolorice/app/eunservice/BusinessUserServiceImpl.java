@@ -88,5 +88,10 @@ public class BusinessUserServiceImpl implements BusinessUserService {
 			}
 			   
 		}
+
+	@Override
+	public void addJoinApprove(String businessId) {
+		businessUserDao.joinApprove(businessId);
+	}
    
 }

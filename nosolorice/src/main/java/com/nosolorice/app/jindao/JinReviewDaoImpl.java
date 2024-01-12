@@ -49,4 +49,8 @@ public class JinReviewDaoImpl implements JinReviewInterfacDao {
 	public void OwnerCommentdelete(int reviewNo) {
 		sqlSession.delete(NAME_SPACE + ".OwnerCommentdelete",reviewNo);
 	}
+	
+	public String getreviewcoung(String businessId) {
+		return sqlSession.selectOne(NAME_SPACE + ".getreviewcoung",businessId);
+	}
 }

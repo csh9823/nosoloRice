@@ -1,14 +1,12 @@
 $(function(){
 
 	let loginId = $("#loginId").val();
-	console.log(loginId);
 	$.ajax({
 		url: "isMatchingCheck",
 		data : "id=" + loginId,
 		type : "post",
 		dataType : "json",
 		success : function(resData){
-			console.log("resData : ", resData);
 			if(resData.result){
 				location.href="/app/chating"
 			}
@@ -394,15 +392,12 @@ $(function(){
             	dataType : "json",
             	async : false,
             	success : function(resData){
-            		console.log(resData);
             		blockList = resData;
             	}, error : function(err){
             		console.log(err);
             	}
             });
-            
-            console.log("blockList : ", blockList);
-            
+                        
 			const matchingData = {
 				loginId : loginId,
 		        memberCount : memberCount,
@@ -435,19 +430,15 @@ $(function(){
 	    socket = new WebSocket(url);
 	    
 	    //matching 웹소켓 서버에 연결 됬을 때 이벤트
-	    $(socket).on("open", function(event) {
-	    	console.log("matching 웹소켓 서버에 연결 되었습니다.");      	
+	    $(socket).on("open", function(event) {      	
 	    	const data = JSON.stringify(matchingData);
 			socket.send(data);            	
 		});
 	    
 	    //matching 웹소켓 서버에서 메시지가 왔을 때 이벤트    						
 		socket.addEventListener('message', function(event){
-		    
-		    console.log('서버로부터 메시지 수신:', event.data); // 문자열로 출력
-		    
+		    		    
 		    const messageObj = JSON.parse(event.data);
-		    console.log(messageObj);
 		    
 		    //ajax통신으로 messageObj객체를 서버에 보내 DB작업을 해야함
 		    //1. chat_room테이블에 정보저장
@@ -460,7 +451,6 @@ $(function(){
 		    	type : "post",
 		    	dataType: "json",
 		    	success : function(resData){
-		    		console.log(resData);
 		    		if(resData.success){
 			    		//db작업이 끝나면 채팅창으로 이동
 					    //채팅창에서 db를 검색해 자동으로 roomId가 엔드포인트인 웹소켓 서버로 연결 시켜줄거임
@@ -542,7 +532,6 @@ $(function(){
                     
                     // 비지니스 로직 시작
                     address = addr;
-                    console.log("검색한 주소 : ", address);
 
                     // 검색이 끝나면 지도API를 검색한 주소로 이동한다.
                     geocoder.addressSearch(address, (res, stat) => { 
@@ -591,7 +580,6 @@ $(function(){
     		dataType : "json",
     		async : false,
     		success : function(resData){
-    			console.log(resData);
     			xPoint = resData.xpoint;
     			yPoint = resData.ypoint;
     		}, error : function(err){

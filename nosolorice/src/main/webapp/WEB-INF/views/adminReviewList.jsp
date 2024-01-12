@@ -218,10 +218,13 @@ ul {
 	<script>
     	
     	let reviewNo = 0;
+    	let businessId = "";
     	
     	$(".reviewRow").on('click',function(){
     		
     		reviewNo = $(this).find('.reviewNo').text().trim();
+    		
+    		businessId = $(this).find('.businessId').text().trim();
     		
     		console.log(reviewNo);
     		
@@ -363,7 +366,7 @@ ul {
         			
         			url : "/app/reviewDeleteProcess",
         			type : "post",
-        			data : "reviewNo=" + reviewNo + "&pageNum=" + pageNum,
+        			data : "reviewNo=" + reviewNo + "&pageNum=" + pageNum + "&businessId=" + businessId,
         			dataType : "json",			
         			success : function(resData){
 		

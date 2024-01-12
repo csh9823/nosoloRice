@@ -91,16 +91,18 @@ public class SehwaController {
 					@RequestParam(value="fileInput", required = false) MultipartFile multi,
 					String businessId, String oldPass, @RequestParam(required = false) String pass,
 					String mobile1, String mobile2, String mobile3, String mail, String domain, 
-					String name, String businessName, String bankName, int bankNumber,
+					String name, String businessName, String bankName, long bankNumber,
 					String phone1, String phone2, String phone3, int postNum, String address1, 
-					@RequestParam(required = false, defaultValue = "") String address2,
-					HttpServletRequest request) throws IOException {
+					@RequestParam(required = false, defaultValue = "") String address2, String xpoint, String ypoint,
+					HttpServletRequest request, HttpSession session) throws IOException {
 		
 		String nPass = oldPass;
 		if(pass != null && !pass.isEmpty()) nPass = pass;
 		String mobile = mobile1 + "-" + mobile2 + "-" + mobile3;
 		String email = mail + domain;
 		String phone = phone1 + "-" + phone2 + "-" + phone3;
+		System.out.println("xpoint : " + xpoint + "ypoint : " + ypoint);
+		
 		
 		BusinessUser user = new BusinessUser();
 		user.setBusinessId(businessId);
@@ -115,6 +117,8 @@ public class SehwaController {
 		user.setPostNum(postNum);
 		user.setAddress1(address1);
 		user.setAddress2(address2);
+		user.setXpoint(xpoint);
+		user.setYpoint(ypoint);
 		
 		if(multi != null && !multi.isEmpty()) {
 			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
@@ -127,7 +131,10 @@ public class SehwaController {
 		
 		service.businessUserInfoUpdate(user);
 		
-		return "redirect:/businessUserStoreInfo?id=testBusinessId";
+		BusinessUser bUser = service.getBusinessUserInfo(businessId);
+		session.setAttribute("BusinessUser", bUser);
+		
+		return "redirect:/businessUserStoreInfo?id=" + businessId;
 	}	
 
 	@RequestMapping(value="/normalUserInfoUpdate", method = RequestMethod.GET)
@@ -140,7 +147,7 @@ public class SehwaController {
 	@RequestMapping(value="/normalUserInfoUpdate", method = RequestMethod.POST)
 	public String normalUserInfoUpdate(String normalId, String name, String nickName, 
 							String oldPass, @RequestParam(required = false) String pass,
-							int birth1, int birth2, int birth3, 
+							int birth1, int birth2, int birth3, String xpoint, String ypoint,
 							String mobile1, String mobile2, String mobile3, String mail, String domain,
 							int postNum, String address1, @RequestParam(required = false) String address2, 
 							@RequestParam(value="fileInput", required=false) MultipartFile multi,
@@ -151,6 +158,8 @@ public class SehwaController {
 		String birth = birth1 + "-" + birth2 + "-" + birth3;
 		String mobile = mobile1 + "-" + mobile2 + "-" + mobile3;
 		String email = mail + domain;
+		System.out.println("xpoint : " + xpoint + "ypoint : " + ypoint );
+		
 		
 		NormalUser user = new NormalUser();
 		user.setNormalId(normalId);
@@ -163,6 +172,8 @@ public class SehwaController {
 		user.setPostNum(postNum);
 		user.setAddress1(address1);
 		user.setAddress2(address2);
+		user.setXpoint(xpoint);
+		user.setYpoint(ypoint);
 		
 		if(multi != null && !multi.isEmpty()) {
 			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
@@ -253,6 +264,7 @@ public class SehwaController {
 		review.setBookingOkNo(reviewBookingNo);
 		review.setReviewScore(starPoint);
 		review.setReviewContent(reviewContent);
+		System.out.println("Review : BookingNo : " + reviewBookingNo);
 
 		if(multi != null && !multi.isEmpty()) {
 			String filePath = request.getServletContext().getRealPath(DEFAULT_PATH);
@@ -356,20 +368,20 @@ public class SehwaController {
 	
 	@RequestMapping("/storeOpen")
 	public String storeOpen(String id, HttpSession session) {
-		BusinessUser user = service.getBusinessUserInfo(id);
-		user.setStoreOnoff("open");
+		service.storeOpen(id);
 		
+		BusinessUser user = service.getBusinessUserInfo(id);
 		session.setAttribute("BusinessUser", user);
-		return "redirect:/businessUserStoreInfo?id=testBusinessId";
+		return "redirect:/businessUserStoreInfo?id=" + id;
 	}
 	
 	@RequestMapping("/storeClose")
 	public String storeClose(String id, HttpSession session) {
-		BusinessUser user = service.getBusinessUserInfo(id);
-		user.setStoreOnoff("close");
+		service.storeClose(id);
 		
+		BusinessUser user = service.getBusinessUserInfo(id);
 		session.setAttribute("BusinessUser", user);
-		return "redirect:/businessUserStoreInfo?id=testBusinessId";
+		return "redirect:/businessUserStoreInfo?id=" + id;
 	}
 	
 	

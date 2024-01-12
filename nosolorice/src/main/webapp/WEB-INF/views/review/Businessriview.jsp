@@ -115,7 +115,7 @@
                 <div class="col-2"><span style="font-size: 30px; color: rgb(201,60,60);"><strong>리뷰</strong></span></div>
             </div>
             <div class="row">
-                <div class="col-2"><span style="font-size: 20px;"><strong>리뷰(${review[0].totalCount})</strong></div>
+                <div class="col-2"><span style="font-size: 20px;"><strong>리뷰(${reviewCount})</strong></div>
             </div>
             
             <c:forEach var="rev" items="${review}">
@@ -147,16 +147,19 @@
                 <div class="col-2" style="text-align: right;">
                     <a href="Businessriviewblind?revireNo=${rev.revireNo}"><button class="revblind">블라인드</button></a>
                 </div>
-                <c:if test="${rev.revieWdelet eq '1'}">
-                <div class="col-2">
-                    <a href="Businessriviewdelete?revireNo=${rev.revireNo}"><button class="revdelete">요청완료</button></a>
-                </div>
-                </c:if>
-                <c:if test="${rev.revieWdelet ne '1'}">
-                <div class="col-2">
-                    <a href="Businessriviewdelete?revireNo=${rev.revireNo}"><button class="revdelete">삭제요청</button></a>
-                </div>
-                </c:if>
+                
+				<c:if test="${rev.revieWdelet eq '1'}">
+				    <div class="col-2">
+				        <button class="revdelete">요청중</button>
+				    </div>
+				</c:if>
+				
+				<c:if test="${rev.revieWdelet ne '1'}">
+				    <div class="col-2">
+				        <a href="Businessriviewdelete?revireNo=${rev.revireNo}"><button class="revdelete">삭제요청</button></a>
+				    </div>
+				</c:if>
+                
             </div>
 
             <div class="row">
@@ -203,7 +206,7 @@
 <div id="modal2">
         <div class="modal2-content">
             <div class="row">
-                <div class="col" style="font-size: 20px; margin-left: 28px;margin-bottom: 10px;"> <strong>예약 거절 사유를 입력해 주세요</strong></div>
+                <div class="col" style="font-size: 20px; margin-left: 28px;margin-bottom: 10px;"> <strong>사장님 답글을 달아주세요~</strong></div>
             </div>
 
             <div class="row">
@@ -227,7 +230,7 @@
 <div id="modal3">
         <div class="modal3-content">
             <div class="row">
-                <div class="col" style="font-size: 20px; margin-left: 28px;margin-bottom: 10px;"> <strong>예약 거절 사유를 입력해 주세요</strong></div>
+                <div class="col" style="font-size: 20px; margin-left: 28px;margin-bottom: 10px;"> <strong>답글을 달아 주세요</strong></div>
             </div>
 
             <div class="row">

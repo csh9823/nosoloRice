@@ -13,7 +13,7 @@ SELECT
     booking_count * deposit AS deposit,
 	booking_book_no AS bookingBookNo,
 	deposit,
-	booking_chatname AS bookingChatName 
+	booking_chatname AS bookingChatName
 FROM booking
 where business_id = #{businessId}
 </select>
