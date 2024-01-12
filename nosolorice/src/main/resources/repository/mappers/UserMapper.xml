@@ -1,388 +1,384 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.nosolorice.app.mapper.UserMapper" >
 
-	<insert id="writeUserInquiry" parameterType="UserInquiry">
-		insert into user_inquiry values(null, #{inquiryDivision}, #{inquiryTitle}, #{inquiryPicture}, now(), #{inquiryContent}, null, null, #{normalId})
-	</insert>
-	<select id="getUserInquiry" parameterType="hashmap" resultMap="userInquiryMap" resultType="UserInquiry">
-		select * from user_inquiry where normal_id = #{normalId} order by user_inquiry_no desc LIMIT #{start}, #{pageSize}
-	</select>
-	<select id="getUserInquiryListCount" parameterType="hashmap" resultType="int">
-		select count(user_inquiry_no) from user_inquiry where normal_id = #{normalId}
-	</select>
-	
-	<insert id="addChatRoom" parameterType="hashmap">
-		insert into chat_room values(#{roomId}, #{memberCount}, #{locationMethod}, #{locationInfo}, null) ON DUPLICATE KEY UPDATE room_id = room_id
-	</insert>
-	<insert id="addChatMember" parameterType="hashmap">
-		insert into chat_member values(#{id}, #{roomId})
-	</insert>
-	
-	<select id="chatMemberCheck" resultType="int">
-		select count(normal_id) from normal_user where normal_id = #{id} 
-	</select>
-	
-	<select id="getRoomId" resultType="String">
-		select room_id as roomId from chat_member where normal_id = #{id}
-	</select>
-	
-	<select id="getChatHistory" resultType="ChatHistory">
-		select 
-		chat_history.chat_no as chatNo, 
-		chat_history.normal_id as normalId, 
-		normal_user.nickname as nickName, 
-		chat_history.chat_name as chatName, 
-		chat_history.chat_type as chatType, 
-		chat_history.chat_message as chatMessage, 
-		chat_history.chat_regdate as chatRegDate 
-		from chat_history  
-		JOIN 
-    	normal_user ON chat_history.normal_id = normal_user.normal_id 
-		where chat_name = #{roomId} order by chat_regdate
-	</select>
-	
-	<select id="getChatRoomInfo" resultType="java.util.Map">
-		select 
-		room_id as roomId,
-		member_count as memberCount,
-		location_method as locationMethod,
-		location_info as locationInfo,
-		expiry_time as expiryTime
-		from chat_room where room_id = #{roomId}
-	</select>
-	
-	<insert id="addChatMessage" parameterType="ChatHistory">
-		insert into chat_history values(null, #{normalId}, #{chatName}, #{chatType}, #{chatMessage}, now())
-	</insert>
-	
-	<select id="isMatchingCheck" resultType="int">
-		select count(normal_id) as count from chat_member where normal_id = #{id}
-	</select>
-	
-	
-	<select id="getStoreListByMap" parameterType="hashmap" resultType="BusinessUser" resultMap="businessUserMap">
-	SELECT
-	b.*, 
-	6371 * 2 * ASIN(SQRT(
+   <insert id="writeUserInquiry" parameterType="UserInquiry">
+      insert into user_inquiry values(null, #{inquiryDivision}, #{inquiryTitle}, #{inquiryPicture}, now(), #{inquiryContent}, null, null, #{normalId})
+   </insert>
+   <select id="getUserInquiry" parameterType="hashmap" resultMap="userInquiryMap" resultType="UserInquiry">
+      select * from user_inquiry where normal_id = #{normalId} order by user_inquiry_no desc LIMIT #{start}, #{pageSize}
+   </select>
+   <select id="getUserInquiryListCount" parameterType="hashmap" resultType="int">
+      select count(user_inquiry_no) from user_inquiry where normal_id = #{normalId}
+   </select>
+   
+   <insert id="addChatRoom" parameterType="hashmap">
+      insert into chat_room values(#{roomId}, #{memberCount}, #{locationMethod}, #{locationInfo}, null) ON DUPLICATE KEY UPDATE room_id = room_id
+   </insert>
+   <insert id="addChatMember" parameterType="hashmap">
+      insert into chat_member values(#{id}, #{roomId})
+   </insert>
+   
+   <select id="chatMemberCheck" resultType="int">
+      select count(normal_id) from normal_user where normal_id = #{id} 
+   </select>
+   
+   <select id="getRoomId" resultType="String">
+      select room_id as roomId from chat_member where normal_id = #{id}
+   </select>
+   
+   <select id="getChatHistory" resultType="ChatHistory">
+      select 
+      chat_history.chat_no as chatNo, 
+      chat_history.normal_id as normalId, 
+      normal_user.nickname as nickName, 
+      chat_history.chat_name as chatName, 
+      chat_history.chat_type as chatType, 
+      chat_history.chat_message as chatMessage, 
+      chat_history.chat_regdate as chatRegDate 
+      from chat_history  
+      JOIN 
+       normal_user ON chat_history.normal_id = normal_user.normal_id 
+      where chat_name = #{roomId} order by chat_regdate
+   </select>
+   
+   <select id="getChatRoomInfo" resultType="java.util.Map">
+      select 
+      room_id as roomId,
+      member_count as memberCount,
+      location_method as locationMethod,
+      location_info as locationInfo,
+      expiry_time as expiryTime
+      from chat_room where room_id = #{roomId}
+   </select>
+   
+   <insert id="addChatMessage" parameterType="ChatHistory">
+      insert into chat_history values(null, #{normalId}, #{chatName}, #{chatType}, #{chatMessage}, now())
+   </insert>
+   
+   <select id="isMatchingCheck" resultType="int">
+      select count(normal_id) as count from chat_member where normal_id = #{id}
+   </select>
+   
+   
+   <select id="getStoreListByMap" parameterType="hashmap" resultType="BusinessUser" resultMap="businessUserMap">
+   SELECT
+   b.*, 
+   6371 * 2 * ASIN(SQRT(
         POWER(SIN((RADIANS(xpoint) - RADIANS(#{lat})) / 2), 2) +
         COS(RADIANS(#{lat})) * COS(RADIANS(xpoint)) *
         POWER(SIN((RADIANS(ypoint) - RADIANS(#{lng})) / 2), 2)
     )) AS distance, 
-	AVG(r.review_score) AS totalScore, 
+   AVG(r.review_score) AS totalScore, 
     COUNT(r.business_id) AS totalReviewCount 
-	FROM business_user b 
-	LEFT JOIN 
+   FROM business_user b 
+   LEFT JOIN 
     review r ON b.business_id = r.business_id 
     WHERE 
     b.store_onoff = 'open' 
-	GROUP BY 
-	b.business_id, 
+   GROUP BY 
+   b.business_id, 
     b.business_name 
     <if test="sortType == 'distance'">
-		ORDER BY distance
-	</if>
-	<if test="sortType == 'totalScore'">
-		ORDER BY totalScore DESC
-	</if>
-	<if test="sortType == 'totalReviewCount'">
-		ORDER BY totalReviewCount DESC
-	</if>
-	</select>
+      ORDER BY distance
+   </if>
+   <if test="sortType == 'totalScore'">
+      ORDER BY totalScore DESC
+   </if>
+   <if test="sortType == 'totalReviewCount'">
+      ORDER BY totalReviewCount DESC
+   </if>
+   </select>
 
-	<select id="getStoreListByAddress" parameterType="hashmap"  resultType="BusinessUser" resultMap="businessUserMap">
-	SELECT
-	b.*, 
-	AVG(r.review_score) AS totalScore, 
+   <select id="getStoreListByAddress" parameterType="hashmap"  resultType="BusinessUser" resultMap="businessUserMap">
+   SELECT
+   b.*, 
+   AVG(r.review_score) AS totalScore, 
     COUNT(r.business_id) AS totalReviewCount 
-	FROM business_user b 
-	LEFT JOIN
+   FROM business_user b 
+   LEFT JOIN
     review r ON b.business_id = r.business_id 
     WHERE 
     b.address1 = #{address} and b.store_onoff = 'open' 
-	GROUP BY 
-	b.business_id, 
+   GROUP BY 
+   b.business_id, 
     b.business_name 
     <if test="sortType == 'totalScore'">
-		ORDER BY totalScore DESC
-	</if>
-	<if test="sortType == 'totalReviewCount'">
-		ORDER BY totalReviewCount DESC
-	</if>
-	</select>
-	
-	<select id="getReviewList" resultMap="reviewResultMap">
-		select * from review where business_id = #{businessId}
-	</select>
-	
-	<select id="getMenuList" resultType="Menu">
-		SELECT 
-		menu.menu_no as menuNo, 
-		menu.menu_name as menuName, 
-		menu.menu_price as menuPrice, 
-		menu.menu_info as menuInfo, 
-		menu.menu_origin as menuOrigin, 
-		menu.menu_picture as menuPicture, 
-		menu_category.menu_category_name as menuCategoryName 
-		FROM menu
-		JOIN menu_category ON menu.menu_category_no = menu_category.menu_category_no
-		WHERE menu_category.business_id = #{businessId}; 
-	</select>
-	
-	<select id="getReviewWriterInfo" resultType="NormalUser">
-		select
-		nickname as nickName,
-		profile
-		from  normal_user
-		where normal_id = #{id}
-	</select>
-	
-	<select id="getBusinessUserInfo" resultType="BusinessUser" resultMap="businessUserMap">
-		SELECT 
-		b.*, 
-		AVG(r.review_score) AS totalScore, 
-	    COUNT(r.business_id) AS totalReviewCount 
-		FROM business_user b 
-		LEFT JOIN
-	    review r ON b.business_id = r.business_id 
-	    WHERE 
-	    b.business_id = #{businessId} 
-		GROUP BY 
-		b.business_id, 
-	    b.business_name
-	</select>
-	
-	<select id="getNormalUserInfo" resultType="NormalUser" resultMap="normalUserMap">
-		select
-		* 
-		from  normal_user
-		where normal_id = #{normalId}
-	</select>
-	
-	<select id="searchStoreListByAddress" parameterType="hashmap" resultType="BusinessUser" resultMap="businessUserMap">
-			SELECT DISTINCT
-		    b.*,
-		    COALESCE(review_data.totalScore, 0) AS totalScore,
-		    COALESCE(review_data.totalReviewCount, 0) AS totalReviewCount
-		FROM
-		    business_user b
-		    LEFT JOIN (
-		        SELECT
-		            business_id,
-		            AVG(review_score) AS totalScore,
-		            COUNT(business_id) AS totalReviewCount
-		        FROM
-		            review 
-				WHERE 
-					b.store_onoff = 'open' 
-		        GROUP BY
-		            business_id
-		    ) review_data ON b.business_id = review_data.business_id
-		    LEFT JOIN menu_category mc ON b.business_id = mc.business_id
-		    LEFT JOIN menu m ON mc.menu_category_no = m.menu_category_no
-		WHERE
-		    (b.business_name LIKE '%${keyword}%' OR m.menu_name LIKE '%${keyword}%') and b.address1 = #{address} 
-	    <if test="sortType == 'totalScore'">
-			ORDER BY totalScore DESC
-		</if>
-		<if test="sortType == 'totalReviewCount'">
-			ORDER BY totalReviewCount DESC
-		</if>
-	</select>
-	
-	<select id="searchStoreListByMap" parameterType="hashmap" resultType="BusinessUser" resultMap="businessUserMap">
-		SELECT DISTINCT
-		    b.*,
-			6371 * 2 * ASIN(SQRT(
-			POWER(SIN((RADIANS(xpoint) - RADIANS(#{lat})) / 2), 2) +
-			COS(RADIANS(#{lat})) * COS(RADIANS(xpoint)) *
-			POWER(SIN((RADIANS(ypoint) - RADIANS(#{lng})) / 2), 2)
-			)) AS distance, 
-		    COALESCE(review_data.totalScore, 0) AS totalScore,
-		    COALESCE(review_data.totalReviewCount, 0) AS totalReviewCount
-		FROM
-		    business_user b
-		    LEFT JOIN (
-		        SELECT
-		            business_id,
-		            AVG(review_score) AS totalScore,
-		            COUNT(business_id) AS totalReviewCount
-		        FROM
-		            review 
-				WHERE 
-					b.store_onoff = 'open' 
-		        GROUP BY
-		            business_id
-		    ) review_data ON b.business_id = review_data.business_id
-		    LEFT JOIN menu_category mc ON b.business_id = mc.business_id
-		    LEFT JOIN menu m ON mc.menu_category_no = m.menu_category_no
-		WHERE
-		    b.business_name LIKE '%${keyword}%'
-		    OR m.menu_name LIKE '%${keyword}%'
-		<if test="sortType == 'distance'">
-			ORDER BY distance
-		</if>
-		<if test="sortType == 'totalScore'">
-			ORDER BY totalScore DESC
-		</if>
-		<if test="sortType == 'totalReviewCount'">
-			ORDER BY totalReviewCount DESC
-		</if>
+      ORDER BY totalScore DESC
+   </if>
+   <if test="sortType == 'totalReviewCount'">
+      ORDER BY totalReviewCount DESC
+   </if>
+   </select>
+   
+   <select id="getReviewList" resultMap="reviewResultMap">
+      select * from review where business_id = #{businessId}
+   </select>
+   
+   <select id="getMenuList" resultType="Menu">
+      SELECT 
+      menu.menu_no as menuNo, 
+      menu.menu_name as menuName, 
+      menu.menu_price as menuPrice, 
+      menu.menu_info as menuInfo, 
+      menu.menu_origin as menuOrigin, 
+      menu.menu_picture as menuPicture, 
+      menu_category.menu_category_name as menuCategoryName 
+      FROM menu
+      JOIN menu_category ON menu.menu_category_no = menu_category.menu_category_no
+      WHERE menu_category.business_id = #{businessId}; 
+   </select>
+   
+   <select id="getReviewWriterInfo" resultType="NormalUser">
+      select
+      nickname as nickName,
+      profile
+      from  normal_user
+      where normal_id = #{id}
+   </select>
+   
+   <select id="getBusinessUserInfo" resultType="BusinessUser" resultMap="businessUserMap">
+      SELECT 
+      b.*, 
+      AVG(r.review_score) AS totalScore, 
+       COUNT(r.business_id) AS totalReviewCount 
+      FROM business_user b 
+      LEFT JOIN
+       review r ON b.business_id = r.business_id 
+       WHERE 
+       b.business_id = #{businessId} 
+      GROUP BY 
+      b.business_id, 
+       b.business_name
+   </select>
+   
+   <select id="getNormalUserInfo" resultType="NormalUser" resultMap="normalUserMap">
+      select
+      * 
+      from  normal_user
+      where normal_id = #{normalId}
+   </select>
+   
+   <select id="searchStoreListByAddress" parameterType="hashmap" resultType="BusinessUser" resultMap="businessUserMap">
+         SELECT DISTINCT
+          b.*,
+          COALESCE(review_data.totalScore, 0) AS totalScore,
+          COALESCE(review_data.totalReviewCount, 0) AS totalReviewCount
+      FROM
+          business_user b
+          LEFT JOIN (
+              SELECT
+                  business_id,
+                  AVG(review_score) AS totalScore,
+                  COUNT(business_id) AS totalReviewCount
+              FROM
+                  review 
+              GROUP BY
+                  business_id
+          ) review_data ON b.business_id = review_data.business_id
+          LEFT JOIN menu_category mc ON b.business_id = mc.business_id
+          LEFT JOIN menu m ON mc.menu_category_no = m.menu_category_no
+      WHERE
+          (b.business_name LIKE '%${keyword}%' OR m.menu_name LIKE '%${keyword}%') and b.address1 = #{address} and b.store_onoff = 'open'  
+       <if test="sortType == 'totalScore'">
+         ORDER BY totalScore DESC
+      </if>
+      <if test="sortType == 'totalReviewCount'">
+         ORDER BY totalReviewCount DESC
+      </if>
+   </select>
+   
+   <select id="searchStoreListByMap" parameterType="hashmap" resultType="BusinessUser" resultMap="businessUserMap">
+      SELECT DISTINCT
+          b.*,
+         6371 * 2 * ASIN(SQRT(
+         POWER(SIN((RADIANS(xpoint) - RADIANS(#{lat})) / 2), 2) +
+         COS(RADIANS(#{lat})) * COS(RADIANS(xpoint)) *
+         POWER(SIN((RADIANS(ypoint) - RADIANS(#{lng})) / 2), 2)
+         )) AS distance, 
+          COALESCE(review_data.totalScore, 0) AS totalScore,
+          COALESCE(review_data.totalReviewCount, 0) AS totalReviewCount
+      FROM
+          business_user b
+          LEFT JOIN (
+              SELECT
+                  business_id,
+                  AVG(review_score) AS totalScore,
+                  COUNT(business_id) AS totalReviewCount
+              FROM
+                  review  
+              GROUP BY
+                  business_id
+          ) review_data ON b.business_id = review_data.business_id
+          LEFT JOIN menu_category mc ON b.business_id = mc.business_id
+          LEFT JOIN menu m ON mc.menu_category_no = m.menu_category_no
+      WHERE
+          (b.business_name LIKE '%${keyword}%' OR m.menu_name LIKE '%${keyword}%')
+          and b.store_onoff = 'open' 
+      <if test="sortType == 'distance'">
+         ORDER BY distance
+      </if>
+      <if test="sortType == 'totalScore'">
+         ORDER BY totalScore DESC
+      </if>
+      <if test="sortType == 'totalReviewCount'">
+         ORDER BY totalReviewCount DESC
+      </if>
 
-	</select>
-	
-	<insert id="addChatMemberReport" parameterType="ReportDetails">
-		insert into report_details values(null, #{reportContent}, #{reportPicture}, #{reportReporter}, #{reportAttacker}, now())
-	</insert>
-	
-	<insert id="addChatMemberBlock" parameterType="BlockHistory">
-		insert into block_history values(null, now(), #{blockState}, #{blocker}, #{blockAttacker})
-	</insert>
-	
-	<select id="getRecentBookingNo" resultType="int" parameterType="Booking">
-		SELECT COALESCE(MAX(booking_book_no), 0) FROM booking WHERE business_id = #{businessId}
-	</select>
-	
-	<insert id="addBooking" parameterType="Booking">
-		insert into booking values(null, #{bookingCount}, #{bookingRequest}, #{bookingTime}, #{bookingState}, #{bookingBookNo}, #{businessId}, #{deposit}, #{bookingChatName})
-	</insert>
-	
-	<delete id="deleteBooking" parameterType="hashmap">
-		delete from booking where business_id = #{businessId} and booking_book_no = #{bookingBookNo}
-	</delete>
-	
-	<select id="getBookingInfo" parameterType="Booking" resultType="Booking" resultMap="bookingMap">
-		select * from booking where booking_chatname = #{roomId}
-	</select>
-	
-	<delete id="deleteChatMember">
-		delete from chat_member where normal_id = #{normalId}
-	</delete>
-	
-	<insert id="addBookingUserList" parameterType="BookingUserList">
-		insert into booking_userlist values(#{normalId}, #{businessId}, #{bookingNo})
-	</insert>
-	
-	<select id="getBookingIndex" parameterType="BookingUserList" resultType="int">
-		select booking_no from booking where business_id = #{businessId} and booking_book_no = #{bookNo}
-	</select>
-	
-	<delete id="deleteBookingUserList">
-		delete from booking_userlist WHERE normal_id = #{normalId}
-	</delete>
-	
-	<update id="payWithPoint" parameterType="hashmap">
-		update normal_user set mypoint = (mypoint - #{deposit}) where normal_id = #{normalId}
-	</update>
-	
-	<select id="getBookingUserList" parameterType="hashmap" resultType="NormalUser">
-		SELECT nu.nickname as nickName
-		FROM booking_userlist bu
-		JOIN normal_user nu ON bu.normal_id = nu.normal_id
-		WHERE bu.booking_no = #{bookingNo}
-	</select>
-	
-	<select id="getBlockList" resultType="BlockHistory" resultMap="blockResultMap">
-		select * from block_history where blocker = #{blocker}		
-	</select>
-	
-	<resultMap id="blockResultMap" type="BlockHistory">
-		<id property="blockHistoryNo" column="block_history_no"/>
-		<result property="blockDate" column="block_date"/>
-		<result property="blockState" column="block_state"/>
-		<result property="blocker" column="blocker"/>
-		<result property="blockAttacker" column="block_attacker"/>
-	</resultMap>
-	
-	
-	<resultMap id="bookingMap" type="Booking">
-		<id property="bookingNo" column="booking_no"/>
-		<result property="bookingCount" column="booking_count"/>
-		<result property="bookingRequest" column="booking_request"/>
-		<result property="bookingTime" column="booking_time"/>
-		<result property="bookingState" column="booking_state"/>
-		<result property="bookingBookNo" column="booking_book_no"/>
-		<result property="businessId" column="business_id"/>
-		<result property="deposit" column="deposit"/>
-		<result property="bookingChatName" column="booking_chatname"/>
-	</resultMap>
-	
-	<resultMap id="normalUserMap" type="NormalUser">
-		<id property="normalId" column="normal_id"/>
-		<result property="pass" column="pass"/>
-		<result property="name" column="name"/>
-		<result property="birth" column="birth"/>
-		<result property="nickName" column="nickname"/>
-		<result property="mobile" column="mobile"/>
-		<result property="profile" column="profile"/>
-		<result property="postNum" column="postnum"/>
-		<result property="address1" column="address1"/>
-		<result property="address2" column="address2"/>
-		<result property="xpoint" column="xpoint"/>
-		<result property="ypoint" column="ypoint"/>
-		<result property="gender" column="gender"/>
-		<result property="email" column="email"/>
-		<result property="regDate" column="regdate"/>
-		<result property="myPoint" column="mypoint"/>
-		<result property="root" column="root"/>
-	</resultMap>
-	
-	<resultMap id="businessUserMap" type="BusinessUser">
-	   <id property="businessId" column="business_id"/>
-	   <result property="pass" column="pass"/>
-	   <result property="name" column="name"/>
-	   <result property="phone" column="phone"/>
-	   <result property="businessNumber" column="business_number"/>
-	   <result property="businessName" column="business_name"/>
-	   <result property="businessPicture" column="business_picture"/>
-	   <result property="email" column="email"/>
-	   <result property="mobile" column="mobile"/>
-	   <result property="postNum" column="postnum"/>
-	   <result property="address1" column="address1"/>
-	   <result property="address2" column="address2"/>
-	   <result property="xpoint" column="xpoint"/>
-	   <result property="ypoint" column="ypoint"/>
-	   <result property="businessProfile" column="business_profile"/>
-	   <result property="bankName" column="bank_name"/>
-	   <result property="bankNumber" column="bank_number"/>
-	   <result property="deposit" column="deposit"/>
-	   <result property="openTime" column="open_time"/>
-	   <result property="closeTime" column="close_time"/>
-	   <result property="breakTime" column="break_time"/>
-	   <result property="dayOff" column="day_off"/>
-	   <result property="introduction" column="introduction"/>
-	   <result property="regDate" column="regdate"/>
-	   <result property="storeOnoff" column="store_onoff"/>
-	   <result property="okNoOk" column="ok_nook"/>
-	   <result property="root" column="root"/>
-	</resultMap>
+   </select>
+   
+   <insert id="addChatMemberReport" parameterType="ReportDetails">
+      insert into report_details values(null, #{reportContent}, #{reportPicture}, #{reportReporter}, #{reportAttacker}, now())
+   </insert>
+   
+   <insert id="addChatMemberBlock" parameterType="BlockHistory">
+      insert into block_history values(null, now(), #{blockState}, #{blocker}, #{blockAttacker})
+   </insert>
+   
+   <select id="getRecentBookingNo" resultType="int" parameterType="Booking">
+      SELECT COALESCE(MAX(booking_book_no), 0) FROM booking WHERE business_id = #{businessId}
+   </select>
+   
+   <insert id="addBooking" parameterType="Booking">
+      insert into booking values(null, #{bookingCount}, #{bookingRequest}, #{bookingTime}, #{bookingState}, #{bookingBookNo}, #{businessId}, #{deposit}, #{bookingChatName})
+   </insert>
+   
+   <delete id="deleteBooking" parameterType="hashmap">
+      delete from booking where business_id = #{businessId} and booking_book_no = #{bookingBookNo}
+   </delete>
+   
+   <select id="getBookingInfo" parameterType="Booking" resultType="Booking" resultMap="bookingMap">
+      select * from booking where booking_chatname = #{roomId}
+   </select>
+   
+   <delete id="deleteChatMember">
+      delete from chat_member where normal_id = #{normalId}
+   </delete>
+   
+   <insert id="addBookingUserList" parameterType="BookingUserList">
+      insert into booking_userlist values(#{normalId}, #{businessId}, #{bookingNo})
+   </insert>
+   
+   <select id="getBookingIndex" parameterType="BookingUserList" resultType="int">
+      select booking_no from booking where business_id = #{businessId} and booking_book_no = #{bookNo}
+   </select>
+   
+   <delete id="deleteBookingUserList">
+      delete from booking_userlist WHERE normal_id = #{normalId}
+   </delete>
+   
+   <update id="payWithPoint" parameterType="hashmap">
+      update normal_user set mypoint = (mypoint - #{deposit}) where normal_id = #{normalId}
+   </update>
+   
+   <select id="getBookingUserList" parameterType="hashmap" resultType="NormalUser">
+      SELECT nu.nickname as nickName
+      FROM booking_userlist bu
+      JOIN normal_user nu ON bu.normal_id = nu.normal_id
+      WHERE bu.booking_no = #{bookingNo}
+   </select>
+   
+   <select id="getBlockList" resultType="BlockHistory" resultMap="blockResultMap">
+      select * from block_history where blocker = #{blocker}      
+   </select>
+   
+   <resultMap id="blockResultMap" type="BlockHistory">
+      <id property="blockHistoryNo" column="block_history_no"/>
+      <result property="blockDate" column="block_date"/>
+      <result property="blockState" column="block_state"/>
+      <result property="blocker" column="blocker"/>
+      <result property="blockAttacker" column="block_attacker"/>
+   </resultMap>
+   
+   
+   <resultMap id="bookingMap" type="Booking">
+      <id property="bookingNo" column="booking_no"/>
+      <result property="bookingCount" column="booking_count"/>
+      <result property="bookingRequest" column="booking_request"/>
+      <result property="bookingTime" column="booking_time"/>
+      <result property="bookingState" column="booking_state"/>
+      <result property="bookingBookNo" column="booking_book_no"/>
+      <result property="businessId" column="business_id"/>
+      <result property="deposit" column="deposit"/>
+      <result property="bookingChatName" column="booking_chatname"/>
+   </resultMap>
+   
+   <resultMap id="normalUserMap" type="NormalUser">
+      <id property="normalId" column="normal_id"/>
+      <result property="pass" column="pass"/>
+      <result property="name" column="name"/>
+      <result property="birth" column="birth"/>
+      <result property="nickName" column="nickname"/>
+      <result property="mobile" column="mobile"/>
+      <result property="profile" column="profile"/>
+      <result property="postNum" column="postnum"/>
+      <result property="address1" column="address1"/>
+      <result property="address2" column="address2"/>
+      <result property="xpoint" column="xpoint"/>
+      <result property="ypoint" column="ypoint"/>
+      <result property="gender" column="gender"/>
+      <result property="email" column="email"/>
+      <result property="regDate" column="regdate"/>
+      <result property="myPoint" column="mypoint"/>
+      <result property="root" column="root"/>
+   </resultMap>
+   
+   <resultMap id="businessUserMap" type="BusinessUser">
+      <id property="businessId" column="business_id"/>
+      <result property="pass" column="pass"/>
+      <result property="name" column="name"/>
+      <result property="phone" column="phone"/>
+      <result property="businessNumber" column="business_number"/>
+      <result property="businessName" column="business_name"/>
+      <result property="businessPicture" column="business_picture"/>
+      <result property="email" column="email"/>
+      <result property="mobile" column="mobile"/>
+      <result property="postNum" column="postnum"/>
+      <result property="address1" column="address1"/>
+      <result property="address2" column="address2"/>
+      <result property="xpoint" column="xpoint"/>
+      <result property="ypoint" column="ypoint"/>
+      <result property="businessProfile" column="business_profile"/>
+      <result property="bankName" column="bank_name"/>
+      <result property="bankNumber" column="bank_number"/>
+      <result property="deposit" column="deposit"/>
+      <result property="openTime" column="open_time"/>
+      <result property="closeTime" column="close_time"/>
+      <result property="breakTime" column="break_time"/>
+      <result property="dayOff" column="day_off"/>
+      <result property="introduction" column="introduction"/>
+      <result property="regDate" column="regdate"/>
+      <result property="storeOnoff" column="store_onoff"/>
+      <result property="okNoOk" column="ok_nook"/>
+      <result property="root" column="root"/>
+   </resultMap>
 
-	<resultMap id="reviewResultMap" type="Review">
-	   <id property="reviewNo" column="review_no"/>
-	   <result property="reviewContent" column="review_content"/>
-	   <result property="reviewPicture" column="review_picture"/>
-	   <result property="reviewScore" column="review_score"/>
-	   <result property="regDate" column="regdate"/>
-	   <result property="reviewBlind" column="review_blind"/>
-	   <result property="reviewDelete" column="review_delete"/>
-	   <result property="normalId" column="normal_id"/>
-	   <result property="businessId" column="business_id"/>
-	   <result property="bookingOkNo" column="bookingok_no"/>
-	   <result property="reviewRequestRegDate" column="review_request_regdate"/>
-	</resultMap>	
-	
-	<resultMap type="UserInquiry" id="userInquiryMap">
-		<id property="userInquiryNo" column="user_inquiry_no" />
-		<result property="inquiryDivision" column="inquiry_division" />
-		<result property="inquiryTitle" column="inquiry_title" />
-		<result property="inquiryPicture" column="inquiry_picture" />
-		<result property="inquiryRegDate" column="inquiry_regdate" />
-		<result property="inquiryContent" column="inquiry_content" />
-		<result property="inquiryComment" column="inquiry_comment" />
-		<result property="inquiryCommentRegDate" column="inquiry_comment_regdate" />
-		<result property="normalId" column="normal_id" />
-	</resultMap>
-	
+   <resultMap id="reviewResultMap" type="Review">
+      <id property="reviewNo" column="review_no"/>
+      <result property="reviewContent" column="review_content"/>
+      <result property="reviewPicture" column="review_picture"/>
+      <result property="reviewScore" column="review_score"/>
+      <result property="regDate" column="regdate"/>
+      <result property="reviewBlind" column="review_blind"/>
+      <result property="reviewDelete" column="review_delete"/>
+      <result property="normalId" column="normal_id"/>
+      <result property="businessId" column="business_id"/>
+      <result property="bookingOkNo" column="bookingok_no"/>
+      <result property="reviewRequestRegDate" column="review_request_regdate"/>
+   </resultMap>   
+   
+   <resultMap type="UserInquiry" id="userInquiryMap">
+      <id property="userInquiryNo" column="user_inquiry_no" />
+      <result property="inquiryDivision" column="inquiry_division" />
+      <result property="inquiryTitle" column="inquiry_title" />
+      <result property="inquiryPicture" column="inquiry_picture" />
+      <result property="inquiryRegDate" column="inquiry_regdate" />
+      <result property="inquiryContent" column="inquiry_content" />
+      <result property="inquiryComment" column="inquiry_comment" />
+      <result property="inquiryCommentRegDate" column="inquiry_comment_regdate" />
+      <result property="normalId" column="normal_id" />
+   </resultMap>
+   
 </mapper>

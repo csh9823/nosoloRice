@@ -24,8 +24,8 @@
   	<div class="col-md-9">
 	    <form class="row" name ="businessUserInfoUpdate" id="businessUserInfoUpdate" 
 	    		action="businessUserInfoUpdate" method="post" enctype="multipart/form-data">
-	      <input type="text" name="xpoint" id="xpoint" value="${BusinessUser.xpoint }">
-	      <input type="text" name="ypoint" id="ypoint" value="${BusinessUser.ypoint }">
+	      <input type="hidden" name="xpoint" id="xpoint" value="${BusinessUser.xpoint }">
+	      <input type="hidden" name="ypoint" id="ypoint" value="${BusinessUser.ypoint }">
 	      <div class="col-3 pt-5 ps-2">
 	      	<div class="row">
 	      		<div class="col">
