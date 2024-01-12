@@ -27,7 +27,7 @@ $(document).ready(function () {
     let x = $("#xpoint").val();
     let y = $("#ypoint").val();
     let bNo = $("#bNoCheck").val();
-
+	
 	if (bid.trim() === "") {
         alert("아이디는 공란으로 둘 수 없습니다. \n입력 후 다시 시도해 주세요.");
         return false;
@@ -78,10 +78,14 @@ $(document).ready(function () {
         return false;
     }
     
-    if (regImg === "" || regImg === null) {
+    if (regImg === "" || regImg === null ) {
         alert("사업자 확인을 위해 사업자등록증 사본 이미지를 반드시 업로드 해 주세요.");
         return false;
     }
+    
+	function isValidImageFile(file) {
+	    return file.type.startsWith('image/');
+	}
     
     if (bankcode === "") {
         alert("은행을 반드시 선택해 주세요.");
