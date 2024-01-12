@@ -54,7 +54,7 @@ public class UserController {
 	
 	@RequestMapping("userInquiry")
 	public String userInquiry(Model model) {
-		return "forward:userInquiry";
+		return "userInquiry";
 	}
 	
 	@RequestMapping("userInquiryList")
@@ -65,7 +65,7 @@ public class UserController {
 		
 		model.addAllAttributes(userService.getUserInquiryList(pageNum, normalId));
 		
-		return "forward:userInquiryList";
+		return "userInquiryList";
 	}
 	
 	@RequestMapping("writeUserInquiry")

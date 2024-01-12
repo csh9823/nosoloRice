@@ -45,19 +45,35 @@
 	    @OnOpen
 	    public void onOpen(Session session, @PathParam("roomId") String roomId) throws JsonProcessingException {
 	    	System.out.println(session + "님이 " + roomId + "채팅방에 연결 되었습니다");
+	    	session.getUserProperties().put("roomId", roomId);
 	    }
 	    
 	    @OnMessage
 	    public void onMessage(String message, Session session) throws IOException {
-	    	
+	    	System.out.println(message);
 	    	// 클라이언트에서 보낸 채팅메시지를 객체형태로 받는다
 	    	Map<String, Object> msg = om.readValue(message, new TypeReference<Map<String, Object>>() {});
+	    		    	
+	        // 현재 세션의 roomId 가져오기
+	        String currentRoomId = (String) session.getUserProperties().get("roomId");
+
+	        // 모든 열려있는 세션 가져오기
+	        Set<Session> allSessions = session.getOpenSessions();
+	        
+	        // 현재 세션과 동일한 roomId를 가진 세션들을 chatMember로 묶기
+	        Set<Session> chatMember = new HashSet<>();
+	        for (Session s : allSessions) {
+	            String roomId = (String) s.getUserProperties().get("roomId");
+	            if (currentRoomId != null && currentRoomId.equals(roomId)) {
+	                chatMember.add(s);
+	            }
+	        }
+
 	    	
-	    	Set<Session> chatMember = session.getOpenSessions();
+	    	
 	    	if(msg.get("chatType").equals("connect")) {
-	    		
+
 	    		String nickName = (String)msg.get("nickName").toString();
-	    		System.out.println("유저가 처음에 등록한 NickName" + nickName);
 	    		session.getUserProperties().put("nickName", nickName);
 	    		
 	    		Set<String> nickNames = new HashSet<>();
@@ -211,6 +227,30 @@
 	    @OnClose
 	    public void onClose(Session session) throws IOException {
 	    	System.out.println(session.getId() + "님의 웹소켓 연결이 해제되었습니다.");
+	    	
+	        // 현재 세션의 roomId 가져오기
+	        String currentRoomId = (String) session.getUserProperties().get("roomId");
+	        String nickName = (String) session.getUserProperties().get("nickName");
+
+	        // 모든 열려있는 세션 가져오기
+	        Set<Session> allSessions = session.getOpenSessions();
+	        
+	        // 현재 세션과 동일한 roomId를 가진 세션들을 chatMember로 묶기
+	        Set<Session> chatMember = new HashSet<>();
+	        for (Session s : allSessions) {
+	            String roomId = (String) s.getUserProperties().get("roomId");
+	            if (currentRoomId != null && currentRoomId.equals(roomId)) {
+	                chatMember.add(s);
+	            }
+	        }
+	        for(Session s : chatMember) {
+	        	Map<String, Object> map = new HashMap<>();
+	        	map.put("chatType", "userClose");
+	        	map.put("closeNickName", nickName);
+    			String jsonData = om.writeValueAsString(map);
+    			s.getBasicRemote().sendText(jsonData);	
+	        }
+	    	
 	    }
 	
 	    @OnError

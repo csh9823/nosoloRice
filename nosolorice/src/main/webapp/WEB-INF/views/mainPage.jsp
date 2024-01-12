@@ -48,13 +48,13 @@
       <!-- 여기서부터 작업시작  -->
          <input type="hidden" id="isIntro" value="${introduce}">
          <!-- 매칭하기 버튼  -->
-         <div class="row my-5">
-            <div class="col text-center rounded" 
-            style="height : 500px; background-image: url('resources/image/mainBanner01.jpg'); background-size: cover;">
+         <div class="row my-5 rounded" style="background-color: #F7D6CF;box-shadow: 0 0 20px 0px rgb(214, 214, 214);">
+            <div class="col text-center" 
+            style="height : 500px; background-image: url('resources/image/mainBanner01.jpg'); background-size: cover; margin:10vh 0;">
                
                <div class="row h-100">
-                  <div class="col d-flex align-items-center justify-content-start p-5">
-                        <button class="btn btn-danger" style="width: 300px;height: 120px;" id="matchingStartBtn" onclick="location.href='matching'">
+                  <div class="col d-flex align-items-center justify-content-start">
+                        <button class="btn btn-danger" style="width: 300px;height: 120px;margin-left: 70px;" id="matchingStartBtn" onclick="location.href='matching'">
                            <div class="matchingTextAnimation">
                                    <span style="font-size:1em;">지</span>
                                    <span style="font-size:1em;">금</span>
