@@ -58,13 +58,12 @@
         <div class="col-md-3">
             <ul class="my-3">
                 <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">마이페이지</li>
-                <li class="my-5 fs-4"><a href="#">내 정보</a></li>
-                <li class="my-5 fs-4"><a href="#">내 예약이력</a></li>
-                <li class="my-5 fs-4"><a href="#">작성한 리뷰</a></li>
-                <li class="my-5 fs-4"><a href="#">포인트 충전내역</a></li>
-                <li class="my-5 fs-4"><a href="userReportList">신고내역</a></li>
-                <li class="my-5 fs-4"><a href="blockList">차단목록</a></li>
-
+                <li class="my-5 fs-4"><a href="normalUserInfoUpdate?id=${sessionScope.NormalUser.normalId}">내 정보</a></li>
+                <li class="my-5 fs-4"><a href="noramlUserBookingList?id=${sessionScope.NormalUser.normalId}">내 예약이력</a></li>
+                <li class="my-5 fs-4"><a href="pointList?id=${sessionScope.NormalUser.normalId}">포인트 충전내역</a></li>
+                <li class="my-5 fs-4"><a href="userReportList?id=${sessionScope.NormalUser.normalId}">신고내역</a></li>
+                <li class="my-5 fs-4"><a href="blockList?id=${sessionScope.NormalUser.normalId}">차단목록</a></li>
+				<li class="my-5 fs-4"><a href="normalUsesrSecession?id=${sessionScope.NormalUser.normalId}">탈퇴</a></li>
             </ul>
         </div>
 
