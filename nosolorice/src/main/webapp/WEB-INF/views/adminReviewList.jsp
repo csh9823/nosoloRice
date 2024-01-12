@@ -108,7 +108,7 @@ ul {
 										<div class="col-3 my-3 businessId">${r.businessId}</div>
 										<div class="col-2 my-3 bookingOkNo">${r.bookingOkNo}</div>
 										<div class="col-3 my-3 reviewRegDate">
-											<fmt:formatDate value="${r.reviewRequestRegDate}" pattern="yyyy-MM-dd a KK:mm:ss" />
+										<span><fmt:formatDate value="${r.reviewRequestRegDate}" pattern="yyyy-MM-dd a KK:mm:ss" /></span>
 										</div>
 										<input type="hidden" class="modalRegDate" value="${r.regDate}">
 										<input type="hidden" class="starScore" value="${r.reviewScore}"> 
@@ -333,8 +333,9 @@ ul {
     		   
     		  $("#reviewContent").text(reviewContent);
     		  
+    		  if(reviewPicture.length > 0){
     		  $("#reviewPicture").empty().append(`<img src= 'resources/upload/` + reviewPicture + `' style="max-width: 100%;">`);
-
+    		  }
     		  $("#profile").empty().append(`<img src='resources/upload/` + profile + `' class="rounded-circle" style="width:100px;">`);
     		  
     		  $("#nickName").text(nickName);
