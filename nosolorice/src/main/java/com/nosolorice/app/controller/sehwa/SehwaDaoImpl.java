@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.nosolorice.app.domain.Review.OwnerComment;
 import com.nosolorice.app.domain.Review.Review;
 import com.nosolorice.app.domain.booking.Booking;
 import com.nosolorice.app.domain.booking.BookingOk;
@@ -278,6 +279,16 @@ public class SehwaDaoImpl implements SehwaDao {
 	@Override
 	public void storeOpen(String id) {
 		sqlSession.update(NAME_SPACE + ".storeOpen", id);
+	}
+
+	@Override
+	public OwnerComment getOwnerCommnet(int reviewNo) {
+		return sqlSession.selectOne(NAME_SPACE + ".getOwnerComment", reviewNo);
+	}
+
+	@Override
+	public void deleteOwnerComment(int reviewNo) {
+		sqlSession.delete(NAME_SPACE + ".deleteOwnerComment", reviewNo);
 	}
 
 

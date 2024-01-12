@@ -3,6 +3,7 @@ package com.nosolorice.app.controller.sehwa;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.nosolorice.app.domain.Review.OwnerComment;
 import com.nosolorice.app.domain.Review.Review;
 import com.nosolorice.app.domain.booking.Booking;
 import com.nosolorice.app.domain.booking.BookingOk;
@@ -85,6 +86,9 @@ public interface SehwaDao {
 	
 	public void storeOpen(String id);
 	
+	public OwnerComment getOwnerCommnet(int reviewNo);
+	
+	public void deleteOwnerComment(int reviewNo);
 	
 	
 	
