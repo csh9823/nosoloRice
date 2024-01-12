@@ -206,7 +206,7 @@
 <div id="modal2">
         <div class="modal2-content">
             <div class="row">
-                <div class="col" style="font-size: 20px; margin-left: 28px;margin-bottom: 10px;"> <strong>예약 거절 사유를 입력해 주세요</strong></div>
+                <div class="col" style="font-size: 20px; margin-left: 28px;margin-bottom: 10px;"> <strong>사장님 답글을 달아주세요~</strong></div>
             </div>
 
             <div class="row">

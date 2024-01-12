@@ -8,4 +8,5 @@ public interface JinLoginInterfaceDao {
 	abstract public BusinessUser loginBusinessUser(String id, String pass);
 	abstract public NormalUser loginNormalUser(String id, String pass);
 	abstract public RootUser loginRootUser(String id, String pass);
+	abstract public String deniedUser(String id);
 }

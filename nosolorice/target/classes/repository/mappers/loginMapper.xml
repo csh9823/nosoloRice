@@ -69,6 +69,13 @@ from root_user
 where root_id = #{id} and root_pass = #{pass}
 </select>
 
+<select id="deniedUser" resultType="String">
+select
+normal_id
+from denied_user
+where normal_id = #{id}
+</select>
+
 </mapper>	
 
 

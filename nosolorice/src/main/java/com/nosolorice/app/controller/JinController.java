@@ -167,11 +167,10 @@ public class JinController {
 			}
 			
 			BusinessUser buser = jinloginService.loginBusinessUser(id, pass);
-			
 			NormalUser nuser = jinloginService.loginNormalUser(id, pass);
-			
 			RootUser ruser = jinloginService.loginRootUser(id, pass);
-
+			String stop = jinloginService.deniedUser(id);
+			
 			if(buser != null) {
 				System.out.println(buser.getBusinessId());
 				session.setAttribute("BusinessUser", buser);
@@ -179,9 +178,17 @@ public class JinController {
 			}
 			
 			if(nuser != null) {
-				System.out.println(nuser.getNormalId());
-				session.setAttribute("NormalUser", nuser);
-				return "redirect:mainPage";
+				if(stop != null) {
+					response.setContentType("text/html; charset=utf-8");
+					out.println("<script>");
+					out.println("	alert('정지된 회원 입니다.');");
+					out.println("	history.back();");
+					out.println("</script>");
+				}else {
+					System.out.println(nuser.getNormalId());
+					session.setAttribute("NormalUser", nuser);
+					return "redirect:mainPage";
+				}
 			}
 			
 			if(ruser != null) {

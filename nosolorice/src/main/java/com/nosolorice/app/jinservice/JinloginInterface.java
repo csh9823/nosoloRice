@@ -9,4 +9,5 @@ public interface JinloginInterface {
 	
 	abstract public NormalUser loginNormalUser(String id, String pass);
 	abstract public RootUser loginRootUser(String id, String pass);
+	abstract public String deniedUser(String id);
 }
