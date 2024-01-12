@@ -246,10 +246,9 @@ public class AdminPageServiceImpl implements AdminPageService {
 	}
 
 	@Override
-	public void reviewDelete(int reviewNo) {
-
+	public void reviewDelete(int reviewNo, String businessId) {
+		adminPageDao.deleteOwnerComment(reviewNo, businessId);
 		adminPageDao.reviewDelete(reviewNo);
-
 	}
 	
 	@Override

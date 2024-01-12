@@ -42,4 +42,8 @@ public class JinLoginDaoImpl implements JinLoginInterfaceDao {
 		map.put("pass",  pass);
 		return sqlSession.selectOne(NAME_SPACE + ".loginRootUser", map );
 	}
+	
+	public String deniedUser(String id) {
+		return sqlSession.selectOne(NAME_SPACE + ".deniedUser", id );
+	}
 }

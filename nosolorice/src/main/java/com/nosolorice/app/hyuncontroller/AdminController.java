@@ -40,7 +40,7 @@ public class AdminController {
 	
 	@RequestMapping("joinApproveProcess.ajax")
 	@ResponseBody
-	public Map<String, String> joinApproveProcess(int businessNumber, int no){	
+	public Map<String, String> joinApproveProcess(long businessNumber, int no){	
 		// 사업자 회원정보의 상태값 y로 바꾸기
 		adminService.updateJoinApprove(businessNumber);
 		adminService.deleteJoinApprove(no);

@@ -43,6 +43,8 @@
       
                 <!-- 유저_프로필 -->
                 <img src="${sessionScope.NormalUser.profile}" style="width: 80px; height: 80px; border-radius: 50%;"/>
+                
+                <a href="#"><img src="resources/upload/${sessionScope.NormalUser.profile}" class="rounded-circle "style="width:100px; width:100px;"/></a>
       
                 <!-- 포인트 -->          
                 <div class="d-flex flex-column mb-2 ">
@@ -52,7 +54,7 @@
                 
       
                 <!-- 버튼들 -->
-                <button type="button" class="btn btn-danger me-2">충전</button>
+                <button type="button" class="btn btn-danger me-2" onclick="location.href='chargePoint'">충전</button>
                 <a class="nav-link" class="btn btn-primary" href='${  not empty sessionScope.NormalUser  ? "logout" : "login" }'>
                   ${ not empty sessionScope.NormalUser  ? "로그아웃" : "로그인" }
               </a>

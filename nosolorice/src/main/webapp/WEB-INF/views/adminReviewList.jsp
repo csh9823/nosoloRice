@@ -13,6 +13,7 @@
 <link
 	href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/variable/woff2/SUITE-Variable.css"
 	rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <script src="resources/js/summernote-lite.js"></script>
 <script src="resources/js/summernote-ko-KR.js"></script>
 <script src="resources//js/summerNote.js"></script>
@@ -107,7 +108,7 @@ ul {
 										<div class="col-3 my-3 businessId">${r.businessId}</div>
 										<div class="col-2 my-3 bookingOkNo">${r.bookingOkNo}</div>
 										<div class="col-3 my-3 reviewRegDate">
-											<fmt:formatDate value="${r.reviewRequestRegDate}" pattern="yyyy-MM-dd a KK:mm:ss" />
+										<span><fmt:formatDate value="${r.reviewRequestRegDate}" pattern="yyyy-MM-dd a KK:mm:ss" /></span>
 										</div>
 										<input type="hidden" class="modalRegDate" value="${r.regDate}">
 										<input type="hidden" class="starScore" value="${r.reviewScore}"> 
@@ -146,7 +147,7 @@ ul {
 											</div>
 											<div class="row">
 												<div class="col">
-													<span id="reviewRegDate">날짜</span>
+													<span id="reviewRegDate" style="font-size:12px;">날짜</span>
 
 												</div>
 												<div class="col text-end">
@@ -217,10 +218,13 @@ ul {
 	<script>
     	
     	let reviewNo = 0;
+    	let businessId = "";
     	
     	$(".reviewRow").on('click',function(){
     		
     		reviewNo = $(this).find('.reviewNo').text().trim();
+    		
+    		businessId = $(this).find('.businessId').text().trim();
     		
     		console.log(reviewNo);
     		
@@ -332,8 +336,9 @@ ul {
     		   
     		  $("#reviewContent").text(reviewContent);
     		  
+    		  if(reviewPicture.length > 0){
     		  $("#reviewPicture").empty().append(`<img src= 'resources/upload/` + reviewPicture + `' style="max-width: 100%;">`);
-
+    		  }
     		  $("#profile").empty().append(`<img src='resources/upload/` + profile + `' class="rounded-circle" style="width:100px;">`);
     		  
     		  $("#nickName").text(nickName);
@@ -361,7 +366,7 @@ ul {
         			
         			url : "/app/reviewDeleteProcess",
         			type : "post",
-        			data : "reviewNo=" + reviewNo + "&pageNum=" + pageNum,
+        			data : "reviewNo=" + reviewNo + "&pageNum=" + pageNum + "&businessId=" + businessId,
         			dataType : "json",			
         			success : function(resData){
 		

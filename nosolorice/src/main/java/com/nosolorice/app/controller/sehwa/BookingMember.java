@@ -9,6 +9,7 @@ import com.nosolorice.app.domain.normalUser.NormalUser;
 
 public class BookingMember {
 	
+	private int listNo;								// 출력no
 	private int no;									// 방문관리번호
 	private List<String> members;				// 같이 방문한 사람 아이디
 	private List<NormalUser> normalUser;	// 같이 방문한 사람 정보
@@ -19,8 +20,9 @@ public class BookingMember {
 	
 	
 	public BookingMember() {};
-	public BookingMember(int no, List<String> members, List<NormalUser> normalUser, BusinessUser businessUser,
+	public BookingMember(int listNo, int no, List<String> members, List<NormalUser> normalUser, BusinessUser businessUser,
 			Timestamp bookingTime, Boolean reviewStatus, Review review) {
+		this.listNo = listNo;
 		this.no = no;
 		this.members = members;
 		this.normalUser = normalUser;
@@ -74,6 +76,12 @@ public class BookingMember {
 	}
 	public void setReview(Review review) {
 		this.review = review;
+	}
+	public int getListNo() {
+		return listNo;
+	}
+	public void setListNo(int listNo) {
+		this.listNo = listNo;
 	}
 
 

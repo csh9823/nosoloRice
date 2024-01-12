@@ -34,7 +34,7 @@ public class AdminDaoImpl implements AdminDao {
 		return sqlSession.selectOne(NAME_SPACE + ".getJoinApproveListCount");
 	}
 	@Override
-	public void updateJoinApprove(int businessNumber) {
+	public void updateJoinApprove(long businessNumber) {
 		System.out.println("ajax다오까지는 도착");
 		sqlSession.update(NAME_SPACE + ".updateJoinApprove", businessNumber);
 	}

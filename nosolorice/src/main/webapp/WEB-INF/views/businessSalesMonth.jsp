@@ -22,7 +22,7 @@
 					
 						<div class="row mx-2 mt-5">
 							<div class="col">
-								<span class="fw-bold fs-3">예약이력</span>
+								<span class="fw-bold fs-3">매출내역</span>
 							</div>
 						</div>
 						

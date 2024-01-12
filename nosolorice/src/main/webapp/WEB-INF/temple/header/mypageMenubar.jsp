@@ -28,10 +28,10 @@
             <div class="menu row mb-3" onclick="location.href='pointList?id=${sessionScope.NormalUser.normalId}'">
               <span class="fs-5 text-gray">포인트 충전내역</span>
             </div>
-            <div class="menu row mb-3" onclick="location.href=''">
+            <div class="menu row mb-3" onclick="location.href='userReportList?id=${sessionScope.NormalUser.normalId}'">
               <span class="fs-5 text-gray">신고내역</span>
             </div>
-            <div class="menu row mb-3" onclick="location.href=''">
+            <div class="menu row mb-3" onclick="location.href='location.href='blockList?id=${sessionScope.NormalUser.normalId}'">
               <span class="fs-5 text-gray">차단목록</span>
             </div>
             <div class="menu row mb-3" onclick="location.href='normalUsesrSecession?id=${sessionScope.NormalUser.normalId}'">

@@ -68,7 +68,6 @@ $(function(){
 	//가져온 room_id를 이용해 chat_room 테이블에서 채팅방의 정보를 가져온다. <-- 위 AJAX에서 해결
 	//roomId를 이용해 chat_history테이블에서 기존 채팅메시지들을 가져온다 <-- 위 AJAX에서 해결
 	
-	console.log("대기중인 예약정보 : ", bookingInfo);
 	if(bookingInfo != null && bookingInfo.bookingState == '대기'){
 		let regDate = new Date(bookingInfo.bookingTime);
 		let formatRegDate = (regDate.getHours() < 13 ? "오전" + String(regDate.getHours()) + ":" + String(regDate.getMinutes()).padStart(2,'0') : "오후" + String(regDate.getHours() - 12) + ":" + String(regDate.getMinutes()).padStart(2,'0'));
@@ -109,7 +108,6 @@ $(function(){
 	} 
 	
 	if(bookingInfo != null && bookingInfo.bookingState == '승인'){
-		console.log("부킹상태가 승인일때 bookingInfo : ", bookingInfo);
 		
 		let businessId = bookingInfo.businessId;
 		let businessInfo = {};
@@ -219,38 +217,34 @@ $(function(){
 		storeListAppend(sList);		
 	}
 	
-	console.log("memberCount : ", chatRoomInfo.memberCount);
-	
-	
 	//가져온 room_id를 이용해 웹소켓채팅서버를 연다 - 완료
 	//학원꺼
 	//let url = "ws://192.168.0.14:8081/app/chating/" + roomId;
-	let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
+	//let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
 	
 	//집꺼
 	//let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
 	
 	//현진이꺼
-	//let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
+	let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
 	
+	console.log("roomId : ", roomId);
+	console.log("url : ", url);
     socket = new WebSocket(url);
     
     $(socket).on("open", function(event) {
-    
         let chatHistory = {
 			nickName : loginNickName,
 			chatType : "connect",
+			roomId : roomId
         }
 		let jsonData = JSON.stringify(chatHistory);
         socket.send(jsonData);
-    
 	});
 			
 	socket.addEventListener('message', function(event){
 		let chatObj = JSON.parse(event.data);
-		console.log("chatObj : ", chatObj);
 		let chatType = chatObj.chatType;
-		console.log("chatType : ", chatType);
 		
 		if(chatType == 'connect'){
 			let memberList = chatObj.memberList;
@@ -264,13 +258,10 @@ $(function(){
 		}
 		
 		if(chatType == 'agree'){
-			console.log(loginId + "에서 chatOBj : " + chatObj);
 			let agreeCount = chatObj.agreeCount;
-			console.log(loginId + "에서 agreeCount : " + agreeCount);
 			$("#bookAgreeBtn").val(agreeCount + "명 동의중...");
 			$("#bookRejectBtn").val("취소");
 			$("#bookAgreeBtn").prop("disabled", true);
-			console.log("어그리 비티엔에 몇명동의중 밸류 넣기 실행완료");
 		}
 		
 		if(chatType == 'agreeComplete'){
@@ -313,10 +304,37 @@ $(function(){
 			}
 		}
 		
+		if(chatType == 'userClose'){
+		
+			if(isBooking && !$("#bookPropose").hasClass("d-none")){
+				let closeNickName = chatObj.closeNickName;
+				
+				isBooking = false;
+				bookComplete = false;
+				$("#bookFailReason").html(`
+					<p>거절 사유<br>`+ closeNickName +`님이 예약제안 도중<br>채팅방을 이탈하여<br>예약제안이 취소 되었습니다</p>
+				`);
+				$("#bookWait").addClass("d-none");
+				$("#bookSuccess").addClass("d-none");
+				$("#bookPropose").addClass("d-none");
+				$("#bookFail").removeClass("d-none");
+				
+				let chatHistory = {
+					nickName : loginNickName,
+					chatType : "connect",
+					roomId : roomId
+			    }
+				let jsonData = JSON.stringify(chatHistory);
+			    socket.send(jsonData);
+				
+			}
+			
+		}
+		
+		
 		if(chatType == 'bookNo'){
 			
 			let bookNo = chatObj.bookNo;
-			console.log("bookNo타입 메시지 받을때 chatObj : ", chatObj);
 			let businessId = $("#storeDetailModalBusinessId").val();
 			let bookingBookNo = bookNo;
 			
@@ -326,10 +344,6 @@ $(function(){
 			$("#bookAgreeBtn").val("동의");
 			$("#bookPropose").addClass("d-none");
 			$("#bookWait").removeClass("d-none");
-			console.log("addBookingUserList ajax시 loginId : ", loginId);
-			console.log("addBookingUserList ajax시 businessId : ", businessId);
-			console.log("addBookingUserList ajax시 bookNo : ", bookNo);
-			
 			
 			//멤버 전원 booking_userlist에 자기 자신 등록
 
@@ -349,15 +363,13 @@ $(function(){
 			//사장님과 통신할 웹소켓서버에 연결
 			//학원꺼
 			//let url = "ws://192.168.0.14:8081/app/booking/" + businessId;
-			let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
+			//let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
 			//집꺼
 			//let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
 			//현진이꺼		
-			//let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
+			let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
 			
-			bookingSocket = new WebSocket(url);
-			console.log("예약관리 서버 접속");
-			
+			bookingSocket = new WebSocket(url);			
 			
 			$(bookingSocket).on("open", function(event) {
 				
@@ -370,7 +382,6 @@ $(function(){
 				
 				const jsonData = JSON.stringify(conncectMsg);
         		bookingSocket.send(jsonData);
-				console.log("예약관리 서버접속 후 메시지 발송");
 				
 				//서버에 { type : 'request', businessId : businessId, roomId : roomId } 메시지 보내기
 				if(loginNickName == $("#bookModalName").text()){
@@ -384,12 +395,10 @@ $(function(){
 					setTimeout(function(){
 		        		bookingSocket.send(jsonData);					
 					}, 1000);
-	        		console.log("예약관리 서버접속 후 제안자만 방정보 발송");
 				}
 				
 				
 			});
-			console.log("예약관리서버 open메서드 실행완료");
 			
 			bookingSocket.addEventListener('message', function(event){
 			
@@ -433,7 +442,6 @@ $(function(){
 						dataType : "json",
 						async : false,
 						success : function(resData){
-							console.log(resData);
 							$(resData).each(function(i, v){
 								nickNames += (i==resData.length-1 ? v.nickName :  v.nickName + ", ");
 							});
@@ -524,7 +532,6 @@ $(function(){
 		}
 		
 		if(chatType == 'userCancel'){
-		
 			//멤버 전원다 booking_userlist에서 자신 지우기
 			$.ajax({
     			url : "/app/deleteBookingUserList",
@@ -941,21 +948,6 @@ $(function(){
 	});
 
 	$(socket).on('close', function(event) {
-		if(isBooking && !$("#bookPropose").hasClass("d-none")){
-			
-			console.log("예약제안창에서 나가면 이거 실행");
-			//거절 버튼 누르면 웹소켓 서버에 'reject' 타입으로 메시지 보내고 서버에서 전체멤버에게 거절 메시지 보내기
-			let chatHistory = {
-				normalId : loginId,
-				nickName : loginNickName,
-				chatName : roomId,
-				chatType : "quitPropose",
-				memberCount : chatRoomInfo.memberCount
-	        }
-	        let jsonData = JSON.stringify(chatHistory);
-	        socket.send(jsonData);
-		}
-		
 	    console.log('WebSocket 연결이 닫혔습니다.');
 	});
 
@@ -969,7 +961,6 @@ $(function(){
 	
 	//예약완료여부를 체크하여 완료시 오른쪽에 예약안내 모달을 띄운다. 이 모달을 닫을 수 없다.(아직 고려중...)
 	 
-	console.log("isBooking? : ", isBooking);
 	
     //... 텍스트 애니메이션
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -1219,9 +1210,7 @@ $(function(){
     //채팅본문에 프로필이미지를 눌렀을 때
     $(document).on("click", ".chatProfileImg", function (e) {
         $("#userConfigBox").addClass("d-none");
-        
-        console.log($("#userConfigBox"));
-		
+        		
 		let userNickName = $(this).parent().next().children().eq(0).children().text().trim();
 		let userId = $(this).parent().parent().attr("data-id");
         //e.target의 bottom = userConfig박스의 top
@@ -1323,7 +1312,7 @@ $(function(){
         	dataType : "json",
         	async : false,
         	success : function(resData){
-        		console.log("신고DB작업 후 resData : ", resData);        		
+        		console.log(resData);        		
         	}, error : function(err) {
         		console.log("통신에러 : ", err);
         	}
@@ -1359,7 +1348,7 @@ $(function(){
 	        	dataType : "json",
 	        	async : false,
 	        	success : function(resData){
-	        		console.log("신고DB작업 후 resData : ", resData);        		
+	        		console.log(resData);        		
 	        	}, error : function(err) {
 	        		console.log("통신에러 : ", err);
 	        	}
@@ -1377,8 +1366,6 @@ $(function(){
     //채팅창 나가기 확인 모달열기
     $("#chatQuitBtn").on("click", function(){
         $("#chatRoomQuitModal").removeClass("d-none");
-        console.log("나기기전에 isBooking 체크 : ", isBooking);
-        console.log("나기기전에 bookComplete 체크 : ", bookComplete);
     });
 
     //채팅창 나가기 확인 모달 취소화기
@@ -1430,7 +1417,13 @@ $(function(){
 		let storeBusinessId = $(this).find(".storeChatDivBusinessId").val();
 		let target = $("#storeRow").find("input[type='hidden'][value='"+ storeBusinessId + "']");
 		target.click();
-	})
+	});
+	
+	$("#proposeStoreInfo").on("click", function(){
+     	let storeBusinessId = $("#storeDetailModalBusinessId").val();
+		let target = $("#storeRow").find("input[type='hidden'][value='"+ storeBusinessId + "']");
+		target.click();
+	});
 
     //가게 상세보기 모달 열기
     $(document).on("click", ".storeDiv", function(){
@@ -1954,7 +1947,6 @@ $(function(){
     });
     container2.addEventListener("drop", (e) => {
         e.preventDefault();
-        console.log("드래그 요소가 '두' 번째 박스 영역에 드롭");
     });
 
     //여기서부터 예약모달 --------------------------------------------------------------------------------------------------------------------------------------
