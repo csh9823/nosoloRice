@@ -43,8 +43,6 @@
       
                 <!-- 유저_프로필 -->
                 <img src="${sessionScope.NormalUser.profile}" style="width: 80px; height: 80px; border-radius: 50%;"/>
-                
-                <a href="#"><img src="resources/upload/${sessionScope.NormalUser.profile}" class="rounded-circle "style="width:100px; width:100px;"/></a>
       
                 <!-- 포인트 -->          
                 <div class="d-flex flex-column mb-2 ">

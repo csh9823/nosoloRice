@@ -34,7 +34,7 @@ public class BusinessUserController {
 	@Autowired
 	private BusinessUserServiceImpl businessUserServiceImpl;
 	
-	private static final String DEFAULT_PATH = "/resources/upload";
+	private static final String DEFAULT_PATH = "resources/upload";
 	
 	@Autowired
 	public void setBusinessService(BusinessUserService businessUserService) {
@@ -112,7 +112,7 @@ public class BusinessUserController {
         	businessUser.setBusinessProfile(profileNewName);
         } else if(businessProfile.isEmpty() && !businessPicture.isEmpty()) {
         	// 기본프로필이미지 등록
-        	String defaultImagePath = "profile_img.png";
+        	String defaultImagePath = DEFAULT_PATH+"profile_img.png";
         	System.out.println("사업자_기본프로필 등록완료! : " + defaultImagePath);
         	businessUser.setBusinessProfile(defaultImagePath);
         	

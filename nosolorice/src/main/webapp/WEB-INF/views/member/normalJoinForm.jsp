@@ -85,49 +85,49 @@ form input::file-selector-button {
               
               <div class="col-sm-10 p-2">
                 <div class="form-group">
-                  <p>* 이름</p>
+                  <p style="color : #515151;" class="fw-bolder">* 이름</p>
                   <input type="text" class="form-control" id="name" name="name" placeholder="이름" >
                 </div>
               </div>
 
               <div class="col-7 p-2">
                 <div class="form-group">
-                  <p>* 아이디</p>
+                  <p style="color : #515151;" class="fw-bolder">* 아이디</p>
                   <input type="text" class="form-control" id="normalId" name="normalId" placeholder="ID" >
                 </div>
               </div>
 
               <div class="col-3 text-end p-2">
                 <div class="form-group">
-                  <p>&nbsp</p>
+                  <p style="color : #515151;">&nbsp</p>
                   <input type="button" class="btn btn-success" id="overlapCheck" name="overlapCheck" value="증복확인">
                 </div>
               </div>
 
               <div class="col-7 p-2">
                 <div class="form-group">
-                  <p>* 닉네임</p>
+                  <p style="color : #515151;" class="fw-bolder">* 닉네임</p>
                   <input type="text" class="form-control" name="nickName" id="nickName" placeholder="닉네임" >
                 </div>
               </div>
 
               <div class="col-3 text-end p-2">
                 <div class="form-group">
-                  <p>&nbsp</p>
+                  <p style="color : #515151;">&nbsp</p>
                   <input type="button" class="btn btn-success" id="nickOverlapCheck" name="nickOverlapCheck" value="증복확인">
                 </div>
               </div>
 
               <div class="col-10 p-2">
                 <div class="form-group">
-                  <p>* 비밀번호</p>
+                  <p style="color : #515151;" class="fw-bolder">* 비밀번호</p>
                   <input type="password" class="form-control" id="pass" name="pass" placeholder="비밀번호" >
                 </div>
               </div>
 
               <div class="col-10 p-2">
                 <div class="form-group">
-                  <p>* 비밀번호확인</p>
+                  <p style="color : #515151;" class="fw-bolder">* 비밀번호확인</p>
                   <input type="password" class="form-control" id="checkPass" name="checkPass" placeholder="비밀번호확인" >
                 </div>
               </div>
@@ -139,14 +139,14 @@ form input::file-selector-button {
               
               <div class="col-8 p-2">
                 <div class="form-group">
-                  <p>* 전화번호</p>
+                  <p style="color : #515151;" class="fw-bolder">* 전화번호</p>
                   <input type="text" class="form-control" name="mobile" id="mobile" placeholder="010-1234-5678" maxlength="13" oninput="autoHyphen(this)" />
                 </div>
               </div>
 
               <div class="col-2 text-end p-2">
                 <div class="form-group">
-                  <p>&nbsp</p>
+                  <p style="color : #515151;">&nbsp</p>
                   <input type="button" class="btn btn-success" id="getNormalPhoneCheck" name="getNormalPhoneCheck" value="인증번호 받기">
                 </div>
               </div>
@@ -158,14 +158,14 @@ form input::file-selector-button {
               
               <div class="col-8 p-2">
                 <div class="form-group">
-                  <p>* 인증번호</p>
+                  <p style="color : #515151;" class="fw-bolder">* 인증번호</p>
                   <input type="number" class="form-control" name="chkNum" id="chkNum" placeholder="인증번호를 입력해 주세요" >
                 </div>
               </div>
 
               <div class="col-2 p-2 text-end">
                 <div class="form-group">
-                  <p>&nbsp</p>
+                  <p style="color : #515151;">&nbsp</p>
                   <input type="button" class="btn btn-success" name="normalPhoneCheck" id="normalPhoneCheck" value="인증하기">
                 </div>
               </div>
@@ -177,21 +177,21 @@ form input::file-selector-button {
 
               <div class="col-4 text-start p-2">
                 <div class="form-group">
-                  <p>* 생년월일</p>
+                  <p style="color : #515151;" class="fw-bolder">* 생년월일</p>
                   <input type="number" class="form-control" name="year" id="year" placeholder="년" maxlength="4" oninput="yearMaxLength(this);" />
                 </div>
               </div>
 
               <div class="col-3 text-center p-2">
                 <div class="form-group">
-                  <p>&nbsp</p>
+                  <p style="color : #515151;">&nbsp</p>
                   <input type="number" class="form-control" name="month" id="month" maxlength=2 placeholder="월" oninput="monthDay(this);" />
                 </div>
               </div>
 
               <div class="col-3 text-end p-2">
                 <div class="form-group">
-                  <p>&nbsp</p>
+                  <p style="color : #515151;">&nbsp</p>
                   <input type="number" class="form-control" name="day" id="day" maxlength=2 placeholder="일" oninput="monthDay(this);" />
                 </div>
               </div>
@@ -202,7 +202,7 @@ form input::file-selector-button {
               </div>
 
               <div class="col-4 p-2">
-				  <p>* 성별을 선택해 주세요</p>
+				  <p style="color : #515151;" class="fw-bolder"class="fw-bolder">* 성별을 선택해 주세요</p>
 				  <div class="form-check form-check-inline">
 				    <input class="form-check-input" type="radio" name="gender" id="man" value="남성">
 				    <label class="form-check-label" for="man">남성</label>
@@ -218,8 +218,9 @@ form input::file-selector-button {
                 </div>
               </div>
 
-              <div class="col-8 p-2">
+              <div class="col-10 p-2">
                 <div class="form-group">
+                  <p style="color : #515151;"class="fw-bolder">* 이메일</p>
                   <input type="email" class="form-control" name="emailId" id="emailId" placeholder="이메일을 입력해 주세요" >
                 </div>
               </div>
@@ -231,6 +232,7 @@ form input::file-selector-button {
 
               <div class="col-3 p-1">
                 <div class="form-group">
+                  <p style="color : #515151;"class="fw-bolder">* 주소</p>
                   <input type="number" maxlength="5" class="form-control" name="postNum" id="postNum" placeholder="우편번호" readonly>
                 </div>
               </div>
@@ -242,6 +244,7 @@ form input::file-selector-button {
 
               <div class="col-3 text-end p-1">
                 <div class="form-group">
+                  <p style="color : #515151;">&nbsp</p>
                   <input type="button" class="btn btn-success" id="btnZipcode" name="btnZipcode" value="주소검색">
                 </div>
               </div>
@@ -259,7 +262,8 @@ form input::file-selector-button {
               </div>
 
               <div class="col-10 p-2">
-                <h5>이용약관</h5>
+                <p style="color : #515151;"class="fw-bolder">&nbsp</p>
+                <h5 class="fw-bolder">* 이용약관</h5>
                   <div class="form-group" style="overflow: scroll; height: 150px; padding:16px; border-radius:4px; border: 1px solid #979797;" id="termOfUse">
                     <p> 가. 개인정보의 수집 및 이용 목적
   
@@ -296,7 +300,7 @@ form input::file-selector-button {
               <div class="col-10 p-2">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" name="termOK" id="termOK" >
-                  <label class="form-check-label" for="termOK"> * 위 이용약관에 동의합니다. (필수)</label>
+                  <label class="form-check-label fw-bolder" style="color : #515151;" for="termOK"> * 위 이용약관에 동의합니다. (필수)</label>
                 </div>
               </div>
 
@@ -340,7 +344,6 @@ form input::file-selector-button {
 	    event.preventDefault();
 	  };
 	}, true);
-	  
 	
 	</script>
 	
