@@ -14,6 +14,7 @@
 <script src="resources/js/sehwa/validation.js"></script>
 <script src="resources/js/sehwa/ajax.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=685bdba705a3c08af0c489199df63809&libraries=services"></script>
 
 </head>
 <body>
@@ -23,6 +24,8 @@
   	<div class="col-md-9">
 	    <form class="row" name ="businessUserInfoUpdate" id="businessUserInfoUpdate" 
 	    		action="businessUserInfoUpdate" method="post" enctype="multipart/form-data">
+	      <input type="text" name="xpoint" id="xpoint" value="${BusinessUser.xpoint }">
+	      <input type="text" name="ypoint" id="ypoint" value="${BusinessUser.ypoint }">
 	      <div class="col-3 pt-5 ps-2">
 	      	<div class="row">
 	      		<div class="col">
@@ -237,22 +240,6 @@
   </div>
   
   <script>
-
-  function inputNumber(input) {
-
-  	let minLength = 4;
-  	let inputValue = input.value;
-  	
-  	let replaceText = inputValue.replace(/[^0-9]/g, '');
-  	
-  	if(replaceText.length < minLength) {
-  		alert("4자리 숫자를 입력해주세요.");
-  	}
-
-  	input.value = replaceText;
-  	
-  }
-  
 	//비밀번호일치확인(실시간 출력)
 	$("#oldPass").on("keyup", function() {
 		let id = $("#businessId").val();
@@ -350,7 +337,6 @@
 		};
 	});
 	
-	$("#mobile1").on("blur", inputNumber(this));
 	
   </script>
   

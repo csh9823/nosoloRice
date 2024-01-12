@@ -3,6 +3,17 @@ function sample6_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+ 			
+ 			// 주소 - 좌표 변환
+            var geocoder = new daum.maps.services.Geocoder(); // Geocoder 객체 생성
+   
+            var callback = function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    console.log(result);
+                }
+            };
+            
+            geocoder.addressSearch('#address1', callback);
 
             // 각 주소의 노출 규칙에 따라 주소를 조합한다.
             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
@@ -40,6 +51,23 @@ function sample6_execDaumPostcode() {
             document.getElementById("address2").value = '';   
             // 커서를 상세주소 필드로 이동한다.
             document.getElementById("address2").focus();
+            
+            // 주소를 가져옴
+            var address = $("#address1").val();
+            
+            // 주소를 좌표로 변환하는 Geocoder 객체 생성
+            var geocoder = new kakao.maps.services.Geocoder();
+            
+            // 주소 검색 요청
+           	geocoder.addressSearch(address, function(result, status) {
+            	if (status === kakao.maps.services.Status.OK) {
+		            // 검색 결과에서 좌표값 가져오기
+		            var coords = new kakao.maps.LatLng(result[0].y, result[0].x)
+            		// hidden 폼에 좌표값 설정
+	               $("#xpoint").val(coords.getLat());
+	               $("#ypoint").val(coords.getLng())
+	            }
+	        });
         }
     }).open();
 };
