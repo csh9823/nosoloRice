@@ -227,7 +227,7 @@ public class JinController {
 			model.addAttribute("menucatename",menucatename);
 		}
 		
-		return "BusinessMenu/businessMenus";
+		return "forward:/WEB-INF/views/BusinessMenu/businessMenus.jsp";
 	}
 	
 	// 카테고리 추가
@@ -301,7 +301,7 @@ public class JinController {
 		List<Booking> booking = jinbookService.BookingList(businessId);
 		model.addAttribute("booking",booking);
 		
-		return "BusinessMenu/yesnoList";
+		return "forward:/WEB-INF/views/BusinessMenu/yesnoList.jsp";
 	}
 	
 	
@@ -403,7 +403,7 @@ public class JinController {
 		List<Map<String,Object>> map = jinReviewService.ReviewList(businessId);
 		model.addAttribute("review",map);
 		model.addAttribute("reviewCount", count);
-		return "review/Businessriview";
+		return "forward:/WEB-INF/views/review/Businessriview.jsp";
 	}
 	
 	// 리뷰 블라인드 처리

@@ -21,36 +21,43 @@
   <div class="container"> 
   <div class="row">
   	<%@ include file="../../temple/header/businessMenubar.jsp" %>
-  	<div class="col-md-9">
+  	<div class="col p-5" style="height:100vh; overflow: hidden;">
+  		<div class="row mb-5">
+  			<div class="col px-3">
+  				<span class="fs-2 fw-bold">
+  					내 정보 수정
+  				</span>
+  			</div>
+  		</div>
 	    <form class="row" name ="businessUserInfoUpdate" id="businessUserInfoUpdate" 
 	    		action="businessUserInfoUpdate" method="post" enctype="multipart/form-data">
 	      <input type="hidden" name="xpoint" id="xpoint" value="${BusinessUser.xpoint }">
 	      <input type="hidden" name="ypoint" id="ypoint" value="${BusinessUser.ypoint }">
-	      <div class="col-3 pt-5 ps-2">
+	      <div class="col-3">
 	      	<div class="row">
 	      		<div class="col">
 			        <input type="file" name="fileInput" id="fileInput"  onchange="readImage(this)"  style="display:none;" accept="image/*">
 			        <button style="border : none; background-color: white;" class="w-100" id="clickImg">
 			          <c:if test="${empty BusinessUser.businessProfile}">
 				          <div class="square-container">
-					          <img src="resources/img/profile_img.png" class="preview w-100 profile-img">      
+					          <img src="resources/img/profile_img.png" class="preview w-100 profile-img rounded-circle border">      
 				          </div>
 			          </c:if>
 			          <c:if test="${not empty BusinessUser.businessProfile}">
 				          <div class="square-container">
-				          	<img src="resources/upload/${BusinessUser.businessProfile}" class="preview w-100 profile-img">
+				          	<img src="resources/upload/${BusinessUser.businessProfile}" class="preview w-100 profile-img rounded-circle border">
 				          </div>
 			          </c:if>
 			        </button>
 	      		</div>
 	      	</div>
-	      	<div class="row">
-	      		<div class="col">
+	      	<div class="row my-2">
+	      		<div class="col text-center">
 			        <span id="changeDefaultImg" class="text-gray" style="text-decoration: none;">기본이미지로 변경</span>
 	      		</div>
 	      	</div>
 	      </div>
-	      <div class="col-9 p-5">
+	      <div class="col-9 pe-5">
 	        <div class="row mb-3">
 	          <div class="col">
 	            <input type="text" name="businessId" id="businessId" class="form-control" value="${BusinessUser.businessId}" readonly>
