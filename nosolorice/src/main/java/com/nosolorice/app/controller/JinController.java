@@ -184,7 +184,19 @@ public class JinController {
 					out.println("	alert('정지된 회원 입니다.');");
 					out.println("	history.back();");
 					out.println("</script>");
+					return null;
 				}else {
+					NormalUser nuser2 = (NormalUser) request.getSession().getAttribute("NormalUser");
+					
+					if(nuser2 != null) {
+						response.setContentType("text/html; charset=utf-8");
+						out.println("<script>");
+						out.println("	alert('로그인 중인 회원 입니다.');");
+						out.println("	history.back();");
+						out.println("</script>");
+						return null;
+					}
+					
 					System.out.println(nuser.getNormalId());
 					session.setAttribute("NormalUser", nuser);
 					return "redirect:mainPage";
