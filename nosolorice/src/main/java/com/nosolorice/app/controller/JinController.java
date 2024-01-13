@@ -71,7 +71,7 @@ public class JinController {
 	@RequestMapping("findForm")
 	public String findForm() {
 		
-		return "login/findForm";
+		return "forward:/WEB-INF/views/login/findForm.jsp";
 	}
 	 
 	// 아이디 찾기 알려주기 폼
@@ -147,7 +147,7 @@ public class JinController {
 		System.out.println(id);
 		model.addAttribute("id",id);
 		
-		return "login/login";
+		return "forward:/WEB-INF/views/login/login.jsp";
 	}
 
 	//로그인 하기
