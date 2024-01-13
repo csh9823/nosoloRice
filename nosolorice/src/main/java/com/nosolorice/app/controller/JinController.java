@@ -127,7 +127,7 @@ public class JinController {
 	@RequestMapping("joinForm")
 	public String joinForm() {
 		
-		return "login/joinForm";
+		return "forward:/WEB-INF/views/login/joinForm.jsp";
 	}
 	
 	//로그아웃

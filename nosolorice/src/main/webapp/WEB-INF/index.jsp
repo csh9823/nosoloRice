@@ -8,7 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="resources/css/idFind.css">
 <link rel="stylesheet" href="resources/css/mode.css">
-<link rel="stylesheet" href="resources/css/joinForm.css">
 <link href="resources/bootstrap/bootstrap.min.css" rel="stylesheet" >
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <script src="resources/js/jquery-3.2.1.min.js"></script>
@@ -21,9 +20,14 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="resources/summernote/summernote-lite.js"></script>
 <script src="resources/summernote/lang/summernote-ko-KR.js"></script>
-
+<link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/variable/woff2/SUITE-Variable.css" rel="stylesheet">
 <!-- favicon 404 에러 방지용 -->
 <link rel="icon" href="data:,">
+<style>
+    * {
+      font-family: 'SUITE Variable', sans-serif;
+    }
+</style>
 </head>
 <body>
 

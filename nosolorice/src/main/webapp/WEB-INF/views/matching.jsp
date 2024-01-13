@@ -233,7 +233,7 @@
 									<div class="carousel-item">
 										<p class="text-center fs-3 fw-bold">같은 성별만 만나고 싶어요</p>
 										<div class="text-center">
-											<input type="radio" class="form-check-input me-1 align-middle" name="matchGender" value="yes" id="matchGender1">
+											<input type="radio" class="form-check-input me-1 align-middle" name="matchGender" value="${sessionScope.NormalUser.gender}" id="matchGender1">
 											<label for="matchGender1" class="matchingConfigLabel fs-4 align-middle" style="cursor: pointer;">네</label>
 											<input type="radio" checked class="form-check-input me-1 ms-5 align-middle" name="matchGender" value="no" id="matchGender2">
 											<label for="matchGender2" class="matchingConfigLabel fs-4 align-middle" style="cursor: pointer;">상관 없어요</label>

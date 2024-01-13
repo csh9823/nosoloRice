@@ -32,6 +32,14 @@ form input::file-selector-button {
    display: none;
 }
 
+#profileUploadLabel {
+	color:#515151;
+	cursor:pointer;
+}
+#profileUploadLabel:hover {
+	font-weight: 600;
+}
+
 </style>
 
 <div class="container justify-content-center">
@@ -47,147 +55,127 @@ form input::file-selector-button {
 	<input type="hidden" name="mypoint" id="mypoint" value=0 />
 	<input type="hidden" name="root" id="root" value=2 />
 	
-        <div class="row-12 p-5">
-          <div class="d-flex justify-content-center">
-            <img src="resources/image/nosolorice_logo_M.png">
-          </div>
-          
+        <div class="row p-5">          
           <div class="d-flex justify-content-center">  
-          
             <p class="fs-1 fw-bold">일반회원 가입</p>
           </div>
         </div>
-
-        <div class="row-12 d-flex p-3 justify-content-center">
-          
-          <!-- profile_img -->
-         <div class="col-lg-4">
-          <div class="col-sm-2">
-            <img src="resources/upload/profile_img.png" id="profilePreview" style="width: 400px; height: 400px;" class="rounded-circle">
-            <label for="profileImageInput" style="width: 200px; padding-top: 10px; color:#515151;">프로필 이미지 업로드하기</label>
+        
+	<div class="row justify-content-center">
+		<div class="col">
+		
+        <div class="row justify-content-center">
+        
+          <div class="col-3 text-center">
+          	<img src="resources/upload/profile_img.png" id="profilePreview" style="width:300px; height:300px;" class="rounded-circle border my-2">
+            <label for="profileImageInput" id="profileUploadLabel">프로필 이미지 업로드하기</label>
             <input type="file" accept="image/*" onchange="profileImage(this)" id="profileImageInput" name="profileImageInput" style="display:none;">
-          </div> 
-         </div> 
-
-		  <div class="col-sm-1">
-          	<div class="form-group">
-            </div>
           </div>
+          
+          <div class="col-6 px-5">
 
-           <div class="col-md-8">
-            <div class="row">
-            
-            <div class="col-7 p-2">
-                <div class="form-group">
-                  <p>*표시는 필수사항입니다.</p>
-                </div>
-              </div>
-              
-              <div class="col-sm-10 p-2">
+			<div class="row">
+	            <div class="col p-2">
+	                <div class="form-group">
+	                	*표시는 필수사항입니다.
+	                </div>
+				</div>
+			</div>
+			
+			<div class="row">              
+              <div class="col p-2">
                 <div class="form-group">
                   <input type="text" class="form-control" id="name" name="name" placeholder="* 이름" >
                 </div>
               </div>
+            </div>
 
-              <div class="col-7 p-2">
+			<div class="row">
+              <div class="col p-2">
                 <div class="form-group">
                   <input type="text" class="form-control" id="normalId" name="normalId" placeholder="* ID" >
                 </div>
               </div>
-
-              <div class="col-3 text-end p-2">
-                <div class="form-group">
-                  <input type="button" class="btn btn-success" id="overlapCheck" name="overlapCheck" value="증복확인">
-                </div>
+              <div class="col-auto p-2">
+                  <input type="button" class="btn btn-success" id="overlapCheck" name="overlapCheck" value="중복확인">              
               </div>
-
-              <div class="col-7 p-2">
+            </div>
+            
+            <div class="row">
+              <div class="col p-2">
                 <div class="form-group">
                   <input type="text" class="form-control" name="nickName" id="nickName" placeholder="* 닉네임" >
                 </div>
               </div>
-
-              <div class="col-3 text-end p-2">
+              <div class="col-auto p-2">
                 <div class="form-group">
-                  <input type="button" class="btn btn-success" id="nickOverlapCheck" name="nickOverlapCheck" value="증복확인">
+                  <input type="button" class="btn btn-success" id="nickOverlapCheck" name="nickOverlapCheck" value="증복확인">                	
                 </div>
               </div>
-
-              <div class="col-10 p-2">
+            </div>
+            
+            <div class="row">
+              <div class="col p-2">
                 <div class="form-group">
                   <input type="password" class="form-control" id="pass" name="pass" placeholder="* 비밀번호" >
                 </div>
               </div>
+            </div>
 
-              <div class="col-10 p-2">
+			<div class="row">
+              <div class="col p-2">
                 <div class="form-group">
                   <input type="password" class="form-control" id="checkPass" name="checkPass" placeholder="* 비밀번호확인" >
                 </div>
               </div>
-
-              <div class="col-12">
-                <div class="form-group">
-                </div>
-              </div>
+            </div>
               
-              <div class="col-8 p-2">
+            <div class="row">
+              <div class="col p-2">
                 <div class="form-group">
                   <input type="text" class="form-control" name="mobile" id="mobile" placeholder="* 전화번호를 입력해 주세요." maxlength="13" oninput="autoHyphen(this)" />
                 </div>
               </div>
-
-              <div class="col-2 text-end p-2">
+              <div class="col-auto p-2">
                 <div class="form-group">
-                  <input type="button" class="btn btn-success" id="getNormalPhoneCheck" name="getNormalPhoneCheck" value="인증번호 받기">
+                  <input type="button" class="btn btn-success" id="getNormalPhoneCheck" name="getNormalPhoneCheck" value="인증번호 받기">                  
                 </div>
               </div>
+            </div>
 
-              <div class="col-12">
-                <div class="form-group">
-                </div>
-              </div>
-              
-              <div class="col-8 p-2">
+            <div class="row">
+              <div class="col p-2">
                 <div class="form-group">
                   <input type="number" class="form-control" name="chkNum" id="chkNum" placeholder="* 인증번호를 입력해 주세요" >
                 </div>
               </div>
-
-              <div class="col-2 p-2 text-end">
+              <div class="col-auto p-2">
                 <div class="form-group">
                   <input type="button" class="btn btn-success" name="normalPhoneCheck" id="normalPhoneCheck" value="인증하기">
                 </div>
               </div>
-              
-              <div class="col-12">
-                <div class="form-group">
-                </div>
-              </div>
+            </div>
 
+			<div class="row">
               <div class="col-4 text-start p-2">
                 <div class="form-group">
                   <input type="number" class="form-control" name="year" id="year" placeholder="* 년" maxlength="4" oninput="yearMaxLength(this);" />
                 </div>
               </div>
-
-              <div class="col-3 text-center p-2">
+              <div class="col-4 text-center p-2">
                 <div class="form-group">
                   <input type="number" class="form-control" name="month" id="month" maxlength=2 placeholder="* 월" oninput="monthDay(this);" />
                 </div>
               </div>
-
-              <div class="col-3 text-end p-2">
+              <div class="col-4 text-end p-2">
                 <div class="form-group">
                   <input type="number" class="form-control" name="day" id="day" maxlength=2 placeholder="* 일" oninput="monthDay(this);" />
                 </div>
               </div>
+            </div>
 
-              <div class="col-12">
-                <div class="form-group">
-                </div>
-              </div>
-
-              <div class="col-4 p-2">
+			<div class="row">
+              <div class="col p-2">
 				  <p>* 성별을 선택해 주세요</p>
 				  <div class="form-check form-check-inline">
 				    <input class="form-check-input" type="radio" name="gender" id="man" value="남성">
@@ -198,55 +186,49 @@ form input::file-selector-button {
 				    <label class="form-check-label" for="woman">여성</label>
 				  </div>
 			  </div>
+		    </div>
 
-              <div class="col-12">
-                <div class="form-group">
-                </div>
-              </div>
-
-              <div class="col-8 p-2">
+			<div class="row">
+              <div class="col p-2">
                 <div class="form-group">
                   <input type="email" class="form-control" name="emailId" id="emailId" placeholder="* 이메일을 입력해 주세요" >
                 </div>
               </div>
+            </div>
 
-              <div class="col-12">
-                <div class="form-group">
-                </div>
-              </div>
-
-              <div class="col-3 p-1">
+			<div class="row">
+              <div class="col p-1">
                 <div class="form-group">
                   <input type="number" maxlength="5" class="form-control" name="postNum" id="postNum" placeholder="* 우편번호" readonly>
                 </div>
               </div>
-
-              <div class="col-4">
+              <div class="col-auto p-1">
                 <div class="form-group">
+                  <input type="button" class="btn btn-success" id="btnZipcode" name="btnZipcode" value="주소검색">                
                 </div>
               </div>
+            </div>
 
-              <div class="col-3 text-end p-1">
-                <div class="form-group">
-                  <input type="button" class="btn btn-success" id="btnZipcode" name="btnZipcode" value="주소검색">
-                </div>
-              </div>
-
-              <div class="col-10 p-1">
+			<div class="row">
+              <div class="col p-1">
                 <div class="form-group">
                   <input type="text" class="form-control" name="address1" id="address1" placeholder="* 일반주소" readonly>
                 </div>
               </div>
+            </div>
 
-              <div class="col-10 p-1">
+			<div class="row">
+              <div class="col p-1">
                 <div class="form-group">
                   <input type="text" class="form-control" id="address2" name="address2" placeholder="상세주소">
                 </div>
               </div>
+            </div>
 
-              <div class="col-10 p-2">
+			<div class="row">
+              <div class="col p-2">
                 <h5>이용약관</h5>
-                  <div class="form-group" style="overflow: scroll; height: 150px; padding:16px; border-radius:4px; border: 1px solid #979797;" id="termOfUse">
+                  <div class="form-group" style="overflow: auto; height: 150px; padding:16px; border-radius:4px; border: 1px solid #979797;" id="termOfUse">
                     <p> 가. 개인정보의 수집 및 이용 목적
   
                     국가공간정보포털은 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며, 이용 목적이 변경되는 경우에는 개인정보 보호법 제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.
@@ -273,34 +255,28 @@ form input::file-selector-button {
                     위 개인정보의 수집 및 이용에 대한 동의를 거부할 수 있으나, 동의를 거부할 경우 회원 가입이 제한됩니다.</p>
                   </div>
               </div>
+            </div>
 
-              <div class="col-12">
-                <div class="form-group">
-                </div>
-              </div>
-
-              <div class="col-10 p-2">
+			<div class="row">
+              <div class="col p-2">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" name="termOK" id="termOK" >
                   <label class="form-check-label" for="termOK"> * 위 이용약관에 동의합니다. (필수)</label>
                 </div>
               </div>
+            </div>
 
-              <div class="col-12">
-                <div class="form-group">
-                </div>
+			<div class="row">
+              <div class="col text-center p-2">
+                  <button type="submit" class="btn btn-success w-100 fs-4" style="height:100px;'" id="normalJoin">가입하기</button>
               </div>
-
-              <div class="col-10 text-center p-2">
-                <div class="form-group">
-                  <button type="submit" class="btn btn-success" id="normalJoin">&nbsp&nbsp&nbsp&nbsp가입하기&nbsp&nbsp&nbsp&nbsp</button>
-                </div>
-              </div>
-              
-				</div>
             </div>
             
         </div>
+        </div>
+        </div>
+        </div>
+        
          </form> 
       </div>
   

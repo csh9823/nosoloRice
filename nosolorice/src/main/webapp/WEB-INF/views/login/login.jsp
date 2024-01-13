@@ -25,8 +25,9 @@
 </head>
 <body>
     <div class="container content" style="height:100vh; overflow: hidden;">
-    
-        <div class="row imgrows" style="margin-top: 15vh;">
+    <div class="row justify-content-center align-items-center h-100">
+    	<div class="col">
+        <div class="row imgrows">
             <div class="col text-center"> 
                 <img src="resources/img/logo/nosolorice_logo_M.png" alt="">
             </div>
@@ -50,12 +51,14 @@
             </div>
          </form>
          
-         <div class="row justify-content-center">
+         <div class="row justify-content-center mb-5">
              <div class="col-4 text-center">
                  <input type="button" onclick='location.href="joinForm"' class="btn w-100 fs-5 mb-2 text-white loginHoverBtn" id="memberjoin" value="회원가입">
                  <a id="myfind" href="findForm">아이디나 비밀번호가 기억나지 않으세요?</a>
              </div>
          </div>
+         </div>
+      </div>
    </div>
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">

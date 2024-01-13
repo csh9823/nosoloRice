@@ -22,10 +22,10 @@
 </head>
 <body>
 	<div class="container" style="height:100vh; overflow: hidden;">
-		<div class="row justify-content-center">
+		<div class="row justify-content-center align-items-center h-100">
 			<div class="col-9">
 	
-			    <div class="row imgrows" style="margin-top: 8vh;">
+			    <div class="row imgrows">
 			        <div class="col text-center"> 
 			            <img src="resources/img/logo/nosolorice_logo_M.png">
 			        </div>
