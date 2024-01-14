@@ -26,8 +26,71 @@
 	
 	<context:component-scan base-package="com.nosolorice.app" />
 	
-	<view-controller path="/normalJoin" view-name="member/normalJoinForm" />
-	<view-controller path="/normaljoinresult" view-name="member/normalJoinResult" />
 	<view-controller path="/question" view-name="question"/>
+	
+	<beans:bean id="normalLoginInterceptor" class="com.nosolorice.app.hyuncontroller.NormalLoginInterceptor" />
+	<beans:bean id="businessLoginInterceptor" class="com.nosolorice.app.hyuncontroller.BusinessLoginInterceptor" />
+	<beans:bean id="rootLoginInterceptor" class="com.nosolorice.app.hyuncontroller.RootLoginInterceptor" />
+	<beans:bean id="loginInterceptor" class="com.nosolorice.app.hyuncontroller.LoginInterceptor" />
+	
+	<interceptors>
+	
+		<interceptor>
+			<mapping path="/mainPage"/>
+			<mapping path="/matching"/>				
+			<mapping path="/chating"/>				
+			<mapping path="/normalUserInfoUpdate"/>
+			<mapping path="/normalUserBookingList"/>
+			<mapping path="/pointList"/>		
+			<mapping path="/userReportList"/>		
+			<mapping path="/blockList"/>		
+			<mapping path="/normalUsesrSecession"/>		
+			<mapping path="/question"/>
+			<mapping path="/userInquiry"/>
+			<mapping path="/userInquiryList"/>
+			<mapping path="/noticeNormal"/>
+			<mapping path="/chargePoint"/>			
+			<beans:ref bean="normalLoginInterceptor" />	
+		</interceptor>
+				
+		<interceptor>
+			<mapping path="/businessUserStoreInfo"/>
+			<mapping path="/yesnoList"/>				
+			<mapping path="/businessSales"/>
+			<mapping path="/Businessriview"/>
+			<mapping path="/BusinessMenu"/>		
+			<mapping path="/businessUserSecession"/>		
+			<mapping path="/noticeBusiness"/>		
+			<mapping path="/businessInquiry"/>		
+			<mapping path="/businessUserInfoUpdate"/>		
+			<beans:ref bean="businessLoginInterceptor" />	
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/noticeList"/>
+			<mapping path="/adminNormalInquiryList"/>
+			<mapping path="/adminBusinessInquiryList"/>
+			<mapping path="/adminReportList"/>
+			<mapping path="/joinApprove"/>
+			<mapping path="/adminReviewList"/>
+			<mapping path="/businessDeleteList"/>
+			<mapping path="/deniedList"/>
+			<mapping path="/adminSales"/>				
+			<mapping path="/adminSalesMonth"/>	
+			<beans:ref bean="rootLoginInterceptor" />	
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/login"/>
+			<mapping path="/joinForm"/>
+			<mapping path="/normalJoin"/>
+			<mapping path="/businessJoin"/>
+			<mapping path="/findForm"/>
+			<mapping path="/idFind"/>
+			<mapping path="/newpassword"/>
+			<beans:ref bean="loginInterceptor" />	
+		</interceptor>
+		
+	</interceptors>
 	
 </beans:beans>

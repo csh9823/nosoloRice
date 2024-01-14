@@ -202,6 +202,8 @@ $(function(){
 		let sList = new Array();
 		let sortType = $("#chatStoreSortSelect").val();
 		
+		console.log("주소매칭일때 클라이언트 주소데이터 : ", locationData);
+		
 		$.ajax({
 			url: "/app/getStoreListByAddress",
 			data : "address=" + locationData + "&sortType=" + sortType,
@@ -2539,7 +2541,7 @@ const searchStoreListReset = (chatRoomInfo, keyword) => {
 				dataType : "json",
 				async : false,
 				success : function(resData){
-					sList = resData;				
+					sList = resData;
 				}, error : function(err){
 					console.log(err)
 				}

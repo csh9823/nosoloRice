@@ -11,6 +11,12 @@
 	.joinHoverDiv:hover {
 		color : #d6594b;
 	}
+	.loginHoverBtn {
+		background-color: #00ba73;
+	}
+	.loginHoverBtn:hover {
+		background-color: #1c9969;
+	}
 </style>
 </head>
 <body>
@@ -30,19 +36,31 @@
 		    </div>
 		
 		    <div class="row justify-content-center mb-5">
-		    
-		        <div class="col-4 text-center border rounded me-3 p-5 joinHoverDiv"  onclick="location.href='normalJoin'" style="cursor: pointer;">
-		            <i class="bi bi-person-add"  style="font-size:10em;"></i><br><br>
-		            <span class="fs-3 fw-bold">일반 회원가입</span>
-		        </div>
-		        
-		        <div class="col-4 text-center border rounded ms-3 p-5 joinHoverDiv" onclick="location.href='businessJoin'" style="cursor: pointer;">
-		            <i class="bi bi-building-add" style="font-size:10em;"></i><br><br>
-		            <span class="fs-3 fw-bold">사업자 회원가입</span>
+		    	<div class="col mx-3">
+		    		<div class="row justify-content-center">
+				        <div class="col-4 text-center border rounded me-3 p-5 joinHoverDiv"  onclick="location.href='normalJoin'" style="cursor: pointer;">
+				            <i class="bi bi-person-add"  style="font-size:10em;"></i><br><br>
+				            <span class="fs-3 fw-bold">일반 회원가입</span>
+				        </div>
+				        
+				        <div class="col-4 text-center border rounded ms-3 p-5 joinHoverDiv" onclick="location.href='businessJoin'" style="cursor: pointer;">
+				            <i class="bi bi-building-add" style="font-size:10em;"></i><br><br>
+				            <span class="fs-3 fw-bold">사업자 회원가입</span>
+				        </div>
+					</div>
 		        </div>
 		        
 		    </div>
+		    
+	    	<div class="row my-5 justify-content-center">
+		        <div class="col-8 px-0 mx-3 text-center">
+		            <input type="button" onclick="location.href='login'" class="btn w-100 loginHoverBtn text-white fs-3" style="height:100px;" value="로그인 페이지로 이동">
+		        </div>
+		    </div>
+		    
 		</div>
+		
+	    
 	</div>
 </div>
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>

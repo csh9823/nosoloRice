@@ -113,14 +113,14 @@ public class JinController {
 	@RequestMapping("idFind")
 	public String idFind() {
 		
-		return "login/idFind";
+		return "forward:/WEB-INF/views/login/idFind.jsp";
 	}
 	
 	// 비밀번호 찾기 인증폼
 	@RequestMapping("newpassword")
 	public String newpassword() {
 		
-		return "login/newpassword";
+		return "forward:/WEB-INF/views/login/newpassword.jsp";
 	}
 	
 	//회원가입폼
