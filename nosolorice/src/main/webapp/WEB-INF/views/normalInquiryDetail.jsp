@@ -171,7 +171,7 @@
     		
     		$("#answerContent").val("");
     		
-    	$("#answerBtn").show();
+    	$("#answerBtn").show().focus();
 
 		}, 300);	
 
