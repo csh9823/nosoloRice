@@ -1,4 +1,6 @@
-package com.nosolorice.app.controller;
+package com.nosolorice.app.controller.jin;
+
+
 
 import java.io.File;
 import java.io.IOException;
@@ -112,7 +114,7 @@ public class JinController {
 	// 아이디 찾기 인증번호 폼
 	@RequestMapping("idFind")
 	public String idFind() {
-		
+
 		return "login/idFind";
 	}
 	
@@ -141,13 +143,18 @@ public class JinController {
 	
 	//로그인 폼
 	@RequestMapping("login")
-	public String login(@CookieValue(name= "saveId",required = false) String id,Model model) {
+	public String login(@CookieValue(name= "saveId",required = false) String id,Model model,HttpServletRequest request) {
 		
+		// 세션 값 저장하기
+		NormalUser nuser = (NormalUser) request.getSession().getAttribute("NormalUser");
+		if(nuser != null) {
+			System.out.println(nuser.getNormalId());
+		}
 		// 쿠키 값 확인
 		System.out.println(id);
 		model.addAttribute("id",id);
-		
-		return "login/login";
+		return "forward:/WEB-INF/views/login/login.jsp";
+		// return "login/login";
 	}
 
 	//로그인 하기
@@ -165,7 +172,7 @@ public class JinController {
 				cookie.setMaxAge(0);
 				response.addCookie(cookie);
 			}
-			
+	    
 			BusinessUser buser = jinloginService.loginBusinessUser(id, pass);
 			NormalUser nuser = jinloginService.loginNormalUser(id, pass);
 			RootUser ruser = jinloginService.loginRootUser(id, pass);
@@ -178,6 +185,7 @@ public class JinController {
 			}
 			
 			if(nuser != null) {
+				
 				if(stop != null) {
 					response.setContentType("text/html; charset=utf-8");
 					out.println("<script>");
@@ -186,20 +194,21 @@ public class JinController {
 					out.println("</script>");
 					return null;
 				}else {
-					NormalUser nuser2 = (NormalUser) request.getSession().getAttribute("NormalUser");
-					
-					if(nuser2 != null) {
-						response.setContentType("text/html; charset=utf-8");
-						out.println("<script>");
-						out.println("	alert('로그인 중인 회원 입니다.');");
-						out.println("	history.back();");
-						out.println("</script>");
-						return null;
-					}
-					
-					System.out.println(nuser.getNormalId());
-					session.setAttribute("NormalUser", nuser);
-					return "redirect:mainPage";
+					 // 중복 로그인 여부 확인
+				    String duplicateSessionId = SessionConfig.getSessionidCheck("NormalUser", nuser.getNormalId());
+				    System.out.println("중복로직"+duplicateSessionId);
+				    if (!duplicateSessionId.isEmpty()) {
+				            response.setContentType("text/html; charset=utf-8");
+				            out.println("<script>");
+				            out.println("    alert('이미 로그인 중인 회원입니다. 로그인 중인 아이디를 로그아웃 시킵니다.');");
+				            out.println("    history.back();");
+				            out.println("</script>");
+				            return null;
+				    }
+				    // 세션 속성 설정 및 메인 페이지로 리다이렉트
+				    session = request.getSession();
+				    session.setAttribute("NormalUser", nuser);
+				    return "redirect:mainPage";
 				}
 			}
 			
@@ -207,14 +216,12 @@ public class JinController {
 				session.setAttribute("RootUser", ruser);
 				return "redirect:noticeList";
 			}
-			
-			
+
 			response.setContentType("text/html; charset=utf-8");
 			out.println("<script>");
 			out.println("	alert('회원 정보가 일치하지 않습니다.');");
 			out.println("	history.back();");
 			out.println("</script>");
-			
 	    	return null;
 		}
 
