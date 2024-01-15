@@ -89,7 +89,7 @@
                 </c:if>
                 
                 <c:if test="${empty r.deniedUnlock}">
-                <div class="col-2">접수대기</div>
+                <div class="col-2">10일 정지</div>
                 </c:if>
             </div>
              </c:forEach>
