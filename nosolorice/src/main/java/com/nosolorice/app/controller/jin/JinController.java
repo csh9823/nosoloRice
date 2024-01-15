@@ -251,7 +251,7 @@ public class JinController {
 		
 		return "redirect:BusinessMenu?businessId="+businessId;
 	}
-	
+	 
 	// 카테고리 삭제
 	@RequestMapping("MenuCateDelete")
 	public String MenuCateDelete(String businessId,int menuCategoryNo ,PrintWriter out,
@@ -287,7 +287,7 @@ public class JinController {
 			String saveName = uid.toString() + "_" + multipartFile.getOriginalFilename();
 			File file = new File(realPath,saveName);
 			multipartFile.transferTo(file);
-			menu.setMenuPicture(DEFAULT_PATH+"/"+saveName);
+			menu.setMenuPicture(saveName);
 		}
 		
 		jinMenuService.MenuAdd(menu);
@@ -379,7 +379,7 @@ public class JinController {
 			String saveName = uid.toString() + "_" + multipartFile.getOriginalFilename();
 			File file = new File(realPath,saveName);
 			multipartFile.transferTo(file);
-			menu.setMenuPicture(DEFAULT_PATH+"/"+saveName);
+			menu.setMenuPicture(saveName);
 			
 			// 기존 파일 삭제하기
 			String getmenu = jinMenuService.getMenu(menu.getMenuNo());

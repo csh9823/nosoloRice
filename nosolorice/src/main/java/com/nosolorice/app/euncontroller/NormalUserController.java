@@ -93,7 +93,7 @@ public class NormalUserController {
 
         normalUserService.addNormalUser(normalUser);
 
-        return "login/login"; // 경로 수정
+        return "redirect:/login"; // 경로 수정
     }
 
     @RequestMapping("/overlapIdCheck")

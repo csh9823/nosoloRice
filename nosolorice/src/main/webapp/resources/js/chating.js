@@ -225,10 +225,10 @@ $(function(){
 	//let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
 	
 	//집꺼
-	let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
+	//let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
 	
 	//현진이꺼
-	//let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
+	let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
 	
 	console.log("roomId : ", roomId);
 	console.log("url : ", url);
@@ -367,9 +367,9 @@ $(function(){
 			//let url = "ws://192.168.0.14:8081/app/booking/" + businessId;
 			//let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
 			//집꺼
-			let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
+			//let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
 			//현진이꺼		
-			//let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
+			let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
 			
 			bookingSocket = new WebSocket(url);			
 			
@@ -1574,7 +1574,7 @@ $(function(){
 				  	$("[data-category="+ cat +"]").append(`
 				  		<div class="row my-3" style="height:125px; overflow-y: hidden;">
 							<div class="col-3 p-0">
-							        <img src="`+ v.menuPicture +`" class="rounded" style="width:125px; height:125px;">
+							        <img src="resources/upload/`+ v.menuPicture +`" class="rounded" style="width:125px; height:125px;">
 							    </div>
 							    <div class="col-9">
 							        <div class="row">
