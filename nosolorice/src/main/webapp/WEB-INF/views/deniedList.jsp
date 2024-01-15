@@ -291,7 +291,6 @@ $("#idSearchForm").on('submit', function(e) {
 		 
 		 $.ajax({
 			 
-			 
 			 url : "/app/addDenied",
 			 data : "id=" + id + "&reason=" + reason + "&day=" + day ,
 			 type : "post",
