@@ -228,7 +228,7 @@ public class AdminPageDaoImpl implements AdminPageDao {
 	@Override
 	public void answerBusinessInquiry(BusinessInquiry businessInquiry) {
 		
-		sqlSession.update(Mapper + ".businessAnswerInquiry");
+		sqlSession.update(Mapper + ".businessAnswerInquiry",businessInquiry);
 		
 	}
 
