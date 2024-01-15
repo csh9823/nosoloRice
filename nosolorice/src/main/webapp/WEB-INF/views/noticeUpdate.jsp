@@ -47,15 +47,17 @@
         <div class="col-md-3">
           <ul class="my-3">
             <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
+            <li class="my-5"><a href="noticeList">공지작성</a></li>
             <li class="my-5"><a href="adminNormalInquiryList">일반회원 문의</a></li>
             <li class="my-5"><a href="adminBusinessInquiryList">사업자회원 문의</a></li>
             <li class="my-5"><a href="adminReportList">신고내역</a></li>
-            <li class="my-5"><a href="#">가입승인</a></li>
+            <li class="my-5"><a href="joinApprove">가입승인</a></li>
             <li class="my-5"><a href="adminReviewList">리뷰삭제 요청</a></li>
-            <li class="my-5"><a href="">업체삭제</a></li>
+            <li class="my-5"><a href="businessDeleteList">업체삭제</a></li>
             <li class="my-5"><a href="deniedList">회원정지</a></li>
-            <li class="my-5"><a href="#">매출현황</a></li>
+            <li class="my-5"><a href="adminSales">매출현황</a></li>
             <li class="my-5"><a href="noticeList">공지작성</a></li>
+            <li class="my-5"><input type="button" class="btn" value="로그아웃" onclick="location.href='logout'"></li>
           </ul>
         </div>     
         <div class="col">
@@ -64,7 +66,7 @@
       		<h2 class="fs-3 fw-bold my-5">공지수정</h2>
      	</div>
      	<div class="col-auto d-flex align-items-center">
-     	 <input type="button" value="목록보기" class="btn" onclick="location.href='adminNormalInquiry?pageNum=${pageNum}'">
+     	 <input type="button" value="목록보기" class="btn" onclick="location.href='noticeList?pageNum=${pageNum}'">
      	</div>
        </div>
   <div class="row align-items-center">

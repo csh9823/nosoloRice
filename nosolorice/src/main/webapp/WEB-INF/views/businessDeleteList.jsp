@@ -66,6 +66,7 @@
             <li class="my-5"><a href="businessDeleteList" class="textColor" style="color:#C93C3C">업체삭제</a></li>
             <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
             <li class="my-5"><a href="adminSales" class="textColor">매출현황</a></li>
+            <li class="my-5"><input type="button" class="btn" value="로그아웃" onclick="location.href='logout'"></li>
           </ul>
         </div> 
           
@@ -113,7 +114,7 @@
 		  		</div>
 		  			</div>
 			</div>
-					<div class="row"id="forBlist">
+					<div class="row" id="forBlist">
 				<div class="col" >
 					<c:if test="${not empty bList}">
 					<c:forEach var="b" items="${bList}">
@@ -121,14 +122,14 @@
 				    <div class="col-md-3">
 				        <img src="resources/upload/${b.businessProfile}" style="max-width: 100%; height: auto;">
 				    </div>
-				    <div class="col-md-5 py-4">
+				    <div class="col py-4">
 				        <div class="fs-2">${b.businessName}</div>
 				        <div class="fs-4">${b.businessId}(${b.name})</div>
 				        <div class="fs-4">${b.phone}</div>
 				        <div class="fs-4">${b.address1} ${b.address2}</div>
 				        <div class="py-3"></div>
 				    </div>
-				    <div class="col-md-auto text-md-end align-self-center">
+				    <div class="col-md-auto text-end align-self-center">
 				        <input type="button" value="삭제" class="btn btn-lg deleteBtn" style="background-color:#C93C3C; color:white;">
 				    </div>
 						</div>
@@ -149,9 +150,7 @@
 						      <a class="page-link" href="businessDeleteList?pageNum=${ startPage - PG }">Pre</a>
 						    </li>
 					    </c:if>
-				
-							
-							
+			
 					    <c:forEach var="i" begin="${startPage}" end="${endPage}">
 			   			 
 					    	<c:if test="${i == currentPage }">
@@ -165,8 +164,7 @@
 						    	</li>
 						    </c:if>					    
 					    </c:forEach>
-					    
-				
+					   				
 						<c:if test="${ endPage < pageCount }">
 						    <li class="page-item">
 						      <a class="page-link" href="businessDeleteList?pageNum=${ startPage + PG }">Next</a>
@@ -182,8 +180,6 @@
        </div>
        
 	</div> <!-- container end  -->
-
-            
             
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 <script>

@@ -110,10 +110,15 @@ $(function(){
 	            <li class="my-5"><a href="adminBusinessInquiryList" class="textColor">사업자회원 문의</a></li>
 	            <li class="my-5"><a href="adminReportList" class="textColor">신고내역</a></li>
 	            <li class="my-5"><a href="joinApprove" class="textColor" style="color:#C93C3C">가입승인</a></li>
-	            <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제 요청</a></li>
+	            <li class="my-5"><a href="adminReviewList" class="textColor">리뷰삭제요청</a></li>
 	            <li class="my-5"><a href="businessDeleteList" class="textColor">업체삭제</a></li>
 	            <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
 	            <li class="my-5"><a href="adminSales" class="textColor">매출현황</a></li>
+<<<<<<< HEAD
+	            <li class="my-5"><input type="button" class="btn" value="로그아웃" onclick="location.href='logout'" style="background-color: #FA9884; color:white;">
+=======
+	            <li class="my-5"><input type="button" class="btn" value="로그아웃" onclick="location.href='logout'"></li>
+>>>>>>> branch 'KimDaehyun' of https://github.com/csh9823/nosoloRice.git
 	          </ul>
 	        </div>  
 		

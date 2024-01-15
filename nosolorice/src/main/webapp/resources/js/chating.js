@@ -202,6 +202,8 @@ $(function(){
 		let sList = new Array();
 		let sortType = $("#chatStoreSortSelect").val();
 		
+		console.log("주소매칭일때 클라이언트 주소데이터 : ", locationData);
+		
 		$.ajax({
 			url: "/app/getStoreListByAddress",
 			data : "address=" + locationData + "&sortType=" + sortType,
@@ -488,7 +490,7 @@ $(function(){
 			$(bookingSocket).on('error', function(event) {
 			    console.error('WebSocket 오류:', event);
 			});
-			
+			$("#waitTimer").text("");
 			timerStart(0, 0);
 		}
 		if(chatType == 'reject'){
@@ -1378,7 +1380,7 @@ $(function(){
         
         if(bookComplete){
         	location.href="mainPage";
-        } else {
+        } else if($("#bookWait").hasClass("d-none")) {
         	
         	//chat_member 테이블에서 자기 자신 삭제
         	$.ajax({
@@ -1572,7 +1574,7 @@ $(function(){
 				  	$("[data-category="+ cat +"]").append(`
 				  		<div class="row my-3" style="height:125px; overflow-y: hidden;">
 							<div class="col-3 p-0">
-							        <img src="`+ v.menuPicture +`" class="rounded" style="width:125px; height:125px;">
+							        <img src="resources/upload/`+ v.menuPicture +`" class="rounded" style="width:125px; height:125px;">
 							    </div>
 							    <div class="col-9">
 							        <div class="row">
@@ -2539,7 +2541,7 @@ const searchStoreListReset = (chatRoomInfo, keyword) => {
 				dataType : "json",
 				async : false,
 				success : function(resData){
-					sList = resData;				
+					sList = resData;
 				}, error : function(err){
 					console.log(err)
 				}

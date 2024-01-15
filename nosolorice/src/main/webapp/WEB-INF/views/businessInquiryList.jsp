@@ -99,15 +99,15 @@
 				
 				<div class="row">
 					<%@ include file="../temple/header/businessMenubar.jsp" %>
-					<div class="col bg-white">
+					<div class="col p-5" style="height:100vh; overflow: auto;">
 					
-						<div class="row mx-2 mt-5">
+						<div class="row">
 							<div class="col">
-								<span class="fw-bold fs-3">1:1 문의</span>
+								<span class="fw-bold fs-2">1:1 문의</span>
 							</div>
 						</div>
 						
-						<div class="row mx-2 my-3">
+						<div class="row my-3">
 							<div class="col">
 								<a href="businessInquiry" style="text-decoration: none;">
 									<span class="fs-5 text-secondary">문의하기</span>
@@ -118,7 +118,7 @@
 							</div>
 						</div>
 						
-						<div class="row mx-2 text-center border-top border-bottom border-dark py-3">
+						<div class="row text-center border-top border-bottom border-dark py-3">
 							<div class="col-2">
 								<span class="fs-5">번호</span>
 							</div>
@@ -140,7 +140,7 @@
 						<c:if test="${not empty inquiryList}">
 						<!-- 반복문 시작 -->
 						<c:forEach var="i" items="${inquiryList}">
-						<div class="row mx-2 text-center border-bottom py-3 businessInquiryRow">
+						<div class="row text-center border-bottom py-3 businessInquiryRow">
 							<div class="col-2">
 								<span class="fs-5">${i.getBusinessInquiryNo()}</span>
 							</div>
@@ -160,7 +160,7 @@
 						</div>
 						
 						<!-- 본문내용출력 시작 -->						
-						<div class="row mx-2 py-3 d-none businessInquiryContent border-bottom">
+						<div class="row py-3 d-none businessInquiryContent border-bottom">
 							<div class="col">
 
 								<div class="row inquiryContentRow">
@@ -231,7 +231,7 @@
 						<!-- 페이지네이션 끝  -->
 						</c:if>
 						<c:if test="${empty inquiryList}">
-							<div class="row mx-2 text-center border-bottom py-3">
+							<div class="row text-center border-bottom py-3">
 								<div class="col">
 									문의 내역이 없습니다
 								</div>

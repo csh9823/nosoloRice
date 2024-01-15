@@ -44,7 +44,6 @@
           margin: 15% auto;
           padding: 20px;
           width: 400px;
-          height: 300px;
         }
         #close-modal{
             background-color: white;
@@ -67,20 +66,6 @@
         padding: 20px;
         width: 600px;
         height: 400px;
-        }
-        #catesubmit{
-            padding: 0;
-            width: 100px;
-            height: 27px;
-        }
-        #cateselect{
-            width: 185px;
-            height: 30px;
-        }
-        #catedelete{
-            padding: 0;
-            width: 100px;
-            height: 27px;
         }
 
         .btn-upload {
@@ -152,54 +137,60 @@
 <div class="container">
 <div class="row">
 <%@ include file="../../temple/header/businessMenubar.jsp" %>
-        <div class="col-2" style="border: 1px solid black;">
-            <div class="row" style="margin-top: 100px; font-size: 30px; margin-left: 10px; margin-bottom: 40px;">
-                <div class="col" id="menumanagement">메뉴관리</div>
+<div class="col ps-5 pe-3 bg-light" style="height:100vh; overflow: hidden;">
+	<div class="row">
+        <div class="col-3 pe-3 pt-5">
+            <div class="row" style="font-size: 30px;">
+                <div class="col fw-bold pb-3 border-bottom" id="menumanagement">메뉴관리</div>
             </div>
         <c:forEach var="menucate" items="${menuCategory}" >
-            <div class="row" style="margin-bottom: 20px; font-size: 20px; margin-left: 10px;">
+            <div class="row">
+            	<div class="col fs-4 my-2 text-dark">
                 	<a href="BusinessMenu?businessId=${sessionScope.BusinessUser.businessId}&menuCategoryNo=${menucate.menuCategoryNo}" class="menuCateNames">
-	                	<div class="col">${menucate.menuCategoryName}</div>
+	                	${menucate.menuCategoryName}
                 	</a>
+                </div>
             </div>
         </c:forEach>
-            <div class="row" style="margin-bottom: 20px; font-size: 20px; margin-left: 10px;">
+            <div class="row my-3">
                 <div class="col"><button type="button" class="btn btn-danger" id="menucatemanagementbtn">카테고리 관리</button></div>
             </div>
         </div>
 
-        <div class="col-7" style="border: 1px solid black;">
-            <div class="row" style="margin-top: 100px; font-size: 30px; margin-left: 10px; margin-bottom: 40px;">
+        <div class="col ps-3 pt-5" style="height:100vh;">
+            <div class="row" style="font-size: 30px;">
             
             	<c:if test="${menuCategoryNo == null}">
-                	<div class="col-4" style="margin-left: 35px">전체 메뉴</div>
+                	<div class="col-auto fw-bold pb-3">전체 메뉴</div>
             	</c:if>
             	
 				<c:if test="${menuCategoryNo != null}">
-				    <div class="col-4" style="margin-left: 35px">
+				    <div class="col-auto fw-bold">
 				    			${menucatename}
 				    <input type="hidden" id="thiscateno" value="${mapNoMenuList[0].menuCategory}">			
 				    </div>
 				    
 				</c:if>
             	
-                <div class="col-7"><button type="button" class="btn btn-success" id="menumanagementbtn" style="margin-top: 0px">메뉴등록</button>&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn btn-danger" id="menumdelete">메뉴삭제</button></div>
+                <div class="col text-end">
+                	<button type="button" class="btn btn-success me-2" id="menumanagementbtn">메뉴등록</button>
+                    <button type="button" class="btn btn-danger" id="menumdelete">메뉴삭제</button>
+                </div>
             </div>
 
-            <div class="row" id="rowimgs">
+            <div class="row" id="rowimgs" style="height:90vh; overflow: auto;">
             
              <!-- 카테고리 있는 리스트 -->
 				<c:if test="${not empty mapNoMenuList }">
 				
 				<c:forEach var="mapNoMenuList" items="${mapNoMenuList}">
 				
-				<div class="col-4 text-center imgmenucol" style="margin-top: 10px;">
+				<div class="col-4 text-center imgmenucol p-3" style="margin-top: 10px;">
 				
 				<c:if test="${not empty mapNoMenuList.menuPicture}">
                     <div class="row">
                         <div class="col">
-                            <div style="background-image: url(${mapNoMenuList.menuPicture}); width: 200px; height: 200px; background-size : 100% 100%;">
+                            <div style="background-image: url(resources/upload/${mapNoMenuList.menuPicture}); width: 200px; height: 200px; background-size : 100% 100%;" class="rounded">
                             </div>
                         </div>
                     </div>
@@ -208,7 +199,7 @@
 				<c:if test="${mapNoMenuList.menuPicture == null}">
                     <div class="row">
                         <div class="col">
-                            <div style="background-image: url(https://via.placeholder.com/200); width: 200px; height: 200px; background-size : 100% 100%;">
+                            <div style="background-image: url('resources/upload/default_menuPicture.png'); width: 200px; height: 200px; background-size : 100% 100%;" class="rounded">
                             </div>
                         </div>
                     </div>
@@ -222,7 +213,9 @@
                     </div>
                     
                     <div class="row">
-                    	<button type="button" class="btn btn-success openmodel" style="margin-top: 0px" value="${mapNoMenuList.menuNo}">메뉴수정</button>
+                    	<div class="col">
+	                    	<button type="button" class="btn btn-success openmodel w-100" value="${mapNoMenuList.menuNo}">메뉴수정</button>                    	
+                    	</div>
                     </div>
                  </div>
                  </c:forEach> 
@@ -231,12 +224,12 @@
                  <!-- 카테고리 없는 전체 리스트 -->
 				<c:if test="${not empty map}">
 				    <c:forEach var="menu" items="${map}">
-				        <div class="col-4 text-center imgmenucol" style="margin-top: 10px;">
+				        <div class="col-4 text-center imgmenucol p-3" style="margin-top: 10px;">
 				
 				            <c:if test="${not empty menu.menuPicture}">
 				                <div class="row">
 				                    <div class="col">
-				                        <div style="background-image: url(${menu.menuPicture}); width: 200px; height: 200px; background-size : 100% 100%;">
+				                        <div style="background-image: url(resources/upload/${menu.menuPicture}); width: 200px; height: 200px; background-size : 100% 100%;" class="rounded">
 				                        </div>
 				                    </div>
 				                </div>
@@ -245,7 +238,7 @@
 				            <c:if test="${menu.menuPicture == null}">
 				                <div class="row">
 				                    <div class="col">
-				                        <div style="background-image: url(https://via.placeholder.com/200); width: 200px; height: 200px; background-size : 100% 100%;">
+				                        <div style="background-image: url('resources/upload/default_menuPicture.png'); width: 200px; height: 200px; background-size : 100% 100%;" class="rounded">
 				                        </div>
 				                    </div>
 				                </div>
@@ -260,53 +253,57 @@
 				            </div>
 				            
 				            <div class="row">
-				            <button type="button" class="btn btn-success openmodel" style="margin-top: 0px" value="${menu.menuNo}">메뉴수정</button>
+				            	<div class="col">
+						            <button type="button" class="btn btn-success openmodel w-100" value="${menu.menuNo}">메뉴수정</button>				            	
+				            	</div>
 				            </div>
 				        </div>
 				    </c:forEach>
 			</c:if>
             </div>
         </div>
+        </div>
+        </div>
     </div>
 </div>
 
 <div id="modal">
-    <div class="modal-content">
+    <div class="modal-content p-4">
         
-        <div class="row" style="margin-bottom: 10px; margin-top: 10px;">
+        <div class="row mb-2">
             <div class="col"><strong>카테고리 추가</strong></div>
             <div class="col" style="text-align: right;"><button id="close-modal"><i class="bi bi-x-lg"></i></button></div>
         </div>
 
         <form action="BusinessMenuCateadd" id="cateaddsubmit" method="get">
             <div class="row">
-                    <div class="col">
-                    <input type="text" name="menuCateName" id="cateadd">
+                    <div class="col pe-0">
+                    <input type="text" class="form-control" name="menuCateName" placeholder="카테고리명을 입력하세요" id="cateadd">
                     <input type="hidden" name="businessId" value="${sessionScope.BusinessUser.businessId}">
                     </div>
 					
-                    <div class="col"><button type="submit" class="btn btn-success" id="catesubmit">추가하기</button></div>
+                    <div class="col-auto text-end">
+                    	<button type="submit" class="btn btn-success h-100" id="catesubmit">추가하기</button>
+                    </div>
             </div>
         </form>
             
-            <div class="row" style="border: solid 0.5px lightgray; width: 385px; margin-top: 60px;">
+            <div class="row border-top mx-1 my-3"></div>
 
-            </div>
-
-            <div class="row" style="margin-top: 40px; margin-bottom: 10px;">
+            <div class="row mb-2">
                 <div class="col"><strong>카테고리 삭제</strong></div>
             </div>
 			
 			<form action="MenuCateDelete" method="get">
             <div class="row">
-                <div class="col">
-                    <select name="menuCategoryNo" id="cateselect">
+                <div class="col pe-0">
+                    <select name="menuCategoryNo" class="form-select" id="cateselect">
 		                <c:forEach var="menucate" items="${menuCategory}" >
 							<option value="${menucate.menuCategoryNo}">${menucate.menuCategoryName}</option>		                
 		                </c:forEach>
                     </select>
                 </div>
-                <div class="col">
+                <div class="col-auto text-end">
                     <button type="submit" class="btn btn-danger" id="catedelete">삭제하기</button>
                     <input type="hidden" name="businessId" value="${sessionScope.BusinessUser.businessId}">
                 </div>
@@ -337,7 +334,7 @@
 
                 <div class="row">
                     <div class="col">
-                        <img src="https://via.placeholder.com/200" alt="" id="menuimgform">
+                        <img src="resources/upload/default_menuPicture.png" alt="" id="menuimgform">
                     </div>
                     <div class="col" style="margin-top: 35px;">
                         <label for="menuimg">
@@ -502,8 +499,8 @@ $("#menumdelete").on("click", function(){
 				      '<div class="col-4 text-center imgmenucol" style="margin-top: 10px;">'
 				            + "<div class='row'>" 
 				      		      +'<div class="col">'+
-				      		      	(resData[i].menuPicture != null ? '<div style="background-image: url('+resData[i].menuPicture+'); background-size : 100% 100%; width: 200px; height: 200px;">'
-				      		      	: '<div style="background-image: url(https://via.placeholder.com/200); background-size : 100% 100%; width: 200px; height: 200px;">')
+				      		      	(resData[i].menuPicture != null ? '<div style="background-image: url(' + 'resources/upload/'+resData[i].menuPicture+'); background-size : 100% 100%; width: 200px; height: 200px;">'
+				      		      	: '<div style="background-image: url(resources/upload/default_menuPicture.png); background-size : 100% 100%; width: 200px; height: 200px;">')
 				                		+ '<button type="button" class="btn btn-danger thisdelete" style="margin-top: 80px;" value='+resData[i].menuNo+'>삭제하기</button>' 
 				                		+'</div>'         
 				            	+ '</div>'    
@@ -727,7 +724,7 @@ $('input[type="text"]').keydown(function() {
     					menuPrice.val(resData.menuPrice)
     					menuName.val(resData.menuName)
     					if(resData.menuPicture != null){
-    						menuImg.src = resData.menuPicture;	
+    						menuImg.src = "resources/upload/"+resData.menuPicture;	
     					}
     					menuCategoryDropdown.value = resData.menuCategoryNo;
     				},

@@ -37,8 +37,6 @@
     }
     
     .revupdate{
-    margin-top: 270px; 
-    margin-left: 220px; 
     background-color: rgb(250,152,132); 
     border-radius: 3px; 
     border: none;
@@ -49,8 +47,6 @@
 	}
     
     .revupdate2{
-	    margin-top: 270px; 
-	    margin-left: 220px; 
 	    background-color: rgb(250,152,132); 
 	    border-radius: 3px; 
 	    border: none;
@@ -104,90 +100,102 @@
             width: 600px;
             height: 400px;
         }
+        a {
+        	text-decoration: none;
+        }
     </style>
 </head>
 <body>
 <div class="container">
 <div class="row">
 	<%@ include file="../../temple/header/businessMenubar.jsp" %>
-        <div class="col">
-            <div class="row">
-                <div class="col-2"><span style="font-size: 30px; color: rgb(201,60,60);"><strong>리뷰</strong></span></div>
-            </div>
-            <div class="row">
-                <div class="col-2"><span style="font-size: 20px;"><strong>리뷰(${reviewCount})</strong></div>
+        <div class="col p-5" style="height:100vh; overflow: auto;">
+            <div class="row mt-3">
+                <div class="col-2 fs-2"><span style="color: rgb(201,60,60);"><strong>리뷰(${reviewCount})</strong></span></div>
             </div>
             
             <c:forEach var="rev" items="${review}">
-            <fmt:formatDate value="${rev.reviewRegdate}" pattern="YYYY:MM:dd:HH:mm" var="bookingTime" />
+            <fmt:formatDate value="${rev.reviewRegdate}" pattern="YYYY/MM/dd HH:mm" var="bookingTime" />
              <c:if test="${rev.reviewBlind eq '1'}">
             
              </c:if>
              	
         	<c:if test="${rev.reviewBlind ne '1'}">
-            <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
-                <div class="col-4">
+            <div class="row mt-3">
+                <div class="col">
                     <div class="row">
-                        <div class="col-2"><img src="resources/upload/${rev.normalProfile}" style="width: 30px; height: 30px; border-radius: 30px;"></div>
-                        <div class="col-6">${rev.normalNickname}</div>
+                        <div class="col-auto pe-0 d-flex align-items-center justify-content-center">
+                        	<img src="resources/upload/${rev.normalProfile}" class="rounded-circle" style="width: 50px; height: 50px;">
+                        </div>
+                        <div class="col-6">
+                        	<div class="row">
+                        		<div class="col fs-4 fw-bold">
+		                        	${rev.normalNickname}                        		
+                        		</div>
+                        	</div>
+                        	<div class="row">
+                        		<div class="col">
+		                        	${bookingTime}
+                        		</div>
+                        	</div>
+                        </div>
                     </div>
-                    <div class="col-6" style="margin-left: 54px;">
-                        ${bookingTime}
-                    </div>
                 </div>
-                <div class="col-2">
+
+                <div class="col-auto fs-4 d-flex align-items-center">
+					<i class="bi ${rev.reviewScore >=1 ? 'bi-star-fill' : 'bi-star'}"></i>
+					<i class="bi ${rev.reviewScore >=2 ? 'bi-star-fill' : 'bi-star'}"></i>
+					<i class="bi ${rev.reviewScore >=3 ? 'bi-star-fill' : 'bi-star'}"></i>
+					<i class="bi ${rev.reviewScore >=4 ? 'bi-star-fill' : 'bi-star'}"></i>
+					<i class="bi ${rev.reviewScore >=5 ? 'bi-star-fill' : 'bi-star'}"></i>
                 </div>
-                <div class="col-2">
-                <i class="bi ${rev.reviewScore >=1 ? 'bi-star-fill' : 'bi-star'}"></i>
-                              <i class="bi ${rev.reviewScore >=2 ? 'bi-star-fill' : 'bi-star'}"></i>
-                              <i class="bi ${rev.reviewScore >=3 ? 'bi-star-fill' : 'bi-star'}"></i>
-                              <i class="bi ${rev.reviewScore >=4 ? 'bi-star-fill' : 'bi-star'}"></i>
-                              <i class="bi ${rev.reviewScore >=5 ? 'bi-star-fill' : 'bi-star'}"></i>
-                </div>
-                <div class="col-2" style="text-align: right;">
-                    <a href="Businessriviewblind?revireNo=${rev.revireNo}"><button class="revblind">블라인드</button></a>
-                </div>
-                
-				<c:if test="${rev.revieWdelet eq '1'}">
-				    <div class="col-2">
-				        <button class="revdelete">요청중</button>
-				    </div>
-				</c:if>
-				
-				<c:if test="${rev.revieWdelet ne '1'}">
-				    <div class="col-2">
-				        <a href="Businessriviewdelete?revireNo=${rev.revireNo}"><button class="revdelete">삭제요청</button></a>
-				    </div>
-				</c:if>
-                
+
+			    <div class="col-auto text-end d-flex align-items-center">
+		    		<a href="Businessriviewblind?revireNo=${rev.revireNo}">
+                  		<button class="revblind px-3 py-2 me-2">블라인드</button>
+                  	</a>
+			    	<c:if test="${rev.revieWdelet eq '1'}">
+			        	<button class="revdelete px-3 py-2">요청중</button>
+					</c:if>
+			    
+					<c:if test="${rev.revieWdelet ne '1'}">
+				        <a href="Businessriviewdelete?revireNo=${rev.revireNo}">
+				        	<button class="revdelete px-3 py-2">삭제요청</button>
+				        </a>
+					</c:if>
+			    </div>   
             </div>
 
-            <div class="row">
+            <div class="row py-3">
                 <div class="col">
                             ${rev.reviewContent}
                 </div>
             </div>
             
             <div class="row">
-                    <div class="col-6">
+                    <div class="col">
 	        			<c:if test="${rev.reviewPicture != null}">
-	                    	<img src="resources/upload/${rev.reviewPicture}" style="width: 300px; height: 300px;">
+	                    	<img src="resources/upload/${rev.reviewPicture}" style="max-width: 100%;">
 	                    </c:if>
                     </div>
-
+            </div>
+            
+            <div class="row my-2">
                     <c:if test="${rev.ownerComment != null}">
-                    <div class="col-6"  style="">
-                        <button class="revupdate2" value="${rev.revireNo}.${rev.ownerComment}">답글수정</button>
+                    <div class="col text-end">
+                        <button class="revupdate2 px-3 py-2" value="${rev.revireNo}.${rev.ownerComment}">답글수정</button>
                         <a href="OwnerCommentdelete?reviewNo=${rev.revireNo}"><button class="rev2delete">답글삭제</button></a>
                     </div>
                     </c:if>
                     
                     <c:if test="${rev.ownerComment == null}">
-					<div class="col-6"  style="">
-                    	<button class="revupdate" value="${rev.revireNo}.${rev.normalId}">답글달기</button>
+					<div class="col text-end">
+                    	<button class="revupdate px-3 py-2" value="${rev.revireNo}.${rev.normalId}">답글달기</button>
                     </div>
                     </c:if>
             </div>
+            <!--  -->
+			<!--  -->
             
 			<c:if test="${rev.ownerComment != null}">
 	            <div class="row">

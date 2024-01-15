@@ -23,7 +23,7 @@
 	<div class="container">
 	<div class="row">
 	  	<%@ include file="../../temple/header/businessMenubar.jsp" %>
-  		<div class="col-md-9">
+  		<div class="col-md-9 p-5" style="height:100vh; overflow: auto;">
 			<input type="hidden" id="businessId" value="${BusinessUser.businessId}">
 		   <div class="row">
 		     <div class="square-container col-4">

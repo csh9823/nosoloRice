@@ -11,7 +11,7 @@
     <script src="resources/js/member.js"></script>
     <link href="resources/bootstrap/main.css" rel="stylesheet">
 </head>
-<body>
+<body style="overflow: hidden;">
     <div class="row my-5">
         <c:choose>
             <c:when test="${overlap}">
