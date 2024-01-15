@@ -73,7 +73,7 @@
                 <div class="col-3">신고일</div>
                 <div class="col-2">신고처리</div>
             </div>
-            
+             
             
             <c:forEach var="r" items="${userReportList}">
             <div class="row align-items-center text-center py-3"> 
