@@ -357,6 +357,23 @@
 			business_id = #{id}
 	</update>
 	
+	<select id="getOwnerComment" resultType="OwnerComment">
+		SELECT
+			owner_no AS ownerNo,
+			business_comment AS businessComment,
+			regdate AS regDate
+		FROM
+			owner_comment
+		WHERE
+			review_no = #{reviewNo}
+	</select>
+	
+	<delete id="deleteOwnerComment">
+		DELETE FROM
+			owner_comment
+		WHERE
+			review_no = #{reviewNo}
+	</delete>
 	
 	
 	

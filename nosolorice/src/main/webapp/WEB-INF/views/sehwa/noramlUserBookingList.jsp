@@ -215,6 +215,15 @@
 			                        		data-no="${bookingList.review.reviewNo}">
 		                        </div>
 		                    </div>
+		                    <!-- 사장님 댓글 있을 경우 -->
+		                    <c:if test="${not empty bookingList.ownerComment.businessComment}">
+			                    <div class="row p-4 my-2">
+			                    	<div class="col bg-body-tertiary p-4">
+			                    		<h5 class="fw-bold">사장님 답글</h5>
+				                    	<pre class="px-4">${bookingList.ownerComment.businessComment}</pre>
+			                    	</div>
+			                    </div>
+		                    </c:if>
 		                  </td>
 		                </tr>
 	                </c:forEach>

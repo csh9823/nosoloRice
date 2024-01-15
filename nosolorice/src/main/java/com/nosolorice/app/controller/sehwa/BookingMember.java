@@ -3,6 +3,7 @@ package com.nosolorice.app.controller.sehwa;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.nosolorice.app.domain.Review.OwnerComment;
 import com.nosolorice.app.domain.Review.Review;
 import com.nosolorice.app.domain.businessUser.BusinessUser;
 import com.nosolorice.app.domain.normalUser.NormalUser;
@@ -16,12 +17,13 @@ public class BookingMember {
 	private BusinessUser businessUser;		// 사업장정보
 	private Timestamp bookingTime;			// 방문시간
 	private Boolean reviewStatus;				// 리뷰등록여부
-	private Review review;
+	private Review review;						// 리뷰
+	private OwnerComment ownerComment;
 	
 	
 	public BookingMember() {};
 	public BookingMember(int listNo, int no, List<String> members, List<NormalUser> normalUser, BusinessUser businessUser,
-			Timestamp bookingTime, Boolean reviewStatus, Review review) {
+			Timestamp bookingTime, Boolean reviewStatus, Review review, OwnerComment ownerComment) {
 		this.listNo = listNo;
 		this.no = no;
 		this.members = members;
@@ -30,6 +32,7 @@ public class BookingMember {
 		this.bookingTime = bookingTime;
 		this.reviewStatus = reviewStatus;
 		this.review = review;
+		this.ownerComment = ownerComment;
 	}
 
 
@@ -82,6 +85,12 @@ public class BookingMember {
 	}
 	public void setListNo(int listNo) {
 		this.listNo = listNo;
+	}
+	public OwnerComment getOwnerComment() {
+		return ownerComment;
+	}
+	public void setOwnerComment(OwnerComment ownerComment) {
+		this.ownerComment = ownerComment;
 	}
 
 

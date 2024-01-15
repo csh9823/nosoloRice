@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nosolorice.app.domain.Review.OwnerComment;
 import com.nosolorice.app.domain.Review.Review;
 import com.nosolorice.app.domain.booking.Booking;
 import com.nosolorice.app.domain.booking.BookingOk;
@@ -176,6 +177,12 @@ public class SehwaServiceImpl implements SehwaService {
 					// 리뷰가 있을 때
 					bMember.setReviewStatus(true);
 					bMember.setReview(review);
+					
+					// 사장님 리뷰 여부확인
+					OwnerComment oComment = dao.getOwnerCommnet(review.getReviewNo());
+					if(oComment != null) {
+						bMember.setOwnerComment(oComment);
+					} 
 				}
 				bookingList.add(bMember);
 			}
@@ -183,11 +190,6 @@ public class SehwaServiceImpl implements SehwaService {
 		} else {
 			
 		}
-		
-		for(int i =0; i <bookingList.size(); i++ ) {
-			System.out.println(bookingList.get(i).getNo());
-		}
-		
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("bookingList", bookingList);
@@ -223,6 +225,9 @@ public class SehwaServiceImpl implements SehwaService {
 
 	@Override
 	public void deleteReview(int no) {
+		// 사장님 댓글 먼저삭제
+		dao.deleteOwnerComment(no);
+		// 댓글 삭제
 		dao.deleteReview(no);
 	}
 
