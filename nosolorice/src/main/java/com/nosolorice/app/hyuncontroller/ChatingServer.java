@@ -40,12 +40,13 @@
 		
 		private final ObjectMapper om = new ObjectMapper();
     	//예약동의set
-    	private static Set<Session> agreeSet = new HashSet<>();
+    	private static Map<String, Set<Session>> roomAgreeSets = new HashMap<>();
     	
 	    @OnOpen
 	    public void onOpen(Session session, @PathParam("roomId") String roomId) throws JsonProcessingException {
 	    	System.out.println(session + "님이 " + roomId + "채팅방에 연결 되었습니다");
 	    	session.getUserProperties().put("roomId", roomId);
+	    	roomAgreeSets.putIfAbsent(roomId, new HashSet<>());
 	    }
 	    
 	    @OnMessage
@@ -56,7 +57,8 @@
 	    		    	
 	        // 현재 세션의 roomId 가져오기
 	        String currentRoomId = (String) session.getUserProperties().get("roomId");
-
+	        Set<Session> agreeSet = roomAgreeSets.get(currentRoomId);	        
+	        
 	        // 모든 열려있는 세션 가져오기
 	        Set<Session> allSessions = session.getOpenSessions();
 	        
@@ -93,6 +95,7 @@
 	    	
 	    	//사장님 cancel이면 agreeSet 비우기
 	    	if(msg.get("chatType").equals("denied")) {
+	    		//소멸
 	    		agreeSet.clear();
 	    	}
 	    	
@@ -100,8 +103,15 @@
 	    		System.out.println("agree메시지 수신 : " + msg.toString());
 	    		Map<String, Object>dataMap = new HashMap<>();
 	    		agreeSet.add(session);
+	    		
 	    		System.out.println("agreeSet.size() : " + agreeSet.size());
 	    		System.out.println("Integer.parseInt(msg.get(\"memberCount\").toString()) : " + Integer.parseInt(msg.get("memberCount").toString()));
+	    		for (Map.Entry<String, Set<Session>> entry : roomAgreeSets.entrySet()) {
+	    		    System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+	    		}
+	    		for(Session s : agreeSet) {
+	    			System.out.println("agreeSet 반복문 : " + s.getUserProperties().get("nickName"));
+	    		}
 	    		
 	    		if(agreeSet.size() == Integer.parseInt(msg.get("memberCount").toString())) {
 		    		for(Session s : chatMember) {
@@ -109,6 +119,10 @@
 		    			String jsonData = om.writeValueAsString(dataMap);
 		    			s.getBasicRemote().sendText(jsonData);    		
 		    		}
+		    		//소멸
+		    		roomAgreeSets.remove((String) session.getUserProperties().get("roomId"));
+		    		System.out.println("agreeComplete 후 agreeSet소멸 완료");
+		    		
 	    		} else {
 	    			for(Session s : agreeSet) {
 	    				dataMap.put("chatType", "agree");
@@ -142,6 +156,8 @@
 	    		
 	    		System.out.println("reject 메시지 수신 : " + msg.toString());
 	    		Map<String, Object>dataMap = new HashMap<>();
+	    		
+	    		//소멸
 	    		agreeSet.clear();
 	    		
     			for(Session s : chatMember) {
@@ -157,7 +173,6 @@
 	    		
 	    		System.out.println("userCancel 메시지 수신 : " + msg.toString());
 	    		Map<String, Object>dataMap = new HashMap<>();
-	    		agreeSet.clear();
 	    		
     			for(Session s : chatMember) {
     				dataMap.put("chatType", "userCancel");

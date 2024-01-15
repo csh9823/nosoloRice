@@ -16,15 +16,15 @@
 				
 				<div class="row">
 					<%@ include file="../temple/header/businessMenubar.jsp" %>
-					<div class="col bg-white">
+					<div class="col p-5" style="height:100vh; overflow: hidden;">
 					
-						<div class="row mx-2 mt-5">
+						<div class="row">
 							<div class="col">
-								<span class="fw-bold fs-3">1:1 문의</span>
+								<span class="fw-bold fs-2">1:1 문의</span>
 							</div>
 						</div>
 						
-						<div class="row mx-2 my-3">
+						<div class="row my-3">
 							<div class="col">
 								<a href="businessInquiry" style="text-decoration: none;">
 									<span class="fs-5 text-danger">문의하기</span>
@@ -35,7 +35,7 @@
 							</div>
 						</div>
 						
-						<form class="row mx-2" method="post" enctype="multipart/form-data" action="writeBusinessInquiry">
+						<form class="row" method="post" enctype="multipart/form-data" action="writeBusinessInquiry">
 							<div class="col">
 								
 								<div class="row my-3">

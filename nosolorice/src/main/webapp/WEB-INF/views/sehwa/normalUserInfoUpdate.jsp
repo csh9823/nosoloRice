@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
-<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,9 +19,9 @@
 	    		class="row">
 	      <input type="hidden" name="xpoint" id="xpoint" value="${NormalUser.xpoint }">
 	      <input type="hidden" name="ypoint" id="ypoint" value="${NormalUser.ypoint }">
-	      <div class="col-3">
+	      <div class="col-3 text-center">
 	        <input type="file" name="fileInput" id="fileInput"  onchange="readImage(this)"  style="display:none;" accept="image/*">
-	        <button style="border : none; background-color: white;" class="w-100" id="clickImg">
+	        <button style="border : none; background-color: white;" class="w-100 my-2" id="clickImg">
 	          <div class="profile-box-200">
 		          <c:if test="${NormalUser.profile eq 'defaultImg'}">
 			          <img src="resources/img/profile_img.png" class="preview w-100 profile-img">      
@@ -32,7 +31,7 @@
 		          </c:if>
 		          </div>
 	        </button>
-	        <span id="changeDefaultImg" class="text-gray" style="text-decoration: none;">기본이미지로 변경</span>
+	        <span id="changeDefaultImg" class="text-gray" style="text-decoration: none; cursor:pointer;">기본이미지로 변경</span>
 	      </div>
 	      <div class="col-9 px-5">
 	        <div class="row mb-3">

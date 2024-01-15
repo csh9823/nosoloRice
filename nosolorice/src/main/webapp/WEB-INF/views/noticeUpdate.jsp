@@ -56,7 +56,8 @@
             <li class="my-5"><a href="businessDeleteList">업체삭제</a></li>
             <li class="my-5"><a href="deniedList">회원정지</a></li>
             <li class="my-5"><a href="adminSales">매출현황</a></li>
-            <li class="my-5"><input type="button" class="btn" value="로그아웃" onclick="location.href='logout'" style="background-color: #FA9884; color:white;">
+            <li class="my-5"><a href="noticeList">공지작성</a></li>
+            <li class="my-5"><input type="button" class="btn" value="로그아웃" onclick="location.href='logout'"></li>
           </ul>
         </div>     
         <div class="col">

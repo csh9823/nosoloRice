@@ -27,11 +27,6 @@
     overflow: hidden;
     transition: max-height 0.3s ease-out;
   }
-
-  .btn {
-    background-color: #3DB78B;
-    color : white;
-  }
        .pagination .page-item.active .page-link {
     background-color: #FA9884;
     border-color: #FA9884;
@@ -97,7 +92,7 @@
              </c:forEach>
 
           
-          
+          <c:if test="not empty ${userReportList}">
           <div class="row my-5">
 				<div class="col">
 					<nav aria-label="Page navigation">
@@ -132,6 +127,7 @@
 					</nav>
 				</div>
 			</div> 
+			</c:if>
        </div>
   </div>
 </div>

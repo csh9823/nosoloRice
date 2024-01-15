@@ -94,61 +94,71 @@ public class MatchingServer {
     		    		
     		if(s != session && Integer.parseInt(dataMap.get("memberCount").toString()) == Integer.parseInt(s.getUserProperties().get("memberCount").toString())) {
     			
-    			boolean option = true;
+    			boolean option = false; //true면 조건 일치 false면 조건 불일치
     			
     			//매칭 선택조건
+    			
+    			/*
+    			위치메서드
+    			위치정보
+    			카테고리
+    			성별
+    			연령대
+    			*/
+    			
+    			if(! dataMap.get("locationMethod").toString().equals(s.getUserProperties().get("locationMethod").toString())) continue;
+    			
     			// 위치메서드 조건(address)
     			if(dataMap.get("locationMethod").toString().equals("address")) {
-    				option = dataMap.get("locationMethod").toString().equals(s.getUserProperties().get("locationMethod").toString()) ? true : false;
-    				if(option) {
-    					option = dataMap.get("locationInfo").toString().equals(s.getUserProperties().get("locationInfo").toString()) ? true : false;
-    				}
+    				if(! dataMap.get("locationInfo").toString().equals(s.getUserProperties().get("locationInfo").toString())) continue;
     			}
     			// 위치메서드 조건(map)   			
     			if(dataMap.get("locationMethod").toString().equals("map")) {
-    				option = dataMap.get("locationMethod").toString().equals(s.getUserProperties().get("locationMethod").toString()) ? true : false;
-    				if(option) {
-    			    	ArrayList<Object> list = (ArrayList<Object>) dataMap.get("locationInfo");    			    	
-    			    	double area = Integer.parseInt((String)list.get(2)) * 0.00898315;
-    			    	double maxX = Double.parseDouble(list.get(0).toString())+area;
-    			    	double minX = Double.parseDouble(list.get(0).toString()) - area;
-    			    	double maxY = Double.parseDouble(list.get(1).toString()) + area;
-    			    	double minY = Double.parseDouble(list.get(1).toString()) - area;
-    			    	//s의 x y좌표가 내 4개 좌표 안에 속하기만 하면된다.
-    			    	ArrayList<Object> sList = (ArrayList<Object>) s.getUserProperties().get("locationInfo");
-    			    	double sX = Double.parseDouble(sList.get(0).toString());
-    			    	double sY = Double.parseDouble(sList.get(1).toString());
-    			    	option = (sX >= minX && sX <= maxX && sY >= minY && sY <= maxY) ? true : false;
-    				}
+			    	ArrayList<Object> list = (ArrayList<Object>) dataMap.get("locationInfo");    			    	
+			    	double area = Integer.parseInt((String)list.get(2)) * 0.00898315;
+			    	double maxX = Double.parseDouble(list.get(0).toString())+area;
+			    	double minX = Double.parseDouble(list.get(0).toString()) - area;
+			    	double maxY = Double.parseDouble(list.get(1).toString()) + area;
+			    	double minY = Double.parseDouble(list.get(1).toString()) - area;
+			    	//s의 x y좌표가 내 4개 좌표 안에 속하기만 하면된다.
+			    	ArrayList<Object> sList = (ArrayList<Object>) s.getUserProperties().get("locationInfo");
+			    	double sX = Double.parseDouble(sList.get(0).toString());
+			    	double sY = Double.parseDouble(sList.get(1).toString());
+			    	if(! (sX >= minX && sX <= maxX && sY >= minY && sY <= maxY)) continue;
     			}
     			
     			// 카테고리 조건
-    			if(! dataMap.get("category").toString().equals("[]")) {
-    		    	ArrayList<Object> cList = (ArrayList<Object>) dataMap.get("category");
-    		    	ArrayList<Object> scList = (ArrayList<Object>) s.getUserProperties().get("category");
-    				option = cList.equals(scList) ? true : false;
+    			if(! dataMap.get("category").toString().equals("[]") || ! s.getUserProperties().get("category").toString().equals("[]")) {
+    					ArrayList<Object> cList = (ArrayList<Object>) dataMap.get("category");
+    					ArrayList<Object> scList = (ArrayList<Object>) s.getUserProperties().get("category");
+    					boolean isOverlap = false;
+    					for(Object sc : scList) {
+    						if (cList.contains(sc)) {
+    							System.out.println("음식카테고리가 한개라도 일치함");
+    							isOverlap = true;
+    							break;
+    						}
+    					}
+    					if(! isOverlap) continue;
+    					System.out.println("카테고리 조건 비교 통과!");
     			}
     			// 같은성별여부 조건
-    			if(! dataMap.get("gender").toString().equals("no")) {
-    				option = dataMap.get("sessionGender").toString().equals(s.getUserProperties().get("sessionGender").toString()) ? true : false;
+    			if(! dataMap.get("gender").toString().equals("no") || ! s.getUserProperties().get("gender").toString().equals("no")) {
+    				if(! dataMap.get("sessionGender").toString().equals(s.getUserProperties().get("sessionGender").toString())) continue;
     			}
+    			System.out.println("같은 성별만 조건 비교 통과!");
     			// 같은 연령대 조건
-    			if(Integer.parseInt(dataMap.get("age").toString()) != 0 ) {
-    				option = Integer.parseInt(dataMap.get("age").toString()) == Integer.parseInt(s.getUserProperties().get("age").toString()) ? true : false;
+    			if(Integer.parseInt(dataMap.get("age").toString()) != 0 || Integer.parseInt(s.getUserProperties().get("age").toString()) != 0) {
+    				if(Integer.parseInt(dataMap.get("age").toString()) != Integer.parseInt(s.getUserProperties().get("age").toString())) continue;
     			}
-    			
-
-
+    			System.out.println("같은 연령대만 조건 비교 통과!");
     			//매칭조건이 모두 맞았을 때 matchingMember Set에 넣는다.
-    			if(option) {
-    				matchingMember.add(s);
-    				ArrayList<String> sBlockList = (ArrayList<String>) s.getUserProperties().get("blockList");
-    		    	for(String id : sBlockList) {
-    		    		matchingBlockSet.add(id);
-    		    	}
-    				
-    			}
+				matchingMember.add(s);
+				ArrayList<String> sBlockList = (ArrayList<String>) s.getUserProperties().get("blockList");
+		    	for(String id : sBlockList) matchingBlockSet.add(id);
+		    	System.out.println("매칭멤버 set에 추가 완료!");
     		}
+    		
     		if(matchingMember.size() == Integer.parseInt((String) dataMap.get("memberCount"))) break;
     	}
     	
