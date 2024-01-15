@@ -332,6 +332,10 @@ public class JinController {
 	//예약거절
 	@RequestMapping("bookingStateDelete")
 	public String bookingStateDelete(String businessId,int bookingNo) {
+		
+		// 반복이 완료 되면 부킹 유저 리스트 삭제 해줌
+		jinbookService.bookinguserdelete(businessId, bookingNo);
+		
 		jinbookService.bookingStateDelete(businessId, bookingNo);
 		return "redirect:yesnoList?businessId="+businessId;
 	}
