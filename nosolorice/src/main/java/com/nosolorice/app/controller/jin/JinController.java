@@ -46,7 +46,6 @@ public class JinController {
 	private JinFindService jinFindService; 
 	
 	
-	
 	// 로그인 서비스
 	@Autowired
 	private JinloginService jinloginService;
