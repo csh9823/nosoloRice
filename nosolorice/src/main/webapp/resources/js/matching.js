@@ -418,7 +418,8 @@ $(function(){
     const matchingServerConnect = (matchingData) => {
 
 	    //현진이꺼
-		let url = "ws://192.168.0.44:8090/app/matching";
+		//let url = "ws://192.168.0.44:8090/app/matching";
+		let url = "ws://192.168.0.16:8081/app/matching";
 	    
 	    socket = new WebSocket(url);
 	    

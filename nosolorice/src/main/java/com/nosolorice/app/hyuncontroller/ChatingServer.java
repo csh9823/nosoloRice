@@ -59,6 +59,7 @@
 	        String currentRoomId = (String) session.getUserProperties().get("roomId");
 	        Set<Session> agreeSet = roomAgreeSets.get(currentRoomId);	        
 	        
+	        
 	        // 모든 열려있는 세션 가져오기
 	        Set<Session> allSessions = session.getOpenSessions();
 	        

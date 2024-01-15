@@ -29,11 +29,7 @@
     * {
       font-family: 'SUITE Variable', sans-serif;
     }
-    
-        .btn {
-      background-color: #3DB78B;
-   		color : white;
-    }
+
 
     ul {
       list-style: none;

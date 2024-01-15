@@ -249,16 +249,6 @@ public class UserController {
 			@RequestParam("businessId") String businessId, 
 			@RequestParam("deposit") int deposit, 
 			@RequestParam("bookingChatName") String bookingChatName) throws ParseException{
-		
-		System.out.println("여기부터 booking객체 출력 시작");
-		System.out.println(bookingCount);
-		System.out.println(bookingRequest);
-		System.out.println(bookingTime);
-		System.out.println(bookingState);
-		System.out.println(deposit);
-		System.out.println(businessId);
-		System.out.println(bookingChatName);
-		System.out.println("여기부터 booking객체 출력 끝");
 
 
         // SimpleDateFormat을 이용하여 시간 형식을 해석
