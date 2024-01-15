@@ -519,6 +519,14 @@
     	location.href="deleteReview?no=" + no + "&id=" + id;
     });
     
+    // 파일 input 한개만
+    $("input[type=file]").on("change", function() {
+    	let fileInput = $(this)[0];
+    	if(fileInput.files.length >1) {
+    		fileInput.value = "";
+    	}
+    });
+    
     
     // 별점 hover 처리하기
     let clicked1 = false;

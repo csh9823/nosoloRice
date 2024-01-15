@@ -337,6 +337,13 @@
 		};
 	});
 	
+    // 파일 input 한개만
+    $("input[type=file]").on("change", function() {
+    	let fileInput = $(this)[0];
+    	if(fileInput.files.length >1) {
+    		fileInput.value = "";
+    	}
+    });
 	
   </script>
   
