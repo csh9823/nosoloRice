@@ -74,10 +74,9 @@
       <div class="col">
         <div class="row">
           <div class="col d-flex align-items-center">
-            <h2 class="fs-3 fw-bold my-5">일반 공지사항</h2>
+            <h2 class="fs-3 fw-bold my-5 text-danger">일반 공지사항</h2>
             <div class="col"></div> <!-- 공간 확보를 위한 비어있는 컬럼 -->
             <div class="col-auto">
-            
             </div>
           </div>
       </div>

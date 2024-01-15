@@ -10,12 +10,10 @@
   <title>Document</title>
   <script src="resources/js/jquery-3.2.1.min.js"></script>
   <link href="resources/bootstrap/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/variable/woff2/SUITE-Variable.css" rel="stylesheet">
   <style>
       .btn {
         background-color: #FA9884;
       }
-      body {font-family: 'SUITE Variable', sans-serif;}
       
       .noticeRow:hover {
       
@@ -46,9 +44,7 @@
   
   <div class="row">
   	<%@ include file="../temple/header/businessMenubar.jsp" %>
-  	<div class="col-1">
-  	</div>
-  	<div class="col">
+  	<div class="col p-5" style="height:100vh; overflow: auto;">
   	
 
   
@@ -56,7 +52,7 @@
       <div class="col">
         <div class="row">
           <div class="col d-flex align-items-center">
-            <h2 class="fs-3 fw-bold my-5">사업 공지사항</h2>
+            <h2 class="fs-3 fw-bold mb-4">사업 공지사항</h2>
             <div class="col"></div> <!-- 공간 확보를 위한 비어있는 컬럼 -->
             <div class="col-auto">
               
@@ -64,6 +60,7 @@
           </div>
       </div>
     </div>
+  </div>
     
      <div class="row text-center border-bottom border-top py-3">
       <div class="col-1">번호</div>
@@ -133,7 +130,6 @@
 				</div>
 		</c:if>		
   	</div>	
-    	</div>
   </div>				
 	</div>  <!-- container end -->
 

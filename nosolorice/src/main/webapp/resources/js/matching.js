@@ -314,7 +314,7 @@ $(function(){
             
             //성별
             const gender = $("input[name=matchGender]:checked").val();
-            if(gender == 'yes'){
+            if(gender != 'no'){
                 $(".configGender").text("같은 성별만 매칭");
             } else if(gender == 'no' || gender == undefined){
                 $(".configGender").text("상관없음");
@@ -382,7 +382,7 @@ $(function(){
             const gender = $("input[name=matchGender]:checked").val();
             const age = $("#matchingAgeSelect").val();
             //세션로그인 이용자의 정보. 일단 임시로 지정해놓음
-            const sessionGender = "male";
+            const sessionGender = $("input[name=matchGender]").val();
             let blockList = new Array();
             //ajax로 자신의 blockList를 가져온다.
             $.ajax({
@@ -416,14 +416,7 @@ $(function(){
         
     //matching 웹소켓 서버 연결
     const matchingServerConnect = (matchingData) => {
-    
-    	//학원꺼
-	    //let url = "ws://192.168.0.14:8081/app/matching";
-	    //let url = "ws://192.168.0.16:8081/app/matching";
-	    
-	    //집꺼
-	    //let url = "ws://192.168.35.92:8081/app/matching";
-	    
+
 	    //현진이꺼
 		let url = "ws://192.168.0.44:8090/app/matching";
 	    

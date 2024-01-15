@@ -42,6 +42,11 @@ public class NormalUserController {
 		this.normalUserService = normalUserService;
 	}
 
+	@RequestMapping("normalJoin")
+	public String normalJoin() {
+		return "forward:/WEB-INF/views/member/normalJoinForm.jsp";
+	}
+	
     // 회원가입 완료
     @RequestMapping("/normalJoinResult")
     public String normalJoinResult(
@@ -82,14 +87,13 @@ public class NormalUserController {
         	normalUser.setProfile(newName);
         } else {
         	String defaultImagePath = DEFAULT_PATH+"/profile_img.png";
-        	// String defaultImagePath = "defaultImage.png";
         	System.out.println("이용자_기본프로필 등록완료! : " + defaultImagePath);
         	normalUser.setProfile(defaultImagePath);
         }
 
         normalUserService.addNormalUser(normalUser);
 
-        return "login/login"; // 경로 수정
+        return "redirect:/login"; // 경로 수정
     }
 
     @RequestMapping("/overlapIdCheck")
@@ -99,7 +103,7 @@ public class NormalUserController {
         model.addAttribute("normalId", normalId);
         model.addAttribute("overlap", overlap);
 
-        return "member/overlapIdCheck";
+        return "forward:/WEB-INF/views/member/overlapIdCheck.jsp";
     }
 
     // 닉네임 중복
@@ -111,7 +115,7 @@ public class NormalUserController {
         
         model.addAttribute("overlap", overlap);
         model.addAttribute("nickName", nickName);
-        return "member/nickOverlapCheck";
+        return "forward:/WEB-INF/views/member/nickOverlapCheck.jsp";
     }
 
 

@@ -46,7 +46,6 @@
             text-align: center; 
             font-size: 30px; color: white;
             padding-top: 40px;
-            margin-left: 30px;
         }
         
         .pnolist:hover{
@@ -83,7 +82,7 @@
         border: none;
         }
         .nolisttbtn{
-        background-color: red;
+        background-color: #c93c3c;
         border: none;
         }
 </style>
@@ -94,46 +93,50 @@
     <div class="row">
 <%@ include file="../../temple/header/businessMenubar.jsp" %>
 		<input type="hidden" id="bId" value="${sessionScope.BusinessUser.businessId}">
-        <div class="col">
+        <div class="col" style="overflow: auto;">
             <div class="row">
-
-                <div class="col" style="font-size: 30px; margin-left: 43px;">
-                    <strong>예약관리</strong>
+				<div class="col p-5">
+				
+				<div class="row">
+	                <div class="col" style="font-size: 30px;">
+	                    <strong>예약관리</strong>
+	                </div>
                 </div>
 
-                <div class="row">
-                    <div class="col" style="font-size: 20px; margin-bottom: 50px; margin-top: 20px; margin-left: 43px;">예약 대기 리스트</div>
+                <div class="row mt-3">
+                    <div class="col fw-bold fs-4">예약 대기 리스트</div>
                 </div>
+                
      			<c:forEach var="booking" items="${booking}">
 				<c:if test="${booking.bookingState eq '대기'}">
 				<fmt:formatDate value="${booking.bookingTime}" pattern="HH:mm" var="bookingTime" />
-                <div class="row" style="margin-left: 30px; padding: 0px; margin-bottom: 15px;">
-		                <div class="col-2" style="border: solid 1px black; border-right: none; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                <div class="row px-3 my-2">
+		                <div class="col-2 text-center ps-0" style="border: solid 1px black; border-right: none; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
 		                    <p style="font-size: 30px; border-right: lightgray solid 1px; height: 100px;  margin-top: 15px; padding-top: 25px;">
 		                    	${bookingTime}
 		                    </p>
 		                </div>
 		
-		                <div class="col" style="border: solid 1px black; border-left: none;">
+		                <div class="col border-top border-bottom border-dark d-flex flex-column align-items-start justify-content-center">
 		                    <div class="row">
-		                        <div class="col-4">
-		                            <p style="font-size: 30px; padding-top: 10px;">${booking.bookingCount}명 예약</p>
+		                        <div class="col">
+		                            <span style="font-size: 24px; font-weight:600;">${booking.bookingCount}명 예약</span>
 		                        </div>
 		                    </div>
 		
 		                    <div class="row">
 		                        <div class="col">
-		                            <p style="font-size: 10px;">요청사항</p>
+		                            <span class="fs-5">요청사항</span>
 		                        </div>
 		                    </div>
 		
 		                    <div class="row">
 		                        <div class="col">
-		                            <p style="font-size: 10px;">${booking.bookingRequest}</p>
+		                            <span class="fs-5">${booking.bookingRequest}</span>
 		                        </div>
 		                    </div>
 		                </div>
-		                <div class="col-2" style="background-color: rgb(61,183,139);">
+		                <div class="col-2 text-center border-top border-bottom border-dark" style="background-color: rgb(61,183,139);">
 		                <form action="bookingStateOk" method="get">
 		                	<input type="hidden" name="bookingState" value="승인">
 		                	<input type="hidden" name="bookingOkState" value="0">
@@ -147,8 +150,8 @@
 		                </form>    	
 		                </div>
 		    
-		                <div class="col-2" style="background-color: red; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
-		                    <p><button class="pnolist" style="border: none; background-color: red;" value="${booking.bookingNo}" data-id="${booking.bookingChatName}">거절</button> </p>
+		                <div class="col-2 text-center border border-dark border-start-0 rounded-end" style="background-color: #c93c3c; border: 1px 0 solid black;">
+		                    <button class="pnolist" style="border: none; background-color: #c93c3c;" value="${booking.bookingNo}" data-id="${booking.bookingChatName}">거절</button>
 		                </div>
                 </div>
         		</c:if>
@@ -156,53 +159,49 @@
                 
                 
                 
-                <div class="row" style="border-top: solid 1px black; margin-top: 20px; margin-left: 30px;">
-                    <div class="row">
-                        <div class="col" style="font-size: 30px;">
-                            <strong>예약 승인 리스트</strong>
-                        </div>
-                    </div>
+                <div class="row border-top border-dark mt-3 pt-3">
+	                <div class="col fs-4">
+	                    <strong>예약 승인 리스트</strong>
+	                </div>
                 </div>
 				<c:forEach var="booking" items="${booking}">
 				<c:if test="${booking.bookingState eq '승인'}">
 				<fmt:formatDate value="${booking.bookingTime}" pattern="HH:mm" var="bookingTime" />
-                <div class="row" style="margin-left: 30px; padding: 0px; margin-bottom: 15px;">
+                <div class="row px-3 my-2">
 
-                    <div class="col-2" style="border: solid 1px black; border-right: none; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
-                        <p style="font-size: 30px; border-right: lightgray solid 1px; height: 100px;  margin-top: 15px; padding-top: 25px;">${bookingTime}</p>
+                    <div class="col-2 ps-0 border border-dark border-end-0 rounded-start text-center">
+                        <p style="font-size: 30px; border-right: lightgray solid 1px; height: 100px; margin-top: 15px; padding-top: 25px;">${bookingTime}</p>
                     </div>
 
-                    <div class="col" style="border: solid 1px black; border-left: none;">
-                        <div class="row">
+                    <div class="col border-top border-bottom border-dark">
+                        <div class="row mt-3">
 
-                            <div class="col-4">
-                                <p style="font-size: 20px; padding-top: 10px ;"> 
-                                <span style="border-right: 1px solid lightgray; padding-right: 10px;">
+                            <div class="col-auto">
+                                <span style="font-size: 24px; font-weight:600; border-right: 1px solid lightgray; padding-right: 10px;">
                                 	예약번호
                                 </span>
-                                </p>
                             </div>
                             
-                            <div class="col-2">
-                                <p style="font-size: 20px; padding-top: 10px;">${booking.bookingBookNo}</p>
+                            <div class="col">
+                                <span style="font-size: 24px; font-weight:600;">${booking.bookingBookNo}</span>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col">
-                                <p style="font-size: 10px;">요청사항</p>
+                                <span class="fs-5">요청사항</span>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col">
-                                <p style="font-size: 10px;">${booking.bookingRequest}</p>
+                                <span class="fs-5">${booking.bookingRequest}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-2" style="background-color: rgb(61,183,139); ">
+                    <div class="col-2 text-center border-top border-bottom border-dark" style="background-color: rgb(61,183,139); ">
                     <form action="Bookingok" method="get">
-                        <button type="submit" class="yeslist yeslistbtn"><p class="pyeslist">방문완료</p></button>
+                        <button type="submit" class="yeslist yeslistbtn"><p class="pyeslist" style="font-size:27px;">방문완료</p></button>
                         <input type="hidden" name="bookingOkCount" value="${booking.bookingCount}">
                         <input type="hidden" name="bookingOkRequest" value="${booking.bookingRequest}">
                         <input type="hidden" name="bookingOkTime" value="${booking.bookingTime}">
@@ -214,7 +213,7 @@
                      </form>
                     </div>
     
-                    <div class="col-2" style="background-color: red; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                    <div class="col-2 text-center border border-dark border-start-0" style="background-color: #c93c3c; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
                     <form action="Bookingok" method="get">
                         <button type="submit" class="nolist nolisttbtn"><p class="pnolist2">미방문</p></button>
                         <input type="hidden" name="bookingOkCount" value="${booking.bookingCount}">
@@ -230,6 +229,7 @@
                 </div>
                 </c:if>
                 </c:forEach>
+                </div>
             </div>
         </div>
     </div>
@@ -315,14 +315,6 @@
     
     //예약관리 페이지에 접속하면 웹소켓 서버에 연결한다. 서버 아이피 입력
     let url = "ws://192.168.0.44:8090/app/booking/" + loginId;
-    
-    //학원꺼
-    //let url = "ws://192.168.0.14:8081/app/booking/" + loginId;
-    //let url = "ws://192.168.0.16:8081/app/booking/" + loginId;
-    
-    //집꺼
-    //let url = "ws://192.168.35.92:8081/app/booking/" + loginId;
-
 			
 			bookingSocket = new WebSocket(url);
 			
@@ -346,6 +338,7 @@
 				}
 				
 				if(msgObj.type == 'userCancel'){
+					console.log("시발 새로고침하라고!");
 					location.reload();
 				}
 				

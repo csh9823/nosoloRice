@@ -1,4 +1,4 @@
-package com.nosolorice.app.controller;
+package com.nosolorice.app.controller.jin;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nosolorice.app.controller.jin.SessionConfig;
 import com.nosolorice.app.domain.booking.Booking;
 import com.nosolorice.app.domain.booking.BookingOk;
 import com.nosolorice.app.domain.booking.BookingUserList;
@@ -71,7 +72,7 @@ public class JinController {
 	@RequestMapping("findForm")
 	public String findForm() {
 		
-		return "login/findForm";
+		return "forward:/WEB-INF/views/login/findForm.jsp";
 	}
 	 
 	// 아이디 찾기 알려주기 폼
@@ -113,21 +114,21 @@ public class JinController {
 	@RequestMapping("idFind")
 	public String idFind() {
 		
-		return "login/idFind";
+		return "forward:/WEB-INF/views/login/idFind.jsp";
 	}
 	
 	// 비밀번호 찾기 인증폼
 	@RequestMapping("newpassword")
 	public String newpassword() {
 		
-		return "login/newpassword";
+		return "forward:/WEB-INF/views/login/newpassword.jsp";
 	}
 	
 	//회원가입폼
 	@RequestMapping("joinForm")
 	public String joinForm() {
 		
-		return "login/joinForm";
+		return "forward:/WEB-INF/views/login/joinForm.jsp";
 	}
 	
 	//로그아웃
@@ -147,64 +148,76 @@ public class JinController {
 		System.out.println(id);
 		model.addAttribute("id",id);
 		
-		return "login/login";
+		return "forward:/WEB-INF/views/login/login.jsp";
 	}
 
 	//로그인 하기
-		@RequestMapping("loginservice")
-		public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,
-				HttpServletResponse response,HttpSession session ,PrintWriter out,HttpServletRequest request) {
-			
-			// 쿠키에 값 저장하기
-			if(idsave != 0) {
-				Cookie cookie = new Cookie("saveId" ,id);
-				cookie.setMaxAge(60*60*24*30);
-				response.addCookie(cookie);
-			}else {
-				Cookie cookie = new Cookie("saveId" ,id);
-				cookie.setMaxAge(0);
-				response.addCookie(cookie);
-			}
-			
-			BusinessUser buser = jinloginService.loginBusinessUser(id, pass);
-			NormalUser nuser = jinloginService.loginNormalUser(id, pass);
-			RootUser ruser = jinloginService.loginRootUser(id, pass);
-			String stop = jinloginService.deniedUser(id);
-			
-			if(buser != null) {
-				System.out.println(buser.getBusinessId());
-				session.setAttribute("BusinessUser", buser);
-				return "redirect:businessUserStoreInfo?Id="+buser.getBusinessId();
-			}
-			
-			if(nuser != null) {
-				if(stop != null) {
-					response.setContentType("text/html; charset=utf-8");
-					out.println("<script>");
-					out.println("	alert('정지된 회원 입니다.');");
-					out.println("	history.back();");
-					out.println("</script>");
-				}else {
-					System.out.println(nuser.getNormalId());
-					session.setAttribute("NormalUser", nuser);
-					return "redirect:mainPage";
-				}
-			}
-			
-			if(ruser != null) {
-				session.setAttribute("RootUser", ruser);
-				return "redirect:noticeList";
-			}
-			
-			
-			response.setContentType("text/html; charset=utf-8");
-			out.println("<script>");
-			out.println("	alert('회원 정보가 일치하지 않습니다.');");
-			out.println("	history.back();");
-			out.println("</script>");
-			
-	    	return null;
+	@RequestMapping("loginservice")
+	public String login(@RequestParam(name="idsave", defaultValue = "0") Integer idsave,String id, String pass,
+			HttpServletResponse response,HttpSession session ,PrintWriter out,HttpServletRequest request) {
+		
+		// 쿠키에 값 저장하기
+		if(idsave != 0) {
+			Cookie cookie = new Cookie("saveId" ,id);
+			cookie.setMaxAge(60*60*24*30);
+			response.addCookie(cookie);
+		}else {
+			Cookie cookie = new Cookie("saveId" ,id);
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
 		}
+    
+		BusinessUser buser = jinloginService.loginBusinessUser(id, pass);
+		NormalUser nuser = jinloginService.loginNormalUser(id, pass);
+		RootUser ruser = jinloginService.loginRootUser(id, pass);
+		String stop = jinloginService.deniedUser(id);
+		
+		if(buser != null) {
+			System.out.println(buser.getBusinessId());
+			session.setAttribute("BusinessUser", buser);
+			return "redirect:businessUserStoreInfo?Id="+buser.getBusinessId();
+		}
+		
+		if(nuser != null) {
+			
+			if(stop != null) {
+				response.setContentType("text/html; charset=utf-8");
+				out.println("<script>");
+				out.println("	alert('정지된 회원 입니다.');");
+				out.println("	history.back();");
+				out.println("</script>");
+				return null;
+			}else {
+				 // 중복 로그인 여부 확인
+			    String duplicateSessionId = SessionConfig.getSessionidCheck("NormalUser", nuser.getNormalId());
+			    System.out.println("중복로직"+duplicateSessionId);
+			    if (!duplicateSessionId.isEmpty()) {
+			            response.setContentType("text/html; charset=utf-8");
+			            out.println("<script>");
+			            out.println("    alert('이미 로그인 중인 회원입니다. 로그인 중인 아이디를 로그아웃 시킵니다.');");
+			            out.println("    history.back();");
+			            out.println("</script>");
+			            return null;
+			    }
+			    // 세션 속성 설정 및 메인 페이지로 리다이렉트
+			    session = request.getSession();
+			    session.setAttribute("NormalUser", nuser);
+			    return "redirect:mainPage";
+			}
+		}
+		
+		if(ruser != null) {
+			session.setAttribute("RootUser", ruser);
+			return "redirect:noticeList";
+		}
+
+		response.setContentType("text/html; charset=utf-8");
+		out.println("<script>");
+		out.println("	alert('회원 정보가 일치하지 않습니다.');");
+		out.println("	history.back();");
+		out.println("</script>");
+    	return null;
+	}
 
 	@RequestMapping("BusinessMenu")
 	public String BusinessMenu(String businessId,Model model, @RequestParam(name="menuCategoryNo",required = false) String menuCategoryNo) {
@@ -227,7 +240,7 @@ public class JinController {
 			model.addAttribute("menucatename",menucatename);
 		}
 		
-		return "BusinessMenu/businessMenus";
+		return "forward:/WEB-INF/views/BusinessMenu/businessMenus.jsp";
 	}
 	
 	// 카테고리 추가
@@ -238,7 +251,7 @@ public class JinController {
 		
 		return "redirect:BusinessMenu?businessId="+businessId;
 	}
-	
+	 
 	// 카테고리 삭제
 	@RequestMapping("MenuCateDelete")
 	public String MenuCateDelete(String businessId,int menuCategoryNo ,PrintWriter out,
@@ -274,7 +287,7 @@ public class JinController {
 			String saveName = uid.toString() + "_" + multipartFile.getOriginalFilename();
 			File file = new File(realPath,saveName);
 			multipartFile.transferTo(file);
-			menu.setMenuPicture(DEFAULT_PATH+"/"+saveName);
+			menu.setMenuPicture(saveName);
 		}
 		
 		jinMenuService.MenuAdd(menu);
@@ -300,8 +313,7 @@ public class JinController {
 		// 부킹 no가 있는지 먼저 체크
 		List<Booking> booking = jinbookService.BookingList(businessId);
 		model.addAttribute("booking",booking);
-		
-		return "BusinessMenu/yesnoList";
+		return "forward:/WEB-INF/views/BusinessMenu/yesnoList.jsp";
 	}
 	
 	
@@ -367,7 +379,7 @@ public class JinController {
 			String saveName = uid.toString() + "_" + multipartFile.getOriginalFilename();
 			File file = new File(realPath,saveName);
 			multipartFile.transferTo(file);
-			menu.setMenuPicture(DEFAULT_PATH+"/"+saveName);
+			menu.setMenuPicture(saveName);
 			
 			// 기존 파일 삭제하기
 			String getmenu = jinMenuService.getMenu(menu.getMenuNo());
@@ -403,7 +415,7 @@ public class JinController {
 		List<Map<String,Object>> map = jinReviewService.ReviewList(businessId);
 		model.addAttribute("review",map);
 		model.addAttribute("reviewCount", count);
-		return "review/Businessriview";
+		return "forward:/WEB-INF/views/review/Businessriview.jsp";
 	}
 	
 	// 리뷰 블라인드 처리

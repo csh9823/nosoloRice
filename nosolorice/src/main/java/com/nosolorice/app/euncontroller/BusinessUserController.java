@@ -44,7 +44,7 @@ public class BusinessUserController {
 	@RequestMapping("/businessJoin")
     public String businessJoinForm(Model model) {
 
-        return "member/businessJoinForm"; 
+        return "forward:/WEB-INF/views/member/businessJoinForm.jsp"; 
     }
 	
 	// 회원가입 완료 _사업자번호와 계좌번호가 long으로 바뀌어서 db도 int가 아닌 BigInt로 타입 바꿔줘야함

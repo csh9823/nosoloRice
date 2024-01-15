@@ -11,35 +11,30 @@
     .text-red {
       color : #C93C3C !important;
     }
+    ul {
+      list-style: none;
+    }
+    a{
+      text-decoration: none;
+      color : #616161;
+    }
+    a:active {
+      color: #C93C3C ;
+      
+    }
   </style>
 <body>
-      <div class="col-md-3 border-end" style="height:100vh;">
-        <div class="row">
-          <div class="col">
-            <div class="row my-5">
-              <span class="fs-2 fw-bold text-red">마이페이지</span>
-            </div>
-            <div class="menu row mb-3" onclick="location.href='normalUserInfoUpdate?id=${sessionScope.NormalUser.normalId}'">
-              <span class="fs-5 text-gray">내 정보</span>
-            </div>
-            <div class="menu row mb-3" onclick="location.href='noramlUserBookingList?id=${sessionScope.NormalUser.normalId}'">
-              <span class="fs-5 text-gray">내 예약이력</span>
-            </div>
-            <div class="menu row mb-3" onclick="location.href='pointList?id=${sessionScope.NormalUser.normalId}'">
-              <span class="fs-5 text-gray">포인트 충전내역</span>
-            </div>
-            <div class="menu row mb-3" onclick="location.href='userReportList?id=${sessionScope.NormalUser.normalId}'">
-              <span class="fs-5 text-gray">신고내역</span>
-            </div>
-            <div class="menu row mb-3" onclick="location.href='location.href='blockList?id=${sessionScope.NormalUser.normalId}'">
-              <span class="fs-5 text-gray">차단목록</span>
-            </div>
-            <div class="menu row mb-3" onclick="location.href='normalUsesrSecession?id=${sessionScope.NormalUser.normalId}'">
-              <span class="fs-5 text-gray">탈퇴</span>
-            </div>
-          </div>
+        <div class="col-md-3">
+            <ul class="my-3">
+                <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">마이페이지</li>
+                <li class="my-5 fs-4"><a href="normalUserInfoUpdate?id=${sessionScope.NormalUser.normalId}">내 정보</a></li>
+                <li class="my-5 fs-4"><a href="noramlUserBookingList?id=${sessionScope.NormalUser.normalId}">내 예약이력</a></li>
+                <li class="my-5 fs-4"><a href="pointList?id=${sessionScope.NormalUser.normalId}">포인트 충전내역</a></li>
+                <li class="my-5 fs-4"><a href="userReportList?id=${sessionScope.NormalUser.normalId}">신고내역</a></li>
+                <li class="my-5 fs-4"><a href="blockList?id=${sessionScope.NormalUser.normalId}">차단목록</a></li>
+				<li class="my-5 fs-4"><a href="normalUsesrSecession?id=${sessionScope.NormalUser.normalId}">탈퇴</a></li>
+            </ul>
         </div>
-      </div> 
 </body>
 
   <script>
