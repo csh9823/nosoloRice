@@ -333,14 +333,14 @@
 			bookingSocket.addEventListener('message', function(e){
 				//서버로부터 받은 json문자열 메시지를 자바스크립트로 객체로 변환.
 				let msgObj = JSON.parse(e.data);
-				
+				console.log("취소메시지 도착! : ", msgObj);
 				if(msgObj.type == 'request'){
-			        location.reload();
-				}
-				
-				if(msgObj.type == 'userCancel'){
-					console.log("시발 새로고침하라고!");
-					location.reload();
+						location.reload();	
+				} else if(msgObj.type == 'userCancel'){
+						let businessId = msgObj.businessId;
+						let bookNo = msgObj.bookNo;
+						alert(bookNo + "번 예약이 취소 되었습니다");
+						location.reload();
 				}
 				
 				

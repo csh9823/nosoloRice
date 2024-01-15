@@ -568,7 +568,7 @@ $(function(){
 		    				console.log(err);
 		    			}
 		    		});
-				}, 1500);
+				}, 1000);
 			}
 						
 			//예약 실패 화면으로 이동
@@ -2106,7 +2106,8 @@ $(function(){
         $("#bookFail").addClass("d-none");
         $("#bookSuccess").addClass("d-none");
         $("#bookWait").addClass("d-none");
-        $("#bookPropose").removeClass("d-none");        
+        $("#bookPropose").removeClass("d-none");
+        location.reload();        
     });
     
     //예약 대기창 취소하기 버튼 클릭이벤트
