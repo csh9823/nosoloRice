@@ -29,9 +29,9 @@ input[type='number'] {
 
 /* input file 커스텀 */
 form input::file-selector-button {
-   display: none;
+   display: none; 
 }
-
+ 
 </style>
 
 <div class="container justify-content-center">
