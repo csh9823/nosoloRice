@@ -190,7 +190,7 @@
          <div class="col-2">번호</div>
          <div class="col-4">제목</div>
          <div class="col-3">등록일</div>
-         <div class="col-3">삭제</div>
+         <div class="col-3">수정/삭제</div>
     </div>
 
      <c:if test="${empty bList}"> 
