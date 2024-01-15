@@ -146,13 +146,13 @@
   .stepCol{
     border: 5px #3DB78B solid;
     border-radius: 20px;
-    width : 45vw !important;
+    width : 800px !important;
     height: 40vh;
   }
   #carouselExampleDark {
     border: 5px #3DB78B solid;
     border-radius: 20px;
-    width : 45vw !important;
+    width : 800px !important;
     height: 40vh;
   }
   #matchingConfigModalMatchingBtn{
@@ -203,7 +203,7 @@
     cursor: pointer;
   }
   #step4BtnDiv {
-    width: 45vw !important;
+    width: 800px !important;
     margin: auto;
   }
   #addressDiv{
@@ -212,10 +212,9 @@
   }
   #matchingAddress {
     position: absolute;
-    top: 30vh;
-    left: 5vw;
-    width: 35vw;
-    height: auto;
+    top: 45%;
+    width: 100%;
+    height: 20%;
     font-weight: bold;
     z-index: -1;
   }

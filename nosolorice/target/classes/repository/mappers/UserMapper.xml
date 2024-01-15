@@ -101,7 +101,10 @@
    LEFT JOIN
     review r ON b.business_id = r.business_id 
     WHERE 
-    b.address1 = #{address} and b.store_onoff = 'open' 
+    <foreach collection="address.split(' ')" item="word" separator=" OR ">
+        b.address1 LIKE CONCAT('%', #{word}, '%')
+    </foreach> 
+    AND b.store_onoff = 'open'  
    GROUP BY 
    b.business_id, 
     b.business_name 
@@ -161,34 +164,39 @@
       where normal_id = #{normalId}
    </select>
    
-   <select id="searchStoreListByAddress" parameterType="hashmap" resultType="BusinessUser" resultMap="businessUserMap">
-         SELECT DISTINCT
-          b.*,
-          COALESCE(review_data.totalScore, 0) AS totalScore,
-          COALESCE(review_data.totalReviewCount, 0) AS totalReviewCount
-      FROM
-          business_user b
-          LEFT JOIN (
-              SELECT
-                  business_id,
-                  AVG(review_score) AS totalScore,
-                  COUNT(business_id) AS totalReviewCount
-              FROM
-                  review 
-              GROUP BY
-                  business_id
-          ) review_data ON b.business_id = review_data.business_id
-          LEFT JOIN menu_category mc ON b.business_id = mc.business_id
-          LEFT JOIN menu m ON mc.menu_category_no = m.menu_category_no
-      WHERE
-          (b.business_name LIKE '%${keyword}%' OR m.menu_name LIKE '%${keyword}%') and b.address1 = #{address} and b.store_onoff = 'open'  
-       <if test="sortType == 'totalScore'">
-         ORDER BY totalScore DESC
-      </if>
-      <if test="sortType == 'totalReviewCount'">
-         ORDER BY totalReviewCount DESC
-      </if>
-   </select>
+	<select id="searchStoreListByAddress" parameterType="hashmap" resultType="BusinessUser" resultMap="businessUserMap">
+	    SELECT DISTINCT
+	        b.*,
+	        COALESCE(review_data.totalScore, 0) AS totalScore,
+	        COALESCE(review_data.totalReviewCount, 0) AS totalReviewCount
+	    FROM
+	        business_user b
+	        LEFT JOIN (
+	            SELECT
+	                business_id,
+	                AVG(review_score) AS totalScore,
+	                COUNT(business_id) AS totalReviewCount
+	            FROM
+	                review 
+	            GROUP BY
+	                business_id
+	        ) review_data ON b.business_id = review_data.business_id
+	        LEFT JOIN menu_category mc ON b.business_id = mc.business_id
+	        LEFT JOIN menu m ON mc.menu_category_no = m.menu_category_no
+	    WHERE
+	        (b.business_name LIKE CONCAT('%', #{keyword}, '%') OR m.menu_name LIKE CONCAT('%', #{keyword}, '%'))
+	        AND
+	        <foreach collection="address.split(' ')" item="word" separator=" OR ">
+	            b.address1 LIKE CONCAT('%', #{word}, '%')
+	        </foreach>
+	        AND b.store_onoff = 'open'
+	    <if test="sortType == 'totalScore'">
+	        ORDER BY totalScore DESC
+	    </if>
+	    <if test="sortType == 'totalReviewCount'">
+	        ORDER BY totalReviewCount DESC
+	    </if>
+	</select>
    
    <select id="searchStoreListByMap" parameterType="hashmap" resultType="BusinessUser" resultMap="businessUserMap">
       SELECT DISTINCT

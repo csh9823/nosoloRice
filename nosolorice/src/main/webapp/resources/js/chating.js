@@ -202,6 +202,8 @@ $(function(){
 		let sList = new Array();
 		let sortType = $("#chatStoreSortSelect").val();
 		
+		console.log("주소매칭일때 클라이언트 주소데이터 : ", locationData);
+		
 		$.ajax({
 			url: "/app/getStoreListByAddress",
 			data : "address=" + locationData + "&sortType=" + sortType,
@@ -223,10 +225,10 @@ $(function(){
 	//let url = "ws://192.168.0.16:8081/app/chating/" + roomId;
 	
 	//집꺼
-	//let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
+	let url = "ws://192.168.35.92:8081/app/chating/" + roomId;
 	
 	//현진이꺼
-	let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
+	//let url = "ws://192.168.0.44:8090/app/chating/" + roomId;
 	
 	console.log("roomId : ", roomId);
 	console.log("url : ", url);
@@ -365,9 +367,9 @@ $(function(){
 			//let url = "ws://192.168.0.14:8081/app/booking/" + businessId;
 			//let url = "ws://192.168.0.16:8081/app/booking/" + businessId;
 			//집꺼
-			//let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
+			let url = "ws://192.168.35.92:8081/app/booking/" + businessId;
 			//현진이꺼		
-			let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
+			//let url = "ws://192.168.0.44:8090/app/booking/" + businessId;
 			
 			bookingSocket = new WebSocket(url);			
 			
@@ -488,7 +490,7 @@ $(function(){
 			$(bookingSocket).on('error', function(event) {
 			    console.error('WebSocket 오류:', event);
 			});
-			
+			$("#waitTimer").text("");
 			timerStart(0, 0);
 		}
 		if(chatType == 'reject'){
@@ -1378,7 +1380,7 @@ $(function(){
         
         if(bookComplete){
         	location.href="mainPage";
-        } else {
+        } else if($("#bookWait").hasClass("d-none")) {
         	
         	//chat_member 테이블에서 자기 자신 삭제
         	$.ajax({
@@ -2539,7 +2541,7 @@ const searchStoreListReset = (chatRoomInfo, keyword) => {
 				dataType : "json",
 				async : false,
 				success : function(resData){
-					sList = resData;				
+					sList = resData;
 				}, error : function(err){
 					console.log(err)
 				}

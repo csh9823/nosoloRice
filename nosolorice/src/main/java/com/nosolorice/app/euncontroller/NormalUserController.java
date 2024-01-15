@@ -42,6 +42,10 @@ public class NormalUserController {
 		this.normalUserService = normalUserService;
 	}
 
+	@RequestMapping("normalJoin")
+	public String normalJoin() {
+		return "forward:/WEB-INF/views/member/normalJoinForm.jsp";
+	}
     
     // 회원가입 완료
     @RequestMapping("/normalJoinResult")
@@ -99,7 +103,7 @@ public class NormalUserController {
         model.addAttribute("normalId", normalId);
         model.addAttribute("overlap", overlap);
 
-        return "member/overlapIdCheck";
+        return "forward:/WEB-INF/views/member/overlapIdCheck.jsp";
     }
 
     // 닉네임 중복
@@ -111,7 +115,7 @@ public class NormalUserController {
         
         model.addAttribute("overlap", overlap);
         model.addAttribute("nickName", nickName);
-        return "member/nickOverlapCheck";
+        return "forward:/WEB-INF/views/member/nickOverlapCheck.jsp";
     }
 
 

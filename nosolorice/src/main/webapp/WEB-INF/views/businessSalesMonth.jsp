@@ -18,9 +18,9 @@
 				
 				<div class="row">
 					<%@ include file="../temple/header/businessMenubar.jsp" %>
-					<div class="col bg-white">
+					<div class="col p-5 bg-white" style="height:100vh; overflow: auto;">
 					
-						<div class="row mx-2 mt-5">
+						<div class="row mx-2">
 							<div class="col">
 								<span class="fw-bold fs-3">매출내역</span>
 							</div>

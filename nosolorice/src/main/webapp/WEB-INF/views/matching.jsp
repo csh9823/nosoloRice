@@ -35,9 +35,9 @@
 								인원
 							</span>
 							<br>
-							<i class="bi bi-dash" style="font-size : 7em; cursor: pointer;" id="step1Minus"></i>
-							<span id="memberCount" style="font-size : 7em;" class="mx-3">2</span>
-							<i class="bi bi-plus" style="font-size : 7em; cursor: pointer;" id="step1Plus"></i>
+							<i class="bi bi-dash" style="font-size : 7em; cursor: pointer; user-select: none" id="step1Minus"></i>
+							<span id="memberCount" style="font-size : 7em; user-select: none;" class="mx-3" >2</span>
+							<i class="bi bi-plus" style="font-size : 7em; cursor: pointer; user-select: none" id="step1Plus"></i>
 						</div>
 					</div>
 					<div class="row my-5">
@@ -136,7 +136,7 @@
 					</div>
 
 					<div class="row my-2">
-						<div class="col stepCol p-2" id="addressDiv">
+						<div class="col stepCol p-2" id="addressDiv" style="position : relative;">
 							<div class="rounded text-center py-3 mb-1" id="searchAddressBtn">
 								<span class="fs-1">다시 검색</span>
 							</div>
@@ -233,7 +233,7 @@
 									<div class="carousel-item">
 										<p class="text-center fs-3 fw-bold">같은 성별만 만나고 싶어요</p>
 										<div class="text-center">
-											<input type="radio" class="form-check-input me-1 align-middle" name="matchGender" value="yes" id="matchGender1">
+											<input type="radio" class="form-check-input me-1 align-middle" name="matchGender" value="${sessionScope.NormalUser.gender}" id="matchGender1">
 											<label for="matchGender1" class="matchingConfigLabel fs-4 align-middle" style="cursor: pointer;">네</label>
 											<input type="radio" checked class="form-check-input me-1 ms-5 align-middle" name="matchGender" value="no" id="matchGender2">
 											<label for="matchGender2" class="matchingConfigLabel fs-4 align-middle" style="cursor: pointer;">상관 없어요</label>
@@ -290,7 +290,7 @@
 
 					<div class="row my-2 stepCol" style="background-color: #3DB78B;">
 						<div class="col fs-bold text-center text-white d-flex align-items-center justify-content-center flex-column matchingNextBtn" 
-						id="matchingStartBtn" style="cursor:pointer;">
+						id="matchingStartBtn" style="cursor:pointer;width: 100%;">
 							<span style="font-size:6em;">매칭시작</span>
 						</div>
 					</div>
@@ -306,7 +306,7 @@
 				</div>
 
 				<!-- 매칭설정보기 모달 -->
-				<div class="border rounded" id="matchingConfigModal">
+				<div class="border rounded" id="matchingConfigModal" style="width:600px;">
 					<div class="px-3 fs-3 py-3 m-0 border-bottom" id="matchingConfigModalTitle">
 						<div class="row">
 							<div class="col text-secondary">매칭설정 보기</div>

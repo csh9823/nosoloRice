@@ -111,6 +111,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<BusinessUser> getStoreListByAddress(String address, String sortType) {
+		System.out.println("주소매칭일때 Dao에서 주소정보 : " + address);
 		Map<String, String> map = new HashMap<>();
 		map.put("address", address);
 		map.put("sortType", sortType);
@@ -134,6 +135,9 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<BusinessUser> searchStoreListByAddress(String address, String keyword, String sortType) {
+		System.out.println("주소매칭때 검색시 address" + address);
+		System.out.println("주소매칭때 검색시 keyword" + keyword);
+		System.out.println("주소매칭때 검색시 sortType" + sortType);
 		Map<String, String> map = new HashMap<>();
 		map.put("address", address);
 		map.put("keyword", keyword);

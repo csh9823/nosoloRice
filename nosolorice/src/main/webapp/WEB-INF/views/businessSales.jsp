@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,9 +19,9 @@
 				
 				<div class="row">
 					<%@ include file="../temple/header/businessMenubar.jsp" %>
-					<div class="col bg-white">
+					<div class="col p-5 bg-white" style="height:100vh; overflow: auto;">
 					
-						<div class="row mx-2 mt-5">
+						<div class="row mx-2">
 							<div class="col">
 								<span class="fw-bold fs-3">매출내역</span>
 							</div>
@@ -62,7 +63,9 @@
 						<c:forEach var="s" items="${salesList}">
 						<div class="row mx-2 text-center border-bottom py-3">
 							<div class="col">
-								<span class="fs-5 salesLabel">${s.getBookingOkTime()}</span>
+								<span class="fs-6 salesLabel">
+									<fmt:formatDate value="${s.getBookingOkTime()}" pattern="yyyy년 MM월 dd일"/>
+								</span>
 							</div>
 							<div class="col">
 								<span class="fs-5">${s.getBookingNo()}</span>
