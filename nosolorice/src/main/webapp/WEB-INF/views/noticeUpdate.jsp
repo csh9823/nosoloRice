@@ -47,6 +47,7 @@
         <div class="col-md-3">
           <ul class="my-3">
             <li class="my-5 fs-2 fw-bold" style="color:#C93C3C">관리자 페이지</li>
+            <li class="my-5"><a href="noticeList">공지작성</a></li>
             <li class="my-5"><a href="adminNormalInquiryList">일반회원 문의</a></li>
             <li class="my-5"><a href="adminBusinessInquiryList">사업자회원 문의</a></li>
             <li class="my-5"><a href="adminReportList">신고내역</a></li>

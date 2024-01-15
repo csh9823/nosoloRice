@@ -59,6 +59,7 @@
             <li class="my-5"><a href="businessList" class="textColor">업체삭제</a></li>
             <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
             <li class="my-5"><a href="businessSales" class="textColor">매출현황</a></li>
+            <li class="my-5"><input type="button" class="btn" value="로그아웃" onclick="location.href='logout'">
           </ul>
         </div> 
          
@@ -119,11 +120,11 @@
         		</div>
         	</div>
         	
-        	<form action="answerInquiryProcess" name="answerForm" id="answerForm" method="post">
-        	<input type="hidden" value="${businessInquiry.businessInquiryNo}" id="inquiryNo" name="userInquiryNo">
+        	<form action="businessAnswerInquiryProcess" name="answerForm" id="answerForm" method="post">
+        	<input type="hidden" value="${businessInquiry.businessInquiryNo}" id="inquiryNo" name="businessInquiryNo">
         	<div class="row" id="answerRow">
         		<div class="form-group d-flex align-items-center justify-content-end">
-				    <textarea name="inquiryComment" id="answerContent" class="form-control mx-2" rows="4" style="resize:none; flex: 1;"></textarea>
+				    <textarea name="businessComment" id="answerContent" class="form-control mx-2" rows="4" style="resize:none; flex: 1;"></textarea>
 				    <div class="ml-2">
 				        <input type="submit" value="답변완료" class="btn" id="submitBtn" style="height:100px; background-color:#3DB78B">
 				        <input type="button" value="취소하기" class="btn" id="cancelBtn" style="height:100px; background-color:#C93C3C;">
@@ -155,6 +156,8 @@
     		alert("내용을 작성해주세요.");
     		return false;
     	}
+
+    	
     });
     
   

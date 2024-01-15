@@ -74,6 +74,7 @@ ul {
 			            <li class="my-5"><a href="deniedList" class="textColor">회원정지</a></li>
 			            <li class="my-5"><a href="adminSales" class="textColor">매출현황</a></li>
 			            <li class="my-5"><input type="button" class="btn" value="로그아웃" onclick="location.href='logout'"></li>
+
 					</ul>
 				</div>
 

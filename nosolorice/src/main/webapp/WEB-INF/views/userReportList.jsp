@@ -73,7 +73,7 @@
                 <div class="col-3">신고일</div>
                 <div class="col-2">신고처리</div>
             </div>
-            
+             
             
             <c:forEach var="r" items="${userReportList}">
             <div class="row align-items-center text-center py-3"> 
@@ -82,11 +82,11 @@
                 <div class="col-3">${r.reportContent}</div>
                 <div class="col-3"><fmt:formatDate value="${r.reportRegDate}" pattern="yyyy-MM-dd" /></div>
                 <c:if test="${not empty r.deniedUnlock}">
-                <div class="col-2">${r.resultDate()}</div>
+                <div class="col-2">신고완료</div>
                 </c:if>
                 
                 <c:if test="${empty r.deniedUnlock}">
-                <div class="col-2">미처리</div>
+                <div class="col-2">접수대기</div>
                 </c:if>
             </div>
              </c:forEach>
@@ -134,11 +134,6 @@
 	       
  
 
-
-
-
-
-       
   
 
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>

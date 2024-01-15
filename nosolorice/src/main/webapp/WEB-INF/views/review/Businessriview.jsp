@@ -175,8 +175,7 @@
             <div class="row">
                     <div class="col">
 	        			<c:if test="${rev.reviewPicture != null}">
-	                    	<%-- <img src="resources/upload/${rev.reviewPicture}" style="max-width: 100%;"> --%>
-	                    	<img src="https://via.placeholder.com/1000" style="max-width: 100%;">
+	                    	<img src="resources/upload/${rev.reviewPicture}" style="max-width: 100%;">
 	                    </c:if>
                     </div>
             </div>

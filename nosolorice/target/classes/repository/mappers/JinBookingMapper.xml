@@ -71,7 +71,7 @@ VALUES (#{normalId}, #{businessId}, #{bookingokNo})
 
 <select id="getbookingOknumber" resultType="int" parameterType="int">
 select
-booking_no
+bookingok_no
 from bookingok
 where booking_no = #{bookingNo}
 </select>

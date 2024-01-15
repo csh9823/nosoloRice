@@ -188,8 +188,8 @@ $(document).ready(function () {
 	
 	        reader.onload = function (e) {
 	            preview.src = e.target.result;
-	            preview.style.width = '400px';
-	            preview.style.height = '400px';
+	            preview.style.width = '300px';
+	            preview.style.height = '300px';
 	        };
 	
 	        reader.readAsDataURL(file);

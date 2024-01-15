@@ -190,7 +190,7 @@
 				<c:if test="${not empty mapNoMenuList.menuPicture}">
                     <div class="row">
                         <div class="col">
-                            <div style="background-image: url(${mapNoMenuList.menuPicture}); width: 200px; height: 200px; background-size : 100% 100%;" class="rounded">
+                            <div style="background-image: url(resources/upload/${mapNoMenuList.menuPicture}); width: 200px; height: 200px; background-size : 100% 100%;" class="rounded">
                             </div>
                         </div>
                     </div>
@@ -199,7 +199,7 @@
 				<c:if test="${mapNoMenuList.menuPicture == null}">
                     <div class="row">
                         <div class="col">
-                            <div style="background-image: url('https://via.placeholder.com/200'); width: 200px; height: 200px; background-size : 100% 100%;" class="rounded">
+                            <div style="background-image: url('resources/upload/default_menuPicture.png'); width: 200px; height: 200px; background-size : 100% 100%;" class="rounded">
                             </div>
                         </div>
                     </div>
@@ -229,7 +229,7 @@
 				            <c:if test="${not empty menu.menuPicture}">
 				                <div class="row">
 				                    <div class="col">
-				                        <div style="background-image: url(${menu.menuPicture}); width: 200px; height: 200px; background-size : 100% 100%;" class="rounded">
+				                        <div style="background-image: url(resources/upload/${menu.menuPicture}); width: 200px; height: 200px; background-size : 100% 100%;" class="rounded">
 				                        </div>
 				                    </div>
 				                </div>
@@ -238,7 +238,7 @@
 				            <c:if test="${menu.menuPicture == null}">
 				                <div class="row">
 				                    <div class="col">
-				                        <div style="background-image: url('https://via.placeholder.com/200'); width: 200px; height: 200px; background-size : 100% 100%;" class="rounded">
+				                        <div style="background-image: url('resources/upload/default_menuPicture.png'); width: 200px; height: 200px; background-size : 100% 100%;" class="rounded">
 				                        </div>
 				                    </div>
 				                </div>
@@ -334,7 +334,7 @@
 
                 <div class="row">
                     <div class="col">
-                        <img src="https://via.placeholder.com/200" alt="" id="menuimgform">
+                        <img src="resources/upload/default_menuPicture.png" alt="" id="menuimgform">
                     </div>
                     <div class="col" style="margin-top: 35px;">
                         <label for="menuimg">
@@ -499,8 +499,8 @@ $("#menumdelete").on("click", function(){
 				      '<div class="col-4 text-center imgmenucol" style="margin-top: 10px;">'
 				            + "<div class='row'>" 
 				      		      +'<div class="col">'+
-				      		      	(resData[i].menuPicture != null ? '<div style="background-image: url('+resData[i].menuPicture+'); background-size : 100% 100%; width: 200px; height: 200px;">'
-				      		      	: '<div style="background-image: url(https://via.placeholder.com/200); background-size : 100% 100%; width: 200px; height: 200px;">')
+				      		      	(resData[i].menuPicture != null ? '<div style="background-image: url(' + 'resources/upload/'+resData[i].menuPicture+'); background-size : 100% 100%; width: 200px; height: 200px;">'
+				      		      	: '<div style="background-image: url(resources/upload/default_menuPicture.png); background-size : 100% 100%; width: 200px; height: 200px;">')
 				                		+ '<button type="button" class="btn btn-danger thisdelete" style="margin-top: 80px;" value='+resData[i].menuNo+'>삭제하기</button>' 
 				                		+'</div>'         
 				            	+ '</div>'    
@@ -724,7 +724,7 @@ $('input[type="text"]').keydown(function() {
     					menuPrice.val(resData.menuPrice)
     					menuName.val(resData.menuName)
     					if(resData.menuPicture != null){
-    						menuImg.src = resData.menuPicture;	
+    						menuImg.src = "resources/upload/"+resData.menuPicture;	
     					}
     					menuCategoryDropdown.value = resData.menuCategoryNo;
     				},
