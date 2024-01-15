@@ -74,6 +74,9 @@
                 <div class="col-2">신고처리</div>
             </div>
              
+             <c:if test="${empty userReportList }">
+            	<div class="py-3">신고 내역이 없습니다.</div>
+            </c:if>
             
             <c:forEach var="r" items="${userReportList}">
             <div class="row align-items-center text-center py-3"> 
