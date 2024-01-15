@@ -4,8 +4,8 @@
 
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="resources/js/jquery-3.2.1.min.js"></script>
-<!-- <link href="resources/bootstrap/main.css" rel="stylesheet"> -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<link href="resources/bootstrap/new_bootstrap.css" rel="stylesheet" />
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> -->
 
 <!-- favicon 404 에러 방지용(파비폰은 resources/image 안에 있습니다.) -->
 <link rel="icon" href="data:,">
@@ -66,6 +66,8 @@ form input::file-selector-button {
             <img src="resources/upload/profile_img.png" id="profilePreview" style="width: 400px; height: 400px;" class="rounded-circle">
             <label for="profileImageInput" style="width: 200px; padding-top: 10px; color:#515151;">프로필 이미지 업로드하기</label>
             <input type="file" accept="image/*" onchange="profileImage(this)" id="profileImageInput" name="profileImageInput" style="display:none;">
+            <pre style="width: 300px; padding-top: 10px; color:#C93C3C; ">* 이미지를 업로드 하지 않을 경우
+  기본 이미지가 등록됩니다.</pre>
           </div> 
          </div> 
 
@@ -263,7 +265,7 @@ form input::file-selector-button {
 
               <div class="col-10 p-2">
                 <p style="color : #515151;"class="fw-bolder">&nbsp</p>
-                <h5 class="fw-bolder">* 이용약관</h5>
+                <h5 class="fw-bolder" style="color : #515151;">* 이용약관</h5>
                   <div class="form-group" style="overflow: scroll; height: 150px; padding:16px; border-radius:4px; border: 1px solid #979797;" id="termOfUse">
                     <p> 가. 개인정보의 수집 및 이용 목적
   

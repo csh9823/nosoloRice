@@ -112,8 +112,8 @@ public class BusinessUserController {
         	businessUser.setBusinessProfile(profileNewName);
         } else if(businessProfile.isEmpty() && !businessPicture.isEmpty()) {
         	// 기본프로필이미지 등록
-        	String defaultImagePath = DEFAULT_PATH+"profile_img.png";
-        	// String defaultImagePath = "defaultImage.png";
+        	String defaultImagePath = DEFAULT_PATH+"business_defaultImage.png";
+        	// String defaultImagePath = "business_defaultImage.png";
         	System.out.println("사업자_기본프로필 등록완료! : " + defaultImagePath);
         	businessUser.setBusinessProfile(defaultImagePath);
         	
@@ -130,7 +130,6 @@ public class BusinessUserController {
         businessUserService.addBusinessUser(businessUser);
         businessUserService.addJoinApprove(businessId);
 
-        // 사업자도 회원가입 후 무조건 로그인이여야 하는가
         return "redirect:login";
     }
 

@@ -42,7 +42,7 @@
               <div class="d-flex justify-content-evenly align-items-center">
       
                 <!-- 유저_프로필 -->
-                <img src="${sessionScope.NormalUser.profile}" style="width: 80px; height: 80px; border-radius: 50%;"/>
+                <img src="${sessionScope.NormalUser.profile}" style="width: 70px; height: 70px; border-radius: 50%;"/>
       
                 <!-- 포인트 -->          
                 <div class="d-flex flex-column mb-2 ">

@@ -42,7 +42,6 @@ public class NormalUserController {
 		this.normalUserService = normalUserService;
 	}
 
-    
     // 회원가입 완료
     @RequestMapping("/normalJoinResult")
     public String normalJoinResult(
