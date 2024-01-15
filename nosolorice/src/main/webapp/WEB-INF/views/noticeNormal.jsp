@@ -12,11 +12,10 @@
   <link href="resources/bootstrap/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/variable/woff2/SUITE-Variable.css" rel="stylesheet">
   <style>
-        .btn {
-        background-color: #FA9884;
-        color:#fff;
+    
+      body {
+      font-family: 'SUITE Variable', sans-serif;
       }
-      body {font-family: 'SUITE Variable', sans-serif;}
       
       .noticeRow:hover {
       

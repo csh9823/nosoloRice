@@ -256,6 +256,7 @@ public class AdminPageController {
 	  @RequestMapping("/businessAnswerInquiryProcess")
 	  public String businessAnswerInquiry(String businessComment,int businessInquiryNo) {
 		 
+		  	System.out.println("코멘트 :" +  businessComment + " 번호" + businessInquiryNo);
 		  BusinessInquiry businessInquiry = new BusinessInquiry();
 		  
 		  businessInquiry.setBusinessInquiryNo(businessInquiryNo);

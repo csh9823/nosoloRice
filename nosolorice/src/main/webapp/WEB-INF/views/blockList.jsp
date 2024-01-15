@@ -27,10 +27,7 @@
     transition: max-height 0.3s ease-out;
   }
 
-  .btn {
-    background-color: #3DB78B;
-    color : white;
-  }
+ 
     .pagination .page-item.active .page-link {
     background-color: #FA9884;
     border-color: #FA9884;
@@ -84,7 +81,7 @@
                 <%-- <div class="col-2">${b.blockState}</div> --%>
                 <div class="col-2 py-3">
                   <input type="hidden" name="blockHistoryNo" value="${b.blockHistoryNo}">
-                  <input type="button" value="해제하기"  class="blockUnlockBtn btn" data-no="${b.blockHistoryNo}">
+                  <input type="button" value="해제하기"  class="blockUnlockBtn btn" data-no="${b.blockHistoryNo}" style="background-color: #3DB78B; color : white;">
                 </div>    
             </div>
             </c:forEach>
