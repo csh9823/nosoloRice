@@ -40,12 +40,12 @@
 			        <button style="border : none; background-color: white;" class="w-100" id="clickImg">
 			          <c:if test="${empty BusinessUser.businessProfile}">
 				          <div class="square-container">
-					          <img src="resources/img/profile_img.png" class="preview w-100 profile-img rounded-circle border">      
+					          <img src="resources/img/profile_img.png" class="preview w-100 profile-img rounded border">      
 				          </div>
 			          </c:if>
 			          <c:if test="${not empty BusinessUser.businessProfile}">
 				          <div class="square-container">
-				          	<img src="resources/upload/${BusinessUser.businessProfile}" class="preview w-100 profile-img rounded-circle border">
+				          	<img src="resources/upload/${BusinessUser.businessProfile}" class="preview w-100 profile-img rounded border">
 				          </div>
 			          </c:if>
 			        </button>

@@ -342,8 +342,8 @@ public class JinController {
 
 		// 부킹 ok no 가져오기
 		int bookingOkno = jinbookService.getbookingOknumber(bookingOk.getBookingNo());
-		System.out.println("부킹ok의 no값"+bookingOkno);
 		
+		System.out.println("부킹ok의 no값"+bookingOkno);
 		// 방문완료로 처리해주는거
 		jinbookService.bookingState(bookingOk.getBusinessId(), bookingOk.getBookingNo(), bookingOk.getBookingOkState());
 		
@@ -351,9 +351,9 @@ public class JinController {
 		List<BookingUserList> bookuser =  jinbookService.bookingUserList(bookingOk.getBusinessId(), bookingOk.getBookingNo());
 
 		for (BookingUserList bookingUser : bookuser) {
+			jinbookService.visitantuseradd(bookingUser.getNormalId(),bookingOk.getBusinessId(),bookingOkno);
 			// 아이디 가져오는거 까지 확인 완료
 			System.out.println(bookingUser.getNormalId());
-			jinbookService.visitantuseradd(bookingUser.getNormalId(),bookingOk.getBusinessId(),bookingOkno);
 		}
 		
 		// 반복이 완료 되면 부킹 유저 리스트 삭제 해줌
