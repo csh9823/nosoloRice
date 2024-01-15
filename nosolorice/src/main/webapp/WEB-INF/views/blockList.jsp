@@ -72,6 +72,11 @@
                 <div class="col-4">차단일</div>
                 <div class="col-2">차단해제</div>
             </div>
+            
+            <c:if test="${empty blockList }">
+            	<div class="py-3">차단 내역이 없습니다.</div>
+            </c:if>
+            
            <c:if test="${not empty blockList}"> 
           <c:forEach var="b" items="${blockList}">
             <div class="row align-items-center text-center">
