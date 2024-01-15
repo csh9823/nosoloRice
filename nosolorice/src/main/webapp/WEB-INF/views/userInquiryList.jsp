@@ -148,7 +148,7 @@
 								<span class="fs-5">${i.getInquiryDivision()}</span>
 								
 							</div>
-							<div class="col">
+							<div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
 								<span class="fs-5" style="overflow: hidden; white-space: nowrap; text-overflow:ellipsis;">${i.getInquiryTitle()}</span>
 							</div>
 							<div class="col-2">
@@ -176,7 +176,9 @@
 									<div class="col p-5 fs-5" style="min-height : 20vh;">
 										<p>답변시간 : <span><fmt:formatDate value="${i.inquiryCommentRegDate}" pattern="yyyy년 MM월 dd일  HH시 mm분" /></span></p>
 										<p>답변내용</p>
-										<pre>${i.inquiryComment}</pre>
+											<p>
+											${i.inquiryComment}
+											</p>
 										<br>
 									</div>								
 								</div>

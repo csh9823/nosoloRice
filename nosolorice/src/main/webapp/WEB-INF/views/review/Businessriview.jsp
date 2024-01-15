@@ -184,7 +184,7 @@
                     <c:if test="${rev.ownerComment != null}">
                     <div class="col text-end">
                         <button class="revupdate2 px-3 py-2" value="${rev.revireNo}.${rev.ownerComment}">답글수정</button>
-                        <a href="OwnerCommentdelete?reviewNo=${rev.revireNo}"><button class="rev2delete">답글삭제</button></a>
+                        <a href="OwnerCommentdelete?reviewNo=${rev.revireNo}"><button class="rev2delete px-3 py-2">답글삭제</button></a>
                     </div>
                     </c:if>
                     
@@ -199,7 +199,8 @@
             
 			<c:if test="${rev.ownerComment != null}">
 	            <div class="row">
-	                <div class="col-11" style="background-color: #C93C3C; padding: 0px; margin-left: 11px;">
+	                <div class="col me-3 p-3 rounded border" style="padding: 0px; margin-left: 11px;">
+	                	<span class="fw-bold fs-5">답글 내용 </span><br>
 	                	<span class="line-break">${rev.ownerComment}</span>
 	                </div>
 	            </div>
