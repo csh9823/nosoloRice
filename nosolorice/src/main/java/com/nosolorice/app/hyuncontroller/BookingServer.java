@@ -125,9 +125,10 @@ public class BookingServer {
     				Map<String, Object>dataMap = new HashMap<>();
     				dataMap.put("type", "userCancel");
     				dataMap.put("bookNo", bookNo);
+    				dataMap.put("businessId", businessId);
     				String jsonData = om.writeValueAsString(dataMap);
     				s.getBasicRemote().sendText(jsonData);
-    				System.out.println("사장님에게 예약취소됬다고 메시지 발송 완료");
+    				System.out.println("사장님에게 예약취소됬다고 메시지 발송 완료 : " + jsonData);
     			}
     		}    
     		return;
@@ -149,5 +150,3 @@ public class BookingServer {
     }
 
 }
-
-

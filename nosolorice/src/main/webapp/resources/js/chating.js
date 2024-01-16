@@ -45,7 +45,9 @@ $(function(){
 		success : function(resData){
 			console.log(resData);				
 			chatHistory = resData.chatHistory;
+			console.log("채팅방 처음 들어올때 chatHistory: ", chatHistory);
 			chatRoomInfo = resData.chatRoomInfo;
+			console.log("채팅방 처음 들어올때 chatRoomInfo : ", chatRoomInfo);
 			isChatMember = resData.isChatMember;
 			roomId = resData.roomId;
 			bookingInfo = resData.bookingInfo;
@@ -299,7 +301,7 @@ $(function(){
 			//예약번호를 멤버전원에게 전달한다
 			let chatHistory = {
 				chatType : 'bookNo',
-				bookNo : $(".bookingBookNo:first").text().trim()
+				bookNo : bookingBookNo
 			}
 			const jsonData = JSON.stringify(chatHistory);
         	socket.send(jsonData);
@@ -566,7 +568,7 @@ $(function(){
 		    				console.log(err);
 		    			}
 		    		});
-				}, 1500);
+				}, 1000);
 			}
 						
 			//예약 실패 화면으로 이동
@@ -585,6 +587,7 @@ $(function(){
 		let regDate = new Date(chatObj.chatRegDate);
 		
 		let chatProfileImg = chatObj.profileImg;
+		console.log("실시간 채팅프로필이미지 : ", chatProfileImg);
 		let chatRegDate = (regDate.getHours() < 13 ? "오전" + String(regDate.getHours()) + ":" + String(regDate.getMinutes()).padStart(2,'0') : "오후" + String(regDate.getHours() - 12) + ":" + String(regDate.getMinutes()).padStart(2,'0'));
 		let lastChat = $("#chatDiv .chatRow:last");
 		
@@ -2103,7 +2106,8 @@ $(function(){
         $("#bookFail").addClass("d-none");
         $("#bookSuccess").addClass("d-none");
         $("#bookWait").addClass("d-none");
-        $("#bookPropose").removeClass("d-none");        
+        $("#bookPropose").removeClass("d-none");
+        location.reload();        
     });
     
     //예약 대기창 취소하기 버튼 클릭이벤트
@@ -2145,7 +2149,25 @@ const chatAppend = (chatHistory, loginId) => {
 		let chatNickName = chatObj.nickName;
 		let chatMsg = chatObj.chatMessage;
 		let regDate = new Date(chatObj.chatRegDate);
-		let chatProfileImg = chatObj.profileImg;
+		
+		//이건 비었다. v의 chatId를 통해 해당 chatId의 프로필이미지를 가져온다.
+		let chatProfileImg = "";
+		$.ajax({
+			url : "/app/getNormalUserInfo",
+			data : "normalId=" + chatId,
+			type : "post",
+			dataType : "json",
+			async : false,
+			success : function(resData){
+				chatProfileImg = resData.profile;
+			}, error : function(err) {
+				console.log("통신에러", err);
+			}
+		});
+		
+		
+		
+		console.log("불러온 채팅프로필이미지 : ", chatProfileImg);
 		let chatRegDate = (regDate.getHours() < 13 ? "오전" + String(regDate.getHours()) + ":" + String(regDate.getMinutes()).padStart(2,'0') : "오후" + String(regDate.getHours() - 12) + ":" + String(regDate.getMinutes()).padStart(2,'0'));
 		let lastChat = $("#chatDiv .chatRow:last");
 		if(lastChat.attr("data-time") == chatRegDate && lastChat.attr("data-id") == chatId) lastChat.find(".regDate").text("");
@@ -2596,6 +2618,3 @@ const timerStart = (minutes, seconds) => {
     };
     updateTimer();
 }
-
-
-

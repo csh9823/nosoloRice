@@ -50,11 +50,11 @@ public class JinAjaxController {
 		String number = Integer.toString(randomNumber);
 		
 		if(businessid != null) {
-			//certifiedPhoneNumberService.certifiedPhoneNumber(userPhoneNumber,number);
+			certifiedPhoneNumberService.certifiedPhoneNumber(userPhoneNumber,number);
 		}
 		
 		if(normalid != null) {
-			//certifiedPhoneNumberService.certifiedPhoneNumber(userPhoneNumber,number);
+			certifiedPhoneNumberService.certifiedPhoneNumber(userPhoneNumber,number);
 		}
 		
 		HashMap<String, Object> map = new HashMap<>();
@@ -79,11 +79,11 @@ public class JinAjaxController {
 		String number = Integer.toString(randomNumber);
 		
 		if(businessid != null) {
-			//certifiedPhoneNumberService.certifiedPhoneNumber(userPhoneNumber,number);
+			certifiedPhoneNumberService.certifiedPhoneNumber(userPhoneNumber,number);
 		}
 		
 		if(normalid != null) {
-			//certifiedPhoneNumberService.certifiedPhoneNumber(userPhoneNumber,number);
+			certifiedPhoneNumberService.certifiedPhoneNumber(userPhoneNumber,number);
 		}
 		
 		HashMap<String, Object> map = new HashMap<>();

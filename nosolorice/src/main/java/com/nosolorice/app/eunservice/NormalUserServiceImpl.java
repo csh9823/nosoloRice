@@ -73,10 +73,10 @@ public class NormalUserServiceImpl implements NormalUserService {
 		
 		System.out.println("certifiedPhoneNumber" + mobile +"인증번호 : " + numStr);
 		
-		DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCS9KK7TUTOME4MO", "PTWS3OHSRCMQFQRNYHJOHHJAQ6NSQCUM", "https://api.coolsms.co.kr");
+		DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCSJVKSXY5RG42XZ", "S21PRXKAHV1CLHYZPEAAAUAHBPXNJBAY", "https://api.coolsms.co.kr");
 		 
 		Message message = new Message();
-		message.setFrom("01040969353");
+		message.setFrom("01081313703");
 		message.setTo(mobile);
 		message.setText("인증번호는"+numStr+"입니다.");
 	    

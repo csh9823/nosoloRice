@@ -59,6 +59,7 @@
 	        String currentRoomId = (String) session.getUserProperties().get("roomId");
 	        Set<Session> agreeSet = roomAgreeSets.get(currentRoomId);	        
 	        
+	        
 	        // 모든 열려있는 세션 가져오기
 	        Set<Session> allSessions = session.getOpenSessions();
 	        
@@ -102,9 +103,11 @@
 	    	if(msg.get("chatType").equals("agree")) {
 	    		System.out.println("agree메시지 수신 : " + msg.toString());
 	    		Map<String, Object>dataMap = new HashMap<>();
+	    		System.out.println("agreeSet에 add하기 전 전체 세션 숫자 : " + allSessions.size());	    		
+	    		System.out.println("agreeSet에 add하기 전 roomId가 같은 세션 숫자 : " + chatMember.size());
+	    		
 	    		agreeSet.add(session);
 	    		
-	    		System.out.println("agreeSet.size() : " + agreeSet.size());
 	    		System.out.println("Integer.parseInt(msg.get(\"memberCount\").toString()) : " + Integer.parseInt(msg.get("memberCount").toString()));
 	    		for (Map.Entry<String, Set<Session>> entry : roomAgreeSets.entrySet()) {
 	    		    System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());

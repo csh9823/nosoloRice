@@ -127,7 +127,7 @@ public class NormalUserController {
 		
 		System.out.println("컨트롤러 : " + numStr);
 		
-		// normalUserServiceImpl.normalPhoneCheck(phone,numStr);
+		normalUserServiceImpl.normalPhoneCheck(mobile,numStr);
 		
 		// 인증번호 저장
 		Map<String, String> result = new HashMap<>();
