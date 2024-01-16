@@ -1,0 +1,24 @@
+웹소켓연결 ip 4군데 바꿔야합니다.
+resources/js/matching.js
+resources/js/chating.js
+views/BusinessMenu/yesnoList.jsp
+
+서버아이피랑 서버포트만 변경하면 됩니다.
+"ws:"로 검색하시면 편합니다.
+
+resources/js/matching.js
+421번째 줄
+let url = "ws:서버아이피:서버포트/app/matching";
+
+resources/js/chating.js
+233번째줄
+let url = "ws:서버아이피:서버포트/app/chating" + roomId;
+374번째줄
+let url = "ws:서버아이피:서버포트/app/booking" + businessId;
+
+views/BusinessMenu/yesnoList.jsp
+317번째 줄
+let url = "ws:서버아이피:서버포트/app/booking" + loginId;
+
+
+문자인증 막아놔서 개발자 인증번호 뜨게 해놨습니다.
