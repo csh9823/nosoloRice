@@ -36,6 +36,22 @@
 |-------|-------|
 |<img src="https://github.com/csh9823/nosoloRice/assets/141537487/ef1b2381-3fd0-48c3-8e59-f62b627a8d1a" style="width:500px">|<img src="https://github.com/csh9823/nosoloRice/assets/141537487/1d1b4936-2c81-4ace-89b5-fe97c01bcd88" style="width:500px">|
 
+## 설정사항
+> 웹소켓설정 </br>
+>> IP 변경필요 </br>
+>> - resources/js/matching.js
+>>> 421번째 줄 </br>
+>>> let url = "ws:서버아이피:서버포트/app/matching";
+>> - resources/js/chating.js
+>>> 233번째줄 </br>
+>>> let url = "ws:서버아이피:서버포트/app/chating" + roomId; </br>
+>>> 374번째줄 </br>
+>>> let url = "ws:서버아이피:서버포트/app/booking" + businessId;
+>> - views/BusinessMenu/yesnoList.jsp
+>>> 317번째 줄 </br>
+>>> let url = "ws:서버아이피:서버포트/app/booking" + loginId;
+>> - Server IP와 Server Port 변경 (ws:로 검색하면 편리합니다.)
+
 
 
 
